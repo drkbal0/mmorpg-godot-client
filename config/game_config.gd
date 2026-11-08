@@ -16,7 +16,7 @@ const PROFILES: Dictionary = {
 	"proxmox": {
 		"id": "proxmox",
 		"name": "Servidor Proxmox (LAN 192.168.1.103)",
-		"gateway_url": "https://mmo.elbalo.lol/api",
+		"gateway_url": "http://192.168.1.103:8080",
 		"udp_host": "192.168.1.103",
 		"udp_port": 5000
 	},
@@ -84,6 +84,15 @@ static func get_active_profile_id() -> String:
 	# Exported release build defaults to WAN (Internet)
 	return "wan"
 
+## Returns whether an explicit profile was supplied via CLI
+static func has_explicit_cli_profile() -> bool:
+	var all_args = OS.get_cmdline_args()
+	all_args.append_array(OS.get_cmdline_user_args())
+	for arg in all_args:
+		if arg.begins_with("--profile=") or arg in ["--wan", "--prod", "--production", "--proxmox", "--lan", "--local", "--dev", "--pc"]:
+			return true
+	return false
+
 ## Returns Gateway API Base URL
 static func get_gateway_url() -> String:
 	# 1. Direct CLI argument override
@@ -93,18 +102,23 @@ static func get_gateway_url() -> String:
 		if arg.begins_with("--gateway="):
 			return arg.split("=")[1]
 
-	# 2. Direct client_config.json override
+	# 2. If CLI explicitly selected a profile (e.g. --profile=wan or --proxmox), respect it
+	if has_explicit_cli_profile():
+		var profile_id = get_active_profile_id()
+		return PROFILES[profile_id]["gateway_url"]
+
+	# 3. Direct client_config.json override
 	var cfg = _read_external_config()
 	if cfg.has("gateway_url") and str(cfg["gateway_url"]).strip_edges() != "":
 		return str(cfg["gateway_url"]).strip_edges()
 
-	# 3. Environment override
+	# 4. Environment override
 	if OS.has_environment("GATEWAY_URL"):
 		return OS.get_environment("GATEWAY_URL")
 	if OS.is_debug_build() and OS.has_environment("DEV_GATEWAY_URL"):
 		return OS.get_environment("DEV_GATEWAY_URL")
 
-	# 4. Profile default
+	# 5. Profile default
 	var profile_id = get_active_profile_id()
 	return PROFILES[profile_id]["gateway_url"]
 
@@ -123,14 +137,18 @@ static func get_udp_server() -> Dictionary:
 		elif arg.begins_with("--udp-port="):
 			target_port = int(arg.split("=")[1])
 
-	# 2. client_config.json overrides
+	# 2. If CLI explicitly selected a profile, respect the profile's host & port
+	if has_explicit_cli_profile():
+		return {"host": target_host, "port": target_port}
+
+	# 3. client_config.json overrides
 	var cfg = _read_external_config()
 	if cfg.has("udp_host") and str(cfg["udp_host"]).strip_edges() != "":
 		target_host = str(cfg["udp_host"]).strip_edges()
 	if cfg.has("udp_port") and int(cfg["udp_port"]) > 0:
 		target_port = int(cfg["udp_port"])
 
-	# 3. Environment overrides in debug mode
+	# 4. Environment overrides in debug mode
 	if OS.is_debug_build():
 		if OS.has_environment("MMO_SERVER_IP"):
 			target_host = OS.get_environment("MMO_SERVER_IP")
@@ -142,6 +160,12 @@ static func get_udp_server() -> Dictionary:
 			target_port = int(OS.get_environment("DEV_UDP_PORT"))
 
 	return {"host": target_host, "port": target_port}
+
+static func get_udp_host() -> String:
+	return get_udp_server()["host"]
+
+static func get_udp_port() -> int:
+	return get_udp_server()["port"]
 
 ## Returns human-readable summary of active network configuration
 static func get_active_profile_summary() -> String:
