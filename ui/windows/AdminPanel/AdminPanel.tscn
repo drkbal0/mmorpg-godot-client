@@ -1,0 +1,113 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx6y2y3v6v3y"]
+
+[ext_resource type="Script" path="res://ui/windows/AdminPanel/AdminPanel.gd" id="1_m4d3d"]
+[ext_resource type="Script" path="res://ui/windows/AdminPanel/TelemetryView.gd" id="2_telemetry"]
+
+[node name="AdminPanel" type="Panel"]
+custom_minimum_size = Vector2(500, 700)
+offset_right = 500.0
+offset_bottom = 700.0
+focus_mode = 2
+script = ExtResource("1_m4d3d")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 0
+text = "ADMIN CONTROL PANEL"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CATALOG" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VBoxContainer/TabContainer/CATALOG"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="CatalogGrid" type="GridContainer" parent="MarginContainer/VBoxContainer/TabContainer/CATALOG/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBoxContainer/TabContainer/CATALOG"]
+layout_mode = 2
+
+[node name="ClearCacheButton" type="Button" parent="MarginContainer/VBoxContainer/TabContainer/CATALOG"]
+layout_mode = 2
+text = "CLEAR CLIENT CACHE"
+
+[node name="RefreshButton" type="Button" parent="MarginContainer/VBoxContainer/TabContainer/CATALOG"]
+layout_mode = 2
+text = "REFRESH CATALOG"
+
+[node name="TELEMETRY" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("2_telemetry")
+
+[node name="StatsGrid" type="GridContainer" parent="MarginContainer/VBoxContainer/TabContainer/TELEMETRY"]
+layout_mode = 2
+columns = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 15
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/TELEMETRY/StatsGrid"]
+layout_mode = 2
+text = "Total Deaths:"
+
+[node name="TotalDeathsValue" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/TELEMETRY/StatsGrid"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/TELEMETRY/StatsGrid"]
+layout_mode = 2
+text = "Total Damage:"
+
+[node name="TotalDamageValue" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/TELEMETRY/StatsGrid"]
+layout_mode = 2
+text = "0.0"
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/TELEMETRY/StatsGrid"]
+layout_mode = 2
+text = "Loot Extracted:"
+
+[node name="ItemsExtractedValue" type="Label" parent="MarginContainer/VBoxContainer/TabContainer/TELEMETRY/StatsGrid"]
+layout_mode = 2
+text = "0"
+horizontal_alignment = 2
+
+[node name="RefreshTimer" type="Timer" parent="MarginContainer/VBoxContainer/TabContainer/TELEMETRY"]
+wait_time = 5.0
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "CLOSE ADMIN PANEL"

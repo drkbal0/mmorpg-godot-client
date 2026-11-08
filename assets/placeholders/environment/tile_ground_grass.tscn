@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxab"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_grass"]
+albedo_color = Color(0.18, 0.55, 0.22, 1)
+
+[node name="GroundGrass" type="CSGBox3D"]
+use_collision = true
+collision_layer = 1
+size = Vector3(10, 0.1, 10)
+material = SubResource("StandardMaterial3D_grass")

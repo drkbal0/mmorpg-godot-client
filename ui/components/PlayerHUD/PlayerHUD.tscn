@@ -1,0 +1,217 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7poy2kx6r7v"]
+
+[ext_resource type="Script" path="res://ui/components/PlayerHUD/PlayerHUD.gd" id="1_h1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hud_bg"]
+bg_color = Color(0.05, 0.06, 0.09, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.22, 0.32, 0.45, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_size = 12
+shadow_color = Color(0, 0, 0, 0.75)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_portrait_bg"]
+bg_color = Color(0.08, 0.1, 0.15, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.6, 0.2, 0.85)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
+bg_color = Color(0.2, 0.05, 0.05, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.1, 0.1, 0.1, 0.9)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_fill"]
+bg_color = Color(0.12, 0.82, 0.38, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 1, 0.6, 0.9)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="PlayerHUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_h1")
+
+[node name="RootBottom" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="HUDMargin" type="MarginContainer" parent="RootBottom"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -165.0
+offset_right = 250.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="MainPanel" type="PanelContainer" parent="RootBottom/HUDMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hud_bg")
+
+[node name="ContentMargin" type="MarginContainer" parent="RootBottom/HUDMargin/MainPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxMain" type="HBoxContainer" parent="RootBottom/HUDMargin/MainPanel/ContentMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="PortraitBox" type="PanelContainer" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_portrait_bg")
+
+[node name="PortraitIcon" type="Label" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/PortraitBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 28
+text = "⚔️"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelBadge" type="Label" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/PortraitBox"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 11
+text = "Lv.1 "
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[node name="VBoxControls" type="VBoxContainer" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="TopInfoRow" type="HBoxContainer" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/VBoxControls"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="NameLabel" type="Label" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/VBoxControls/TopInfoRow"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 13
+text = "Pionero"
+vertical_alignment = 1
+
+[node name="CombatStatusLabel" type="Label" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/VBoxControls/TopInfoRow"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "VANGUARDIA ACTIVA"
+horizontal_alignment = 2
+
+[node name="VitalsVBox" type="VBoxContainer" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/VBoxControls"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="HPBarContainer" type="Control" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/VBoxControls/VitalsVBox"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HPBar" type="ProgressBar" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/VBoxControls/VitalsVBox/HPBarContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp_fill")
+value = 100.0
+show_percentage = false
+
+[node name="HPValueLabel" type="Label" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/VBoxControls/VitalsVBox/HPBarContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 11
+text = "1000 / 1000 (100%)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ManaBarContainer" type="Control" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/VBoxControls/VitalsVBox"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ManaBar" type="ProgressBar" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/VBoxControls/VitalsVBox/ManaBarContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+value = 100.0
+show_percentage = false
+
+[node name="ActionBarContainer" type="HBoxContainer" parent="RootBottom/HUDMargin/MainPanel/ContentMargin/HBoxMain/VBoxControls"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8

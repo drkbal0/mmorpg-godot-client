@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://dd8djd55x0"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_pl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_pl"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_pl"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_pl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_pl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_pl")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 2.5, 4)
+
+[node name="Nameplate" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+billboard = 1
+no_depth_test = true
+render_priority = 30
+text = "Player"
+font_size = 54
+outline_size = 18
+pixel_size = 0.009
+shaded = false
+
+
+[node name="DeathOverlay" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="DeathOverlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12549, 0.12549, 0.12549, 0.1)

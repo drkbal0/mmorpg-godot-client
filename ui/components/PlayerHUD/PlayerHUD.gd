@@ -1,0 +1,281 @@
+extends CanvasLayer
+
+# PlayerHUD.gd - Interfaz de Combate Estilo LoL / MOBA (ADR 093)
+# Integra el retrato del campeón, barra segmentada de HP/Mana y barra de habilidades
+# con enfriamiento radial circular dinámico perfectamente centrado y delimitado (clip_contents).
+
+@onready var name_label = %NameLabel
+@onready var hp_bar = %HPBar
+@onready var hp_value_label = %HPValueLabel
+@onready var mana_bar = %ManaBar
+@onready var action_bar_container = %ActionBarContainer
+
+var skill_slots: Dictionary = {} # spell_id -> Dictionary { panel, radial_overlay, cd_label, key_label, cfg, was_on_cooldown }
+var _keybind_poll_timer: float = 0.0
+
+const SKILL_CONFIG = [
+	{"id": 3, "action": "attack_primary", "fallback_key": "LMB", "key": "LMB", "name": "LÁSER", "color": Color(0.2, 0.9, 1.0), "base_cd": 0.2},
+	{"id": 1, "action": "cast_spell_1", "fallback_key": "Q", "key": "Q", "name": "FUEGO", "color": Color(1.0, 0.45, 0.15), "base_cd": 1.2},
+	{"id": 2, "action": "dash_evade", "fallback_key": "Shift", "key": "Shift", "name": "DASH", "color": Color(0.3, 0.75, 1.0), "base_cd": 4.0},
+	{"id": 4, "action": "cast_spell_2", "fallback_key": "E", "key": "E", "name": "ESCUDO", "color": Color(0.1, 1.0, 0.7), "base_cd": 6.0},
+	{"id": 5, "action": "cast_ultimate", "fallback_key": "R", "key": "R", "name": "METEORO", "color": Color(1.0, 0.25, 0.25), "base_cd": 12.0}
+]
+
+func _ready():
+	if has_node("/root/UIOrchestrator"):
+		var orch = get_node("/root/UIOrchestrator")
+		orch.register_instance("player_hud", self)
+		if orch.layout_persistence:
+			if not orch.layout_persistence.hud_scale_changed.is_connected(apply_hud_scale):
+				orch.layout_persistence.hud_scale_changed.connect(apply_hud_scale)
+			apply_hud_scale(orch.layout_persistence.hud_scale)
+	
+	if has_node("/root/InputSettings"):
+		var isettings = get_node("/root/InputSettings")
+		if not isettings.bindings_updated.is_connected(update_keybind_labels):
+			isettings.bindings_updated.connect(update_keybind_labels)
+	
+	_populate_action_bar()
+	update_keybind_labels()
+
+func apply_hud_scale(scale_val: float) -> void:
+	var hud_margin = get_node_or_null("RootBottom/HUDMargin")
+	if hud_margin:
+		hud_margin.pivot_offset = Vector2(hud_margin.size.x * 0.5, hud_margin.size.y)
+		hud_margin.scale = Vector2(scale_val, scale_val)
+
+func get_action_display_key(action_name: String, fallback: String) -> String:
+	if not InputMap.has_action(action_name):
+		return fallback
+	var events = InputMap.action_get_events(action_name)
+	for ev in events:
+		if ev is InputEventMouseButton:
+			match ev.button_index:
+				MOUSE_BUTTON_LEFT: return "LMB"
+				MOUSE_BUTTON_RIGHT: return "RMB"
+				MOUSE_BUTTON_MIDDLE: return "MMB"
+				MOUSE_BUTTON_WHEEL_UP: return "MW_UP"
+				MOUSE_BUTTON_WHEEL_DOWN: return "MW_DN"
+				_: return "M" + str(ev.button_index)
+		elif ev is InputEventKey:
+			var code = ev.physical_keycode if ev.physical_keycode != 0 else ev.keycode
+			if code != 0:
+				var key_str = OS.get_keycode_string(code)
+				if key_str == "Shift": return "Shift"
+				if key_str == "Space": return "Space"
+				if key_str == "Control": return "Ctrl"
+				if key_str == "Alt": return "Alt"
+				return key_str.to_upper()
+	return fallback
+
+func update_keybind_labels() -> void:
+	for sid in skill_slots.keys():
+		var slot = skill_slots[sid]
+		var action_name = slot["cfg"].get("action", "")
+		var fallback = slot["cfg"].get("fallback_key", "??")
+		var display_key = get_action_display_key(action_name, fallback)
+		if slot.has("key_label") and is_instance_valid(slot["key_label"]):
+			slot["key_label"].text = " " + display_key + " "
+
+func _populate_action_bar():
+	if not action_bar_container: return
+	
+	for child in action_bar_container.get_children():
+		child.queue_free()
+	skill_slots.clear()
+	
+	for cfg in SKILL_CONFIG:
+		var sid = cfg["id"]
+		var slot = _create_slot(cfg)
+		action_bar_container.add_child(slot["panel"])
+		skill_slots[sid] = slot
+	update_keybind_labels()
+
+func _create_slot(cfg: Dictionary) -> Dictionary:
+	var slot_panel = PanelContainer.new()
+	slot_panel.custom_minimum_size = Vector2(62, 62)
+	# clip_contents es crítico para evitar desbordes visuales hacia la derecha en R o entre ranuras
+	slot_panel.clip_contents = true
+	
+	var sb = StyleBoxFlat.new()
+	sb.bg_color = Color(0.08, 0.10, 0.14, 0.95)
+	sb.border_width_left = 2
+	sb.border_width_top = 2
+	sb.border_width_right = 2
+	sb.border_width_bottom = 2
+	sb.border_color = cfg["color"] * 0.75
+	sb.corner_radius_top_left = 6
+	sb.corner_radius_top_right = 6
+	sb.corner_radius_bottom_right = 6
+	sb.corner_radius_bottom_left = 6
+	slot_panel.add_theme_stylebox_override("panel", sb)
+	
+	var content = Control.new()
+	content.set_anchors_preset(Control.PRESET_FULL_RECT)
+	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.clip_contents = true
+	slot_panel.add_child(content)
+	
+	# Keybind badge (Top-Left)
+	var key_badge = PanelContainer.new()
+	key_badge.position = Vector2(4, 4)
+	var ksb = StyleBoxFlat.new()
+	ksb.bg_color = Color(0.02, 0.04, 0.06, 0.85)
+	ksb.corner_radius_top_left = 3
+	ksb.corner_radius_top_right = 3
+	ksb.corner_radius_bottom_right = 3
+	ksb.corner_radius_bottom_left = 3
+	key_badge.add_theme_stylebox_override("panel", ksb)
+	
+	var action_name = cfg.get("action", "")
+	var fallback_key = cfg.get("fallback_key", cfg.get("key", "??"))
+	var display_key = get_action_display_key(action_name, fallback_key)
+	var key_label = Label.new()
+	key_label.text = " " + display_key + " "
+	key_label.add_theme_font_size_override("font_size", 10)
+	key_label.add_theme_color_override("font_color", Color(0.9, 0.95, 1.0))
+	key_badge.add_child(key_label)
+	content.add_child(key_badge)
+	
+	# Skill Name (Center)
+	var name_lbl = Label.new()
+	name_lbl.text = cfg["name"]
+	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	name_lbl.position = Vector2(0, 18)
+	name_lbl.size = Vector2(62, 26)
+	name_lbl.add_theme_font_size_override("font_size", 11)
+	name_lbl.add_theme_color_override("font_color", cfg["color"])
+	name_lbl.add_theme_color_override("font_outline_color", Color.BLACK)
+	name_lbl.add_theme_constant_override("outline_size", 4)
+	content.add_child(name_lbl)
+	
+	# Radial Cooldown Sweep Overlay (Procedural Vector Draw)
+	var radial_overlay = Control.new()
+	radial_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	radial_overlay.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	radial_overlay.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	radial_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	radial_overlay.clip_contents = true
+	radial_overlay.set_meta("progress", 0.0)
+	
+	radial_overlay.draw.connect(func():
+		var p = float(radial_overlay.get_meta("progress", 0.0))
+		if p <= 0.005: return
+		var sz = radial_overlay.size
+		if sz.x <= 1.0 or sz.y <= 1.0:
+			sz = slot_panel.size
+		if sz.x <= 1.0 or sz.y <= 1.0:
+			sz = Vector2(62, 62)
+		var center = sz * 0.5
+		# Radio exacto para cubrir esquinas de la celda: sqrt(w^2 + h^2) / 2
+		var radius = ceil(sz.length() * 0.5) + 1.0
+		var points = PackedVector2Array([center])
+		var colors = PackedColorArray()
+		var num_steps = 40
+		var start_ang = -PI * 0.5 # 12 en punto
+		var sweep_ang = p * TAU
+		for i in range(num_steps + 1):
+			var a = start_ang + (float(i) / float(num_steps)) * sweep_ang
+			points.append(center + Vector2(cos(a), sin(a)) * radius)
+		colors.resize(points.size())
+		colors.fill(Color(0.02, 0.03, 0.06, 0.82))
+		radial_overlay.draw_polygon(points, colors)
+		
+		# Aguja / línea sutil del reloj de enfriamiento (confinada al radio interior de la celda)
+		var lead_ang = start_ang + sweep_ang
+		var inner_rad = min(center.x, center.y) - 1.0
+		var lead_pt = center + Vector2(cos(lead_ang), sin(lead_ang)) * inner_rad
+		radial_overlay.draw_line(center, lead_pt, Color(1.0, 1.0, 1.0, 0.5), 1.5)
+	)
+	content.add_child(radial_overlay)
+	
+	# Cooldown timer text
+	var cd_label = Label.new()
+	cd_label.set_anchors_preset(Control.PRESET_FULL_RECT)
+	cd_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	cd_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	cd_label.add_theme_font_size_override("font_size", 16)
+	cd_label.add_theme_color_override("font_color", Color.WHITE)
+	cd_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	cd_label.add_theme_constant_override("outline_size", 6)
+	cd_label.visible = false
+	content.add_child(cd_label)
+	
+	return {
+		"panel": slot_panel,
+		"stylebox": sb,
+		"radial_overlay": radial_overlay,
+		"cd_label": cd_label,
+		"key_label": key_label,
+		"cfg": cfg,
+		"was_on_cd": false
+	}
+
+func _process(delta: float):
+	_keybind_poll_timer += delta
+	if _keybind_poll_timer >= 0.5:
+		_keybind_poll_timer = 0.0
+		update_keybind_labels()
+
+	var spell_mgr = get_node_or_null("/root/SpellManager")
+	if not spell_mgr: return
+	
+	for sid in skill_slots.keys():
+		var slot = skill_slots[sid]
+		var rem = spell_mgr.get_cooldown_remaining(sid)
+		var base_cd = float(slot["cfg"].get("base_cd", 2.0))
+		if spell_mgr.has_method("get_spell"):
+			var sdef = spell_mgr.get_spell(sid)
+			if sdef.has("cooldown_ms") and sdef["cooldown_ms"] > 0:
+				base_cd = float(sdef["cooldown_ms"]) / 1000.0
+		
+		if rem > 0.05:
+			slot["was_on_cd"] = true
+			var progress = clamp(rem / base_cd, 0.0, 1.0)
+			slot["radial_overlay"].set_meta("progress", progress)
+			slot["radial_overlay"].queue_redraw()
+			
+			slot["cd_label"].visible = true
+			slot["cd_label"].text = "%.1f" % rem
+		else:
+			slot["radial_overlay"].set_meta("progress", 0.0)
+			slot["radial_overlay"].queue_redraw()
+			slot["cd_label"].visible = false
+			
+			# Destello luminoso / pulso al quedar lista
+			if slot["was_on_cd"]:
+				slot["was_on_cd"] = false
+				_flash_slot_ready(slot)
+
+func _flash_slot_ready(slot: Dictionary):
+	var sb: StyleBoxFlat = slot["stylebox"]
+	var orig_color: Color = slot["cfg"]["color"] * 0.75
+	var flash_color = Color(1.0, 1.0, 0.6, 1.0) # Destello dorado
+	
+	var tween = create_tween()
+	tween.tween_property(sb, "border_color", flash_color, 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(sb, "border_color", orig_color, 0.3).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
+func setup(p_name: String, p_hp: float):
+	update_name(p_name)
+	update_hp(p_hp)
+
+func update_name(new_name: String):
+	if name_label:
+		name_label.text = new_name
+
+func update_hp(new_hp_percent: float):
+	if hp_bar:
+		var tween = create_tween()
+		tween.tween_property(hp_bar, "value", new_hp_percent, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	if hp_value_label:
+		var cur_val = int(round(new_hp_percent * 10))
+		hp_value_label.text = "%d / 1000 HP (%d%%)" % [cur_val, int(round(new_hp_percent))]
+
+func update_mana(new_mana_percent: float):
+	if mana_bar:
+		var tween = create_tween()
+		tween.tween_property(mana_bar, "value", new_mana_percent, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)

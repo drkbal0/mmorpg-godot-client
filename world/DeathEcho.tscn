@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://dedc11cc55x0"]
+
+[ext_resource type="Script" path="res://world/DeathEcho.gd" id="1_de"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_de"]
+height = 2.0
+radius = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_de"]
+albedo_color = Color(0.2, 0.1, 0.05, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_de"]
+top_radius = 0.5
+bottom_radius = 0.5
+height = 0.2
+
+[node name="DeathEcho" type="Node3D"]
+script = ExtResource("1_de")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.5, 0)
+shape = SubResource("CylinderShape3D_de")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.1, 0)
+material_override = SubResource("StandardMaterial3D_de")
+mesh = SubResource("CylinderMesh_de")
+
+[node name="Nameplate" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+billboard = 1
+no_depth_test = true
+render_priority = 25
+text = "Restos de:"
+font_size = 52
+outline_size = 16
+pixel_size = 0.009
+shaded = false

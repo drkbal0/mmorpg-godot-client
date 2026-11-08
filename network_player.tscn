@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://netplay12345"]
+
+[ext_resource type="Script" path="res://NetworkPlayer.gd" id="1_np"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_np"]
+
+[node name="NetworkPlayer" type="Node3D"]
+script = ExtResource("1_np")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_np")
+
+[node name="Nameplate" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+billboard = 1
+no_depth_test = true
+render_priority = 30
+text = "Player"
+font_size = 54
+outline_size = 18
+pixel_size = 0.009
+shaded = false

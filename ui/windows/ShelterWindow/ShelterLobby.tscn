@@ -1,0 +1,331 @@
+[gd_scene load_steps=5 format=3 uid="uid://cypoy2kx6r7v"]
+
+[ext_resource type="Script" path="res://ui/windows/ShelterWindow/ShelterLobby.gd" id="1_s1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.04, 0.05, 0.08, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_navbar"]
+bg_color = Color(0.06, 0.08, 0.12, 0.98)
+border_width_bottom = 2
+border_color = Color(0.18, 0.28, 0.42, 0.9)
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_profile_pill"]
+bg_color = Color(0.08, 0.12, 0.18, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.45, 0.65, 0.8)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="ShelterLobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s1")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Navbar" type="PanelContainer" parent="VBox"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_navbar")
+
+[node name="NavMargin" type="MarginContainer" parent="VBox/Navbar"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 6
+
+[node name="NavHBox" type="HBoxContainer" parent="VBox/Navbar/NavMargin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LogoLabel" type="Label" parent="VBox/Navbar/NavMargin/NavHBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.78, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 15
+text = "🛡️ MMO VANGUARD"
+vertical_alignment = 1
+
+[node name="VSeparator1" type="VSeparator" parent="VBox/Navbar/NavMargin/NavHBox"]
+layout_mode = 2
+
+[node name="NavButtonsHBox" type="HBoxContainer" parent="VBox/Navbar/NavMargin/NavHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="RosterTabBtn" type="Button" parent="VBox/Navbar/NavMargin/NavHBox/NavButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 36)
+layout_mode = 2
+text = "👥 CAMPEONES"
+
+[node name="FarmTabBtn" type="Button" parent="VBox/Navbar/NavMargin/NavHBox/NavButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(165, 36)
+layout_mode = 2
+text = "⚡ ESTACIONES & FARM"
+
+[node name="StashButton" type="Button" parent="VBox/Navbar/NavMargin/NavHBox/NavButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+text = "📦 ALMACÉN"
+
+[node name="VendorButton" type="Button" parent="VBox/Navbar/NavMargin/NavHBox/NavButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 36)
+layout_mode = 2
+text = "🛒 MERCADER"
+
+[node name="CodexButton" type="Button" parent="VBox/Navbar/NavMargin/NavHBox/NavButtonsHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(125, 36)
+layout_mode = 2
+text = "📜 CÓDICE [J]"
+
+[node name="ProfilePill" type="PanelContainer" parent="VBox/Navbar/NavMargin/NavHBox"]
+custom_minimum_size = Vector2(260, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_profile_pill")
+
+[node name="PillMargin" type="MarginContainer" parent="VBox/Navbar/NavMargin/NavHBox/ProfilePill"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+
+[node name="PillHBox" type="HBoxContainer" parent="VBox/Navbar/NavMargin/NavHBox/ProfilePill/PillMargin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AvatarLabel" type="Label" parent="VBox/Navbar/NavMargin/NavHBox/ProfilePill/PillMargin/PillHBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "👑"
+
+[node name="VBoxUser" type="VBoxContainer" parent="VBox/Navbar/NavMargin/NavHBox/ProfilePill/PillMargin/PillHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="UsernameLabel" type="Label" parent="VBox/Navbar/NavMargin/NavHBox/ProfilePill/PillMargin/PillHBox/VBoxUser"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "USUARIO"
+vertical_alignment = 1
+
+[node name="AccountTypeLabel" type="Label" parent="VBox/Navbar/NavMargin/NavHBox/ProfilePill/PillMargin/PillHBox/VBoxUser"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 9
+text = "Cuenta Básica"
+
+[node name="SilverBadgeLabel" type="Label" parent="VBox/Navbar/NavMargin/NavHBox/ProfilePill/PillMargin/PillHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.8, 0.3, 1)
+theme_override_font_sizes/font_size = 11
+text = "🪙 1,500"
+vertical_alignment = 1
+
+[node name="Body" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 16
+
+[node name="RosterView" type="VBoxContainer" parent="VBox/Body"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="RosterTitle" type="Label" parent="VBox/Body/RosterView"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "SELECCIÓN DE CAMPEÓN | DESPLIEGUE OPERATIVO"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBox/Body/RosterView"]
+layout_mode = 2
+size_flags_vertical = 3
+vertical_scroll_mode = 0
+
+[node name="RosterContainer" type="HBoxContainer" parent="VBox/Body/RosterView/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="Footer" type="MarginContainer" parent="VBox/Body/RosterView"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 10
+
+[node name="HBox" type="HBoxContainer" parent="VBox/Body/RosterView/Footer"]
+layout_mode = 2
+alignment = 1
+
+[node name="MainActionVBox" type="VBoxContainer" parent="VBox/Body/RosterView/Footer/HBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SelectedCharLabel" type="Label" parent="VBox/Body/RosterView/Footer/HBox/MainActionVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_font_sizes/font_size = 12
+text = "Selecciona un personaje para continuar"
+horizontal_alignment = 1
+
+[node name="PlayButton" type="Button" parent="VBox/Body/RosterView/Footer/HBox/MainActionVBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(440, 56)
+layout_mode = 2
+disabled = true
+text = "🚪 SALIR AL ASILO DE AVENTUREROS (OVERWORLD)"
+
+[node name="FarmView" type="VBoxContainer" parent="VBox/Body"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="FarmHeaderHBox" type="HBoxContainer" parent="VBox/Body/FarmView"]
+layout_mode = 2
+
+[node name="FarmTitle" type="Label" parent="VBox/Body/FarmView/FarmHeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.9, 0.85, 0.4, 1)
+theme_override_font_sizes/font_size = 16
+text = "⚡ ESTACIONES & GRANJA INDUSTRIAL DEL REFUGIO"
+
+[node name="HarvestAllBtn" type="Button" parent="VBox/Body/FarmView/FarmHeaderHBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 36)
+layout_mode = 2
+text = "⚡ COSECHAR TODO EL FARM"
+
+[node name="EnergyBanner" type="PanelContainer" parent="VBox/Body/FarmView"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+
+[node name="EnergyMargin" type="MarginContainer" parent="VBox/Body/FarmView/EnergyBanner"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_right = 16
+
+[node name="EnergyLabel" type="Label" parent="VBox/Body/FarmView/EnergyBanner/EnergyMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.95, 0.6, 1)
+theme_override_font_sizes/font_size = 12
+text = "⚡ RED ELÉCTRICA: Generación: +170 kW | Consumo: -90 kW | Superávit: +80 kW [RED ESTABLE 100%]"
+vertical_alignment = 1
+
+[node name="StationsScroll" type="ScrollContainer" parent="VBox/Body/FarmView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StationsGrid" type="HBoxContainer" parent="VBox/Body/FarmView/StationsScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 16
+
+[node name="NotificationBar" type="Label" parent="VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 13
+text = " Refugio en línea. Bienvenido de vuelta, explorador."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DebugPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="DebugPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="DebugTitle" type="Label" parent="DebugPanel/VBox"]
+layout_mode = 2
+text = "HERRAMIENTAS DEBUG"
+
+[node name="DebugLog" type="RichTextLabel" parent="DebugPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "Iniciado."
+
+[node name="CloseDebug" type="Button" parent="DebugPanel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "CERRAR"
+
+[node name="ShowDebugBtn" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "DEBUG"

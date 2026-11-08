@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://sbox001"]
+
+[ext_resource type="PackedScene" uid="uid://dd8djd55x0" path="res://player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://cxab" path="res://assets/placeholders/environment/tile_ground_grass.tscn" id="2_grass"]
+[ext_resource type="PackedScene" uid="uid://bxcd" path="res://assets/placeholders/environment/prop_rock_large.tscn" id="3_rock"]
+[ext_resource type="PackedScene" uid="uid://dxef" path="res://assets/placeholders/environment/prop_tree_pine_01.tscn" id="4_pine"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_dev"]
+sky_top_color = Color(0.4, 0.6, 0.8, 1)
+sky_horizon_color = Color(0.7, 0.8, 0.9, 1)
+ground_bottom_color = Color(0.2, 0.2, 0.2, 1)
+ground_horizon_color = Color(0.7, 0.8, 0.9, 1)
+
+[sub_resource type="Sky" id="Sky_dev"]
+sky_material = SubResource("ProceduralSkyMaterial_dev")
+
+[sub_resource type="Environment" id="Environment_dev"]
+background_mode = 2
+sky = SubResource("Sky_dev")
+ambient_light_source = 3
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_sky_contribution = 0.5
+
+[node name="DevSandbox" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dev")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 10, 0)
+shadow_enabled = true
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="Ground" parent="Environment" instance=ExtResource("2_grass")]
+transform = Transform3D(10, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 0)
+
+[node name="Rock1" parent="Environment" instance=ExtResource("3_rock")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 5)
+
+[node name="Rock2" parent="Environment" instance=ExtResource("3_rock")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -8, 0, 12)
+
+[node name="Pine1" parent="Environment" instance=ExtResource("4_pine")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -5)
+
+[node name="Pine2" parent="Environment" instance=ExtResource("4_pine")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, -8)
+
+[node name="Pine3" parent="Environment" instance=ExtResource("4_pine")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -15, 0, 3)
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

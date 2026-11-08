@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://template_window_base"]
+
+[ext_resource type="Script" path="res://ui/templates/BaseWindow.gd" id="1_script"]
+
+[node name="WindowTemplate" type="PanelContainer"]
+custom_minimum_size = Vector2(300, 200)
+offset_right = 300.0
+offset_bottom = 200.0
+script = ExtResource("1_script")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Header" type="ColorRect" parent="VBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+color = Color(0.12, 0.12, 0.12, 1)
+
+[node name="TitleLabel" type="Label" parent="VBox/Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Window Title"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="VBox/Header"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -30.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "X"
+
+[node name="Content" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PlaceholderLabel" type="Label" parent="VBox/Content"]
+layout_mode = 2
+text = "Content here..."
+horizontal_alignment = 1
+vertical_alignment = 1

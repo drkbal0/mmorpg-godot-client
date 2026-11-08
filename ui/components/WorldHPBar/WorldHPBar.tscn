@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cx61bkw9wldq"]
+
+[ext_resource type="Script" path="res://ui/components/WorldHPBar/WorldHPBar.gd" id="1_xxx"]
+
+[node name="WorldHPBar" type="Node3D"]
+script = ExtResource("1_xxx")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(320, 60)
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+billboard = 1

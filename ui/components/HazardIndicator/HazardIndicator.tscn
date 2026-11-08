@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq7xk7y0y1k2v"]
+
+[ext_resource type="Script" path="res://ui/components/HazardIndicator/HazardIndicator.gd" id="1_hazard_script"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_hazard"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hazard"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.4)
+emission_enabled = true
+emission = Color(1, 0.2, 0.1, 1)
+emission_energy_multiplier = 0.8
+
+[node name="HazardIndicator" type="Node3D"]
+script = ExtResource("1_hazard_script")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_hazard")
+surface_material_override/0 = SubResource("StandardMaterial3D_hazard")

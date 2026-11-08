@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://be5kd4g5n2k1a"]
+
+[ext_resource type="Script" path="res://DeathEcho.gd" id="1_x8y2v"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h1k2m"]
+size = Vector3(1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_k2m1n"]
+size = Vector3(0.8, 0.8, 0.8)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3m2p"]
+albedo_color = Color(0.6, 0.4, 0.2, 1)
+
+[node name="DeathEcho" type="Node3D"]
+script = ExtResource("1_x8y2v")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_h1k2m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_k2m1n")
+surface_material_override/0 = SubResource("StandardMaterial3D_j3m2p")
+
+[node name="Nameplate" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+billboard = 1
+no_depth_test = true
+render_priority = 25
+font_size = 52
+outline_size = 16
+pixel_size = 0.009
+shaded = false
+text = "Loot Echo"

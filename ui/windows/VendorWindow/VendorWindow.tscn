@@ -1,0 +1,94 @@
+[gd_scene load_steps=2 format=3 uid="uid://vendor_window_scene_uid"]
+
+[ext_resource type="Script" path="res://ui/windows/VendorWindow/VendorWindow.gd" id="1_vendor"]
+
+[node name="VendorWindow" type="PanelContainer"]
+custom_minimum_size = Vector2(460, 380)
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 560.0
+offset_bottom = 480.0
+script = ExtResource("1_vendor")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="ColorRect" parent="VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+color = Color(0.08, 0.12, 0.18, 0.95)
+
+[node name="TitleLabel" type="Label" parent="VBox/Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_right = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PUESTO DE SUPERVIVENCIA (REFUGIO)"
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="VBox/Header"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -34.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "X"
+
+[node name="TopInfoMargin" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+
+[node name="InfoHBox" type="HBoxContainer" parent="VBox/TopInfoMargin"]
+layout_mode = 2
+
+[node name="SilverLabel" type="Label" parent="VBox/TopInfoMargin/InfoHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SALDO SILVER: 500"
+
+[node name="TaxLabel" type="Label" parent="VBox/TopInfoMargin/InfoHBox"]
+layout_mode = 2
+text = "Impuesto: 5.0%"
+
+[node name="Scroll" type="ScrollContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Margin" type="MarginContainer" parent="VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
+
+[node name="VendorItemsContainer" type="VBoxContainer" parent="VBox/Scroll/Margin"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="BottomMargin" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="StatusLabel" type="Label" parent="VBox/BottomMargin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Listo para comerciar."
+

@@ -1,0 +1,122 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbadminwindow01"]
+
+[ext_resource type="Script" path="res://ui/windows/DatabaseAdminWindow/DatabaseAdminWindow.gd" id="1_dbadmin"]
+
+[node name="DatabaseAdminWindow" type="Panel"]
+custom_minimum_size = Vector2(750, 550)
+offset_right = 750.0
+offset_bottom = 550.0
+focus_mode = 2
+script = ExtResource("1_dbadmin")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="HeaderHBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="VBox/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 0
+theme_override_font_sizes/font_size = 16
+text = "DATABASE INSPECTOR & REGIONAL GOVERNANCE"
+
+[node name="CloseButton" type="Button" parent="VBox/HeaderHBox"]
+custom_minimum_size = Vector2(30, 24)
+layout_mode = 2
+text = "X"
+
+[node name="HSeparator" type="HSeparator" parent="VBox"]
+layout_mode = 2
+
+[node name="SummaryHBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ItemsCount" type="Label" parent="VBox/SummaryHBox"]
+layout_mode = 2
+text = "Total Items: 0"
+
+[node name="SpellsCount" type="Label" parent="VBox/SummaryHBox"]
+layout_mode = 2
+text = "Total Spells: 0"
+
+[node name="WalletsCount" type="Label" parent="VBox/SummaryHBox"]
+layout_mode = 2
+text = "Total Wallets: 0"
+
+[node name="FilterHBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBox/FilterHBox"]
+layout_mode = 2
+text = "Search Filter:"
+
+[node name="SearchEdit" type="LineEdit" parent="VBox/FilterHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Type name or ID to filter..."
+
+[node name="TabContainer" type="TabContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Items" type="VBoxContainer" parent="VBox/TabContainer"]
+layout_mode = 2
+
+[node name="ItemsTree" type="Tree" parent="VBox/TabContainer/Items"]
+layout_mode = 2
+size_flags_vertical = 3
+hide_root = true
+
+[node name="Spells" type="VBoxContainer" parent="VBox/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="SpellsTree" type="Tree" parent="VBox/TabContainer/Spells"]
+layout_mode = 2
+size_flags_vertical = 3
+hide_root = true
+
+[node name="Wallets" type="VBoxContainer" parent="VBox/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="WalletsTree" type="Tree" parent="VBox/TabContainer/Wallets"]
+layout_mode = 2
+size_flags_vertical = 3
+hide_root = true
+
+[node name="Taxes" type="VBoxContainer" parent="VBox/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="TaxesTree" type="Tree" parent="VBox/TabContainer/Taxes"]
+layout_mode = 2
+size_flags_vertical = 3
+hide_root = true
+
+[node name="FooterHBox" type="HBoxContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="StatusLabel" type="Label" parent="VBox/FooterHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.6, 0.8, 1, 1)
+text = "Ready."
+
+[node name="RefreshButton" type="Button" parent="VBox/FooterHBox"]
+custom_minimum_size = Vector2(140, 30)
+layout_mode = 2
+text = "Refresh Data"

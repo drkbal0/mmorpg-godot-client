@@ -1,0 +1,32 @@
+﻿================================================================================
+                    PROYECTO B - MMORPG (CLIENTE OFICIAL ALFA 1)
+                               Version: 0.1.0
+================================================================================
+
+BIENVENIDO AL MUNDO FRAGMENTADO
+
+1. INICIO RAPIDO:
+   - Ejecuta 'MMORPG.exe' o 'INICIAR_INTERNET_WAN.bat' para jugar por Internet (Oficial).
+   - Ejecuta 'INICIAR_LAN_PROXMOX.bat' si juegas en la misma red local del servidor Proxmox (0.2ms).
+   - Ejecuta 'INICIAR_LOCAL_PC.bat' si estÃ¡s desarrollando con servidores locales en 127.0.0.1.
+   
+   Si no tienes cuenta, regÃ­strate en:
+     https://mmo.elbalo.lol/register
+   Ingresa tus credenciales en la pantalla de inicio y entra a tu Shelter.
+
+2. CONTROLES BASICOS:
+   - W, A, S, D       : Movimiento del Campeon
+   - Click Izquierdo  : Ataque Primario / Habilidad Basica
+   - Q, E             : Habilidades de Combate
+   - R                : Habilidad Definitiva (Ultimate)
+   - Espacio (Space)  : Dash / Evasion Tactica
+   - F                : Interaccion (Loot, Portales de Extraccion)
+   - F9               : HUD de Telemetria, Latencia UDP y Perfil Activo
+
+3. PERFILES DE RED:
+   - WAN (Oficial)    : play.elbalo.lol:5000 (UDP 20Hz Sharded) / Gateway: https://mmo.elbalo.lol/api
+   - Proxmox LAN      : 192.168.1.103:5000 / Gateway: https://mmo.elbalo.lol/api
+   - Local PC         : 127.0.0.1:5000 / Gateway: http://127.0.0.1:8080
+
+Soporte y Wiki: https://mmo.elbalo.lol
+================================================================================

@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxef"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wood"]
+albedo_color = Color(0.35, 0.2, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_leaves"]
+albedo_color = Color(0.1, 0.4, 0.1, 1)
+
+[node name="PineTree" type="Node3D"]
+
+[node name="Trunk" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+radius = 0.4
+height = 2.0
+material = SubResource("StandardMaterial3D_wood")
+
+[node name="Leaves" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+radius = 1.5
+height = 3.0
+cone = true
+material = SubResource("StandardMaterial3D_leaves")
+
+[node name="StaticBody3D" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+use_collision = true
+collision_layer = 1
+radius = 0.4
+height = 2.0
+visible = false

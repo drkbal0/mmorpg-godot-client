@@ -1,0 +1,6 @@
+﻿{
+  "profile": "wan",
+  "gateway_url": "https://mmo.elbalo.lol/api",
+  "udp_host": "play.elbalo.lol",
+  "udp_port": 5000
+}
