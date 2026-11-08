@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://tests/visual_test_harness/VisualTestHarness.gd" id="1_harness"]
+
+[node name="VisualTestHarness" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_harness")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0392157, 0.054902, 0.0901961, 1)
+
+[node name="Stage" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CaptionLayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="CaptionPanel" type="PanelContainer" parent="CaptionLayer"]
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 640.0
+offset_bottom = 58.0
+mouse_filter = 2
+
+[node name="CaptionVBox" type="VBoxContainer" parent="CaptionLayer/CaptionPanel"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Title" type="Label" parent="CaptionLayer/CaptionPanel/CaptionVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.95, 0.8, 0.35, 1)
+theme_override_font_sizes/font_size = 14
+text = "Visual Test Harness"
+
+[node name="Subtitle" type="Label" parent="CaptionLayer/CaptionPanel/CaptionVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.72, 0.85, 1)
+theme_override_font_sizes/font_size = 11
+text = ""

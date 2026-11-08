@@ -425,10 +425,10 @@ func _sync_publish_to_web(slug: String, author_name: String) -> void:
 					txt = txt.replace("is_public: false", "is_public: true\nfirst_discoverer: " + author_name)
 				txt = txt.replace("is_secret: true", "is_secret: false")
 				var f_write = FileAccess.open(c_path, FileAccess.WRITE)
-					if f_write:
-						f_write.store_string(txt)
-						f_write.close()
-						print("[Codex] Failsafe: Archivo local %s actualizado con is_public=true." % c_path)
+				if f_write:
+					f_write.store_string(txt)
+					f_write.close()
+					print("[Codex] Failsafe: Archivo local %s actualizado con is_public=true." % c_path)
 			break
 
 func _on_craft_sheet(entry: Dictionary, craft_btn: Button = null) -> void:
