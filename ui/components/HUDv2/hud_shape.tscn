@@ -1,0 +1,14 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/components/HUDv2/hud_shape.gd" id="1_script"]
+[ext_resource type="Theme" path="res://ui/hud_theme.tres" id="2_theme"]
+
+[node name="HUDShape" type="Control"]
+custom_minimum_size = Vector2(1360, 460)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1360.0
+offset_bottom = 460.0
+mouse_filter = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")

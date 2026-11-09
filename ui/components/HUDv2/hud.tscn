@@ -1,0 +1,251 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/components/HUDv2/hud.gd" id="1_hud"]
+[ext_resource type="Theme" path="res://ui/hud_theme.tres" id="2_theme"]
+[ext_resource type="PackedScene" path="res://ui/components/HUDv2/hud_shape.tscn" id="3_shape"]
+[ext_resource type="PackedScene" path="res://ui/components/HUDv2/portrait.tscn" id="4_portrait"]
+[ext_resource type="PackedScene" path="res://ui/components/HUDv2/spell_slot.tscn" id="5_spell"]
+[ext_resource type="PackedScene" path="res://ui/components/HUDv2/ability_slot.tscn" id="6_ability"]
+[ext_resource type="PackedScene" path="res://ui/components/HUDv2/resource_bar.tscn" id="7_bar"]
+[ext_resource type="PackedScene" path="res://ui/components/HUDv2/item_slot.tscn" id="8_item"]
+
+[node name="HUDv2" type="Control"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -680.0
+offset_top = -460.0
+offset_right = 680.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_hud")
+
+[node name="Shape" parent="." instance=ExtResource("3_shape")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1360.0
+offset_bottom = 460.0
+
+[node name="Feed" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 40.0
+offset_right = 560.0
+offset_bottom = 258.0
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 2
+
+[node name="Buffs" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 239.0
+offset_top = 262.0
+offset_right = 559.0
+offset_bottom = 290.0
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Portrait" parent="." instance=ExtResource("4_portrait")]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 330.0
+offset_right = 220.0
+offset_bottom = 452.0
+
+[node name="Passive" parent="." instance=ExtResource("5_spell")]
+layout_mode = 0
+offset_left = 229.0
+offset_top = 309.0
+offset_right = 275.0
+offset_bottom = 379.0
+is_passive = true
+key_label = ""
+icon_kind = "target"
+
+[node name="AbilityQ" parent="." instance=ExtResource("6_ability")]
+layout_mode = 0
+offset_left = 283.0
+offset_top = 303.0
+offset_right = 345.0
+offset_bottom = 403.0
+key_label = "Q"
+icon_kind = "slash"
+
+[node name="AbilityW" parent="." instance=ExtResource("6_ability")]
+layout_mode = 0
+offset_left = 355.0
+offset_top = 303.0
+offset_right = 417.0
+offset_bottom = 403.0
+key_label = "W"
+icon_kind = "shield"
+
+[node name="AbilityE" parent="." instance=ExtResource("6_ability")]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 303.0
+offset_right = 489.0
+offset_bottom = 403.0
+key_label = "E"
+icon_kind = "dash"
+
+[node name="AbilityR" parent="." instance=ExtResource("6_ability")]
+layout_mode = 0
+offset_left = 499.0
+offset_top = 303.0
+offset_right = 561.0
+offset_bottom = 403.0
+key_label = "R"
+icon_kind = "star"
+
+[node name="SpellD" parent="." instance=ExtResource("5_spell")]
+layout_mode = 0
+offset_left = 585.0
+offset_top = 309.0
+offset_right = 631.0
+offset_bottom = 379.0
+key_label = "D"
+icon_kind = "diamond"
+tint = Color(0.0862745, 0.141176, 0.227451, 1)
+
+[node name="SpellF" parent="." instance=ExtResource("5_spell")]
+layout_mode = 0
+offset_left = 641.0
+offset_top = 309.0
+offset_right = 687.0
+offset_bottom = 379.0
+key_label = "F"
+icon_kind = "target"
+tint = Color(0.164706, 0.101961, 0.0705882, 1)
+
+[node name="HealthBar" parent="." instance=ExtResource("7_bar")]
+layout_mode = 0
+offset_left = 229.0
+offset_top = 408.0
+offset_right = 694.0
+offset_bottom = 428.0
+kind = "health"
+current = 612.0
+max_value = 1003.0
+regen = 3.9
+
+[node name="ManaBar" parent="." instance=ExtResource("7_bar")]
+layout_mode = 0
+offset_left = 229.0
+offset_top = 432.0
+offset_right = 694.0
+offset_bottom = 445.0
+kind = "mana"
+current = 403.0
+max_value = 403.0
+
+[node name="Items" type="Control" parent="."]
+layout_mode = 0
+offset_left = 721.0
+offset_top = 293.0
+offset_right = 881.0
+offset_bottom = 397.0
+mouse_filter = 2
+
+[node name="Item0" parent="Items" instance=ExtResource("8_item")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 48.0
+offset_bottom = 48.0
+label = "1"
+
+[node name="Item1" parent="Items" instance=ExtResource("8_item")]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 0.0
+offset_right = 104.0
+offset_bottom = 48.0
+label = "2"
+
+[node name="Item2" parent="Items" instance=ExtResource("8_item")]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 0.0
+offset_right = 160.0
+offset_bottom = 48.0
+label = "3"
+
+[node name="Item3" parent="Items" instance=ExtResource("8_item")]
+layout_mode = 0
+offset_left = 0.0
+offset_top = 56.0
+offset_right = 48.0
+offset_bottom = 104.0
+label = "5"
+
+[node name="Item4" parent="Items" instance=ExtResource("8_item")]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 56.0
+offset_right = 104.0
+offset_bottom = 104.0
+label = "6"
+
+[node name="Item5" parent="Items" instance=ExtResource("8_item")]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 56.0
+offset_right = 160.0
+offset_bottom = 104.0
+label = "7"
+
+[node name="Trinket" parent="." instance=ExtResource("8_item")]
+layout_mode = 0
+offset_left = 889.0
+offset_top = 294.0
+offset_right = 933.0
+offset_bottom = 338.0
+kind = 1
+label = "4"
+charges = 1
+
+[node name="BtnRecall" parent="." instance=ExtResource("8_item")]
+layout_mode = 0
+offset_left = 891.0
+offset_top = 348.0
+offset_right = 931.0
+offset_bottom = 370.0
+mouse_filter = 0
+kind = 2
+label = "B"
+glyph = "recall"
+
+[node name="BtnShop" parent="." instance=ExtResource("8_item")]
+layout_mode = 0
+offset_left = 891.0
+offset_top = 376.0
+offset_right = 931.0
+offset_bottom = 398.0
+mouse_filter = 0
+kind = 2
+label = "P"
+glyph = "bag"
+
+[node name="GoldBox" parent="." instance=ExtResource("8_item")]
+layout_mode = 0
+offset_left = 721.0
+offset_top = 412.0
+offset_right = 932.0
+offset_bottom = 446.0
+kind = 3
+amount = 0
+
+[node name="Stats" type="Control" parent="."]
+layout_mode = 0
+offset_left = 962.0
+offset_top = 190.0
+offset_right = 1280.0
+offset_bottom = 460.0
+mouse_filter = 2
