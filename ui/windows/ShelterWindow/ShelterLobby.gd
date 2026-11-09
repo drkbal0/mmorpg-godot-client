@@ -30,7 +30,7 @@ const CharacterCardScene = preload("res://ui/windows/ShelterWindow/CharacterCard
 var characters = []
 var selected_character = null
 var _is_loading = false
-var player_silver = 1500
+var player_silver = 500
 
 # Estaciones de producción / Farm del Refugio
 var farm_stations = [

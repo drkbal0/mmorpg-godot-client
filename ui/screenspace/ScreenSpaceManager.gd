@@ -56,7 +56,37 @@ func get_control_for_target(target: Node3D) -> Control:
 		return tracked_targets[target].get("control")
 	return null
 
+var background_dim_opacity: float = 1.0
+var modal_dimming_enabled: bool = true
+
+func set_background_dim_opacity(val: float) -> void:
+	background_dim_opacity = clampf(val, 0.0, 1.0)
+	_update_global_opacity()
+
+func set_modal_dimming_active(active: bool) -> void:
+	modal_dimming_enabled = active
+	_update_global_opacity()
+
+func _update_global_opacity() -> void:
+	var target_alpha = background_dim_opacity
+	if modal_dimming_enabled and _is_any_modal_open():
+		target_alpha = background_dim_opacity * 0.25 # 25% background opacity behind modals
+	for target in tracked_targets:
+		var ctrl = tracked_targets[target].get("control")
+		if is_instance_valid(ctrl):
+			ctrl.modulate.a = target_alpha
+
+func _is_any_modal_open() -> bool:
+	if not has_node("/root/UIOrchestrator"):
+		return false
+	var orch = get_node("/root/UIOrchestrator")
+	return orch.is_window_open("codex_window") or \
+		orch.is_window_open("inventory") or \
+		orch.is_window_open("options_menu") or \
+		orch.is_window_open("admin_panel")
+
 func _process(_delta: float) -> void:
+	_update_global_opacity()
 	if tracked_targets.is_empty():
 		return
 

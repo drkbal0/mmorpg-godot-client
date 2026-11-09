@@ -11,16 +11,28 @@ class_name DeathEchoLabel
 var _base_y: float = 0.0
 var _anim_time: float = 0.0
 
+func _ensure_node_refs() -> void:
+	if header_label == null:
+		header_label = get_node_or_null("PanelContainer/VBoxContainer/HeaderLabel")
+	if prompt_label == null:
+		prompt_label = get_node_or_null("PanelContainer/VBoxContainer/PromptLabel")
+	if panel == null:
+		panel = get_node_or_null("PanelContainer")
+
 func _ready() -> void:
+	_ensure_node_refs()
 	custom_minimum_size = Vector2(160, 42)
 	size = custom_minimum_size
 
 func setup_loot(owner_name: String = "", item_count: int = 1) -> void:
-	if owner_name.is_empty():
-		header_label.text = "☠️ ECO DE MUERTE (%d)" % item_count
-	else:
-		header_label.text = "☠️ RESTOS: %s (%d)" % [owner_name, item_count]
-	prompt_label.text = "Pulsa [F] para Saquear"
+	_ensure_node_refs()
+	if header_label:
+		if owner_name.is_empty():
+			header_label.text = "☠️ ECO DE MUERTE (%d)" % item_count
+		else:
+			header_label.text = "☠️ RESTOS: %s (%d)" % [owner_name, item_count]
+	if prompt_label:
+		prompt_label.text = "Pulsa [F] para Saquear"
 
 func _process(delta: float) -> void:
 	_anim_time += delta * 3.0

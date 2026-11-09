@@ -2,38 +2,50 @@
 
 [ext_resource type="Script" path="res://ui/screenspace/WorldNameplate.gd" id="1_scr"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
-bg_color = Color(0.08, 0.1, 0.14, 0.85)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_level"]
+bg_color = Color(0.06, 0.08, 0.12, 0.95)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.2, 0.25, 0.35, 0.9)
+border_color = Color(0.28, 0.35, 0.48, 1.0)
 corner_radius_top_left = 2
 corner_radius_top_right = 2
 corner_radius_bottom_left = 2
 corner_radius_bottom_right = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.04, 0.05, 0.08, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.22, 0.3, 0.95)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghost"]
-bg_color = Color(0.95, 0.55, 0.15, 0.9)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_left = 2
-corner_radius_bottom_right = 2
+bg_color = Color(0.98, 0.55, 0.15, 0.95)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_main"]
-bg_color = Color(0.18, 0.82, 0.45, 1.0)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_left = 2
-corner_radius_bottom_right = 2
+bg_color = Color(0.14, 0.8, 0.42, 1.0)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_left = 1
+corner_radius_bottom_right = 1
 
 [node name="WorldNameplate" type="Control"]
-custom_minimum_size = Vector2(180, 48)
+custom_minimum_size = Vector2(210, 52)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 180.0
-offset_bottom = 48.0
+offset_right = 210.0
+offset_bottom = 52.0
 mouse_filter = 2
 script = ExtResource("1_scr")
 
@@ -49,10 +61,10 @@ alignment = 1
 
 [node name="TitleLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.7, 0.85, 1, 0.9)
+theme_override_colors/font_color = Color(0.4, 0.85, 1, 0.95)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 10
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 11
 text = "‹ PIONERO ›"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -62,17 +74,46 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 13
+theme_override_font_sizes/font_size = 14
 text = "PlayerName"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BarContainer" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(160, 10)
+[node name="HealthFrame" type="HBoxContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 18)
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_constants/separation = 3
+alignment = 1
 
-[node name="HPBarBG" type="Panel" parent="VBoxContainer/BarContainer"]
+[node name="LevelBadge" type="PanelContainer" parent="VBoxContainer/HealthFrame"]
+custom_minimum_size = Vector2(24, 18)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_level")
+
+[node name="LevelLabel" type="Label" parent="VBoxContainer/HealthFrame/LevelBadge"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.85, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 11
+text = "18"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BarsVBox" type="VBoxContainer" parent="VBoxContainer/HealthFrame"]
+custom_minimum_size = Vector2(172, 18)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="HPStack" type="Control" parent="VBoxContainer/HealthFrame/BarsVBox"]
+custom_minimum_size = Vector2(172, 13)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HPBarBG" type="Panel" parent="VBoxContainer/HealthFrame/BarsVBox/HPStack"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -81,7 +122,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 
-[node name="HPBarGhost" type="ProgressBar" parent="VBoxContainer/BarContainer"]
+[node name="HPBarGhost" type="ProgressBar" parent="VBoxContainer/HealthFrame/BarsVBox/HPStack"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -92,7 +133,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ghost")
 value = 100.0
 show_percentage = false
 
-[node name="HPBarMain" type="ProgressBar" parent="VBoxContainer/BarContainer"]
+[node name="HPBarMain" type="ProgressBar" parent="VBoxContainer/HealthFrame/BarsVBox/HPStack"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -103,7 +144,16 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_main")
 value = 100.0
 show_percentage = false
 
-[node name="TicksOverlay" type="Control" parent="VBoxContainer/BarContainer"]
+[node name="GlossLayer" type="ColorRect" parent="VBoxContainer/HealthFrame/BarsVBox/HPStack"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.22)
+
+[node name="TicksOverlay" type="Control" parent="VBoxContainer/HealthFrame/BarsVBox/HPStack"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -112,3 +162,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="ResourceBar" type="ColorRect" parent="VBoxContainer/HealthFrame/BarsVBox"]
+custom_minimum_size = Vector2(0, 3)
+layout_mode = 2
+color = Color(0.1, 0.65, 1, 0.95)

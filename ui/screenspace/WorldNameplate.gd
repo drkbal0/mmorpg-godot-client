@@ -1,40 +1,70 @@
 extends Control
 class_name WorldNameplate
 
-## WorldNameplate.gd - Screen-Space 2D Vector Nameplate with 100 HP Segmented Bars
-## Renders at native display resolution with smooth damage trailing and class/status badges.
+## WorldNameplate.gd - League of Legends & Solo Leveling Screen-Space Nameplate
+## Features:
+## - Left-side Level Badge (LoL / Solo Leveling style shield/box)
+## - 100 HP minor ticks, 500 HP medium ticks, and 1000 HP major block separators ("cuadros")
+## - Thin Resource/Mana bar underneath
+## - Dual-layer damage response: instant drop + smooth orange ghost trailing
+## - Hit flash on heavy/critical damage
+## - High-contrast crisp typography (crisp outline, zero blur)
+## - Background dimming support for modal menus
 
 @onready var title_label: Label = $VBoxContainer/TitleLabel
 @onready var name_label: Label = $VBoxContainer/NameLabel
-@onready var hp_bar_bg: Panel = $VBoxContainer/BarContainer/HPBarBG
-@onready var hp_bar_ghost: ProgressBar = $VBoxContainer/BarContainer/HPBarGhost
-@onready var hp_bar_main: ProgressBar = $VBoxContainer/BarContainer/HPBarMain
-@onready var ticks_overlay: Control = $VBoxContainer/BarContainer/TicksOverlay
+@onready var level_badge: PanelContainer = $VBoxContainer/HealthFrame/LevelBadge
+@onready var level_label: Label = $VBoxContainer/HealthFrame/LevelBadge/LevelLabel
+@onready var hp_bar_bg: Panel = $VBoxContainer/HealthFrame/BarsVBox/HPStack/HPBarBG
+@onready var hp_bar_ghost: ProgressBar = $VBoxContainer/HealthFrame/BarsVBox/HPStack/HPBarGhost
+@onready var hp_bar_main: ProgressBar = $VBoxContainer/HealthFrame/BarsVBox/HPStack/HPBarMain
+@onready var gloss_layer: ColorRect = $VBoxContainer/HealthFrame/BarsVBox/HPStack/GlossLayer
+@onready var ticks_overlay: Control = $VBoxContainer/HealthFrame/BarsVBox/HPStack/TicksOverlay
+@onready var resource_bar: ColorRect = $VBoxContainer/HealthFrame/BarsVBox/ResourceBar
 
 var max_health: float = 1000.0
 var current_health: float = 1000.0
 var is_hostile_unit: bool = false
+var unit_level: int = 1
 var _previous_hp_percent: float = 100.0
+var _bg_opacity: float = 1.0
+
 
 func _ensure_node_refs() -> void:
-	if name_label == null:
+	if title_label == null:
 		title_label = get_node_or_null("VBoxContainer/TitleLabel")
+	if name_label == null:
 		name_label = get_node_or_null("VBoxContainer/NameLabel")
-		hp_bar_bg = get_node_or_null("VBoxContainer/BarContainer/HPBarBG")
-		hp_bar_ghost = get_node_or_null("VBoxContainer/BarContainer/HPBarGhost")
-		hp_bar_main = get_node_or_null("VBoxContainer/BarContainer/HPBarMain")
-		ticks_overlay = get_node_or_null("VBoxContainer/BarContainer/TicksOverlay")
+	if level_badge == null:
+		level_badge = get_node_or_null("VBoxContainer/HealthFrame/LevelBadge")
+	if level_label == null:
+		level_label = get_node_or_null("VBoxContainer/HealthFrame/LevelBadge/LevelLabel")
+	if hp_bar_bg == null:
+		hp_bar_bg = get_node_or_null("VBoxContainer/HealthFrame/BarsVBox/HPStack/HPBarBG")
+	if hp_bar_ghost == null:
+		hp_bar_ghost = get_node_or_null("VBoxContainer/HealthFrame/BarsVBox/HPStack/HPBarGhost")
+	if hp_bar_main == null:
+		hp_bar_main = get_node_or_null("VBoxContainer/HealthFrame/BarsVBox/HPStack/HPBarMain")
+	if gloss_layer == null:
+		gloss_layer = get_node_or_null("VBoxContainer/HealthFrame/BarsVBox/HPStack/GlossLayer")
+	if ticks_overlay == null:
+		ticks_overlay = get_node_or_null("VBoxContainer/HealthFrame/BarsVBox/HPStack/TicksOverlay")
+	if resource_bar == null:
+		resource_bar = get_node_or_null("VBoxContainer/HealthFrame/BarsVBox/ResourceBar")
+
 
 func _ready() -> void:
 	_ensure_node_refs()
-	custom_minimum_size = Vector2(180, 50)
+	custom_minimum_size = Vector2(210, 52)
 	size = custom_minimum_size
 	if ticks_overlay and not ticks_overlay.draw.is_connected(_on_draw_ticks):
 		ticks_overlay.draw.connect(_on_draw_ticks)
 
-func setup(p_name: String, p_hp: float, p_max_hp: float, is_hostile: bool = false, p_title: String = "") -> void:
+
+func setup(p_name: String, p_hp: float, p_max_hp: float, is_hostile: bool = false, p_title: String = "", p_level: int = 1) -> void:
 	_ensure_node_refs()
 	is_hostile_unit = is_hostile
+	unit_level = maxi(p_level, 1)
 	max_health = maxf(p_max_hp, 1.0)
 	current_health = clampf(p_hp, 0.0, max_health)
 	_previous_hp_percent = (current_health / max_health) * 100.0
@@ -42,14 +72,25 @@ func setup(p_name: String, p_hp: float, p_max_hp: float, is_hostile: bool = fals
 	if name_label:
 		name_label.text = p_name
 		if is_hostile_unit:
-			name_label.modulate = Color(1.0, 0.35, 0.35)
+			name_label.modulate = Color(1.0, 0.45, 0.45) # Crisp Crimson
 		else:
-			name_label.modulate = Color(0.9, 0.95, 1.0)
+			name_label.modulate = Color(0.95, 0.98, 1.0) # Crisp White
+
+	if level_label:
+		level_label.text = str(unit_level)
+		if is_hostile_unit:
+			level_label.modulate = Color(1.0, 0.4, 0.4)
+		else:
+			level_label.modulate = Color(0.3, 0.85, 1.0) # Cyan Pioneer glow
 
 	if title_label:
 		if not p_title.is_empty():
 			title_label.text = p_title
 			title_label.visible = true
+			if is_hostile_unit:
+				title_label.modulate = Color(1.0, 0.3, 0.3, 0.9)
+			else:
+				title_label.modulate = Color(0.4, 0.85, 1.0, 0.95)
 		else:
 			title_label.visible = false
 
@@ -60,13 +101,17 @@ func setup(p_name: String, p_hp: float, p_max_hp: float, is_hostile: bool = fals
 		hp_bar_main.value = _previous_hp_percent
 	if hp_bar_ghost:
 		hp_bar_ghost.value = _previous_hp_percent
+	if resource_bar:
+		resource_bar.visible = not is_hostile_unit # Only friendly / player shows mana
 	if ticks_overlay:
 		ticks_overlay.queue_redraw()
+
 
 func _apply_bar_colors() -> void:
 	_ensure_node_refs()
 	if hp_bar_main == null:
 		return
+
 	var main_sb = hp_bar_main.get_theme_stylebox("fill")
 	if main_sb is StyleBoxFlat:
 		main_sb = main_sb.duplicate()
@@ -74,17 +119,27 @@ func _apply_bar_colors() -> void:
 		main_sb = StyleBoxFlat.new()
 
 	if is_hostile_unit:
-		main_sb.bg_color = Color(0.95, 0.25, 0.25) # Crimson Red
+		main_sb.bg_color = Color(0.88, 0.18, 0.18) # LoL Crimson Enemy Red
 	else:
-		main_sb.bg_color = Color(0.18, 0.82, 0.45) # Emerald Green
+		main_sb.bg_color = Color(0.12, 0.78, 0.42) # LoL Emerald Ally Green
 
-	main_sb.corner_radius_top_left = 2
-	main_sb.corner_radius_top_right = 2
-	main_sb.corner_radius_bottom_left = 2
-	main_sb.corner_radius_bottom_right = 2
+	main_sb.corner_radius_top_left = 1
+	main_sb.corner_radius_top_right = 1
+	main_sb.corner_radius_bottom_left = 1
+	main_sb.corner_radius_bottom_right = 1
 	hp_bar_main.add_theme_stylebox_override("fill", main_sb)
 
-func update_hp(new_hp: float, new_max: float = -1.0) -> void:
+	if hp_bar_ghost:
+		var ghost_sb = hp_bar_ghost.get_theme_stylebox("fill")
+		if ghost_sb is StyleBoxFlat:
+			ghost_sb = ghost_sb.duplicate()
+		else:
+			ghost_sb = StyleBoxFlat.new()
+		ghost_sb.bg_color = Color(0.98, 0.55, 0.15) # LoL Damage Orange Ghost
+		hp_bar_ghost.add_theme_stylebox_override("fill", ghost_sb)
+
+
+func update_hp(new_hp: float, new_max: float = -1.0, is_crit: bool = false) -> void:
 	_ensure_node_refs()
 	if new_max > 0.0:
 		max_health = new_max
@@ -100,36 +155,77 @@ func update_hp(new_hp: float, new_max: float = -1.0) -> void:
 
 	var tween = create_tween()
 	if new_percent < old_percent:
-		# Taking damage: Main bar drops instantly, ghost catches up smoothly
-		if hp_bar_main: hp_bar_main.value = new_percent
-		if hp_bar_ghost:
-			tween.tween_interval(0.2)
-			tween.tween_property(hp_bar_ghost, "value", new_percent, 0.35).set_trans(Tween.TRANS_SINE)
-	else:
-		# Healing: Ghost jumps up instantly, main bar fills smoothly
-		if hp_bar_ghost: hp_bar_ghost.value = new_percent
+		# Taking damage: main bar drops instantly, ghost trails smoothly
 		if hp_bar_main:
-			tween.tween_interval(0.1)
-			tween.tween_property(hp_bar_main, "value", new_percent, 0.35).set_trans(Tween.TRANS_SINE)
+			hp_bar_main.value = new_percent
+
+			# Critical hit flash effect (flash white-gold then back to base)
+			if is_crit or (old_percent - new_percent) > 15.0:
+				var flash_tween = create_tween()
+				hp_bar_main.modulate = Color(2.0, 2.0, 1.8) # Intense HDR hit flash
+				flash_tween.tween_property(hp_bar_main, "modulate", Color.WHITE, 0.18)
+
+		if hp_bar_ghost:
+			tween.tween_interval(0.25)
+			tween.tween_property(hp_bar_ghost, "value", new_percent, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	else:
+		# Healing: ghost bar instantly updates, main bar fills up
+		if hp_bar_ghost:
+			hp_bar_ghost.value = new_percent
+		if hp_bar_main:
+			tween.tween_property(hp_bar_main, "value", new_percent, 0.25).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 	if ticks_overlay:
 		ticks_overlay.queue_redraw()
 
+
+## Sets background opacity when menus / modals are open
+func set_dim_opacity(alpha: float) -> void:
+	_bg_opacity = clampf(alpha, 0.0, 1.0)
+	modulate.a = _bg_opacity
+
+
+## Renders LoL-style health bar ticks:
+## - 100 HP minor tick: thin black line (1px, 45% height)
+## - 500 HP medium tick: medium black line (2px, 70% height)
+## - 1000 HP major separator: thick black line (3px, 100% height) -> creates the iconic LoL "cuadros"
 func _on_draw_ticks() -> void:
-	if max_health <= 0.0:
+	if max_health <= 0.0 or ticks_overlay == null:
 		return
 
 	var bar_w = ticks_overlay.size.x
 	var bar_h = ticks_overlay.size.y
-	var segment_value = 100.0 # 100 HP per tick
-	var total_segments = int(max_health / segment_value)
-
-	if total_segments <= 1 or total_segments > 60:
+	if bar_w <= 1.0 or bar_h <= 1.0:
 		return
 
-	var tick_col = Color(0.05, 0.08, 0.12, 0.85) # High-contrast separator
-	for i in range(1, total_segments):
-		var frac = float(i) / float(total_segments)
-		var x = frac * bar_w
-		ticks_overlay.draw_line(Vector2(x, 0), Vector2(x, bar_h), tick_col, 1.5)
+	var hp_step = 100.0
+	var total_ticks = int(max_health / hp_step)
 
+	for i in range(1, total_ticks):
+		var hp_val = i * hp_step
+		var x = (hp_val / max_health) * bar_w
+
+		if int(hp_val) % 1000 == 0:
+			# 1000 HP Major Separator (LoL Chunk / Cuadro)
+			ticks_overlay.draw_line(
+				Vector2(x, 0.0),
+				Vector2(x, bar_h),
+				Color(0.04, 0.05, 0.08, 0.95),
+				3.0
+			)
+		elif int(hp_val) % 500 == 0:
+			# 500 HP Medium Tick
+			ticks_overlay.draw_line(
+				Vector2(x, bar_h * 0.25),
+				Vector2(x, bar_h),
+				Color(0.05, 0.07, 0.1, 0.8),
+				2.0
+			)
+		else:
+			# 100 HP Minor Tick
+			ticks_overlay.draw_line(
+				Vector2(x, bar_h * 0.5),
+				Vector2(x, bar_h),
+				Color(0.05, 0.07, 0.1, 0.6),
+				1.0
+			)

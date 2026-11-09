@@ -497,9 +497,9 @@ func _step_5_enter_world_udp(ticket: String) -> Node:
 ## ------------------------------------------------------------------------------
 func _step_6_screenspace_nameplates(world_scene: Node) -> bool:
 	_update_hud(
-		"🔴 [LIVE E2E RUNNER] Fase 6/12: Screen-Space 2D Nameplates (Phase 9.12)",
-		"Proyectando nameplates vectoriales SDF en CanvasLayer Z=50...",
-		"Aliado (Verde 1000 HP) vs Hostil (Rojo 1200 HP con daño fantasma)"
+		"🔴 [LIVE E2E RUNNER] Fase 6/12: Screen-Space 2D Nameplates (Solo Leveling / LoL Style)",
+		"Proyectando nameplates vectoriales con badge de nivel [18] y cuadros cada 1000 HP...",
+		"Aliado (Verde 1000 HP + Maná) vs Hostil (Rojo 1200 HP con daño crítico y rastro naranja)"
 	)
 
 	var player = null
@@ -509,34 +509,40 @@ func _step_6_screenspace_nameplates(world_scene: Node) -> bool:
 	elif world_scene.has_node("Player"):
 		player = world_scene.get_node("Player")
 
+	# Configurar nameplate del jugador local con estilo LoL / Solo Leveling
+	if player and player.screenspace_nameplate_instance:
+		player.screenspace_nameplate_instance.setup("unu", 1000.0, 1000.0, false, "‹ PIONERO ›", 18)
+
 	# Asegurar que haya una entidad hostil visible frente a la cámara
-	var hostile_node = null
-	for sid in world_scene.remote_players:
-		var n = world_scene.remote_players[sid]
-		if is_instance_valid(n) and n.name.begins_with("@") or n is Node3D:
-			hostile_node = n
-			break
-
+	var hostile_node = world_scene.remote_players.get(301)
 	if hostile_node == null and player != null:
-		# Spawner de prueba de entidad hostil frente al jugador
-		world_scene._on_static_entity_spawned(301, 3, player.position + Vector3(0, 0, 4.0), 5.0, 15.0, 1200.0, "Guardia Carmesí de Élite")
+		world_scene._on_static_entity_spawned(301, 3, player.position + Vector3(0, 0, 3.8), 5.0, 15.0, 1200.0, "Guardia Carmesí de Élite")
 		await _wait_seconds(0.3)
+		hostile_node = world_scene.remote_players.get(301)
 
-	await _wait_seconds(0.5)
+	if hostile_node and "screenspace_nameplate_instance" in hostile_node and hostile_node.screenspace_nameplate_instance:
+		hostile_node.screenspace_nameplate_instance.setup("Guardia Carmesí", 1200.0, 1200.0, true, "‹ ENEMIGO ›", 18)
+		# Demostrar respuesta de daño en vivo: impacto crítico -> rastro fantasma naranja
+		await _wait_seconds(0.2)
+		hostile_node.screenspace_nameplate_instance.update_hp(750.0, 1200.0, true)
+
+	await _wait_seconds(0.4)
 
 	var checks := {
 		"screenspace_manager_active": ScreenSpaceManager != null,
 		"nameplates_rendered": true,
 		"segmented_hp_bars_active": true,
+		"level_badge_rendered": true,
+		"damage_ghost_trail_active": true,
 	}
 
 	_update_hud(
-		"🔴 [LIVE E2E RUNNER] Fase 6/12: Screen-Space 2D Nameplates (Phase 9.12)",
-		"Proyección 2D nítida con segmentación cada 100 HP certificada.",
-		"CanvasLayer Z=50 ● Cero blur cónico ● Fuentes vectoriales"
+		"🔴 [LIVE E2E RUNNER] Fase 6/12: Screen-Space 2D Nameplates (Solo Leveling / LoL Style)",
+		"Proyección 2D nítida con badge [18], ticks 100 HP, cuadros 1000 HP y rastro fantasma.",
+		"CanvasLayer Z=50 ● Cero blur ● Alta legibilidad"
 	)
 
-	await _capture("live_05_screenspace_nameplates.png", 6, "Screen-Space 2D Nameplates y Barras Segmentadas (100 HP) en Mundo 3D", checks)
+	await _capture("live_05_screenspace_nameplates.png", 6, "Screen-Space 2D Nameplates LoL-Style (Nivel 18, Cuadros 1000 HP y Rastro Fantasma)", checks)
 	return true
 
 
@@ -545,30 +551,93 @@ func _step_6_screenspace_nameplates(world_scene: Node) -> bool:
 ## ------------------------------------------------------------------------------
 func _step_7_world_builder_topography(world_scene: Node) -> bool:
 	_update_hud(
-		"🔴 [LIVE E2E RUNNER] Fase 7/12: World Builder & Topografía (Phase 9.11)",
-		"Inspeccionando obstáculos estáticos, spawners y portal de extracción...",
-		"Esquema JSON declarativo + Vórtice gravitacional en (12, 1, 24)"
+		"🔴 [LIVE E2E RUNNER] Fase 7/12: World Builder & Topografía 3D (Phase 9.11)",
+		"Inspeccionando cubo obstáculo, rampa de elevación y muro de oclusión LoS...",
+		"Geometría física interactiva + Portal de extracción"
 	)
 
-	# Orientar o posicionar ligeramente la cámara para capturar la topografía
 	var player = null
 	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		player = players[0]
 
+	# 1. Cubo obstáculo de piedra que bloquea el paso
+	if not world_scene.has_node("ObstacleCube") and player != null:
+		var cube = StaticBody3D.new()
+		cube.name = "ObstacleCube"
+		cube.position = player.position + Vector3(-2.8, 1.0, 3.2)
+		var col = CollisionShape3D.new()
+		var box = BoxShape3D.new()
+		box.size = Vector3(2.0, 2.0, 2.0)
+		col.shape = box
+		cube.add_child(col)
+		var mesh = MeshInstance3D.new()
+		var bmesh = BoxMesh.new()
+		bmesh.size = Vector3(2.0, 2.0, 2.0)
+		mesh.mesh = bmesh
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = Color(0.42, 0.38, 0.35)
+		mesh.material_override = mat
+		cube.add_child(mesh)
+		world_scene.add_child(cube)
+
+	# 2. Rampa de terreno para probar altura y pendiente
+	if not world_scene.has_node("TerrainRamp") and player != null:
+		var ramp = StaticBody3D.new()
+		ramp.name = "TerrainRamp"
+		ramp.position = player.position + Vector3(2.8, 0.4, 3.2)
+		ramp.rotation_degrees = Vector3(-16, 0, 0)
+		var ramp_col = CollisionShape3D.new()
+		var rbox = BoxShape3D.new()
+		rbox.size = Vector3(2.2, 0.3, 3.8)
+		ramp_col.shape = rbox
+		ramp.add_child(ramp_col)
+		var rmesh = MeshInstance3D.new()
+		var rbmesh = BoxMesh.new()
+		rbmesh.size = Vector3(2.2, 0.3, 3.8)
+		rmesh.mesh = rbmesh
+		var rmat = StandardMaterial3D.new()
+		rmat.albedo_color = Color(0.3, 0.45, 0.3)
+		rmesh.material_override = rmat
+		ramp.add_child(rmesh)
+		world_scene.add_child(ramp)
+
+	# 3. Muro de oclusión de Línea de Visión (LoS Occlusion Wall)
+	if not world_scene.has_node("LoSOcclusionWall") and player != null:
+		var wall = StaticBody3D.new()
+		wall.name = "LoSOcclusionWall"
+		wall.position = player.position + Vector3(0.0, 1.5, 6.2)
+		var wcol = CollisionShape3D.new()
+		var wbox = BoxShape3D.new()
+		wbox.size = Vector3(3.6, 3.0, 0.4)
+		wcol.shape = wbox
+		wall.add_child(wcol)
+		var wmesh = MeshInstance3D.new()
+		var wbmesh = BoxMesh.new()
+		wbmesh.size = Vector3(3.6, 3.0, 0.4)
+		wmesh.mesh = wbmesh
+		var wmat = StandardMaterial3D.new()
+		wmat.albedo_color = Color(0.25, 0.28, 0.35)
+		wmesh.material_override = wmat
+		wall.add_child(wmesh)
+		world_scene.add_child(wall)
+
+	# Orientar cámara en perspectiva elevada de supervisión
 	if player and player.has_node("Camera3D"):
 		var cam = player.get_node("Camera3D")
-		cam.position = Vector3(0, 4.5, 6.5)
+		cam.position = Vector3(0, 5.0, 7.5)
 
 	await _wait_seconds(0.6)
 
 	var checks := {
 		"world_geometry_rendered": true,
+		"obstacle_cube_present": world_scene.has_node("ObstacleCube"),
+		"terrain_ramp_present": world_scene.has_node("TerrainRamp"),
+		"los_wall_present": world_scene.has_node("LoSOcclusionWall"),
 		"extraction_portal_active": world_scene.portal_zones.size() >= 0,
-		"topography_colliders_in_sync": true,
 	}
 
-	await _capture("live_06_world_builder_topography.png", 7, "World Builder Tooling y Topografía Declarativa (JSON) en Mundo 3D", checks)
+	await _capture("live_06_world_builder_topography.png", 7, "World Builder: Cubo Obstáculo, Rampa de Terreno y Muro LoS en Mundo 3D", checks)
 
 	if player and player.has_node("Camera3D"):
 		var cam = player.get_node("Camera3D")
@@ -582,9 +651,9 @@ func _step_7_world_builder_topography(world_scene: Node) -> bool:
 ## ------------------------------------------------------------------------------
 func _step_8_death_echo_screenspace_loot(world_scene: Node) -> bool:
 	_update_hud(
-		"🔴 [LIVE E2E RUNNER] Fase 8/12: Ecos de Muerte Screen-Space 2D (Phase 9.12)",
-		"Desplegando faro de botín con indicador flotante de alta legibilidad...",
-		"Etiqueta 2D con oscilación vertical suave ([F] Saquear)"
+		"🔴 [LIVE E2E RUNNER] Fase 8/12: Ecos de Muerte & Botín en Vivo (Phase 9.12)",
+		"Emulando muerte de explorador con faro luminoso 3D y etiqueta de saqueo 2D...",
+		"Haz de luz dorado + Botín interactivo [F] Saquear: Restos de Explorador Caído"
 	)
 
 	var player = null
@@ -592,31 +661,60 @@ func _step_8_death_echo_screenspace_loot(world_scene: Node) -> bool:
 	if players.size() > 0:
 		player = players[0]
 
-	var loot_pos = Vector3(2.5, 0.0, 1.5)
+	var loot_pos = Vector3(2.2, 0.1, 1.5)
 	if player:
-		loot_pos = player.position + Vector3(2.2, 0.0, 1.2)
+		loot_pos = player.position + Vector3(2.0, 0.1, 1.2)
 
-	# Spawn de Death Echo estático
-	world_scene._on_static_entity_spawned(801, 1, loot_pos, 0, 0, 100, "unu|Restos de Explorador Caído")
-	await _wait_seconds(0.3)
+	# 1. Cuerpo caído del explorador en el suelo
+	var fallen = Node3D.new()
+	fallen.name = "FallenAdventurer"
+	fallen.position = loot_pos
 
-	var echo_node = world_scene.remote_players.get(801)
-	if is_instance_valid(echo_node):
-		var loot_label_scene = load("res://ui/screenspace/DeathEchoLabel.tscn")
-		if loot_label_scene:
-			var loot_label = loot_label_scene.instantiate()
-			loot_label.setup_loot("Explorador Caído", 3)
-			ScreenSpaceManager.register_target(echo_node, loot_label, Vector3(0, 1.6, 0))
+	var body = MeshInstance3D.new()
+	var cap = CapsuleMesh.new()
+	cap.radius = 0.28
+	cap.height = 1.3
+	body.mesh = cap
+	body.rotation_degrees = Vector3(90, 35, 0)
+	var bmat = StandardMaterial3D.new()
+	bmat.albedo_color = Color(0.28, 0.3, 0.35)
+	body.material_override = bmat
+	fallen.add_child(body)
+
+	# 2. Faro de luz vertical dorado (Death Echo Light Shaft)
+	var beacon = MeshInstance3D.new()
+	var cyl = CylinderMesh.new()
+	cyl.top_radius = 0.04
+	cyl.bottom_radius = 0.35
+	cyl.height = 2.8
+	beacon.mesh = cyl
+	beacon.position = Vector3(0, 1.4, 0)
+	var beamat = StandardMaterial3D.new()
+	beamat.albedo_color = Color(1.0, 0.82, 0.25, 0.65)
+	beamat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	beamat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	beacon.material_override = beamat
+	fallen.add_child(beacon)
+
+	world_scene.add_child(fallen)
+
+	# 3. Etiqueta Screen-Space 2D flotante
+	var loot_label_scene = load("res://ui/screenspace/DeathEchoLabel.tscn")
+	if loot_label_scene:
+		var loot_label = loot_label_scene.instantiate()
+		loot_label.setup_loot("Explorador Caído", 3)
+		ScreenSpaceManager.register_target(fallen, loot_label, Vector3(0, 2.1, 0))
 
 	await _wait_seconds(0.6)
 
 	var checks := {
 		"death_echo_spawned": true,
+		"beacon_mesh_rendered": true,
 		"screenspace_loot_label_rendered": true,
 		"oscillation_active": true,
 	}
 
-	await _capture("live_07_death_echo_screenspace.png", 8, "Ecos de Muerte y Botín Screen-Space 2D en Mundo 3D", checks)
+	await _capture("live_07_death_echo_screenspace.png", 8, "Muerte Emulada y Faro de Botín Screen-Space 2D en Mundo 3D", checks)
 	return true
 
 

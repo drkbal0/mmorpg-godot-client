@@ -50,7 +50,7 @@ func _ready():
 	if has_node("/root/ScreenSpaceManager"):
 		screenspace_nameplate_instance = screen_space_nameplate_scene.instantiate()
 		var n_name = "Hostil (SID: %d)" % sid
-		screenspace_nameplate_instance.setup(n_name, 1000.0, 1000.0, true, "‹ ENEMIGO ›")
+		screenspace_nameplate_instance.setup(n_name, 1200.0, 1200.0, true, "‹ ENEMIGO ›", 18)
 		ScreenSpaceManager.register_target(self, screenspace_nameplate_instance, Vector3(0, 2.3, 0))
 		if has_node("Nameplate"):
 			$Nameplate.visible = false

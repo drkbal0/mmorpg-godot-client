@@ -98,7 +98,7 @@ func _ready():
 		screenspace_nameplate_instance = screen_space_nameplate_scene.instantiate()
 		var p_name = AuthManager.selected_character_name if not AuthManager.selected_character_name.is_empty() else AuthManager.username
 		if p_name.is_empty(): p_name = "Campeón"
-		screenspace_nameplate_instance.setup(p_name, 1000.0, 1000.0, false, "‹ PIONERO ›")
+		screenspace_nameplate_instance.setup(p_name, 1000.0, 1000.0, false, "‹ PIONERO ›", 18)
 		ScreenSpaceManager.register_target(self, screenspace_nameplate_instance, Vector3(0, 2.3, 0))
 		if has_node("Nameplate"):
 			$Nameplate.visible = false
