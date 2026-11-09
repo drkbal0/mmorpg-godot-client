@@ -1,4 +1,4 @@
-﻿{
+{
   "profile": "proxmox",
   "gateway_url": "https://mmo.elbalo.lol/api",
   "udp_host": "play.elbalo.lol",
