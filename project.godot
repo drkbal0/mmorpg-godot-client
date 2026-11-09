@@ -39,6 +39,7 @@ InputSettings="*res://ui/orchestration/InputSettings.gd"
 UIInputRouter="*res://ui/orchestration/UIInputRouter.gd"
 TargetManager="*res://shared-core/TargetManager.gd"
 SpellManager="*res://shared-core/SpellManager.gd"
+ScreenSpaceManager="*res://ui/screenspace/ScreenSpaceManager.gd"
 
 [display]
 

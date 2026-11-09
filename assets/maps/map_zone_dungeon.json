@@ -1,0 +1,51 @@
+{
+  "zone_id": 2,
+  "zone_name": "Ancestral_Crypt_Zone_2",
+  "bounds": {
+    "min_x": -100.0,
+    "max_x": 100.0,
+    "min_z": -100.0,
+    "max_z": 100.0
+  },
+  "static_colliders": [
+    {
+      "id": "crypt_altar_center",
+      "type": "box",
+      "pos": [0.0, 1.0, 0.0],
+      "size": [6.0, 2.0, 6.0],
+      "yaw": 0.0
+    },
+    {
+      "id": "crypt_wall_west",
+      "type": "box",
+      "pos": [-25.0, 4.0, 0.0],
+      "size": [2.0, 8.0, 50.0],
+      "yaw": 0.0
+    },
+    {
+      "id": "crypt_wall_east",
+      "type": "box",
+      "pos": [25.0, 4.0, 0.0],
+      "size": [2.0, 8.0, 50.0],
+      "yaw": 0.0
+    }
+  ],
+  "spawners": [
+    {
+      "id": "spawner_crypt_wraiths",
+      "archetype": "CryptWraith",
+      "pos": [0.0, 0.0, -10.0],
+      "count": 4,
+      "radius": 10.0
+    }
+  ],
+  "extraction_portals": [
+    {
+      "id": "portal_overworld_return",
+      "dest_zone": 1,
+      "pos": [0.0, 1.0, 20.0],
+      "radius": 3.5,
+      "channel_time": 10.0
+    }
+  ]
+}

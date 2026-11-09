@@ -13,9 +13,11 @@ const SEND_RATE = 1.0 / 20.0
 
 const world_hp_bar_scene = preload("res://ui/components/WorldHPBar/WorldHPBar.tscn")
 const player_hud_scene = preload("res://ui/components/PlayerHUD/PlayerHUD.tscn")
+const screen_space_nameplate_scene = preload("res://ui/screenspace/WorldNameplate.tscn")
 
 var player_hud_instance : Node
 var world_hp_bar_instance : Node3D
+var screenspace_nameplate_instance : WorldNameplate
 
 var hp_percent : float = 100.0
 var max_hp : float = 1000.0 # Standard default
@@ -90,6 +92,18 @@ func _ready():
 	world_hp_bar_instance = world_hp_bar_scene.instantiate()
 	add_child(world_hp_bar_instance)
 	world_hp_bar_instance.setup(Color.GREEN)
+	
+	# Next-Gen Screen-Space 2D Nameplate & 100 HP Segmented Bar
+	if has_node("/root/ScreenSpaceManager"):
+		screenspace_nameplate_instance = screen_space_nameplate_scene.instantiate()
+		var p_name = AuthManager.selected_character_name if not AuthManager.selected_character_name.is_empty() else AuthManager.username
+		if p_name.is_empty(): p_name = "Campeón"
+		screenspace_nameplate_instance.setup(p_name, 1000.0, 1000.0, false, "‹ PIONERO ›")
+		ScreenSpaceManager.register_target(self, screenspace_nameplate_instance, Vector3(0, 2.3, 0))
+		if has_node("Nameplate"):
+			$Nameplate.visible = false
+		if world_hp_bar_instance:
+			world_hp_bar_instance.visible = false
 	
 	_ensure_collision()
 
@@ -490,6 +504,7 @@ func update_hp(new_hp_percent: float, _source_id: int, source_pos: Vector3):
 		return
 	
 	if world_hp_bar_instance: world_hp_bar_instance.update_hp(new_hp_percent)
+	if screenspace_nameplate_instance: screenspace_nameplate_instance.update_hp(new_hp_percent * 10.0, 1000.0)
 	if player_hud_instance: player_hud_instance.update_hp(new_hp_percent)
 	
 	if hp_percent <= 0 and not is_dead:
@@ -540,5 +555,10 @@ func _on_death(source_pos: Vector3):
 		var mesh_tween = create_tween()
 		mesh_tween.tween_property(mesh, "position", knock_dir * 0.5, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 		mesh_tween.tween_property(mesh, "rotation:x", deg_to_rad(90), 0.5) # Falling down
+
+func _exit_tree() -> void:
+	if has_node("/root/ScreenSpaceManager") and ScreenSpaceManager.instance:
+		ScreenSpaceManager.instance.unregister_target(self)
+
 
 

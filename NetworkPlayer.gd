@@ -14,8 +14,11 @@ var current_server_time: float = -1.0
 
 const world_hp_bar_scene = preload("res://ui/components/WorldHPBar/WorldHPBar.tscn")
 const npc_indicator_scene = preload("res://ui/components/NpcIndicator/NpcIndicator.tscn")
+const screen_space_nameplate_scene = preload("res://ui/screenspace/WorldNameplate.tscn")
+
 var world_hp_bar_instance : Node3D
 var npc_indicator_instance : Node3D
+var screenspace_nameplate_instance : WorldNameplate
 
 var hp_percent : int = 100
 var _hp_initialized : bool = false
@@ -43,6 +46,16 @@ func _ready():
 	world_hp_bar_instance = world_hp_bar_scene.instantiate()
 	add_child(world_hp_bar_instance)
 	world_hp_bar_instance.setup(Color.RED)
+	
+	if has_node("/root/ScreenSpaceManager"):
+		screenspace_nameplate_instance = screen_space_nameplate_scene.instantiate()
+		var n_name = "Hostil (SID: %d)" % sid
+		screenspace_nameplate_instance.setup(n_name, 1000.0, 1000.0, true, "‹ ENEMIGO ›")
+		ScreenSpaceManager.register_target(self, screenspace_nameplate_instance, Vector3(0, 2.3, 0))
+		if has_node("Nameplate"):
+			$Nameplate.visible = false
+		if world_hp_bar_instance:
+			world_hp_bar_instance.visible = false
 	
 	npc_indicator_instance = npc_indicator_scene.instantiate()
 	add_child(npc_indicator_instance)
@@ -332,6 +345,8 @@ func _safe_set_pos(new_pos: Vector3):
 func update_nameplate(p_name: String, p_sid: int):
 	sid = p_sid
 	$Nameplate.text = "%s (SID: %d)" % [p_name, sid]
+	if screenspace_nameplate_instance:
+		screenspace_nameplate_instance.name_label.text = "%s (SID: %d)" % [p_name, sid]
 
 func add_state(pos: Vector3):
 	if not pos.is_finite():
@@ -376,6 +391,8 @@ func update_hp(new_hp_percent: float, _source_id: int, source_pos: Vector3):
 	# 1. Update World HP Bar with Effects
 	if world_hp_bar_instance:
 		world_hp_bar_instance.update_hp(new_hp_percent)
+	if screenspace_nameplate_instance:
+		screenspace_nameplate_instance.update_hp(new_hp_percent * 10.0, 1000.0)
 		
 	# Hide dead characters so they don't overlap with Death Echoes
 	var was_dead = !visible or old_hp <= 0
@@ -419,3 +436,8 @@ func update_hp(new_hp_percent: float, _source_id: int, source_pos: Vector3):
 				mesh.position += knock_dir * 0.3
 				var mesh_tween = create_tween()
 				mesh_tween.tween_property(mesh, "position", Vector3.ZERO, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+func _exit_tree() -> void:
+	if has_node("/root/ScreenSpaceManager") and ScreenSpaceManager.instance:
+		ScreenSpaceManager.instance.unregister_target(self)
+

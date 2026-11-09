@@ -189,6 +189,12 @@ func _run_scenarios() -> void:
 	await _clear_stage()
 	await _scenario_admin_grant()
 	await _clear_stage()
+	await _scenario_screenspace_nameplates()
+	await _clear_stage()
+	await _scenario_world_builder_map()
+	await _clear_stage()
+	await _scenario_death_echo_loot()
+	await _clear_stage()
 
 	var all_pass := true
 	for cap in _captures:
@@ -612,3 +618,143 @@ func _scenario_admin_grant() -> void:
 		})
 	_captures[-1]["observed"] = {"catalog_items": panel.item_definitions.size(), "grant_buttons": visible_grants.size()}
 	$CaptionLayer/CaptionPanel.position = Vector2(12, 10)
+
+
+# ---------------------------------------------------------------------------
+# Escenario 6: Screen-Space 2D Nameplates & Barras Segmentadas (100 HP)
+# ---------------------------------------------------------------------------
+
+func _scenario_screenspace_nameplates() -> void:
+	_set_caption("Escenario 6 · Screen-Space 2D Nameplates & Barras Segmentadas (100 HP)",
+		"Proyección vectorial 2D nítida en CanvasLayer con ticks cada 100 HP y diferenciación aliada/hostil")
+
+	var nameplate_scene = load("res://ui/screenspace/WorldNameplate.tscn")
+
+	# 1. Aliado / Campeón
+	var ally_plate: Control = nameplate_scene.instantiate()
+	_stage.add_child(ally_plate)
+	ally_plate.position = Vector2(240, 240)
+	ally_plate.scale = Vector2(1.25, 1.25)
+	ally_plate.setup("Valerius (Pionero)", 850.0, 1000.0, false, "‹ PIONERO ANCESTRAL ›")
+	ally_plate.update_hp(850.0, 1000.0)
+
+	var ally_note = _add_note("Aliado: Verde Esmeralda\nMax HP: 1000 (10 ticks de 100 HP)\nHP Actual: 850", Vector2(240, 330), Color(0.4, 0.9, 0.6))
+
+	# 2. Hostil / Boss
+	var boss_plate: Control = nameplate_scene.instantiate()
+	_stage.add_child(boss_plate)
+	boss_plate.position = Vector2(680, 240)
+	boss_plate.scale = Vector2(1.25, 1.25)
+	boss_plate.setup("Guardia Carmesí de Élite", 450.0, 1200.0, true, "‹ JEFE DE MAZMORRA ›")
+	boss_plate.update_hp(450.0, 1200.0)
+
+	var boss_note = _add_note("Hostil: Rojo Carmesí\nMax HP: 1200 (12 ticks de 100 HP)\nHP Actual: 450", Vector2(680, 330), Color(1.0, 0.45, 0.45))
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	await _capture("evidence_screenspace_nameplates.png", 6,
+		"WorldNameplate en Screen-Space 2D con barras segmentadas cada 100 HP", {
+			"ally_plate_visible": ally_plate.is_visible_in_tree(),
+			"boss_plate_visible": boss_plate.is_visible_in_tree(),
+			"ally_hp_value": ally_plate.current_health == 850.0,
+			"boss_hp_value": boss_plate.current_health == 450.0,
+		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 7: World Builder & Topografía Declarativa (JSON)
+# ---------------------------------------------------------------------------
+
+func _scenario_world_builder_map() -> void:
+	_set_caption("Escenario 7 · World Builder & Topografía de Mapa (JSON)",
+		"Esquema topográfico declarativo con colisiones estáticas, radio de spawners y portal de extracción")
+
+	var map_tool_script = load("res://tools/map_editor/MapEditorTool.gd")
+	var map_tool: Node3D = Node3D.new()
+	map_tool.set_script(map_tool_script)
+	_stage.add_child(map_tool)
+
+	map_tool.load_map("res://assets/maps/map_zone_overworld.json")
+	await _settle(3)
+
+	var col_count: int = map_tool.colliders_root.get_child_count()
+	var sp_count: int = map_tool.spawners_root.get_child_count()
+	var port_count: int = map_tool.portals_root.get_child_count()
+
+	var summary_box = PanelContainer.new()
+	var sb = StyleBoxFlat.new()
+	sb.bg_color = Color(0.08, 0.11, 0.18, 0.9)
+	sb.border_color = Color(0.2, 0.5, 0.8, 0.8)
+	sb.set_border_width_all(1)
+	sb.set_corner_radius_all(6)
+	summary_box.add_theme_stylebox_override("panel", sb)
+	summary_box.position = Vector2(380, 220)
+	summary_box.custom_minimum_size = Vector2(440, 180)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 6)
+	summary_box.add_child(vbox)
+
+	var title = Label.new()
+	title.text = "🗺️ MAP TOPOGRAPHY MANIFEST (Overworld_Asylum_Zone_1)"
+	title.add_theme_color_override("font_color", Color(0.3, 0.9, 1.0))
+	title.add_theme_font_size_override("font_size", 14)
+	vbox.add_child(title)
+
+	var l1 = Label.new()
+	l1.text = "• Colliders Estáticos AABB: %d (Sincronizados con SpatialGrid)" % col_count
+	vbox.add_child(l1)
+
+	var l2 = Label.new()
+	l2.text = "• Spawners Activos: %d (CrimsonGuard Camp + Patrol South)" % sp_count
+	vbox.add_child(l2)
+
+	var l3 = Label.new()
+	l3.text = "• Portales de Extracción: %d (Hacia Zona 2 - Cripta Ancestral)" % port_count
+	vbox.add_child(l3)
+
+	var l4 = Label.new()
+	l4.text = "• Bounds Autoritativos: [-250m, +250m] X/Z"
+	l4.add_theme_color_override("font_color", Color(0.8, 0.85, 0.9))
+	vbox.add_child(l4)
+
+	_stage.add_child(summary_box)
+
+	await _settle(3)
+	await _wait_seconds(0.4)
+
+	await _capture("evidence_world_builder_topography.png", 7,
+		"World Builder Tooling y Topografía declarativa JSON sincronizada", {
+			"static_colliders_loaded": col_count > 0,
+			"spawners_loaded": sp_count > 0,
+			"portals_loaded": port_count > 0,
+		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 8: Ecos de Muerte & Botín Screen-Space 2D
+# ---------------------------------------------------------------------------
+
+func _scenario_death_echo_loot() -> void:
+	_set_caption("Escenario 8 · Ecos de Muerte & Botín Screen-Space 2D",
+		"Etiqueta 2D interactiva de alta legibilidad para saqueo de contenedores y restos de combate")
+
+	var loot_scene = load("res://ui/screenspace/DeathEchoLabel.tscn")
+	var loot_plate: Control = loot_scene.instantiate()
+	_stage.add_child(loot_plate)
+	loot_plate.position = Vector2(480, 260)
+	loot_plate.scale = Vector2(1.3, 1.3)
+	loot_plate.setup_loot("Valerius (Pionero)", 5)
+
+	var note = _add_note("Widget 2D Screen-Space de Saqueo\nDespawn autoritativo (0x17) al vaciar\nPrompt de interacción [F]", Vector2(480, 360), Color(1.0, 0.85, 0.4))
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	await _capture("evidence_death_echo_screenspace.png", 8,
+		"DeathEchoLabel en Screen-Space con tooltip de interacción táctica", {
+			"loot_label_visible": loot_plate.is_visible_in_tree(),
+			"panel_container_present": loot_plate.has_node("PanelContainer"),
+		})
+
