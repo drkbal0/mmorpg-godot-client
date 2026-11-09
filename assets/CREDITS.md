@@ -9,3 +9,4 @@ This folder contains graphical assets and placeholders for the Godot 4 MMORPG Pr
 ## 3D Models & Geometry (`assets/placeholders/`, `assets/models/`)
 - Procedural CSG geometries and placeholder meshes generated in Godot 4 (`generate_placeholders.gd`).
 - All placeholder scenes are open-source and free to adapt.
+
