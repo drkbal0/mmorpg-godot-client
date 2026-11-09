@@ -400,7 +400,7 @@ func _sync_publish_to_web(slug: String, author_name: String) -> void:
 	# 1. Petición HTTP a la API de la Wiki Web viva
 	var http = HTTPRequest.new()
 	add_child(http)
-	var url = "http://127.0.0.1:3000/api/wiki/publish"
+	var url = GameConfig.get_web_url() + "/api/wiki/publish"
 	var headers = ["Content-Type: application/json"]
 	var payload = JSON.stringify({"slug": slug, "pioneer": author_name})
 	http.request(url, headers, HTTPClient.METHOD_POST, payload)
@@ -408,28 +408,6 @@ func _sync_publish_to_web(slug: String, author_name: String) -> void:
 		print("[Codex] Web Wiki Sync HTTP result: code %d" % response_code)
 		http.queue_free()
 	)
-	
-	# 2. Respaldo directo en disco local si el cliente tiene acceso al repo (Dev / Local PC)
-	var candidates = [
-		ProjectSettings.globalize_path("res://").path_join("../../docs/wiki_data/" + slug + ".md").simplify_path(),
-		"e:/MMORPG/docs/wiki_data/" + slug + ".md",
-		"docs/wiki_data/" + slug + ".md"
-	]
-	for c_path in candidates:
-		if FileAccess.file_exists(c_path):
-			var f_read = FileAccess.open(c_path, FileAccess.READ)
-			if f_read:
-				var txt = f_read.get_as_text()
-				f_read.close()
-				if "is_public: false" in txt:
-					txt = txt.replace("is_public: false", "is_public: true\nfirst_discoverer: " + author_name)
-				txt = txt.replace("is_secret: true", "is_secret: false")
-				var f_write = FileAccess.open(c_path, FileAccess.WRITE)
-				if f_write:
-					f_write.store_string(txt)
-					f_write.close()
-					print("[Codex] Failsafe: Archivo local %s actualizado con is_public=true." % c_path)
-			break
 
 func _on_craft_sheet(entry: Dictionary, craft_btn: Button = null) -> void:
 	if craft_btn:

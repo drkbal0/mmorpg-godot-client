@@ -21,7 +21,10 @@ func refresh_stats():
 	_is_refreshing = true
 	
 	print("[TelemetryView] Fetching stats from backend...")
+	var gw = GameConfig.get_gateway_url()
 	var url = "http://127.0.0.1:8088/admin/telemetry/stats"
+	if not gw.begins_with("http://127.0.0.1"):
+		url = gw + "/admin/telemetry/stats"
 	
 	var http_request = HTTPRequest.new()
 	add_child(http_request)

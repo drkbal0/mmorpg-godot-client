@@ -1,0 +1,28 @@
+# Godot 4 Client Gitignore
+.godot/
+*.translation
+
+# Build & binary outputs
+*.pck
+*.exe
+*.dll
+*.so
+*.dylib
+*.zip
+*.tar.gz
+/build/MMORPG.exe
+/build/MMORPG.pck
+/build/MMORPG_encrypted.exe
+/build/MMORPG_encrypted.pck
+
+# Local Developer Overrides (prevent host leaks)
+client_config.json
+!client_config.example.json
+!build/**/client_config.json
+
+# OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*~

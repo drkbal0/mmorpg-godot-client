@@ -177,7 +177,7 @@
   "godot_version": "4.6.1-stable (official)",
   "harness": "VisualTestHarness",
   "network_mode": "offline",
-  "output_dir": "E:/agentes/claude/MMORPG/feat/claude/visual-test-harness/clients/godot-mmo-client/test_evidence",
+  "output_dir": "clients/godot-mmo-client/test_evidence",
   "overall_status": "PASS",
   "rendering_method": "forward_plus",
   "resolution": [

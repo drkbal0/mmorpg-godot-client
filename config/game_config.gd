@@ -15,9 +15,9 @@ const PROFILES: Dictionary = {
 	},
 	"proxmox": {
 		"id": "proxmox",
-		"name": "Servidor Proxmox (LAN 192.168.1.103)",
-		"gateway_url": "http://192.168.1.103:8080",
-		"udp_host": "192.168.1.103",
+		"name": "Servidor Proxmox / Red Local",
+		"gateway_url": "http://127.0.0.1:8080",
+		"udp_host": "127.0.0.1",
 		"udp_port": 5000
 	},
 	"local": {
@@ -59,7 +59,7 @@ static func get_active_profile_id() -> String:
 		elif arg == "--local" or arg == "--dev" or arg == "--pc":
 			return "local"
 		elif arg == "--debug" or arg == "-d":
-			return "proxmox"
+			return "local"
 
 	# 2. client_config.json profile key
 	var cfg = _read_external_config()
@@ -75,11 +75,9 @@ static func get_active_profile_id() -> String:
 			return p
 
 	# 4. Defaults based on build context:
-	# Debug/Editor defaults to Proxmox LAN for instant local playtesting
+	# Debug/Editor defaults to Local PC (127.0.0.1) for zero-leak standalone safety
 	if not is_production_mode():
-		if OS.has_environment("DEV_LOCAL_PC"):
-			return "local"
-		return "proxmox"
+		return "local"
 
 	# Exported release build defaults to WAN (Internet)
 	return "wan"
@@ -121,6 +119,13 @@ static func get_gateway_url() -> String:
 	# 5. Profile default
 	var profile_id = get_active_profile_id()
 	return PROFILES[profile_id]["gateway_url"]
+
+## Returns Web Portal Base URL (for Wiki, Codex and browser interactions)
+static func get_web_url() -> String:
+	var profile_id = get_active_profile_id()
+	if profile_id == "wan":
+		return "https://mmo.elbalo.lol"
+	return "http://127.0.0.1:3000"
 
 ## Returns UDP Simulation Server Host and Port Dictionary {"host": ..., "port": ...}
 static func get_udp_server() -> Dictionary:
