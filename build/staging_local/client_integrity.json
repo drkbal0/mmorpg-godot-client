@@ -1,7 +1,7 @@
 ﻿{
-    "generated_at":  "2026-11-09T06:11:45Z",
-    "sha256":  "523a33f3791911a9da2fcc759f6dacaaa6cb3972c54de50d7f17d38201a5d0cb",
-    "version":  "0.1.0",
-    "anti_tamper":  "active",
-    "package_name":  "MMORPG.pck"
+  "package_name": "MMORPG.pck",
+  "sha256": "c69d75219081893ce627c69a7c891ee450fe36f33ea562815c2ceb32d4b9b056",
+  "version": "0.1.0",
+  "generated_at": "2026-11-09T06:49:05Z",
+  "anti_tamper": "active"
 }
