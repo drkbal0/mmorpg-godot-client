@@ -1,7 +1,6 @@
 {
-  "profile": "local",
-  "gateway_url": "http://127.0.0.1:8080",
-  "udp_host": "127.0.0.1",
+  "profile": "wan",
+  "gateway_url": "https://mmo.elbalo.lol/api",
+  "udp_host": "play.elbalo.lol",
   "udp_port": 5000
 }
-

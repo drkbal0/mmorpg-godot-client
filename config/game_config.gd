@@ -179,15 +179,16 @@ static func get_active_profile_summary() -> String:
 	return "%s (%s:%d)" % [pid.to_upper(), srv["host"], srv["port"]]
 
 static func _read_external_config() -> Dictionary:
-	var exe_dir = OS.get_executable_path().get_base_dir()
+	var exe_dir = OS.get_executable_path().get_base_dir().replace("\\", "/")
 	var config_paths = [
 		exe_dir + "/client_config.json",
 		"res://client_config.json",
 		"user://client_config.json"
 	]
 	for path in config_paths:
-		if FileAccess.file_exists(path):
-			var file = FileAccess.open(path, FileAccess.READ)
+		var normalized_path = path.replace("\\", "/")
+		if FileAccess.file_exists(normalized_path):
+			var file = FileAccess.open(normalized_path, FileAccess.READ)
 			if file:
 				var content = file.get_as_text()
 				var parsed = JSON.parse_string(content)
