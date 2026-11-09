@@ -5,7 +5,7 @@ extends CanvasLayer
 ## onto CanvasLayer (Z=50) using camera.unproject_position().
 ## Eliminates SubViewport overhead, perspective blur, and Label3D pixelation.
 
-static var instance: ScreenSpaceManager = null
+static var instance: CanvasLayer = null
 
 var tracked_targets: Dictionary = {} # Node3D -> Dictionary {control, offset, max_distance}
 var _cached_cam: Camera3D = null

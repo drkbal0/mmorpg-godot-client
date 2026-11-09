@@ -114,9 +114,11 @@ func _on_profile_loaded():
 
 func _on_server_connected(session_id: int, hp_percent: int, max_hp: int):
 	print("[World] Server ACK received. Session ID: %d, HP: %d%%" % [session_id, hp_percent])
-	if local_player:
-		local_player.max_hp = max_hp
-		local_player.update_hp(hp_percent, -1, Vector3.ZERO)
+	if local_player and is_instance_valid(local_player):
+		if "max_hp" in local_player:
+			local_player.max_hp = max_hp
+		if local_player.has_method("update_hp"):
+			local_player.update_hp(hp_percent, -1, Vector3.ZERO)
 	else:
 		cached_local_hp = hp_percent
 		cached_local_max_hp = max_hp
@@ -193,7 +195,8 @@ func _on_static_entity_spawned(sid: int, type: int, pos: Vector3, aggro: float, 
 		var n = network_player_scene.instantiate()
 		add_child(n)
 		n.position = pos
-		n.update_nameplate(p_name, sid)
+		if n.has_method("update_nameplate"):
+			n.update_nameplate(p_name, sid)
 		if n.has_method("setup_attributes"):
 			n.setup_attributes(aggro, attack, max_hp)
 		# Tint red for hostile
@@ -208,7 +211,8 @@ func _on_static_entity_spawned(sid: int, type: int, pos: Vector3, aggro: float, 
 		var n = network_player_scene.instantiate()
 		add_child(n)
 		n.position = pos
-		n.update_nameplate("[N] " + p_name, sid)
+		if n.has_method("update_nameplate"):
+			n.update_nameplate("[N] " + p_name, sid)
 		if n.has_method("setup_attributes"):
 			n.setup_attributes(aggro, attack, max_hp)
 		# Tint blue/green for neutral

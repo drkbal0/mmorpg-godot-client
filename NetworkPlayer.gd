@@ -18,7 +18,7 @@ const screen_space_nameplate_scene = preload("res://ui/screenspace/WorldNameplat
 
 var world_hp_bar_instance : Node3D
 var npc_indicator_instance : Node3D
-var screenspace_nameplate_instance : WorldNameplate
+var screenspace_nameplate_instance : Control = null
 
 var hp_percent : int = 100
 var _hp_initialized : bool = false
@@ -346,7 +346,9 @@ func update_nameplate(p_name: String, p_sid: int):
 	sid = p_sid
 	$Nameplate.text = "%s (SID: %d)" % [p_name, sid]
 	if screenspace_nameplate_instance:
-		screenspace_nameplate_instance.name_label.text = "%s (SID: %d)" % [p_name, sid]
+		var lbl = screenspace_nameplate_instance.get_node_or_null("VBoxContainer/NameLabel")
+		if lbl:
+			lbl.text = "%s (SID: %d)" % [p_name, sid]
 
 func add_state(pos: Vector3):
 	if not pos.is_finite():

@@ -26,3 +26,4 @@ func _process(delta: float) -> void:
 	_anim_time += delta * 3.0
 	# Subtle hover bobbing
 	panel.position.y = sin(_anim_time) * 3.0
+

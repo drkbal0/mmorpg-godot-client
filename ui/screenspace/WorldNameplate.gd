@@ -16,37 +16,57 @@ var current_health: float = 1000.0
 var is_hostile_unit: bool = false
 var _previous_hp_percent: float = 100.0
 
+func _ensure_node_refs() -> void:
+	if name_label == null:
+		title_label = get_node_or_null("VBoxContainer/TitleLabel")
+		name_label = get_node_or_null("VBoxContainer/NameLabel")
+		hp_bar_bg = get_node_or_null("VBoxContainer/BarContainer/HPBarBG")
+		hp_bar_ghost = get_node_or_null("VBoxContainer/BarContainer/HPBarGhost")
+		hp_bar_main = get_node_or_null("VBoxContainer/BarContainer/HPBarMain")
+		ticks_overlay = get_node_or_null("VBoxContainer/BarContainer/TicksOverlay")
+
 func _ready() -> void:
+	_ensure_node_refs()
 	custom_minimum_size = Vector2(180, 50)
 	size = custom_minimum_size
-	ticks_overlay.draw.connect(_on_draw_ticks)
+	if ticks_overlay and not ticks_overlay.draw.is_connected(_on_draw_ticks):
+		ticks_overlay.draw.connect(_on_draw_ticks)
 
 func setup(p_name: String, p_hp: float, p_max_hp: float, is_hostile: bool = false, p_title: String = "") -> void:
+	_ensure_node_refs()
 	is_hostile_unit = is_hostile
 	max_health = maxf(p_max_hp, 1.0)
 	current_health = clampf(p_hp, 0.0, max_health)
 	_previous_hp_percent = (current_health / max_health) * 100.0
 
-	name_label.text = p_name
-	if is_hostile_unit:
-		name_label.modulate = Color(1.0, 0.35, 0.35)
-	else:
-		name_label.modulate = Color(0.9, 0.95, 1.0)
+	if name_label:
+		name_label.text = p_name
+		if is_hostile_unit:
+			name_label.modulate = Color(1.0, 0.35, 0.35)
+		else:
+			name_label.modulate = Color(0.9, 0.95, 1.0)
 
-	if not p_title.is_empty():
-		title_label.text = p_title
-		title_label.visible = true
-	else:
-		title_label.visible = false
+	if title_label:
+		if not p_title.is_empty():
+			title_label.text = p_title
+			title_label.visible = true
+		else:
+			title_label.visible = false
 
 	# Apply theme colors
 	_apply_bar_colors()
 
-	hp_bar_main.value = _previous_hp_percent
-	hp_bar_ghost.value = _previous_hp_percent
-	ticks_overlay.queue_redraw()
+	if hp_bar_main:
+		hp_bar_main.value = _previous_hp_percent
+	if hp_bar_ghost:
+		hp_bar_ghost.value = _previous_hp_percent
+	if ticks_overlay:
+		ticks_overlay.queue_redraw()
 
 func _apply_bar_colors() -> void:
+	_ensure_node_refs()
+	if hp_bar_main == null:
+		return
 	var main_sb = hp_bar_main.get_theme_stylebox("fill")
 	if main_sb is StyleBoxFlat:
 		main_sb = main_sb.duplicate()
@@ -65,6 +85,7 @@ func _apply_bar_colors() -> void:
 	hp_bar_main.add_theme_stylebox_override("fill", main_sb)
 
 func update_hp(new_hp: float, new_max: float = -1.0) -> void:
+	_ensure_node_refs()
 	if new_max > 0.0:
 		max_health = new_max
 	current_health = clampf(new_hp, 0.0, max_health)
@@ -72,19 +93,27 @@ func update_hp(new_hp: float, new_max: float = -1.0) -> void:
 	var old_percent = _previous_hp_percent
 	_previous_hp_percent = new_percent
 
+	if not is_inside_tree():
+		if hp_bar_main: hp_bar_main.value = new_percent
+		if hp_bar_ghost: hp_bar_ghost.value = new_percent
+		return
+
 	var tween = create_tween()
 	if new_percent < old_percent:
 		# Taking damage: Main bar drops instantly, ghost catches up smoothly
-		hp_bar_main.value = new_percent
-		tween.tween_interval(0.2)
-		tween.tween_property(hp_bar_ghost, "value", new_percent, 0.35).set_trans(Tween.TRANS_SINE)
+		if hp_bar_main: hp_bar_main.value = new_percent
+		if hp_bar_ghost:
+			tween.tween_interval(0.2)
+			tween.tween_property(hp_bar_ghost, "value", new_percent, 0.35).set_trans(Tween.TRANS_SINE)
 	else:
 		# Healing: Ghost jumps up instantly, main bar fills smoothly
-		hp_bar_ghost.value = new_percent
-		tween.tween_interval(0.1)
-		tween.tween_property(hp_bar_main, "value", new_percent, 0.35).set_trans(Tween.TRANS_SINE)
+		if hp_bar_ghost: hp_bar_ghost.value = new_percent
+		if hp_bar_main:
+			tween.tween_interval(0.1)
+			tween.tween_property(hp_bar_main, "value", new_percent, 0.35).set_trans(Tween.TRANS_SINE)
 
-	ticks_overlay.queue_redraw()
+	if ticks_overlay:
+		ticks_overlay.queue_redraw()
 
 func _on_draw_ticks() -> void:
 	if max_health <= 0.0:
@@ -103,3 +132,4 @@ func _on_draw_ticks() -> void:
 		var frac = float(i) / float(total_segments)
 		var x = frac * bar_w
 		ticks_overlay.draw_line(Vector2(x, 0), Vector2(x, bar_h), tick_col, 1.5)
+

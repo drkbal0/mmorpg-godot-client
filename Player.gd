@@ -17,7 +17,7 @@ const screen_space_nameplate_scene = preload("res://ui/screenspace/WorldNameplat
 
 var player_hud_instance : Node
 var world_hp_bar_instance : Node3D
-var screenspace_nameplate_instance : WorldNameplate
+var screenspace_nameplate_instance : Control = null
 
 var hp_percent : float = 100.0
 var max_hp : float = 1000.0 # Standard default
