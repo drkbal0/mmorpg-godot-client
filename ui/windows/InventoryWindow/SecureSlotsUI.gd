@@ -32,6 +32,12 @@ var _is_dragging = false
 var _has_been_moved = false
 var _drag_offset = Vector2.ZERO
 
+var _stash_silver_label: Label = null
+var _char_silver_label: Label = null
+var _transfer_panel: PanelContainer = null
+var _transfer_modal_stash_lbl: Label = null
+var _transfer_modal_char_lbl: Label = null
+
 func _ready():
 	add_to_group("inventory_ui")
 	
@@ -53,6 +59,10 @@ func _ready():
 	# Escuchar solicitudes de refresco del controlador (Desacoplamiento ADR 069)
 	if has_node("/root/InventoryController"):
 		get_node("/root/InventoryController").inventory_refresh_requested.connect(render_inventory_state)
+	
+	# Sincronización en vivo de plata (Alijo y Billetera)
+	if AuthManager and not AuthManager.silver_updated.is_connected(_on_silver_updated):
+		AuthManager.silver_updated.connect(_on_silver_updated)
 		
 	set_process(true)
 
@@ -146,6 +156,8 @@ func initialize_window(params: Dictionary):
 func _request_data_refresh():
 	var char_id = target_char_id if target_char_id != "" else (AuthManager.selected_character_id if AuthManager else "")
 	var state = await InventoryController.fetch_inventory_state(char_id)
+	if AuthManager:
+		AuthManager.fetch_silver_balances()
 	
 	if not is_instance_valid(self) or not is_inside_tree(): return
 	render_inventory_state(state)
@@ -172,6 +184,9 @@ func setup_grid():
 		if child == title_label: continue
 		main_vbox.remove_child(child)
 		child.queue_free()
+	
+	# 0. SETUP CURRENCY & TREASURY HEADER (Silver Stash + Wallet + Transfer Panel)
+	_create_currency_header()
 	
 	# 1. SETUP SHELTER STASH (Account-bound, Shared)
 	_create_section("ALMACÉN DEL REFUGIO (Cuenta)", ShelterManager.InventoryType.SHELTER)
@@ -269,6 +284,138 @@ func _create_lost_inventory_warning():
 	desc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	desc.add_theme_font_size_override("font_size", 14)
 	main_vbox.add_child(desc)
+
+func _create_currency_header():
+	var panel = PanelContainer.new()
+	panel.name = "CurrencyHeaderPanel"
+	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	var sb = StyleBoxFlat.new()
+	sb.bg_color = Color(0.06, 0.08, 0.12, 0.95)
+	sb.border_width_left = 1
+	sb.border_width_top = 1
+	sb.border_width_right = 1
+	sb.border_width_bottom = 1
+	sb.border_color = Color(0.85, 0.72, 0.28) # Hextech Gold border
+	sb.corner_radius_top_left = 6
+	sb.corner_radius_top_right = 6
+	sb.corner_radius_bottom_right = 6
+	sb.corner_radius_bottom_left = 6
+	panel.add_theme_stylebox_override("panel", sb)
+	
+	var margin = MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 12)
+	margin.add_theme_constant_override("margin_right", 12)
+	margin.add_theme_constant_override("margin_top", 6)
+	margin.add_theme_constant_override("margin_bottom", 6)
+	panel.add_child(margin)
+	
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 6)
+	margin.add_child(vbox)
+	
+	var hbox = HBoxContainer.new()
+	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hbox.add_theme_constant_override("separation", 12)
+	vbox.add_child(hbox)
+	
+	# 1. Alijo de Cuenta (Refugio)
+	_stash_silver_label = Label.new()
+	var acc_val = AuthManager.account_silver if AuthManager else 500
+	_stash_silver_label.text = "🪙 Alijo Refugio: %d Silver" % acc_val
+	_stash_silver_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.25))
+	_stash_silver_label.add_theme_font_size_override("font_size", 12)
+	hbox.add_child(_stash_silver_label)
+	
+	var sep1 = VSeparator.new()
+	hbox.add_child(sep1)
+	
+	# 2. Billetera de Personaje
+	var char_name = AuthManager.selected_character_name if AuthManager and AuthManager.selected_character_name != "" else "unu"
+	var char_val = AuthManager.character_silver if AuthManager else 0
+	_char_silver_label = Label.new()
+	_char_silver_label.text = "🎒 Billetera (%s): %d Silver" % [char_name, char_val]
+	_char_silver_label.add_theme_color_override("font_color", Color(0.35, 0.88, 0.95))
+	_char_silver_label.add_theme_font_size_override("font_size", 12)
+	hbox.add_child(_char_silver_label)
+	
+	# Espaciador
+	var spacer = Control.new()
+	spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hbox.add_child(spacer)
+	
+	# Botones de transferencia rápida
+	var btn_withdraw = Button.new()
+	btn_withdraw.text = "⬇ Retirar 100"
+	btn_withdraw.tooltip_text = "Mover 100 Silver del Alijo a la Billetera"
+	btn_withdraw.pressed.connect(func():
+		if AuthManager:
+			AuthManager.transfer_silver(100, true)
+	)
+	hbox.add_child(btn_withdraw)
+	
+	var btn_deposit = Button.new()
+	btn_deposit.text = "⬆ Depositar 100"
+	btn_deposit.tooltip_text = "Mover 100 Silver de la Billetera al Alijo"
+	btn_deposit.pressed.connect(func():
+		if AuthManager:
+			AuthManager.transfer_silver(100, false)
+	)
+	hbox.add_child(btn_deposit)
+	
+	var btn_manage = Button.new()
+	btn_manage.text = "⇄ Gestionar..."
+	btn_manage.tooltip_text = "Abrir opciones avanzadas de transferencia"
+	btn_manage.pressed.connect(_toggle_silver_transfer_panel)
+	hbox.add_child(btn_manage)
+	
+	# Panel colapsable de gestión avanzada
+	_transfer_panel = PanelContainer.new()
+	_transfer_panel.name = "AdvancedTransferPanel"
+	_transfer_panel.visible = false
+	var sub_sb = StyleBoxFlat.new()
+	sub_sb.bg_color = Color(0.04, 0.05, 0.08, 0.98)
+	sub_sb.border_width_top = 1
+	sub_sb.border_color = Color(0.3, 0.35, 0.45)
+	_transfer_panel.add_theme_stylebox_override("panel", sub_sb)
+	
+	var sub_vbox = VBoxContainer.new()
+	sub_vbox.add_theme_constant_override("separation", 6)
+	_transfer_panel.add_child(sub_vbox)
+	
+	var sub_hbox = HBoxContainer.new()
+	sub_hbox.add_theme_constant_override("separation", 10)
+	sub_vbox.add_child(sub_hbox)
+	
+	var btn_all_char = Button.new()
+	btn_all_char.text = "⬇ Todo a Billetera"
+	btn_all_char.pressed.connect(func():
+		if AuthManager:
+			AuthManager.transfer_silver(AuthManager.account_silver, true)
+	)
+	sub_hbox.add_child(btn_all_char)
+	
+	var btn_all_stash = Button.new()
+	btn_all_stash.text = "⬆ Todo al Alijo"
+	btn_all_stash.pressed.connect(func():
+		if AuthManager:
+			AuthManager.transfer_silver(AuthManager.character_silver, false)
+	)
+	sub_hbox.add_child(btn_all_stash)
+	
+	vbox.add_child(_transfer_panel)
+	main_vbox.add_child(panel)
+
+func _toggle_silver_transfer_panel():
+	if _transfer_panel and is_instance_valid(_transfer_panel):
+		_transfer_panel.visible = not _transfer_panel.visible
+
+func _on_silver_updated(acc: int, char_val: int):
+	if _stash_silver_label and is_instance_valid(_stash_silver_label):
+		_stash_silver_label.text = "🪙 Alijo Refugio: %d Silver" % acc
+	if _char_silver_label and is_instance_valid(_char_silver_label):
+		var char_name = AuthManager.selected_character_name if AuthManager and AuthManager.selected_character_name != "" else "unu"
+		_char_silver_label.text = "🎒 Billetera (%s): %d Silver" % [char_name, char_val]
 
 func can_place_item(item: InventoryItem, x: int, y: int, type: ShelterManager.InventoryType) -> bool:
 	var w = item.grid_width if !item.is_rotated else item.grid_height

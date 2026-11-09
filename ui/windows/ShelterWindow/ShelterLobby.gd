@@ -96,6 +96,8 @@ func _ready():
 	
 	if not AuthManager.profile_fetched.is_connected(_setup_ui):
 		AuthManager.profile_fetched.connect(_setup_ui)
+	if not AuthManager.silver_updated.is_connected(_on_auth_silver_updated):
+		AuthManager.silver_updated.connect(_on_auth_silver_updated)
 		
 	play_button.pressed.connect(_on_play_pressed)
 	stash_button.pressed.connect(_on_stash_pressed)
@@ -153,7 +155,17 @@ func _setup_ui():
 		account_type_label.add_theme_color_override("font_color", Color(1, 0.85, 0.3))
 	else:
 		account_type_label.text = "Cuenta Básica (3 Campeones)"
+	if AuthManager:
+		player_silver = AuthManager.account_silver
+		character_silver = AuthManager.character_silver
 	silver_badge.text = "🪙 %d Silver" % player_silver
+
+func _on_auth_silver_updated(acc: int, char_val: int):
+	player_silver = acc
+	character_silver = char_val
+	if silver_badge:
+		silver_badge.text = "🪙 %d Silver" % player_silver
+	_update_transfer_modal_labels()
 
 func _populate_farm_stations():
 	if not stations_grid: return
@@ -766,17 +778,27 @@ func _open_transfer_silver_dialog():
 
 func _transfer_silver(amount: int, to_character: bool):
 	if amount <= 0: return
+	var moved = 0
+	if AuthManager:
+		moved = AuthManager.transfer_silver(amount, to_character)
+		player_silver = AuthManager.account_silver
+		character_silver = AuthManager.character_silver
+	else:
+		if to_character:
+			moved = mini(amount, player_silver)
+			player_silver -= moved
+			character_silver += moved
+		else:
+			moved = mini(amount, character_silver)
+			character_silver -= moved
+			player_silver += moved
+	
 	if to_character:
-		var moved = mini(amount, player_silver)
-		player_silver -= moved
-		character_silver += moved
 		_notify("Transferidos %d de Silver a la billetera del campeón." % moved)
 	else:
-		var moved = mini(amount, character_silver)
-		character_silver -= moved
-		player_silver += moved
 		_notify("Depositados %d de Silver al alijo de cuenta del refugio." % moved)
-	silver_badge.text = "🪙 %d Silver" % player_silver
+	if silver_badge:
+		silver_badge.text = "🪙 %d Silver" % player_silver
 	_update_transfer_modal_labels()
 
 func _update_transfer_modal_labels():

@@ -8,9 +8,9 @@ BIENVENIDO AL MUNDO FRAGMENTADO
 1. INICIO RAPIDO:
    - Ejecuta 'MMORPG.exe' o 'INICIAR_INTERNET_WAN.bat' para jugar por Internet (Oficial).
    - Ejecuta 'INICIAR_LAN_PROXMOX.bat' si juegas en la misma red local del servidor Proxmox (0.2ms).
-   - Ejecuta 'INICIAR_LOCAL_PC.bat' si estás desarrollando con servidores locales en 127.0.0.1.
+   - Ejecuta 'INICIAR_LOCAL_PC.bat' si estÃ¡s desarrollando con servidores locales en 127.0.0.1.
    
-   Si no tienes cuenta, regístrate en:
+   Si no tienes cuenta, regÃ­strate en:
      https://mmo.elbalo.lol/register
    Ingresa tus credenciales en la pantalla de inicio y entra a tu Shelter.
 

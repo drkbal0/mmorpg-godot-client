@@ -10,6 +10,8 @@ var selected_character_name: String = ""
 var world_ticket: String = ""
 var is_premium: bool = false
 var is_admin: bool = false
+var account_silver: int = 500
+var character_silver: int = 0
 
 var gateway_url: String = ""
 
@@ -24,6 +26,60 @@ signal auth_failed(message)
 signal profile_fetched
 signal ticket_fetched(ticket: String)
 signal password_updated
+signal silver_updated(account: int, character: int)
+
+func set_silver(p_account: int, p_character: int) -> void:
+	account_silver = p_account
+	character_silver = p_character
+	silver_updated.emit(account_silver, character_silver)
+
+func transfer_silver(amount: int, to_character: bool) -> int:
+	if amount <= 0: return 0
+	var moved = 0
+	if to_character:
+		moved = mini(amount, account_silver)
+		account_silver -= moved
+		character_silver += moved
+	else:
+		moved = mini(amount, character_silver)
+		character_silver -= moved
+		account_silver += moved
+	silver_updated.emit(account_silver, character_silver)
+	
+	# Background persist to backend if online and character selected
+	if selected_character_id != "" and auth_token != "":
+		_persist_silver_transfer(moved, to_character)
+	return moved
+
+func _persist_silver_transfer(amount: int, to_character: bool) -> void:
+	if amount <= 0: return
+	var from_id = "stash" if to_character else selected_character_id
+	var to_id = selected_character_id if to_character else "stash"
+	var body = {
+		"from_character_id": from_id,
+		"to_character_id": to_id,
+		"amount_silver": amount,
+		"zone_id": 1
+	}
+	APIClient.post_request("/wallet/transfer", body, false)
+
+func fetch_silver_balances() -> Dictionary:
+	if auth_token == "":
+		return {"account_silver": account_silver, "character_silver": character_silver}
+	
+	var stash_res = await APIClient.get_request("/wallet/stash")
+	if stash_res.get("code", 500) == 200 and stash_res.has("data"):
+		var s_data = stash_res.get("data")
+		account_silver = int(s_data.get("silver_balance", s_data.get("balance_silver", account_silver)))
+	
+	if selected_character_id != "":
+		var char_res = await APIClient.get_request("/wallet/" + selected_character_id)
+		if char_res.get("code", 500) == 200 and char_res.has("data"):
+			var c_data = char_res.get("data")
+			character_silver = int(c_data.get("silver_balance", c_data.get("balance_silver", character_silver)))
+	
+	silver_updated.emit(account_silver, character_silver)
+	return {"account_silver": account_silver, "character_silver": character_silver}
 
 func fetch_profile():
 	if auth_token == "":
@@ -175,6 +231,8 @@ func logout():
 	world_ticket = ""
 	is_admin = false
 	is_premium = false
+	account_silver = 500
+	character_silver = 0
 	last_pos = Vector3(-999, -999, -999)
 	print("AuthManager: Session logged out and reset.")
 

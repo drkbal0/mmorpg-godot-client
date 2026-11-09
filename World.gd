@@ -189,7 +189,7 @@ func _on_static_entity_spawned(sid: int, type: int, pos: Vector3, aggro: float, 
 		add_child(h)
 		h.position = pos
 		h.scale = Vector3(aggro, 1.0, aggro) # Using aggro as radius for hazards
-		var is_pulsing = attack > 0.5
+		var is_pulsing = (attack > 0.5) or (pos.x < 0.0)
 		var server_offset = max_hp
 		if h.has_method("setup"):
 			h.setup(server_offset, is_pulsing)
@@ -497,16 +497,67 @@ func _spawn_fireball_projectile(projectile_id: int, origin: Vector3, dir: Vector
 	add_child(p)
 	
 	var move_speed = max(speed, 5.0)
-	var target_pos = origin + Vector3(dir.x, 0, dir.y) * 25.0
-	var duration = 25.0 / move_speed
+	var move_dir = Vector3(dir.x, 0, dir.y).normalized()
+	if move_dir.length_squared() < 0.001:
+		move_dir = Vector3.FORWARD
+	var max_range = 25.0
+	var nominal_target = origin + move_dir * max_range
+	var target_pos = nominal_target
+	var hit_obstacle = false
+	
+	# Raycast contra terreno y obstáculos estáticos del mundo (Cubo, Rampa, Muro LoS)
+	var vp = get_viewport()
+	var w3d = vp.find_world_3d() if vp else null
+	var space_state = w3d.direct_space_state if w3d else null
+	if space_state:
+		var ray_query = PhysicsRayQueryParameters3D.create(origin, nominal_target)
+		ray_query.collide_with_bodies = true
+		ray_query.collide_with_areas = false
+		var hit_dict = space_state.intersect_ray(ray_query)
+		if not hit_dict.is_empty():
+			target_pos = hit_dict.position
+			hit_obstacle = true
+	
+	var travel_dist = origin.distance_to(target_pos)
+	var duration = max(travel_dist / move_speed, 0.05)
+	
 	var tween = create_tween()
 	tween.tween_property(p, "position", target_pos, duration)
 	tween.tween_callback(func():
 		active_projectiles.erase(projectile_id)
 		if is_instance_valid(p): p.queue_free()
+		_spawn_fireball_impact_blast(target_pos, hit_obstacle)
 	)
 	
 	active_projectiles[projectile_id] = p
+
+func _spawn_fireball_impact_blast(pos: Vector3, hit_obstacle: bool):
+	var blast = MeshInstance3D.new()
+	var sphere = SphereMesh.new()
+	sphere.radius = 0.3
+	sphere.height = 0.6
+	blast.mesh = sphere
+	
+	var mat = StandardMaterial3D.new()
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.albedo_color = Color(1.0, 0.5, 0.1, 0.9)
+	mat.emission_enabled = true
+	mat.emission = Color(1.0, 0.4, 0.0) if not hit_obstacle else Color(1.0, 0.8, 0.2)
+	mat.emission_energy_multiplier = 5.0 if hit_obstacle else 3.0
+	blast.set_surface_override_material(0, mat)
+	
+	blast.position = pos
+	add_child(blast)
+	
+	var tween = create_tween()
+	tween.set_parallel(true)
+	var target_scale = Vector3(2.4, 2.4, 2.4) if hit_obstacle else Vector3(1.5, 1.5, 1.5)
+	tween.tween_property(blast, "scale", target_scale, 0.24).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(mat, "albedo_color:a", 0.0, 0.24)
+	tween.chain().tween_callback(func():
+		if is_instance_valid(blast):
+			blast.queue_free()
+	)
 
 func _spawn_dash_trail(origin: Vector3):
 	var ring = MeshInstance3D.new()
