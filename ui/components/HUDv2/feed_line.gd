@@ -41,13 +41,13 @@ func setup(p_time: String, p_player: String, p_champion: String, p_text: String,
 func _layout() -> void:
 	_parts.clear()
 	if time_text != "":
-		_parts.append({"t": time_text, "font": "medium", "color": T.TEXT_DIM})
+		_parts.append({"t": time_text, "font": "medium", "color": T.TEXT_SECONDARY})
 	if player != "":
 		_parts.append({"t": player, "font": "bold", "color": T.ALLY})
 	if champion != "":
-		_parts.append({"t": "[%s]" % champion, "font": "regular", "color": T.TEXT_DIM})
+		_parts.append({"t": "[%s]" % champion, "font": "regular", "color": T.TEXT_SECONDARY})
 	if text != "":
-		_parts.append({"t": text, "font": "medium", "color": T.GOLD_TEXT if is_item else T.TEXT})
+		_parts.append({"t": text, "font": "medium", "color": T.GOLD if is_item else T.TEXT})
 	var x := PAD_X
 	for p in _parts:
 		var w: float = T.font(p.font).get_string_size(p.t, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_FEED).x

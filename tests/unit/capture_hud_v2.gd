@@ -19,7 +19,7 @@ func _run() -> void:
 	for i in 3:
 		await process_frame
 	demo._cast(1)
-	demo.hud.set_ability(0, 2, 5, 24, false, 6, 0.0)
+	demo.hud.set_ability(0, 3, 5, 24, false, 6, 0.0)
 	for s in SHAPES:
 		demo.hud.set_shape(s)
 		for i in 20:

@@ -34,7 +34,7 @@ func has_stats_tab() -> bool:
 
 
 func get_stats_tab_radius() -> int:
-	return int(T.STATS_TAB_RADIUS.get(shape, 16))
+	return T.STATS_TAB_RADIUS if has_stats_tab() else 0
 
 
 func get_outline() -> PackedVector2Array:
@@ -102,7 +102,7 @@ func _draw() -> void:
 		colors[i] = T.PANEL_TOP.lerp(T.PANEL_BOTTOM, f)
 	draw_polygon(outline, colors)
 	# Edge highlight on sides + top (outline is open at the bottom).
-	draw_polyline(outline, T.PANEL_EDGE, 1.0, true)
+	draw_polyline(outline, T.PANEL_EDGE, T.PANEL_EDGE_WIDTH, true)
 
 	# 3) Stats tab (StyleBoxFlat) for Trapecio / Curva.
 	if show_tab:
@@ -111,7 +111,7 @@ func _draw() -> void:
 		sb_tab.corner_radius_bottom_right = 0
 		draw_style_box(sb_tab, tab)
 		var tab_top_y := top_y_at(tab.position.x + 2.0)
-		draw_polyline(D.top_rounded_outline(tab, tab_radius, tab_top_y), T.PANEL_EDGE, 1.0, true)
+		draw_polyline(D.top_rounded_outline(tab, tab_radius, tab_top_y), T.PANEL_EDGE, T.PANEL_EDGE_WIDTH, true)
 
 	# 4) Accent bar centred on the top edge, with soft glow.
 	var bar := T.ACCENT_BAR_RECT

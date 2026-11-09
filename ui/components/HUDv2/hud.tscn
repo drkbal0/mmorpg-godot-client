@@ -44,9 +44,9 @@ alignment = 2
 
 [node name="Buffs" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 239.0
+offset_left = 240.0
 offset_top = 262.0
-offset_right = 559.0
+offset_right = 560.0
 offset_bottom = 290.0
 mouse_filter = 2
 theme_override_constants/separation = 6
@@ -54,9 +54,9 @@ theme_override_constants/separation = 6
 [node name="Portrait" parent="." instance=ExtResource("4_portrait")]
 layout_mode = 0
 offset_left = 110.0
-offset_top = 330.0
+offset_top = 324.0
 offset_right = 220.0
-offset_bottom = 452.0
+offset_bottom = 446.0
 
 [node name="Passive" parent="." instance=ExtResource("5_spell")]
 layout_mode = 0
@@ -140,7 +140,7 @@ layout_mode = 0
 offset_left = 229.0
 offset_top = 432.0
 offset_right = 694.0
-offset_bottom = 445.0
+offset_bottom = 446.0
 kind = "mana"
 current = 403.0
 max_value = 403.0
@@ -244,8 +244,8 @@ amount = 0
 
 [node name="Stats" type="Control" parent="."]
 layout_mode = 0
-offset_left = 962.0
+offset_left = 988.0
 offset_top = 190.0
-offset_right = 1280.0
-offset_bottom = 460.0
+offset_right = 1260.0
+offset_bottom = 446.0
 mouse_filter = 2

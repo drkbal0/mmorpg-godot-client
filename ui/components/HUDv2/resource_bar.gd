@@ -61,7 +61,8 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	var rect := Rect2(Vector2.ZERO, size)
-	var radius := int(minf(5.0, rect.size.y * 0.5))
+	# Spec: "barras 10 (vida) y 7 (maná)"
+	var radius := T.HEALTH_BAR_RADIUS if kind == "health" else T.MANA_BAR_RADIUS
 	var col := T.HEALTH if kind == "health" else T.MANA
 	var f := get_fraction()
 	draw_style_box(T.box(T.BAR_BG, radius, 1, Color(1, 1, 1, 0.06)), rect)

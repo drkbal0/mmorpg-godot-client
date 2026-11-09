@@ -45,6 +45,36 @@ func _run() -> void:
 	var p8 := plain.get_string_size("8888", HORIZONTAL_ALIGNMENT_LEFT, -1, 16).x
 	print("  info: sin tnum 1111=%.2f 8888=%.2f" % [p1, p8])
 
+	# --- Tokens: colors, radii & geometry per prompt spec ---------------------
+	check(T.ACCENT_DEFAULT == Color("#46e3c1"), "token ACCENT_DEFAULT es #46e3c1 (Nexo)")
+	check(T.PANEL_BG == Color(Color("#0d1216"), 0.97), "token PANEL_BG es #0d1216 @ 0.97")
+	check(T.PANEL_EDGE == Color(1, 1, 1, 0.09) and is_equal_approx(T.PANEL_EDGE_WIDTH, 1.5), "token PANEL_EDGE blanco al 9% de 1.5px")
+	check(T.SLOT_READY == Color("#1c2a33"), "token SLOT_READY es #1c2a33")
+	check(T.SLOT_LOCKED == Color("#11181d"), "token SLOT_LOCKED es #11181d")
+	check(T.SLOT_NEUTRAL == Color("#1a252c"), "token SLOT_NEUTRAL es #1a252c")
+	check(T.SLOT_EMPTY == Color("#0a0f13") and T.SLOT_EMPTY_BORDER == Color(1, 1, 1, 0.06), "token SLOT_EMPTY es #0a0f13 + blanco 6%")
+	check(T.WELL == Color("#070a0c"), "token WELL es #070a0c")
+	check(T.BUTTON_BG == Color("#18242b") and T.BUTTON_BORDER == Color(1, 1, 1, 0.08), "token BUTTON_BG es #18242b + blanco 8%")
+	check(T.TEXT == Color("#eef2f4"), "token TEXT es #eef2f4")
+	check(T.TEXT_SECONDARY == Color("#9aa6ae"), "token TEXT_SECONDARY es #9aa6ae")
+	check(T.TEXT_ZERO == Color("#7c8992"), "token TEXT_ZERO es #7c8992")
+	check(T.TEXT_KEY == Color("#c3ccd3"), "token TEXT_KEY es #c3ccd3")
+	check(T.HEALTH == Color("#3ccf73") and T.HEALTH_REGEN == Color("#a9f0c3"), "tokens HEALTH (#3ccf73) y REGEN (#a9f0c3)")
+	check(T.MANA == Color("#3f82f2") and T.MANA_COST == Color("#8fbaff"), "tokens MANA (#3f82f2) y COST (#8fbaff)")
+	check(T.GOLD == Color("#f5c35b") and T.ALLY == Color("#6cb8ff"), "tokens GOLD (#f5c35b) y ALLY (#6cb8ff)")
+	# Radii tokens
+	check(T.ABILITY_RADIUS == 14, "radio tile habilidad = 14")
+	check(T.SPELL_RADIUS == 12, "radio tile chico = 12")
+	check(T.ITEM_RADIUS == 12, "radio ranura = 12")
+	check(T.BUFF_RADIUS == 8, "radio buff = 8")
+	check(T.BUTTON_RADIUS == 8, "radio botón = 8")
+	check(T.GOLD_BOX_RADIUS == 10, "radio caja oro = 10")
+	check(T.HEALTH_BAR_RADIUS == 10 and T.MANA_BAR_RADIUS == 7, "radios barras 10 (vida) y 7 (maná)")
+	check(T.STATS_TAB_RADIUS == 18, "radio pestaña stats = 18 (arriba)")
+	# Stats tab geometry (x=988, bottom=14, ancho 272)
+	check(is_equal_approx(T.STATS_TAB_RECT.position.x, 988.0) and is_equal_approx(T.STATS_TAB_RECT.size.x, 272.0), "pestaña stats x=988 ancho 272")
+	check(is_equal_approx(T.STATS_TAB_RECT.end.y, 446.0), "pestaña stats bottom=14 (y=446)")
+
 	# --- HUD scene ------------------------------------------------------------
 	var hud: Control = load("res://ui/components/HUDv2/hud.tscn").instantiate()
 	root.add_child(hud)
@@ -123,6 +153,10 @@ func _run() -> void:
 	check(hud.stat_rows["armor_pen"].value_text == "0 | 0%", "stat string")
 	check(hud.stat_rows["move_speed"].value_text == "348", "stat float entero")
 	check(hud.stat_rows.size() == T.STAT_SCHEMA.size(), "16 filas de stats")
+	check(hud.stat_rows["armor_pen"].get_value_color() == T.TEXT_ZERO, "valor cero '0 | 0%' atenua a #7c8992")
+	check(hud.stat_rows["attack_damage"].get_value_color() == T.TEXT, "valor no-cero '89' usa #eef2f4")
+	check(is_equal_approx(hud.buffs_root.position.x, 240.0) and is_equal_approx(hud.buffs_root.position.y, 262.0), "buffs en (x=240, y=262)")
+	check(is_equal_approx(hud.stats_root.position.x, 988.0) and is_equal_approx(hud.stats_root.size.x, 272.0), "stats root en x=988 ancho 272")
 
 	# set_buffs
 	hud.set_buffs([{"color": Color.RED, "stacks": 3}, {"color": Color.BLUE}, {"color": Color.GREEN, "duration_fraction": 0.5}])
@@ -154,6 +188,19 @@ func _run() -> void:
 	var demo: Control = load("res://ui/hud_demo.tscn").instantiate()
 	root.add_child(demo)
 	await process_frame
+	check(demo.level == 5, "demo: Nivel inicial = 5")
+	check(is_equal_approx(demo.xp, 0.30), "demo: XP inicial = 30% (0.30)")
+	check(demo.hud.get_ability(0).rank == 3 and demo.hud.get_ability(0).cost == 24, "demo: Q 3/5 coste 24")
+	check(demo.hud.get_ability(1).rank == 1 and demo.hud.get_ability(1).cost == 50, "demo: W 1/5 coste 50")
+	check(demo.hud.get_ability(2).rank == 1 and demo.hud.get_ability(2).cost == 60, "demo: E 1/5 coste 60")
+	check(demo.hud.get_ability(3).locked and demo.hud.get_ability(3).cost == 100 and demo.hud.get_ability(3).unlock_level == 6, "demo: R bloqueada Nv.6 coste 100")
+	check(is_equal_approx(demo.hud.get_spell(0).cooldown, 87.0), "demo: D 87s")
+	check(is_equal_approx(demo.hud.get_spell(1).cooldown, 39.0), "demo: F 39s")
+	check(demo.hud.get_item(0).stacks == 23, "demo: Item 1 x23")
+	check(demo.hud.trinket.charges == 1, "demo: Amuleto 1")
+	check(demo.gold == 1665, "demo: Oro 1665")
+	check(is_equal_approx(demo.hp, 612.0) and is_equal_approx(demo.hp_max, 1003.0) and is_equal_approx(demo.hud.health_bar.regen, 3.9), "demo: Vida 612/1003 (+3.9)")
+	check(is_equal_approx(demo.mana, 403.0) and is_equal_approx(demo.mana_max, 403.0), "demo: Maná 403/403")
 	demo._on_tick()
 	demo._cast(0)
 	await process_frame

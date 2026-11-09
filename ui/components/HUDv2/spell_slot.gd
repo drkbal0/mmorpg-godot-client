@@ -69,10 +69,11 @@ func _draw() -> void:
 	var caption_rect := Rect2(-12, 52, T.SPELL_SIZE + 24, 14)
 
 	if is_passive:
-		draw_style_box(T.box(T.SLOT_BG, T.SPELL_RADIUS, 1, T.SLOT_BORDER), tile)
-		draw_circle(tile.get_center(), 14.0, T.SLOT_BG_DEEP)
+		# Spec: "Neutro (pasiva/retrato): #1a252c"
+		draw_style_box(T.box(T.SLOT_NEUTRAL, T.SPELL_RADIUS, 1, T.SLOT_BORDER), tile)
+		draw_circle(tile.get_center(), 14.0, T.WELL)
 		D.draw_glyph(self, icon_kind, tile.get_center(), 18.0, T.TEXT, 2.0)
-		D.draw_text_centered(self, T.font("header"), T.FS_TINY, caption_rect, "PASIVA", T.TEXT_DIM)
+		D.draw_text_centered(self, T.font("header"), T.FS_TINY, caption_rect, "PASIVA", T.TEXT_SECONDARY)
 		return
 
 	var on_cd := cooldown > 0.0
@@ -80,8 +81,9 @@ func _draw() -> void:
 	if on_cd:
 		D.draw_cooldown(self, tile.grow(-1), T.SPELL_RADIUS - 1, get_cooldown_fraction(), T.COOLDOWN_OVERLAY)
 		D.draw_text_centered(self, T.font("bold"), T.FS_COOLDOWN, tile.grow_individual(0, -4, 0, 0), str(ceili(cooldown)), T.TEXT, true)
-		D.draw_text_centered(self, T.font("medium"), T.FS_SMALL, caption_rect, "en espera", T.TEXT_DIM)
+		D.draw_text_centered(self, T.font("medium"), T.FS_SMALL, caption_rect, "en espera", T.TEXT_SECONDARY)
 	else:
 		D.draw_glyph(self, icon_kind, tile.get_center() + Vector2(0, 2), 18.0, T.TEXT, 2.0)
 		D.draw_text_centered(self, T.font("medium"), T.FS_SMALL, caption_rect, "listo", Color(accent, 0.85))
-	draw_string(T.font("bold"), Vector2(6, 13), key_label, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_TINY, T.TEXT_DIM)
+	# Spec: "Letra tecla: #c3ccd3"
+	draw_string(T.font("bold"), Vector2(6, 13), key_label, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_TINY, T.TEXT_KEY)

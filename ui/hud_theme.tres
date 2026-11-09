@@ -27,21 +27,21 @@ opentype_features = {"tnum": 1}
 spacing_glyph = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(0.0784314, 0.0980392, 0.117647, 0.97)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
+bg_color = Color(0.05098, 0.07059, 0.08627, 0.97)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 0
+corner_radius_bottom_left = 0
 corner_detail = 8
 anti_aliasing = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
-bg_color = Color(0.101961, 0.133333, 0.160784, 1)
+bg_color = Color(0.109804, 0.164706, 0.2, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
-border_color = Color(0.172549, 0.211765, 0.25098, 1)
+border_color = Color(1, 1, 1, 0.12)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
@@ -61,7 +61,7 @@ HUDPanel/base_type = &"PanelContainer"
 HUDPanel/styles/panel = SubResource("StyleBoxFlat_panel")
 HUDSlot/base_type = &"PanelContainer"
 HUDSlot/styles/panel = SubResource("StyleBoxFlat_slot")
-Label/colors/font_color = Color(0.913725, 0.933333, 0.952941, 1)
+Label/colors/font_color = Color(0.933333, 0.94902, 0.956863, 1)
 Label/colors/font_shadow_color = Color(0, 0, 0, 0.45)
 Label/constants/shadow_offset_x = 0
 Label/constants/shadow_offset_y = 1

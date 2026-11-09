@@ -92,8 +92,9 @@ func _draw() -> void:
 	var learned := rank > 0 and not locked
 
 	# Tile background + border.
+	# Spec: "Tile habilidad lista: #1c2a33. Bloqueada: #11181d. Neutro (pasiva/retrato): #1a252c."
 	var border_color := accent if learned else (T.SLOT_BORDER if locked else Color(accent, 0.35))
-	var bg := T.SLOT_LOCKED if locked else T.SLOT_BG
+	var bg := T.SLOT_LOCKED if locked else (T.SLOT_READY if learned else T.SLOT_NEUTRAL)
 	draw_style_box(T.box(bg, T.ABILITY_RADIUS, T.ABILITY_BORDER, border_color), tile)
 	if learned:
 		# Inner sheen.
@@ -104,7 +105,7 @@ func _draw() -> void:
 	var icon_center := tile.get_center() + (Vector2(0, -5) if locked else Vector2.ZERO)
 	D.draw_glyph(self, icon_kind, icon_center, 24.0, icon_color, 2.2)
 	if locked:
-		D.draw_text_centered(self, T.font("semibold"), T.FS_SMALL, Rect2(0, 38, T.ABILITY_SIZE, 16), "Nv. %d" % unlock_level, T.TEXT_DIM)
+		D.draw_text_centered(self, T.font("semibold"), T.FS_SMALL, Rect2(0, 38, T.ABILITY_SIZE, 16), "Nv. %d" % unlock_level, T.TEXT_SECONDARY)
 
 	# Cooldown overlay + seconds.
 	var frac := get_cooldown_fraction()
@@ -113,8 +114,8 @@ func _draw() -> void:
 		var txt := ("%.1f" % cooldown) if cooldown < 1.0 else str(ceili(cooldown))
 		D.draw_text_centered(self, T.font("bold"), T.FS_COOLDOWN, tile, txt, T.TEXT, true)
 
-	# Key label (top-left).
-	draw_string(T.font("bold"), Vector2(7, 14), key_label, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_SMALL, T.TEXT_DIM)
+	# Key label (top-left) - Spec: "Letra tecla: #c3ccd3".
+	draw_string(T.font("bold"), Vector2(7, 14), key_label, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_SMALL, T.TEXT_KEY)
 
 	# Rank pips.
 	var gap := 3.0

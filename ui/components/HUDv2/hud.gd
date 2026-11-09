@@ -19,10 +19,10 @@ const STAT_ROW_SCENE: PackedScene = preload("res://ui/components/HUDv2/stat_row.
 const BUFF_SCENE: PackedScene = preload("res://ui/components/HUDv2/buff_icon.tscn")
 const FEED_SCENE: PackedScene = preload("res://ui/components/HUDv2/feed_line.tscn")
 
-const STATS_PAD := Vector2(18, 20)
-const STATS_COL_W := 132.0
-const STATS_COL_GAP := 18.0
-const STATS_HEADER_H := 24.0
+const STATS_PAD := Vector2(10, 14)
+const STATS_COL_W := 120.0
+const STATS_COL_GAP := 12.0
+const STATS_HEADER_H := 18.0
 
 ## Scale the HUD down (never up) when the viewport is narrower than 1360px.
 @export var auto_fit: bool = true
@@ -236,7 +236,7 @@ func _build_stats() -> void:
 		header.size = Vector2(STATS_COL_W * 2 + STATS_COL_GAP, 16)
 		header.add_theme_font_override("font", T.font("header"))
 		header.add_theme_font_size_override("font_size", T.FS_TINY)
-		header.add_theme_color_override("font_color", T.TEXT_MUTED)
+		header.add_theme_color_override("font_color", T.TEXT_SECONDARY)
 		header.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		stats_root.add_child(header)
 		y += STATS_HEADER_H - 4.0
@@ -255,7 +255,7 @@ func _build_stats() -> void:
 			row_y[col] += T.STAT_ROW_HEIGHT
 			stats_root.add_child(row)
 			stat_rows[def.id] = row
-		y = maxf(row_y[0], row_y[1]) + 8.0
+		y = maxf(row_y[0], row_y[1]) + 4.0
 	_apply_stats()
 
 

@@ -54,15 +54,15 @@ func _draw() -> void:
 	var c := get_ring_center()
 	var shown := xp_fraction if _shown_xp < 0.0 else _shown_xp
 
-	# Outer disc + XP track and progress.
-	draw_circle(c, T.PORTRAIT_RING_RADIUS + T.PORTRAIT_RING_WIDTH * 0.5 + 2.0, T.SLOT_BG_DEEP)
+	# Outer disc (Pozo #070a0c) + XP track and progress.
+	draw_circle(c, T.PORTRAIT_RING_RADIUS + T.PORTRAIT_RING_WIDTH * 0.5 + 2.0, T.WELL)
 	D.draw_ring(self, c, T.PORTRAIT_RING_RADIUS, T.PORTRAIT_RING_WIDTH, Color(1, 1, 1, 0.07))
 	D.draw_ring(self, c, T.PORTRAIT_RING_RADIUS, T.PORTRAIT_RING_WIDTH, accent, 0.0, shown)
 	if shown > 0.0 and shown < 1.0:
 		var a := -PI * 0.5 + TAU * shown
 		draw_circle(c + Vector2(cos(a), sin(a)) * T.PORTRAIT_RING_RADIUS, T.PORTRAIT_RING_WIDTH * 0.5, accent.lightened(0.35))
 
-	# Inner circle (84 px).
+	# Inner circle (84 px). Neutro (pasiva/retrato): #1a252c.
 	var r := T.PORTRAIT_INNER_DIAMETER * 0.5
 	if portrait_texture:
 		var pts := D.circle_points(c, r, 48)
@@ -71,13 +71,13 @@ func _draw() -> void:
 			uvs.append((p - (c - Vector2(r, r))) / (r * 2.0))
 		draw_polygon(pts, PackedColorArray([Color.WHITE]), uvs, portrait_texture)
 	else:
-		draw_circle(c, r, T.SLOT_BG)
-		draw_circle(c, r - 6.0, T.SLOT_BG_DEEP.lerp(T.SLOT_BG, 0.5))
-		D.draw_glyph(self, "user", c + Vector2(0, 2), r * 0.95, T.TEXT_DIM, 2.0)
+		draw_circle(c, r, T.SLOT_NEUTRAL)
+		draw_circle(c, r - 6.0, T.WELL.lerp(T.SLOT_NEUTRAL, 0.5))
+		D.draw_glyph(self, "user", c + Vector2(0, 2), r * 0.95, T.TEXT_SECONDARY, 2.0)
 	draw_arc(c, r, 0, TAU, 64, T.SLOT_BORDER, 1.5, true)
 
 	# Level pill 36x22 in accent.
 	var pill := Rect2(Vector2(c.x - T.LEVEL_PILL_SIZE.x * 0.5, c.y + T.PORTRAIT_RING_RADIUS - 11.0), T.LEVEL_PILL_SIZE)
-	draw_style_box(T.box(T.SLOT_BG_DEEP, 12), pill.grow(2))
+	draw_style_box(T.box(T.WELL, 12), pill.grow(2))
 	draw_style_box(T.box(accent, 11), pill)
 	D.draw_text_centered(self, T.font("bold"), T.FS_BODY + 1, pill, str(level), T.TEXT_DARK)

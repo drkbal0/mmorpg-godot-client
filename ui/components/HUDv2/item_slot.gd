@@ -121,7 +121,10 @@ func _draw() -> void:
 func _draw_item() -> void:
 	var tile := Rect2(Vector2.ZERO, Vector2(T.ITEM_SIZE, T.ITEM_SIZE))
 	if not has_item():
-		draw_style_box(T.box(T.SLOT_BG_DEEP, T.ITEM_RADIUS, 1, T.SLOT_BORDER), tile)
+		# Spec: "Ranura vacía: #0a0f13 + borde blanco al 6% de 1px."
+		draw_style_box(T.box(T.SLOT_EMPTY, T.ITEM_RADIUS, 1, T.SLOT_EMPTY_BORDER), tile)
+		if label != "":
+			draw_string(T.font("bold"), Vector2(6, 13), label, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_TINY, T.TEXT_KEY)
 		return
 	draw_style_box(T.box(Color("#1f3b63"), T.ITEM_RADIUS, 1, Color("#3c6aa8")), tile)
 	if icon:
@@ -130,7 +133,7 @@ func _draw_item() -> void:
 	else:
 		D.draw_glyph(self, glyph, tile.get_center(), 22.0, T.TEXT, 2.0)
 	if label != "":
-		draw_string(T.font("bold"), Vector2(6, 13), label, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_TINY, T.TEXT)
+		draw_string(T.font("bold"), Vector2(6, 13), label, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_TINY, T.TEXT_KEY)
 	if stacks > 1:
 		var r := Rect2(0, T.ITEM_SIZE - 17, T.ITEM_SIZE - 5, 14)
 		var font := T.font("bold")
@@ -143,34 +146,36 @@ func _draw_trinket() -> void:
 	var r := T.TRINKET_DIAMETER * 0.5
 	var c := Vector2(r, r)
 	var has_charges := charges > 0
-	draw_circle(c, r, T.SLOT_BG)
+	draw_circle(c, r, T.SLOT_NEUTRAL)
 	draw_arc(c, r - 1.0, 0, TAU, 48, accent if has_charges else T.SLOT_BORDER, 2.0, true)
-	D.draw_glyph(self, "eye", c, 20.0, T.GOLD_TEXT if has_charges else T.TEXT_MUTED, 2.0)
+	D.draw_glyph(self, "eye", c, 20.0, T.GOLD if has_charges else T.TEXT_MUTED, 2.0)
 	# Charges badge (top-right, overflowing the circle).
 	var bc := c + Vector2(r * 0.78, -r * 0.78)
-	draw_circle(bc, 9.0, T.SLOT_BG_DEEP)
+	draw_circle(bc, 9.0, T.WELL)
 	draw_circle(bc, 7.5, accent if has_charges else T.SLOT_BORDER)
 	D.draw_text_centered(self, T.font("bold"), T.FS_TINY, Rect2(bc - Vector2(8, 8), Vector2(16, 16)), str(charges), T.TEXT_DARK)
 	# Slot number under the circle-left like the grid's 4th column.
 	if label != "":
-		draw_string(T.font("bold"), Vector2(-9, T.TRINKET_DIAMETER + 1), label, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_TINY, T.TEXT_DIM)
+		draw_string(T.font("bold"), Vector2(-9, T.TRINKET_DIAMETER + 1), label, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_TINY, T.TEXT_KEY)
 
 
 func _draw_button() -> void:
 	var rect := Rect2(Vector2.ZERO, size)
-	var border := accent if _hover else T.SLOT_BORDER
-	draw_style_box(T.box(T.SLOT_BG, 7, 1, border), rect)
+	# Spec: "Botón: #18242b + borde blanco al 8%." "Radios: ... botón 8"
+	var border := accent if _hover else T.BUTTON_BORDER
+	draw_style_box(T.box(T.BUTTON_BG, T.BUTTON_RADIUS, 1, border), rect)
 	D.draw_glyph(self, glyph, Vector2(13, rect.size.y * 0.5), 11.0, accent, 1.6)
-	D.draw_text_aligned(self, T.font("bold"), T.FS_SMALL, Rect2(21, 0, rect.size.x - 23, rect.size.y), label, T.TEXT, HORIZONTAL_ALIGNMENT_LEFT)
+	D.draw_text_aligned(self, T.font("bold"), T.FS_SMALL, Rect2(21, 0, rect.size.x - 23, rect.size.y), label, T.TEXT_KEY, HORIZONTAL_ALIGNMENT_LEFT)
 
 
 func _draw_gold() -> void:
 	var rect := Rect2(Vector2.ZERO, size)
-	draw_style_box(T.box(T.SLOT_BG_DEEP, 10, 1, Color(T.GOLD, 0.35)), rect)
+	# Spec: "caja oro 10", "Oro: #f5c35b", "Pozo: #070a0c"
+	draw_style_box(T.box(T.WELL, T.GOLD_BOX_RADIUS, 1, Color(T.GOLD, 0.35)), rect)
 	var cy := rect.size.y * 0.5
 	D.draw_glyph(self, "coin", Vector2(17, cy), 12.0, T.GOLD, 2.0)
 	var font := T.font("bold")
-	draw_string(font, Vector2(31, D.baseline_for_center(font, T.FS_GOLD, cy)), str(amount), HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_GOLD, T.GOLD_TEXT)
+	draw_string(font, Vector2(31, D.baseline_for_center(font, T.FS_GOLD, cy)), str(amount), HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_GOLD, T.GOLD)
 	# Passive income ring on the right.
 	var rc := Vector2(rect.size.x - 18, cy)
 	D.draw_ring(self, rc, 8.0, 3.0, Color(1, 1, 1, 0.08))

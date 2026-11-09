@@ -5,10 +5,10 @@ extends Control
 ##       1 2 3 = shape (trapecio / escalonada / curva) · C = cycle accent
 ##       L = level up · G = +300 gold
 
-const ACCENTS: Array[Color] = [Color("#3fd9b0"), Color("#f2b63d"), Color("#6fb4ff"), Color("#e8607a"), Color("#b07cf0")]
+const ACCENTS: Array[Color] = [Color("#46e3c1"), Color("#5aa9ff"), Color("#f5b546"), Color("#ff6fa8")]
 const SHAPES: Array[String] = ["trapecio", "escalonada", "curva"]
 const ABILITY_DEFS := [
-	{"rank": 2, "max": 5, "cost": 24, "cd": 6.0},
+	{"rank": 3, "max": 5, "cost": 24, "cd": 6.0},
 	{"rank": 1, "max": 5, "cost": 50, "cd": 12.0},
 	{"rank": 1, "max": 5, "cost": 60, "cd": 9.0},
 	{"rank": 0, "max": 3, "cost": 100, "cd": 80.0},
@@ -32,7 +32,7 @@ var mana := 403.0
 var mana_max := 403.0
 var gold := 1665
 var level := 5
-var xp := 0.35
+var xp := 0.30
 var accent_idx := 0
 var shape_idx := 0
 var game_seconds := 4 * 60 + 39
