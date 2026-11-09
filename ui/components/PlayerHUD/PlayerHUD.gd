@@ -22,6 +22,9 @@ const SKILL_CONFIG = [
 	{"id": 5, "action": "cast_ultimate", "fallback_key": "R", "key": "R", "name": "METEORO", "color": Color(1.0, 0.25, 0.25), "base_cd": 12.0}
 ]
 
+const HUDV2_SCENE = preload("res://ui/components/HUDv2/hud.tscn")
+var hud_v2: Control = null
+
 func _ready():
 	if has_node("/root/UIOrchestrator"):
 		var orch = get_node("/root/UIOrchestrator")
@@ -40,6 +43,54 @@ func _ready():
 	_populate_action_bar()
 	_populate_item_hotbar()
 	update_keybind_labels()
+	_setup_hudv2()
+
+func _setup_hudv2() -> void:
+	var hud_margin = get_node_or_null("RootBottom/HUDMargin")
+	var main_panel = hud_margin.get_node_or_null("MainPanel") if hud_margin else null
+	if main_panel:
+		main_panel.visible = false
+	if wings_overlay:
+		wings_overlay.visible = false
+	
+	var root_bottom = get_node_or_null("RootBottom")
+	if not root_bottom: return
+	
+	hud_v2 = HUDV2_SCENE.instantiate()
+	hud_v2.name = "HUDv2"
+	root_bottom.add_child(hud_v2)
+	hud_v2.anchors_preset = Control.PRESET_CENTER_BOTTOM
+	hud_v2.anchor_left = 0.5
+	hud_v2.anchor_right = 0.5
+	hud_v2.anchor_top = 1.0
+	hud_v2.anchor_bottom = 1.0
+	hud_v2.offset_left = -680.0
+	hud_v2.offset_top = -460.0
+	hud_v2.offset_right = 680.0
+	hud_v2.offset_bottom = 0.0
+	
+	hud_v2.set_health(1000.0, 1000.0, 3.9)
+	hud_v2.set_mana(403.0, 403.0)
+	hud_v2.set_level(5, 0.3)
+	hud_v2.set_gold(1665)
+	hud_v2.set_ability(0, 3, 5, 24, false, 6, 0.0)
+	hud_v2.set_ability(1, 1, 5, 50, false, 6, 0.0)
+	hud_v2.set_ability(2, 1, 5, 60, false, 6, 0.0)
+	hud_v2.set_ability(3, 0, 3, 100, false, 6, 0.0)
+	hud_v2.set_spell(0, 87.0)
+	hud_v2.set_spell(1, 39.0)
+	hud_v2.set_item(0, null, 23)
+	hud_v2.set_trinket(1)
+	hud_v2.set_stats({
+		"attack_damage": 89, "ability_power": 0,
+		"attack_speed": 0.72, "crit": "0%",
+		"armor_pen": "0 | 0%", "magic_pen": "0 | 0%",
+		"life_steal": "0%", "omnivamp": "0%",
+		"armor": 49, "magic_resist": 38,
+		"tenacity": "0%", "heal_shield": "0%",
+		"ability_haste": 10, "move_speed": 348,
+		"attack_range": 175, "regen": "19 | 55",
+	})
 
 func _setup_wings_overlay() -> void:
 	var hud_margin = get_node_or_null("RootBottom/HUDMargin")
@@ -95,6 +146,9 @@ func apply_hud_scale(scale_val: float) -> void:
 	if hud_margin:
 		hud_margin.pivot_offset = Vector2(hud_margin.size.x * 0.5, hud_margin.size.y)
 		hud_margin.scale = Vector2(scale_val, scale_val)
+	if is_instance_valid(hud_v2):
+		hud_v2.pivot_offset = Vector2(680.0, 460.0)
+		hud_v2.scale = Vector2(scale_val, scale_val)
 
 func get_action_display_key(action_name: String, fallback: String) -> String:
 	if not InputMap.has_action(action_name):
@@ -346,6 +400,12 @@ func _process(delta: float):
 	var spell_mgr = get_node_or_null("/root/SpellManager")
 	if not spell_mgr: return
 	
+	if is_instance_valid(hud_v2) and spell_mgr:
+		var q_cd = spell_mgr.get_cooldown_remaining(1)
+		var r_cd = spell_mgr.get_cooldown_remaining(5)
+		hud_v2.set_ability(0, 3, 5, 24, false, 6, q_cd)
+		hud_v2.set_ability(3, 0, 3, 100, false, 6, r_cd)
+
 	for sid in skill_slots.keys():
 		var slot = skill_slots[sid]
 		var rem = spell_mgr.get_cooldown_remaining(sid)
@@ -397,8 +457,12 @@ func update_hp(new_hp_percent: float):
 	if hp_value_label:
 		var cur_val = int(round(new_hp_percent * 10))
 		hp_value_label.text = "%d / 1000 HP (%d%%)" % [cur_val, int(round(new_hp_percent))]
+	if is_instance_valid(hud_v2):
+		hud_v2.set_health(new_hp_percent * 10.0, 1000.0, 3.9)
 
 func update_mana(new_mana_percent: float):
 	if mana_bar:
 		var tween = create_tween()
 		tween.tween_property(mana_bar, "value", new_mana_percent, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	if is_instance_valid(hud_v2):
+		hud_v2.set_mana(new_mana_percent * 10.0, 1000.0)
