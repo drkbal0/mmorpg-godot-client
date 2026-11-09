@@ -13,13 +13,24 @@ func _ready():
 			mat.albedo_color.a = 0.0
 			mat.emission_enabled = false
 
-func setup(p_offset: float):
+func setup(p_offset: float = 0.0, is_pulsing: bool = true):
 	if mesh_instance:
 		var mat = mesh_instance.get_active_material(0)
 		if mat:
+			mat = mat.duplicate()
+			mesh_instance.set_surface_override_material(0, mat)
 			mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-			print("[HazardIndicator] Syncing pulse. Offset: %.2f, Scale: %.2f" % [p_offset, scale.x])
-			_start_synchronized_pulse(mat, p_offset)
+			if not is_pulsing:
+				# Static Hazard: permanently ON
+				mat.albedo_color = Color(1.0, 0.15, 0.15, 0.6)
+				mat.emission_enabled = true
+				mat.emission = Color(1.0, 0.1, 0.1)
+				mat.emission_energy_multiplier = 1.2
+				return
+
+			var norm_offset = fposmod(p_offset, 5.0)
+			print("[HazardIndicator] Syncing pulse. Offset: %.2f (Norm: %.2f), Scale: %.2f" % [p_offset, norm_offset, scale.x])
+			_start_synchronized_pulse(mat, norm_offset)
 		else:
 			push_error("[HazardIndicator] No material found on MeshInstance3D!")
 
@@ -31,27 +42,30 @@ func _pulse_cycle_sync(mat, offset: float):
 	if !is_inside_tree() or !is_instance_valid(mat): return
 	var tween = create_tween()
 	
-	if offset < 2.0:
-		# Estamos en fase ON. Duración restante: 2.0 - offset
-		var remaining_on = 2.0 - offset
-		mat.emission_enabled = true
-		mat.emission = Color(1, 0, 0)
-		mat.albedo_color = Color(1, 0, 0, 0.7)
-		mat.emission_energy_multiplier = 1.5
-		
-		# Solo hacemos el desvanecimiento al final si queda tiempo
-		var fade_time = min(0.2, remaining_on)
-		tween.tween_interval(max(0.0, remaining_on - fade_time))
-		tween.tween_property(mat, "albedo_color", Color(1, 0, 0, 0.05), fade_time)
-		tween.parallel().tween_property(mat, "emission_energy_multiplier", 0.0, fade_time)
-		tween.tween_interval(3.0) # Fase OFF completa
-	else:
-		# Estamos en fase OFF. Duración restante: 3.0 - (offset - 2.0)
-		var remaining_off = 5.0 - offset
+	# Ciclo autoritativo de 5s sincronizado con Rust ECS:
+	# - Fase de Recarga / Apagado (3.0s): Daño 0, contorno tenue y seguro (alpha 0.08, sin emisión)
+	# - Fase Activa / Detonación (2.0s): Daño activo, fuego carmesí ardiente (alpha 0.85, emisión HDR 2.5)
+	if offset < 3.0:
+		var remaining_safe = 3.0 - offset
 		mat.emission_enabled = false
-		mat.albedo_color = Color(1, 0, 0, 0.05)
+		mat.albedo_color = Color(0.9, 0.15, 0.15, 0.08)
 		mat.emission_energy_multiplier = 0.0
-		tween.tween_interval(max(0.0, remaining_off))
+		
+		tween.tween_interval(remaining_safe)
+		tween.tween_callback(func():
+			if is_instance_valid(mat):
+				mat.emission_enabled = true
+				mat.emission = Color(1.0, 0.1, 0.1)
+				mat.albedo_color = Color(1.0, 0.1, 0.1, 0.85)
+				mat.emission_energy_multiplier = 2.5
+		)
+		tween.tween_interval(2.0)
+	else:
+		var remaining_active = 5.0 - offset
+		mat.emission_enabled = true
+		mat.emission = Color(1.0, 0.1, 0.1)
+		mat.albedo_color = Color(1.0, 0.1, 0.1, 0.85)
+		mat.emission_energy_multiplier = 2.5
+		tween.tween_interval(remaining_active)
 	
-	# Al terminar, entrar en el bucle normal de 0
 	tween.finished.connect(func(): _pulse_cycle_sync(mat, 0.0))

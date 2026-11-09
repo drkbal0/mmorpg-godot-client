@@ -157,8 +157,14 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.95, 0.8, 0.3, 1)
 theme_override_font_sizes/font_size = 11
-text = "🪙 1,500"
+text = "🪙 500"
 vertical_alignment = 1
+
+[node name="TransferSilverBtn" type="Button" parent="VBox/Navbar/NavMargin/NavHBox/ProfilePill/PillMargin/PillHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 9
+text = "⇄ Mover"
 
 [node name="Body" type="MarginContainer" parent="VBox"]
 layout_mode = 2

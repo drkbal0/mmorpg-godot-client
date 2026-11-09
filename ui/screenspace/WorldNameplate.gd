@@ -26,6 +26,7 @@ var max_health: float = 1000.0
 var current_health: float = 1000.0
 var is_hostile_unit: bool = false
 var unit_level: int = 1
+var is_dead: bool = false
 var _previous_hp_percent: float = 100.0
 var _bg_opacity: float = 1.0
 
@@ -106,6 +107,18 @@ func setup(p_name: String, p_hp: float, p_max_hp: float, is_hostile: bool = fals
 	if ticks_overlay:
 		ticks_overlay.queue_redraw()
 
+	# If dead (0 HP), fade out and hide smoothly
+	var cur_pct = (current_health / max_health) * 100.0
+	if cur_pct <= 0.0:
+		is_dead = true
+		visible = false
+		modulate.a = 0.0
+	else:
+		is_dead = false
+		if not visible:
+			visible = true
+			modulate.a = _bg_opacity
+
 
 func _apply_bar_colors() -> void:
 	_ensure_node_refs()
@@ -178,6 +191,18 @@ func update_hp(new_hp: float, new_max: float = -1.0, is_crit: bool = false) -> v
 	if ticks_overlay:
 		ticks_overlay.queue_redraw()
 
+	# If dead (0 HP), fade out and hide smoothly
+	var cur_pct = (current_health / max_health) * 100.0
+	if cur_pct <= 0.0:
+		is_dead = true
+		visible = false
+		modulate.a = 0.0
+	else:
+		is_dead = false
+		if not visible:
+			visible = true
+			modulate.a = _bg_opacity
+
 
 ## Sets background opacity when menus / modals are open
 func set_dim_opacity(alpha: float) -> void:
@@ -210,22 +235,22 @@ func _on_draw_ticks() -> void:
 			ticks_overlay.draw_line(
 				Vector2(x, 0.0),
 				Vector2(x, bar_h),
-				Color(0.04, 0.05, 0.08, 0.95),
-				3.0
+				Color(0.0, 0.0, 0.0, 1.0),
+				2.5
 			)
 		elif int(hp_val) % 500 == 0:
 			# 500 HP Medium Tick
 			ticks_overlay.draw_line(
-				Vector2(x, bar_h * 0.25),
+				Vector2(x, 0.0),
 				Vector2(x, bar_h),
-				Color(0.05, 0.07, 0.1, 0.8),
-				2.0
+				Color(0.04, 0.04, 0.05, 0.9),
+				1.5
 			)
 		else:
 			# 100 HP Minor Tick
 			ticks_overlay.draw_line(
-				Vector2(x, bar_h * 0.5),
+				Vector2(x, 0.0),
 				Vector2(x, bar_h),
-				Color(0.05, 0.07, 0.1, 0.6),
+				Color(0.05, 0.06, 0.08, 0.75),
 				1.0
 			)

@@ -102,6 +102,9 @@ func _ready():
 	vendor_button.pressed.connect(_on_vendor_toggle)
 	codex_button.pressed.connect(_on_codex_toggle)
 	harvest_all_btn.pressed.connect(_on_harvest_all)
+	var transfer_btn = get_node_or_null("%TransferSilverBtn")
+	if transfer_btn:
+		transfer_btn.pressed.connect(_open_transfer_silver_dialog)
 	
 	%ShowDebugBtn.pressed.connect(func(): %DebugPanel.visible = true)
 	%CloseDebug.pressed.connect(func(): %DebugPanel.visible = false)
@@ -660,3 +663,126 @@ func _apply_button_theme(btn: Button, accent_color: Color) -> void:
 	sb_hover.bg_color = accent_color * 0.7
 	sb_hover.border_color = accent_color.lightened(0.2)
 	btn.add_theme_stylebox_override("hover", sb_hover)
+
+var character_silver: int = 0
+var transfer_modal: Control = null
+
+func _open_transfer_silver_dialog():
+	if transfer_modal and is_instance_valid(transfer_modal):
+		transfer_modal.visible = true
+		_update_transfer_modal_labels()
+		return
+	
+	transfer_modal = PanelContainer.new()
+	transfer_modal.name = "TransferSilverModal"
+	transfer_modal.custom_minimum_size = Vector2(360, 240)
+	transfer_modal.set_anchors_preset(Control.PRESET_CENTER)
+	transfer_modal.offset_left = -180
+	transfer_modal.offset_top = -120
+	transfer_modal.offset_right = 180
+	transfer_modal.offset_bottom = 120
+	
+	var sb = StyleBoxFlat.new()
+	sb.bg_color = Color(0.06, 0.08, 0.12, 0.98)
+	sb.border_width_left = 2
+	sb.border_width_top = 2
+	sb.border_width_right = 2
+	sb.border_width_bottom = 2
+	sb.border_color = Color(0.85, 0.72, 0.35, 0.95)
+	sb.corner_radius_top_left = 8
+	sb.corner_radius_top_right = 8
+	sb.corner_radius_bottom_right = 8
+	sb.corner_radius_bottom_left = 8
+	sb.shadow_size = 18
+	sb.shadow_color = Color(0, 0, 0, 0.85)
+	transfer_modal.add_theme_stylebox_override("panel", sb)
+	
+	var margin = MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 14)
+	margin.add_theme_constant_override("margin_top", 12)
+	margin.add_theme_constant_override("margin_right", 14)
+	margin.add_theme_constant_override("margin_bottom", 12)
+	transfer_modal.add_child(margin)
+	
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 8)
+	margin.add_child(vbox)
+	
+	var title = Label.new()
+	title.text = "🏛️ ADMINISTRADOR DE MONEDAS"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 13)
+	title.add_theme_color_override("font_color", Color(1.0, 0.85, 0.35))
+	vbox.add_child(title)
+	
+	var sep = HSeparator.new()
+	vbox.add_child(sep)
+	
+	var stash_lbl = Label.new()
+	stash_lbl.name = "StashBalanceLbl"
+	stash_lbl.text = "🪙 Alijo de Cuenta (Refugio): %d Silver" % player_silver
+	stash_lbl.add_theme_font_size_override("font_size", 11)
+	vbox.add_child(stash_lbl)
+	
+	var char_name = selected_character.get("name", "Campeón") if selected_character else "Campeón Activo"
+	var char_lbl = Label.new()
+	char_lbl.name = "CharBalanceLbl"
+	char_lbl.text = "🎒 Billetera de %s: %d Silver" % [char_name, character_silver]
+	char_lbl.add_theme_font_size_override("font_size", 11)
+	vbox.add_child(char_lbl)
+	
+	var grid = GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 8)
+	grid.add_theme_constant_override("v_separation", 6)
+	vbox.add_child(grid)
+	
+	var btn_to_char = Button.new()
+	btn_to_char.text = "⬇ Dar 100 al Personaje"
+	btn_to_char.pressed.connect(func(): _transfer_silver(100, true))
+	grid.add_child(btn_to_char)
+	
+	var btn_to_stash = Button.new()
+	btn_to_stash.text = "⬆ Depositar 100 al Alijo"
+	btn_to_stash.pressed.connect(func(): _transfer_silver(100, false))
+	grid.add_child(btn_to_stash)
+	
+	var btn_all_char = Button.new()
+	btn_all_char.text = "⬇ Todo al Personaje"
+	btn_all_char.pressed.connect(func(): _transfer_silver(player_silver, true))
+	grid.add_child(btn_all_char)
+	
+	var btn_all_stash = Button.new()
+	btn_all_stash.text = "⬆ Todo al Alijo"
+	btn_all_stash.pressed.connect(func(): _transfer_silver(character_silver, false))
+	grid.add_child(btn_all_stash)
+	
+	var close_btn = Button.new()
+	close_btn.text = "✕ Cerrar"
+	close_btn.pressed.connect(func(): transfer_modal.visible = false)
+	vbox.add_child(close_btn)
+	
+	add_child(transfer_modal)
+
+func _transfer_silver(amount: int, to_character: bool):
+	if amount <= 0: return
+	if to_character:
+		var moved = mini(amount, player_silver)
+		player_silver -= moved
+		character_silver += moved
+		_notify("Transferidos %d de Silver a la billetera del campeón." % moved)
+	else:
+		var moved = mini(amount, character_silver)
+		character_silver -= moved
+		player_silver += moved
+		_notify("Depositados %d de Silver al alijo de cuenta del refugio." % moved)
+	silver_badge.text = "🪙 %d Silver" % player_silver
+	_update_transfer_modal_labels()
+
+func _update_transfer_modal_labels():
+	if not transfer_modal or not is_instance_valid(transfer_modal): return
+	var s_lbl = transfer_modal.find_child("StashBalanceLbl", true, false)
+	if s_lbl: s_lbl.text = "🪙 Alijo de Cuenta (Refugio): %d Silver" % player_silver
+	var c_lbl = transfer_modal.find_child("CharBalanceLbl", true, false)
+	var char_name = selected_character.get("name", "Campeón") if selected_character else "Campeón Activo"
+	if c_lbl: c_lbl.text = "🎒 Billetera de %s: %d Silver" % [char_name, character_silver]

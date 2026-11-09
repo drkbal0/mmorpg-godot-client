@@ -12,6 +12,7 @@ extends CanvasLayer
 
 var skill_slots: Dictionary = {} # spell_id -> Dictionary { panel, radial_overlay, cd_label, key_label, cfg, was_on_cooldown }
 var _keybind_poll_timer: float = 0.0
+var wings_overlay: Control = null
 
 const SKILL_CONFIG = [
 	{"id": 3, "action": "attack_primary", "fallback_key": "LMB", "key": "LMB", "name": "LÁSER", "color": Color(0.2, 0.9, 1.0), "base_cd": 0.2},
@@ -35,8 +36,59 @@ func _ready():
 		if not isettings.bindings_updated.is_connected(update_keybind_labels):
 			isettings.bindings_updated.connect(update_keybind_labels)
 	
+	_setup_wings_overlay()
 	_populate_action_bar()
+	_populate_item_hotbar()
 	update_keybind_labels()
+
+func _setup_wings_overlay() -> void:
+	var hud_margin = get_node_or_null("RootBottom/HUDMargin")
+	if not hud_margin: return
+	if wings_overlay != null: return
+	
+	wings_overlay = Control.new()
+	wings_overlay.name = "WingsOverlay"
+	wings_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	wings_overlay.set_anchors_preset(Control.PRESET_FULL_RECT)
+	hud_margin.add_child(wings_overlay)
+	hud_margin.move_child(wings_overlay, 0)
+	
+	wings_overlay.draw.connect(_on_draw_wings)
+	var main_panel = hud_margin.get_node_or_null("MainPanel")
+	if main_panel:
+		main_panel.resized.connect(func(): if is_instance_valid(wings_overlay): wings_overlay.queue_redraw())
+
+func _on_draw_wings() -> void:
+	var hud_margin = get_node_or_null("RootBottom/HUDMargin")
+	if not hud_margin or not is_instance_valid(wings_overlay): return
+	var panel = hud_margin.get_node_or_null("MainPanel")
+	if not panel: return
+	var r = panel.get_rect()
+	if r.size.x <= 1.0 or r.size.y <= 1.0: return
+	
+	var wing_bg = Color(0.04, 0.05, 0.08, 0.96)
+	var wing_gold = Color(0.78, 0.65, 0.32, 0.95)
+	var wing_highlight = Color(0.95, 0.85, 0.45, 0.8)
+	
+	# Left Wing Polygon (Angled LoL Console Flank)
+	var left_poly = PackedVector2Array([
+		Vector2(r.position.x + 6.0, r.position.y + r.size.y * 0.40),
+		Vector2(r.position.x - 42.0, r.position.y + r.size.y),
+		Vector2(r.position.x + 16.0, r.position.y + r.size.y)
+	])
+	wings_overlay.draw_colored_polygon(left_poly, wing_bg)
+	wings_overlay.draw_polyline(PackedVector2Array([left_poly[0], left_poly[1], left_poly[2]]), wing_gold, 2.5)
+	wings_overlay.draw_line(left_poly[0], left_poly[1], wing_highlight, 1.2)
+	
+	# Right Wing Polygon (Angled LoL Console Flank)
+	var right_poly = PackedVector2Array([
+		Vector2(r.end.x - 6.0, r.position.y + r.size.y * 0.40),
+		Vector2(r.end.x + 42.0, r.position.y + r.size.y),
+		Vector2(r.end.x - 16.0, r.position.y + r.size.y)
+	])
+	wings_overlay.draw_colored_polygon(right_poly, wing_bg)
+	wings_overlay.draw_polyline(PackedVector2Array([right_poly[0], right_poly[1], right_poly[2]]), wing_gold, 2.5)
+	wings_overlay.draw_line(right_poly[0], right_poly[1], wing_highlight, 1.2)
 
 func apply_hud_scale(scale_val: float) -> void:
 	var hud_margin = get_node_or_null("RootBottom/HUDMargin")
@@ -90,6 +142,77 @@ func _populate_action_bar():
 		action_bar_container.add_child(slot["panel"])
 		skill_slots[sid] = slot
 	update_keybind_labels()
+
+func _populate_item_hotbar() -> void:
+	var hotbar = get_node_or_null("%ItemHotbarContainer")
+	if not hotbar: return
+	for child in hotbar.get_children():
+		child.queue_free()
+	
+	var default_items = [
+		{"key": "1", "name": "Poción Vida", "icon": "res://assets/icons/items/lifepot1x1.png", "count": 5},
+		{"key": "2", "name": "Poción Maná", "icon": "res://assets/icons/items/manapot1x1.png", "count": 5},
+		{"key": "3", "name": "Pergamino", "icon": "res://assets/icons/items/scroll1x1.png", "count": 1},
+		{"key": "4", "name": "Cuchillo", "icon": "res://assets/icons/items/minidager1x1.png", "count": 1},
+		{"key": "5", "name": "Amuleto", "icon": "res://assets/icons/items/amulet1x1.png", "count": 1},
+		{"key": "6", "name": "Mochila", "icon": "res://assets/icons/items/backpack.png", "count": 1}
+	]
+	for it in default_items:
+		var slot = _create_item_slot(it)
+		hotbar.add_child(slot)
+
+func _create_item_slot(data: Dictionary) -> PanelContainer:
+	var panel = PanelContainer.new()
+	panel.custom_minimum_size = Vector2(34, 34)
+	panel.clip_contents = true
+	var sb = StyleBoxFlat.new()
+	sb.bg_color = Color(0.06, 0.08, 0.12, 0.95)
+	sb.border_width_left = 1
+	sb.border_width_top = 1
+	sb.border_width_right = 1
+	sb.border_width_bottom = 1
+	sb.border_color = Color(0.75, 0.62, 0.32, 0.95)
+	sb.corner_radius_top_left = 3
+	sb.corner_radius_top_right = 3
+	sb.corner_radius_bottom_right = 3
+	sb.corner_radius_bottom_left = 3
+	panel.add_theme_stylebox_override("panel", sb)
+
+	var icon_tex: Texture2D = null
+	if FileAccess.file_exists(data.get("icon", "")):
+		icon_tex = load(data.get("icon"))
+
+	var tr = TextureRect.new()
+	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tr.texture = icon_tex
+	tr.custom_minimum_size = Vector2(26, 26)
+	tr.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	tr.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	panel.add_child(tr)
+
+	var key_lbl = Label.new()
+	key_lbl.text = " " + data.get("key", "")
+	key_lbl.add_theme_font_size_override("font_size", 9)
+	key_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.35, 0.95))
+	key_lbl.add_theme_color_override("font_outline_color", Color.BLACK)
+	key_lbl.add_theme_constant_override("outline_size", 2)
+	key_lbl.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	key_lbl.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+	panel.add_child(key_lbl)
+
+	if data.get("count", 1) > 1:
+		var cnt_lbl = Label.new()
+		cnt_lbl.text = "x" + str(data.get("count")) + " "
+		cnt_lbl.add_theme_font_size_override("font_size", 9)
+		cnt_lbl.add_theme_color_override("font_color", Color(0.9, 0.95, 1.0, 0.9))
+		cnt_lbl.add_theme_color_override("font_outline_color", Color.BLACK)
+		cnt_lbl.add_theme_constant_override("outline_size", 2)
+		cnt_lbl.size_flags_horizontal = Control.SIZE_SHRINK_END
+		cnt_lbl.size_flags_vertical = Control.SIZE_SHRINK_END
+		panel.add_child(cnt_lbl)
+
+	return panel
 
 func _create_slot(cfg: Dictionary) -> Dictionary:
 	var slot_panel = PanelContainer.new()

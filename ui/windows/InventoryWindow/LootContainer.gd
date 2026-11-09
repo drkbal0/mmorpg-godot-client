@@ -226,8 +226,45 @@ func _place_loot_item(item_data: Dictionary):
 	item.set_meta("item_definition_id", _get_field(item_data, "item_definition_id", ""))
 	
 	var icon = _get_field(item_data, "icon_path", "")
-	if icon != "" and FileAccess.file_exists(icon):
+	var def_id = str(_get_field(item_data, "item_definition_id", ""))
+	if icon == "":
+		if def_id != "" and ShelterManager.items_definitions.has(def_id):
+			icon = ShelterManager.items_definitions[def_id].get("icon_path", "")
+		elif def_id != "" and ShelterManager.all_items_cache.has(def_id):
+			icon = ShelterManager.all_items_cache[def_id].get("icon_path", "")
+		elif def_id != "" and has_node("/root/ItemManager") and ItemManager.ram_cache.has(def_id):
+			icon = ItemManager.ram_cache[def_id].get("icon_path", "")
+		elif ShelterManager.all_items_cache.has(item.item_id):
+			icon = ShelterManager.all_items_cache[item.item_id].get("icon_path", "")
+
+	# Fallback by item name if icon file is still missing
+	if icon == "" or not ResourceLoader.exists(icon):
+		var iname = item.item_name
+		if "Madera" in iname or "Wood" in iname:
+			icon = "res://assets/icons/items/wood1x1.png"
+		elif "Hierro" in iname or "Iron" in iname:
+			icon = "res://assets/icons/items/iron1x1.png"
+		elif "Piedra" in iname or "Stone" in iname:
+			icon = "res://assets/icons/items/stone1x1.png"
+		elif "Pocion" in iname or "Poción" in iname or "Vida" in iname or "lifepot" in iname:
+			icon = "res://assets/icons/items/lifepot1x1.png"
+		elif "Mana" in iname or "Maná" in iname or "manapot" in iname:
+			icon = "res://assets/icons/items/manapot1x1.png"
+		elif "Cuchillo" in iname or "Daga" in iname:
+			icon = "res://assets/icons/items/minidager1x1.png"
+		elif "Mochila" in iname or "Backpack" in iname:
+			icon = "res://assets/icons/items/backpack.png"
+		elif "Amuleto" in iname:
+			icon = "res://assets/icons/items/amulet1x1.png"
+		elif "Pergamino" in iname or "Scroll" in iname:
+			icon = "res://assets/icons/items/scroll1x1.png"
+		elif "Kit" in iname or "Silo" in iname:
+			icon = "res://assets/icons/items/kit1x1.png"
+
+	if icon != "" and ResourceLoader.exists(icon):
 		item.texture = load(icon)
+	else:
+		item.texture = _get_sleek_fallback_texture(item.item_name, item.grid_width, item.grid_height)
 	
 	var sx = int(_get_field(item_data, "slot_x", 0))
 	var sy = int(_get_field(item_data, "slot_y", 0))
@@ -348,3 +385,37 @@ func _check_empty_and_close():
 		if NetworkManager and NetworkManager.has_method("send_despawn_echo"):
 			NetworkManager.send_despawn_echo(echo_id)
 		_on_close_pressed()
+
+func _get_sleek_fallback_texture(item_name: String, gw: int, gh: int) -> ImageTexture:
+	var w = max(64, gw * 64)
+	var h = max(64, gh * 64)
+	var img = Image.create(w, h, false, Image.FORMAT_RGBA8)
+	var bg_col = Color(0.12, 0.16, 0.22, 0.95)
+	var border_col = Color(0.25, 0.45, 0.75, 1.0)
+	if "Madera" in item_name or "Wood" in item_name:
+		bg_col = Color(0.28, 0.18, 0.10, 0.95)
+		border_col = Color(0.60, 0.40, 0.25, 1.0)
+	elif "Hierro" in item_name or "Iron" in item_name:
+		bg_col = Color(0.18, 0.22, 0.28, 0.95)
+		border_col = Color(0.50, 0.65, 0.85, 1.0)
+	elif "Piedra" in item_name or "Stone" in item_name:
+		bg_col = Color(0.22, 0.24, 0.26, 0.95)
+		border_col = Color(0.55, 0.58, 0.62, 1.0)
+	elif "Kit" in item_name or "Silo" in item_name:
+		bg_col = Color(0.10, 0.22, 0.26, 0.95)
+		border_col = Color(0.10, 0.80, 0.90, 1.0)
+	elif "Pocion" in item_name or "Potion" in item_name or "lifepot" in item_name:
+		bg_col = Color(0.35, 0.08, 0.08, 0.95)
+		border_col = Color(0.90, 0.25, 0.25, 1.0)
+	img.fill(bg_col)
+	for x in range(w):
+		img.set_pixel(x, 0, border_col)
+		img.set_pixel(x, 1, border_col)
+		img.set_pixel(x, h - 1, border_col)
+		img.set_pixel(x, h - 2, border_col)
+	for y in range(h):
+		img.set_pixel(0, y, border_col)
+		img.set_pixel(1, y, border_col)
+		img.set_pixel(w - 1, y, border_col)
+		img.set_pixel(w - 2, y, border_col)
+	return ImageTexture.create_from_image(img)

@@ -419,7 +419,13 @@ func _step_4_acquire_world_ticket() -> Dictionary:
 
 	AuthManager.selected_character_id = chosen_char["id"]
 	AuthManager.selected_character_name = chosen_char["name"]
-	print("[LiveE2ERunner] Campeón Seleccionado: %s (ID: %s)" % [chosen_char["name"], chosen_char["id"]])
+	print("[LiveE2ERunner] Campeón Seleccionado: %s (ID: %s, Status: %s)" % [chosen_char["name"], chosen_char["id"], chosen_char.get("status", "Alive")])
+
+	if str(chosen_char.get("status", "")).to_lower() == "dead":
+		print("[LiveE2ERunner] Personaje caído en combate previo. Reviviendo autoritativamente...")
+		var rev = await APIClient.revive_character(chosen_char["id"])
+		print("[LiveE2ERunner] Resultado de Revivir: ", rev.get("code", 0))
+		await _wait_seconds(0.3)
 
 	var ticket = await AuthManager.fetch_world_ticket()
 	var ok = (ticket != "")
@@ -510,7 +516,7 @@ func _step_6_screenspace_nameplates(world_scene: Node) -> bool:
 		player = world_scene.get_node("Player")
 
 	# Configurar nameplate del jugador local con estilo LoL / Solo Leveling
-	if player and player.screenspace_nameplate_instance:
+	if player and player.screenspace_nameplate_instance and player.screenspace_nameplate_instance.has_method("setup"):
 		player.screenspace_nameplate_instance.setup("unu", 1000.0, 1000.0, false, "‹ PIONERO ›", 18)
 
 	# Asegurar que haya una entidad hostil visible frente a la cámara
@@ -520,11 +526,12 @@ func _step_6_screenspace_nameplates(world_scene: Node) -> bool:
 		await _wait_seconds(0.3)
 		hostile_node = world_scene.remote_players.get(301)
 
-	if hostile_node and "screenspace_nameplate_instance" in hostile_node and hostile_node.screenspace_nameplate_instance:
+	if hostile_node and "screenspace_nameplate_instance" in hostile_node and hostile_node.screenspace_nameplate_instance and hostile_node.screenspace_nameplate_instance.has_method("setup"):
 		hostile_node.screenspace_nameplate_instance.setup("Guardia Carmesí", 1200.0, 1200.0, true, "‹ ENEMIGO ›", 18)
 		# Demostrar respuesta de daño en vivo: impacto crítico -> rastro fantasma naranja
 		await _wait_seconds(0.2)
-		hostile_node.screenspace_nameplate_instance.update_hp(750.0, 1200.0, true)
+		if hostile_node.screenspace_nameplate_instance.has_method("update_hp"):
+			hostile_node.screenspace_nameplate_instance.update_hp(750.0, 1200.0, true)
 
 	await _wait_seconds(0.4)
 

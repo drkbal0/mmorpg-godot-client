@@ -55,6 +55,7 @@ func _ready():
 	_setup_hud()
 	_setup_extraction_ui()
 	_setup_debug_overlay()
+	_build_map_topography()
 	add_to_group("hitbox_debug")
 	
 	# 3. Handle Spawn and Connection
@@ -188,8 +189,10 @@ func _on_static_entity_spawned(sid: int, type: int, pos: Vector3, aggro: float, 
 		add_child(h)
 		h.position = pos
 		h.scale = Vector3(aggro, 1.0, aggro) # Using aggro as radius for hazards
+		var is_pulsing = attack > 0.5
+		var server_offset = max_hp
 		if h.has_method("setup"):
-			h.setup(0.0) # Reset offset or handle if needed
+			h.setup(server_offset, is_pulsing)
 		remote_players[sid] = h
 	elif type == 3: # Hostile NPC
 		var n = network_player_scene.instantiate()
@@ -212,7 +215,7 @@ func _on_static_entity_spawned(sid: int, type: int, pos: Vector3, aggro: float, 
 		add_child(n)
 		n.position = pos
 		if n.has_method("update_nameplate"):
-			n.update_nameplate("[N] " + p_name, sid)
+			n.update_nameplate(p_name, sid)
 		if n.has_method("setup_attributes"):
 			n.setup_attributes(aggro, attack, max_hp)
 		# Tint blue/green for neutral
@@ -1051,3 +1054,75 @@ func _process_portal_vortices(delta: float) -> void:
 			vortex["accretion_disk"].rotate_y(delta * 0.95)
 		if vortex.has("outer_warp") and is_instance_valid(vortex["outer_warp"]):
 			vortex["outer_warp"].rotate_y(-delta * 0.55)
+
+func _build_map_topography() -> void:
+	var path = "res://assets/maps/map_zone_overworld.json"
+	var colliders = []
+	
+	if FileAccess.file_exists(path):
+		var file = FileAccess.open(path, FileAccess.READ)
+		if file:
+			var content = file.get_as_text()
+			var json = JSON.parse_string(content)
+			if typeof(json) == TYPE_DICTIONARY and json.has("static_colliders"):
+				colliders = json["static_colliders"]
+
+	# Garantizar siempre presencia de obstáculos tácticos y topografía en el mapa principal
+	if colliders.is_empty():
+		print("[World] Usando topografía declarativa predeterminada para el Overworld.")
+		colliders = [
+			{"id": "obstacle_cube_spawn", "type": "box", "pos": [4.0, 1.0, 4.0], "size": [2.0, 2.0, 2.0], "yaw": 0.0},
+			{"id": "terrain_ramp_test", "type": "ramp", "pos": [-6.0, 0.75, 8.0], "size": [3.0, 1.5, 6.0], "yaw": 0.0},
+			{"id": "los_wall_cover", "type": "box", "pos": [10.0, 2.0, -6.0], "size": [1.2, 4.0, 10.0], "yaw": 0.0},
+			{"id": "ruin_pillar_north", "type": "box", "pos": [0.0, 2.0, -15.0], "size": [2.0, 4.0, 2.0], "yaw": 0.0},
+			{"id": "ruin_wall_east", "type": "box", "pos": [18.0, 1.5, 5.0], "size": [1.0, 3.0, 8.0], "yaw": 0.0},
+			{"id": "shelter_gate_arch", "type": "box", "pos": [-10.0, 2.5, 0.0], "size": [1.5, 5.0, 6.0], "yaw": 1.5708}
+		]
+
+	print("[World] Building %d static map obstacles..." % colliders.size())
+
+	for col in colliders:
+		var node_id = str(col.get("id", "StaticObstacle"))
+		if has_node(node_id):
+			continue
+
+		var body = StaticBody3D.new()
+		body.name = node_id
+		var pos_arr = col.get("pos", [0, 0, 0])
+		body.position = Vector3(pos_arr[0], pos_arr[1], pos_arr[2])
+		body.rotation.y = col.get("yaw", 0.0)
+
+		var ctype = col.get("type", "box")
+		var s_arr = col.get("size", [2, 2, 2])
+		var size = Vector3(s_arr[0], s_arr[1], s_arr[2])
+
+		var cshape = CollisionShape3D.new()
+		var bshape = BoxShape3D.new()
+		bshape.size = size
+		cshape.shape = bshape
+		body.add_child(cshape)
+
+		var mesh_inst = MeshInstance3D.new()
+		var bmesh = BoxMesh.new()
+		bmesh.size = size
+		mesh_inst.mesh = bmesh
+
+		var mat = StandardMaterial3D.new()
+		if ctype == "ramp":
+			body.rotation_degrees.x = -16.0 # Slanted ramp angle
+			mat.albedo_color = Color(0.28, 0.44, 0.28) # Mossy stone green
+			mat.roughness = 0.8
+		elif "pillar" in node_id:
+			mat.albedo_color = Color(0.48, 0.44, 0.4) # Ancient Sandstone
+			mat.roughness = 0.9
+		elif "wall" in node_id:
+			mat.albedo_color = Color(0.25, 0.28, 0.35) # Dark castle brick
+			mat.roughness = 0.7
+		else:
+			mat.albedo_color = Color(0.35, 0.38, 0.42) # Reinforced Granite Cube
+			mat.roughness = 0.6
+		mesh_inst.material_override = mat
+		mesh_inst.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON
+		body.add_child(mesh_inst)
+
+		add_child(body)

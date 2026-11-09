@@ -498,13 +498,16 @@ func send_position():
 func update_hp(new_hp_percent: float, _source_id: int, source_pos: Vector3):
 	hp_percent = new_hp_percent
 	
-	if not _hp_initialized:
-		_hp_initialized = true
-		if world_hp_bar_instance: world_hp_bar_instance.update_hp(new_hp_percent)
-		return
-	
+	_hp_initialized = true
 	if world_hp_bar_instance: world_hp_bar_instance.update_hp(new_hp_percent)
-	if screenspace_nameplate_instance: screenspace_nameplate_instance.update_hp(new_hp_percent * 10.0, 1000.0)
+	if screenspace_nameplate_instance and screenspace_nameplate_instance.has_method("update_hp"):
+		screenspace_nameplate_instance.update_hp(new_hp_percent * 10.0, 1000.0)
+		if new_hp_percent <= 0:
+			screenspace_nameplate_instance.is_dead = true
+			screenspace_nameplate_instance.visible = false
+			screenspace_nameplate_instance.modulate.a = 0.0
+		else:
+			screenspace_nameplate_instance.is_dead = false
 	if player_hud_instance: player_hud_instance.update_hp(new_hp_percent)
 	
 	if hp_percent <= 0 and not is_dead:

@@ -53,10 +53,16 @@ func setup(p_sid: int, p_raw_name: String):
 		echo_id = sid_str # Fallback
 		username = p_raw_name
 	
-	# The label is named Nameplate, update it if it exists.
+	var display_name = username
+	if display_name.length() > 20 and "-" in display_name:
+		display_name = "Restos de Explorador Caído"
+	else:
+		display_name = "Restos de: " + username
+
+	# 1. 3D Legacy Nameplate fallback
 	var nameplate = get_node_or_null("Nameplate") as Label3D
 	if nameplate:
-		nameplate.text = "Restos de:\n" + username
+		nameplate.text = display_name
 		nameplate.font_size = 52
 		nameplate.outline_size = 16
 		nameplate.outline_modulate = Color.BLACK
@@ -65,6 +71,37 @@ func setup(p_sid: int, p_raw_name: String):
 		nameplate.render_priority = 25
 		nameplate.shaded = false
 		nameplate.modulate = Color(1.0, 0.9, 0.6) # Amber gold tone for loot clarity
+
+	# 2. Add visual golden light beacon shaft
+	if not has_node("LootBeacon"):
+		var beacon = MeshInstance3D.new()
+		beacon.name = "LootBeacon"
+		var cyl = CylinderMesh.new()
+		cyl.top_radius = 0.06
+		cyl.bottom_radius = 0.16
+		cyl.height = 3.5
+		beacon.mesh = cyl
+		beacon.position = Vector3(0, 1.75, 0)
+		var bmat = StandardMaterial3D.new()
+		bmat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		bmat.albedo_color = Color(1.0, 0.82, 0.2, 0.8)
+		bmat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		beacon.material_override = bmat
+		add_child(beacon)
+
+	# 3. Screen-Space 2D Loot Label projection
+	if has_node("/root/ScreenSpaceManager"):
+		var echo_lbl_scene = load("res://ui/screenspace/DeathEchoLabel.tscn")
+		if echo_lbl_scene:
+			var echo_lbl = echo_lbl_scene.instantiate()
+			echo_lbl.setup_loot(display_name, 3)
+			ScreenSpaceManager.register_target(self, echo_lbl, Vector3(0, 1.8, 0))
+			if nameplate:
+				nameplate.visible = false
+
+func _exit_tree() -> void:
+	if has_node("/root/ScreenSpaceManager") and ScreenSpaceManager.instance:
+		ScreenSpaceManager.instance.unregister_target(self)
 
 func _on_input_event(_camera, event, _position, _normal, _shape_idx):
 	if UIOrchestrator.is_mouse_over_ui():

@@ -74,7 +74,11 @@ func _update_global_opacity() -> void:
 	for target in tracked_targets:
 		var ctrl = tracked_targets[target].get("control")
 		if is_instance_valid(ctrl):
-			ctrl.modulate.a = target_alpha
+			if ctrl.get("is_dead") == true:
+				ctrl.modulate.a = 0.0
+				ctrl.visible = false
+			else:
+				ctrl.modulate.a = target_alpha
 
 func _is_any_modal_open() -> bool:
 	if not has_node("/root/UIOrchestrator"):
@@ -112,6 +116,12 @@ func _process(_delta: float) -> void:
 		var ctrl: Control = entry["control"]
 		if not is_instance_valid(ctrl):
 			dead_targets.append(target)
+			continue
+
+		# If 3D target is hidden or marked dead, hide its projected UI immediately
+		if (target is Node3D and not target.is_visible_in_tree()) or ctrl.get("is_dead") == true:
+			if ctrl.visible:
+				ctrl.visible = false
 			continue
 
 		var world_pos: Vector3 = target.global_position + entry["offset"]

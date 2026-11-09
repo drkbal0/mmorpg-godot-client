@@ -50,7 +50,8 @@ func _ready():
 	if has_node("/root/ScreenSpaceManager"):
 		screenspace_nameplate_instance = screen_space_nameplate_scene.instantiate()
 		var n_name = "Hostil (SID: %d)" % sid
-		screenspace_nameplate_instance.setup(n_name, 1200.0, 1200.0, true, "‹ ENEMIGO ›", 18)
+		if screenspace_nameplate_instance.has_method("setup"):
+			screenspace_nameplate_instance.setup(n_name, 1200.0, 1200.0, true, "‹ ENEMIGO ›", 18)
 		ScreenSpaceManager.register_target(self, screenspace_nameplate_instance, Vector3(0, 2.3, 0))
 		if has_node("Nameplate"):
 			$Nameplate.visible = false
@@ -344,11 +345,15 @@ func _safe_set_pos(new_pos: Vector3):
 
 func update_nameplate(p_name: String, p_sid: int):
 	sid = p_sid
-	$Nameplate.text = "%s (SID: %d)" % [p_name, sid]
+	var clean_name = p_name
+	if clean_name.begins_with("[N] "):
+		clean_name = clean_name.substr(4)
+	if has_node("Nameplate"):
+		$Nameplate.text = clean_name
 	if screenspace_nameplate_instance:
 		var lbl = screenspace_nameplate_instance.get_node_or_null("VBoxContainer/NameLabel")
 		if lbl:
-			lbl.text = "%s (SID: %d)" % [p_name, sid]
+			lbl.text = clean_name
 
 func add_state(pos: Vector3):
 	if not pos.is_finite():
@@ -384,22 +389,22 @@ func add_state(pos: Vector3):
 func update_hp(new_hp_percent: float, _source_id: int, source_pos: Vector3):
 	var old_hp = hp_percent
 	hp_percent = new_hp_percent
-	
-	if not _hp_initialized:
-		_hp_initialized = true
-		if world_hp_bar_instance: world_hp_bar_instance.update_hp(new_hp_percent)
-		return
+	_hp_initialized = true
 	
 	# 1. Update World HP Bar with Effects
 	if world_hp_bar_instance:
 		world_hp_bar_instance.update_hp(new_hp_percent)
-	if screenspace_nameplate_instance:
+	if screenspace_nameplate_instance and screenspace_nameplate_instance.has_method("update_hp"):
 		screenspace_nameplate_instance.update_hp(new_hp_percent * 10.0, 1000.0)
 		
 	# Hide dead characters so they don't overlap with Death Echoes
 	var was_dead = !visible or old_hp <= 0
 	visible = new_hp_percent > 0
 	if new_hp_percent <= 0:
+		if screenspace_nameplate_instance:
+			screenspace_nameplate_instance.is_dead = true
+			screenspace_nameplate_instance.visible = false
+			screenspace_nameplate_instance.modulate.a = 0.0
 		if TargetManager.current_target_sid == sid:
 			TargetManager.clear_target()
 		var area = get_node_or_null("Area3D")
@@ -407,6 +412,8 @@ func update_hp(new_hp_percent: float, _source_id: int, source_pos: Vector3):
 			area.monitoring = false
 			area.monitorable = false
 	else:
+		if screenspace_nameplate_instance:
+			screenspace_nameplate_instance.is_dead = false
 		var area = get_node_or_null("Area3D")
 		if area: 
 			area.monitoring = true
