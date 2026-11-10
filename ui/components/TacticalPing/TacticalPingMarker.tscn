@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://ui/components/TacticalPing/TacticalPingMarker.gd" id="1_script"]
+[ext_resource type="Theme" path="res://ui/hud_theme.tres" id="2_theme"]
+
+[node name="TacticalPingMarker" type="Control"]
+custom_minimum_size = Vector2(140, 52)
+offset_right = 140.0
+offset_bottom = 52.0
+mouse_filter = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
