@@ -114,6 +114,10 @@ func get_member_frames() -> Array[PartyMemberFrame]:
 	return result
 
 
+func get_all_frames() -> Array[PartyMemberFrame]:
+	return get_member_frames()
+
+
 ## Limpia y libera todos los frames actuales del grupo.
 func clear_party() -> void:
 	_frames_by_id.clear()

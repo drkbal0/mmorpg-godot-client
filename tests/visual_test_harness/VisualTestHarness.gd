@@ -203,6 +203,8 @@ func _run_scenarios() -> void:
 	await _clear_stage()
 	await _scenario_spell_vector_icons()
 	await _clear_stage()
+	await _scenario_party_frames()
+	await _clear_stage()
 
 	var all_pass := true
 	for cap in _captures:
@@ -1009,4 +1011,104 @@ func _scenario_spell_vector_icons() -> void:
 		"Iconos vectoriales SVG renderizados en slots de habilidad HUDv2", {
 			"grid_populated": grid.get_child_count() == 5,
 		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 13: Party Frames & Sistema de Escuadras (Phase 9.5 / ADR 096)
+# ---------------------------------------------------------------------------
+
+func _scenario_party_frames() -> void:
+	_set_caption("Escenario 13 · HUD de Escuadras / Party Frames & Estado Abatido",
+		"Sincronización de grupo: Barras de HP/Maná, glifos de clase, distancias relativas y badge 'ABATIDO' con cuenta regresiva")
+
+	var party_scene: PackedScene = load("res://ui/components/PartyFrames/PartyFrames.tscn")
+	var party: Control = party_scene.instantiate()
+	party.position = Vector2(80, 160)
+	_stage.add_child(party)
+
+	var members_data: Array[Dictionary] = [
+		{
+			"id": 101,
+			"name": "Valerius (Líder)",
+			"class": "guardian",
+			"hp": 850.0,
+			"max_hp": 1000.0,
+			"mana": 250.0,
+			"max_mana": 400.0,
+			"distance": 18.0,
+			"status": "NORMAL"
+		},
+		{
+			"id": 102,
+			"name": "Sylvia",
+			"class": "mage",
+			"hp": 320.0,
+			"max_hp": 600.0,
+			"mana": 380.0,
+			"max_mana": 500.0,
+			"distance": 42.0,
+			"status": "NORMAL"
+		},
+		{
+			"id": 103,
+			"name": "Kaelen",
+			"class": "ranger",
+			"hp": 0.0,
+			"max_hp": 750.0,
+			"mana": 0.0,
+			"max_mana": 200.0,
+			"distance": 65.0,
+			"is_downed": true,
+			"timer_sec": 18.5,
+			"status": "ABATIDO"
+		}
+	]
+
+	party.set_party_members(members_data)
+
+	# Añadir panel explicativo a la derecha
+	var info_box := PanelContainer.new()
+	info_box.position = Vector2(340, 160)
+	info_box.custom_minimum_size = Vector2(560, 240)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.06, 0.08, 0.11, 0.95)
+	sb.border_color = Color(0.2, 0.35, 0.45, 0.8)
+	sb.set_border_width_all(1)
+	sb.set_corner_radius_all(10)
+	info_box.add_theme_stylebox_override("panel", sb)
+	_stage.add_child(info_box)
+
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 16)
+	margin.add_theme_constant_override("margin_top", 14)
+	margin.add_theme_constant_override("margin_right", 16)
+	margin.add_theme_constant_override("margin_bottom", 14)
+	info_box.add_child(margin)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 8)
+	margin.add_child(vbox)
+
+	var title := Label.new()
+	title.text = "ARQUITECTURA DE ESCUADRAS (PHASE 9.5 / ADR 096)"
+	title.add_theme_font_size_override("font_size", 13)
+	title.add_theme_color_override("font_color", Color("#46e3c1"))
+	vbox.add_child(title)
+
+	var desc := Label.new()
+	desc.text = "• Filtrado Friendly-Fire: Bitmasking O(1) de party_id en proyectiles CCD, hitscans y círculos AoE.\n• Protocolo 0x18 PARTY_SYNC: Payload Little-Endian de 4 miembros con vitals compactados a 20Hz.\n• Política de Loot: Free-For-All y Round-Robin con candado de asignación individual de 15 segundos.\n• Sistema de Abatido (Downed): Jugadores en grupo no mueren al llegar a 0 HP; entran en bleedout (30s).\n• Reanimación Asistida: Canalización de 6s con proximidad <= 3.5m restablece al 25% HP y velocidad."
+	desc.add_theme_font_size_override("font_size", 11)
+	desc.add_theme_color_override("font_color", Color(0.85, 0.9, 0.95))
+	vbox.add_child(desc)
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	await _capture("evidence_party_frames_squad.png", 13,
+		"Party Frames con 3 miembros, glifos vectoriales, vitals animados y miembro abatido con alerta de bleedout", {
+			"party_container_instantiated": party.is_inside_tree(),
+			"member_count_is_three": party.get_all_frames().size() == 3,
+			"kaelen_is_downed": party.get_member_frame(103) != null and party.get_member_frame(103).is_downed,
+		})
+
 
