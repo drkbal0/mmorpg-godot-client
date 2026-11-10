@@ -27,6 +27,10 @@ const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 		portrait_texture = value
 		queue_redraw()
 
+## Live 3D portrait rendering inside SubViewport (ADR 095).
+@export var use_live_3d: bool = true
+var live_portrait: SubViewport = null
+
 ## Displayed XP fraction, eased toward `xp_fraction` for smooth fills.
 var _shown_xp: float = -1.0
 
@@ -34,9 +38,23 @@ var _shown_xp: float = -1.0
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	custom_minimum_size = Vector2(110, 122)
+	if use_live_3d and not Engine.is_editor_hint():
+		_setup_live_3d()
+
+
+func _setup_live_3d() -> void:
+	if live_portrait != null:
+		return
+	var scene = load("res://ui/components/HUDv2/LivePortrait3D.tscn")
+	if scene:
+		live_portrait = scene.instantiate()
+		add_child(live_portrait)
+		portrait_texture = live_portrait.get_texture()
 
 
 func _process(delta: float) -> void:
+	if live_portrait and not Engine.is_editor_hint():
+		queue_redraw()
 	if _shown_xp < 0.0 or Engine.is_editor_hint():
 		_shown_xp = xp_fraction
 		return
@@ -44,6 +62,16 @@ func _process(delta: float) -> void:
 		# Level-up wraps (fraction dropped): snap; otherwise ease.
 		_shown_xp = xp_fraction if xp_fraction < _shown_xp else move_toward(_shown_xp, xp_fraction, delta * 0.8)
 		queue_redraw()
+
+
+func flash_damage() -> void:
+	if live_portrait and live_portrait.has_method("flash_damage"):
+		live_portrait.flash_damage()
+
+
+func flash_level_up() -> void:
+	if live_portrait and live_portrait.has_method("flash_level_up"):
+		live_portrait.flash_level_up()
 
 
 func get_ring_center() -> Vector2:

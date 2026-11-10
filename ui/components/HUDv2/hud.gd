@@ -13,6 +13,9 @@ extends Control
 
 signal recall_pressed
 signal shop_pressed
+signal item_used(slot: int, item_name: String, item_id: String)
+signal item_assigned(slot: int, item_name: String, item_id: String)
+signal item_cleared(slot: int)
 
 const T = preload("res://ui/hud_tokens.gd")
 const STAT_ROW_SCENE: PackedScene = preload("res://ui/components/HUDv2/stat_row.tscn")

@@ -7,6 +7,9 @@ extends Control
 ##  - GOLD:    34px tall gold box with coin, tabular amount and income ring.
 
 signal pressed
+signal item_assigned(slot_idx: int, item_name: String, item_id: String)
+signal item_used(slot_idx: int, item_name: String, item_id: String)
+signal item_cleared(slot_idx: int)
 
 const T = preload("res://ui/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
@@ -23,12 +26,18 @@ enum Kind { ITEM, TRINKET, BUTTON, GOLD }
 @export var label: String = "":
 	set(value):
 		label = value
+		_update_tooltip()
 		queue_redraw()
 
 @export var icon: Texture2D:
 	set(value):
 		icon = value
 		queue_redraw()
+
+@export var item_name: String = ""
+@export var item_id: String = ""
+@export var cooldown_remaining: float = 0.0
+@export var cooldown_total: float = 0.0
 
 ## Glyph for BUTTON variant (recall / bag) or placeholder item glyph.
 @export var glyph: String = "diamond":
@@ -72,7 +81,7 @@ func _ready() -> void:
 
 
 func _apply_kind() -> void:
-	if kind == Kind.BUTTON:
+	if kind == Kind.BUTTON or kind == Kind.ITEM:
 		mouse_filter = Control.MOUSE_FILTER_STOP
 		mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	else:
@@ -80,6 +89,7 @@ func _apply_kind() -> void:
 	match kind:
 		Kind.ITEM:
 			custom_minimum_size = Vector2(T.ITEM_SIZE, T.ITEM_SIZE)
+			_update_tooltip()
 		Kind.TRINKET:
 			custom_minimum_size = Vector2(T.TRINKET_DIAMETER, T.TRINKET_DIAMETER)
 		Kind.BUTTON:
@@ -89,15 +99,111 @@ func _apply_kind() -> void:
 
 
 func has_item() -> bool:
-	return icon != null or stacks > 0
+	return icon != null or stacks > 0 or item_name != ""
+
+
+func _process(delta: float) -> void:
+	if kind == Kind.ITEM and cooldown_remaining > 0.0 and not Engine.is_editor_hint():
+		cooldown_remaining = maxf(0.0, cooldown_remaining - delta)
+		if cooldown_remaining <= 0.0 and stacks <= 0:
+			clear_item()
+		queue_redraw()
+
+
+func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
+	if kind != Kind.ITEM:
+		return false
+	if data is Dictionary and data.get("type") == "inventory_item":
+		var node = data.get("item_node")
+		return is_instance_valid(node)
+	return false
+
+
+func _drop_data(_pos: Vector2, data: Variant) -> void:
+	if not _can_drop_data(_pos, data):
+		return
+	var node = data.get("item_node")
+	if not is_instance_valid(node):
+		return
+	assign_item(node.item_name, node.texture, node.quantity, node.item_id)
+
+
+func assign_item(p_name: String, p_icon: Texture2D, p_stacks: int, p_id: String = "") -> void:
+	item_name = p_name
+	icon = p_icon
+	stacks = p_stacks
+	item_id = p_id
+	_update_tooltip()
+	queue_redraw()
+	var idx := 0
+	if label.is_valid_int():
+		idx = label.to_int() - 1
+	item_assigned.emit(idx, item_name, item_id)
+
+
+func clear_item() -> void:
+	item_name = ""
+	icon = null
+	stacks = 0
+	item_id = ""
+	cooldown_remaining = 0.0
+	_update_tooltip()
+	queue_redraw()
+	var idx := 0
+	if label.is_valid_int():
+		idx = label.to_int() - 1
+	item_cleared.emit(idx)
+
+
+func use_item() -> bool:
+	if not has_item() or cooldown_remaining > 0.0:
+		return false
+	var idx := 0
+	if label.is_valid_int():
+		idx = label.to_int() - 1
+	item_used.emit(idx, item_name, item_id)
+	start_cooldown(15.0)
+	if stacks > 1:
+		stacks -= 1
+		_update_tooltip()
+		queue_redraw()
+	else:
+		stacks = 0
+		_update_tooltip()
+		queue_redraw()
+	return true
+
+
+func start_cooldown(seconds: float) -> void:
+	cooldown_total = maxf(0.1, seconds)
+	cooldown_remaining = seconds
+	queue_redraw()
+
+
+func _update_tooltip() -> void:
+	if kind != Kind.ITEM:
+		return
+	if has_item():
+		tooltip_text = "%s (x%d)\n[Tecla %s o Clic para usar]\n[Clic derecho para desasignar]" % [item_name if item_name != "" else "Objeto", stacks, label]
+	else:
+		tooltip_text = "Ranura rápida [%s]\nArrastra consumibles desde el Inventario [I]" % label
 
 
 func _gui_input(event: InputEvent) -> void:
-	if kind != Kind.BUTTON:
-		return
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		pressed.emit()
-		accept_event()
+	if kind == Kind.BUTTON:
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			pressed.emit()
+			accept_event()
+	elif kind == Kind.ITEM:
+		if event is InputEventMouseButton and event.pressed:
+			if event.button_index == MOUSE_BUTTON_LEFT:
+				if has_item():
+					use_item()
+					accept_event()
+			elif event.button_index == MOUSE_BUTTON_RIGHT:
+				if has_item():
+					clear_item()
+					accept_event()
 
 
 func _notification(what: int) -> void:
@@ -122,11 +228,13 @@ func _draw_item() -> void:
 	var tile := Rect2(Vector2.ZERO, Vector2(T.ITEM_SIZE, T.ITEM_SIZE))
 	if not has_item():
 		# Spec: "Ranura vacía: #0a0f13 + borde blanco al 6% de 1px."
-		draw_style_box(T.box(T.SLOT_EMPTY, T.ITEM_RADIUS, 1, T.SLOT_EMPTY_BORDER), tile)
+		var empty_border: Color = Color(accent, 0.4) if _hover else T.SLOT_EMPTY_BORDER
+		draw_style_box(T.box(T.SLOT_EMPTY, T.ITEM_RADIUS, 1, empty_border), tile)
 		if label != "":
 			draw_string(T.font("bold"), Vector2(6, 13), label, HORIZONTAL_ALIGNMENT_LEFT, -1, T.FS_TINY, T.TEXT_KEY)
 		return
-	draw_style_box(T.box(Color("#1f3b63"), T.ITEM_RADIUS, 1, Color("#3c6aa8")), tile)
+	var border_col: Color = Color(accent, 0.7) if _hover else Color("#3c6aa8")
+	draw_style_box(T.box(Color("#1f3b63"), T.ITEM_RADIUS, 1, border_col), tile)
 	if icon:
 		var inner := tile.grow(-5)
 		draw_texture_rect(icon, inner, false)
@@ -140,6 +248,11 @@ func _draw_item() -> void:
 		var y := D.baseline_for_center(font, T.FS_BODY, r.get_center().y)
 		draw_string(font, Vector2(r.position.x, y + 1), str(stacks), HORIZONTAL_ALIGNMENT_RIGHT, r.size.x, T.FS_BODY, Color(0, 0, 0, 0.6))
 		draw_string(font, Vector2(r.position.x, y), str(stacks), HORIZONTAL_ALIGNMENT_RIGHT, r.size.x, T.FS_BODY, T.TEXT)
+	if cooldown_remaining > 0.0:
+		var frac := clampf(cooldown_remaining / cooldown_total, 0.0, 1.0)
+		D.draw_cooldown(self, tile.grow(-1), T.ITEM_RADIUS - 1, frac, T.COOLDOWN_OVERLAY)
+		var cd_str := str(ceili(cooldown_remaining)) if cooldown_remaining >= 1.0 else "%.1f" % cooldown_remaining
+		D.draw_text_centered(self, T.font("bold"), T.FS_BODY, tile, cd_str, T.TEXT, true)
 
 
 func _draw_trinket() -> void:
