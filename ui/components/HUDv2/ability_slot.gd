@@ -47,6 +47,11 @@ const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 		accent = value
 		queue_redraw()
 
+@export var icon_texture: Texture2D:
+	set(value):
+		icon_texture = value
+		queue_redraw()
+
 ## Remaining cooldown seconds (ticks down on its own).
 var cooldown: float = 0.0
 ## Total of the current cooldown, used for the radial fraction.
@@ -103,7 +108,13 @@ func _draw() -> void:
 	# Icon.
 	var icon_color := T.TEXT if learned else T.TEXT_MUTED
 	var icon_center := tile.get_center() + (Vector2(0, -5) if locked else Vector2.ZERO)
-	D.draw_glyph(self, icon_kind, icon_center, 24.0, icon_color, 2.2)
+	if icon_texture:
+		var inner := tile.grow(-6)
+		if locked:
+			inner = inner.grow_individual(0, -5, 0, 0)
+		draw_texture_rect(icon_texture, inner, false, Color(1, 1, 1, 0.4 if locked else (0.95 if learned else 0.5)))
+	else:
+		D.draw_glyph(self, icon_kind, icon_center, 24.0, icon_color, 2.2)
 	if locked:
 		D.draw_text_centered(self, T.font("semibold"), T.FS_SMALL, Rect2(0, 38, T.ABILITY_SIZE, 16), "Nv. %d" % unlock_level, T.TEXT_SECONDARY)
 

@@ -125,7 +125,31 @@ func _drop_data(_pos: Vector2, data: Variant) -> void:
 	var node = data.get("item_node")
 	if not is_instance_valid(node):
 		return
-	assign_item(node.item_name, node.texture, node.quantity, node.item_id)
+	var d_name: String = "Objeto"
+	if node.get("item_name") != null:
+		d_name = str(node.get("item_name"))
+	elif node.has_meta("item_name"):
+		d_name = str(node.get_meta("item_name"))
+	
+	var d_tex: Texture2D = null
+	if node.get("texture") != null:
+		d_tex = node.get("texture") as Texture2D
+	elif node.has_meta("texture"):
+		d_tex = node.get_meta("texture") as Texture2D
+		
+	var d_qty: int = 1
+	if node.get("quantity") != null:
+		d_qty = int(node.get("quantity"))
+	elif node.has_meta("quantity"):
+		d_qty = int(node.get_meta("quantity"))
+		
+	var d_id: String = ""
+	if node.get("item_id") != null:
+		d_id = str(node.get("item_id"))
+	elif node.has_meta("item_id"):
+		d_id = str(node.get_meta("item_id"))
+		
+	assign_item(d_name, d_tex, d_qty, d_id)
 
 
 func assign_item(p_name: String, p_icon: Texture2D, p_stacks: int, p_id: String = "") -> void:

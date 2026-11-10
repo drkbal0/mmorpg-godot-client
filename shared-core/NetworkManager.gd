@@ -29,6 +29,7 @@ signal skill_spawned(projectile_id: int, caster_sid: int, spell_id: int, origin:
 signal combat_event_received(source_sid: int, target_sid: int, spell_id: int, damage: float, is_crit: bool, target_hp_percent: int)
 signal echo_item_collected(echo_id: String, item_id: String, is_empty: bool)
 signal zone_transition_received(zone_id: int, pos: Vector3)
+signal hazard_sync_received(hazard_sid: int, phase: int, remaining_ms: int, total_ms: int)
 
 var last_server_heartbeat : float = 0.0
 const SERVER_TIMEOUT : float = 8.0 # If no packet from server in 8s, we are disconnected
@@ -308,6 +309,14 @@ func _process(delta):
 						if reader.get_available_bytes() >= 1:
 							is_empty = (reader.get_u8() == 1)
 						echo_item_collected.emit(echo_id, item_id, is_empty)
+			elif packet_type == 0x19: # Hazard Sync (ADR 094 / Fase 9.13)
+				# Layout LE: [0x19][hazard_sid u32][phase u8][remaining_ms u32][phase_total_ms u32]
+				if packet.size() >= 14:
+					var hazard_sid = reader.get_u32()
+					var phase = reader.get_u8()
+					var remaining_ms = reader.get_u32()
+					var total_ms = reader.get_u32()
+					hazard_sync_received.emit(hazard_sid, phase, remaining_ms, total_ms)
 
 func send_heartbeat():
 	if udp_peer.is_socket_connected():

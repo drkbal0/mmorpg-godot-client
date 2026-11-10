@@ -146,6 +146,56 @@ func _run() -> void:
 	hud.set_gold(1665)
 	check(hud.gold_box.amount == 1665, "set_gold")
 
+	# LivePortrait3D tests (Fase 9.13 / ADR 095)
+	hud.portrait._setup_live_3d()
+	check(hud.portrait.live_portrait != null, "LivePortrait3D instanciado en portrait")
+	check(hud.portrait.live_portrait.size == Vector2i(256, 256), "LivePortrait3D resolucion 256x256")
+	check(hud.portrait.live_portrait.own_world_3d, "LivePortrait3D own_world_3d activo (aislamiento 3D)")
+	check(hud.portrait.portrait_texture != null, "portrait_texture vinculado al SubViewport")
+	hud.portrait.flash_damage()
+	check(hud.portrait.live_portrait._is_flashing, "flash_damage activa tween de daño")
+
+	# Quickslots Drag & Drop y Consumo Hotbar [1]-[6]
+	var slot0 = hud.get_item(0)
+	slot0.assign_item("Poción de Vida", tex, 5, "pot-uuid-123")
+	check(slot0.item_name == "Poción de Vida", "Quickslot 1 asigna item_name")
+	check(slot0.item_id == "pot-uuid-123", "Quickslot 1 asigna item_id")
+	check(slot0.stacks == 5, "Quickslot 1 tiene 5 stacks")
+	check(slot0.has_item(), "Quickslot 1 has_item == true")
+	check("Poción de Vida" in slot0.tooltip_text, "Quickslot 1 tooltip formateado")
+	var use_ok = slot0.use_item()
+	check(use_ok, "use_item consume con exito")
+	check(slot0.stacks == 4, "use_item decrementa stack a 4")
+	check(slot0.cooldown_remaining > 0.0, "use_item activa cooldown de 15s")
+	var second_use = slot0.use_item()
+	check(not second_use, "use_item bloqueado mientras esta en cooldown")
+	slot0.clear_item()
+	check(not slot0.has_item() and slot0.item_name == "", "clear_item vacia la ranura")
+
+	# Validacion Drag & Drop desde mochila
+	var mock_item = Control.new()
+	mock_item.set_meta("item_name", "Pergamino de Retorno")
+	mock_item.set_meta("texture", tex)
+	mock_item.set_meta("quantity", 3)
+	mock_item.set_meta("item_id", "scroll-999")
+	var drag_payload = {"type": "inventory_item", "item_node": mock_item}
+	check(slot0._can_drop_data(Vector2.ZERO, drag_payload), "slot0 acepta drop de inventory_item")
+	slot0._drop_data(Vector2.ZERO, drag_payload)
+	check(slot0.item_name == "Pergamino de Retorno" and slot0.stacks == 3, "slot0 drop_data asigna items arrastrados")
+	mock_item.free()
+
+	# Quickslot public API & Hotkey triggers
+	check(hud.use_quickslot(0), "use_quickslot(0) con Pergamino consume con éxito")
+	check(not hud.use_quickslot(0), "segundo use_quickslot(0) en cooldown retorna false")
+	hud.set_item(1, tex, 1, "Poción de Maná", "pot-mana-1")
+	check(hud.use_quickslot(1), "use_quickslot(1) consume con éxito")
+	hud.set_shape("curva")
+	check(hud.shape == "curva", "set_shape('curva') aplica forma curva")
+	hud.set_shape("escalonada")
+	check(hud.shape == "escalonada", "set_shape('escalonada') aplica forma escalonada")
+	hud.set_accent(Color("#5aa9ff"))
+	check(hud.accent == Color("#5aa9ff"), "set_accent cambia color de acento a #5aa9ff")
+
 	# set_stats
 	hud.set_stats({"attack_damage": 89, "attack_speed": 0.72, "armor_pen": "0 | 0%", "move_speed": 348.0})
 	check(hud.stat_rows["attack_damage"].value_text == "89", "stat int")

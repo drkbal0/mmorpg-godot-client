@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="dashGrad" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#0284c7" stop-opacity="0.1"/>
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="20" fill="#040e17"/>
+  <!-- Speed Trails -->
+  <line x1="16" y1="42" x2="60" y2="42" stroke="#0284c7" stroke-width="4" stroke-linecap="round" opacity="0.4"/>
+  <line x1="24" y1="56" x2="72" y2="56" stroke="#38bdf8" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+  <line x1="18" y1="70" x2="68" y2="70" stroke="#0ea5e9" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+  <line x1="28" y1="84" x2="56" y2="84" stroke="#0284c7" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+  <!-- Sonic Boom Chevrons -->
+  <path d="M 52 28 L 76 64 L 52 100" fill="none" stroke="#0284c7" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+  <path d="M 68 28 L 92 64 L 68 100" fill="none" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  <path d="M 84 32 L 106 64 L 84 96" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

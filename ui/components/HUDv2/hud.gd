@@ -137,6 +137,14 @@ func set_ability(slot: int, rank: int, max_rank: int, cost: int, locked: bool, u
 	a.set_cooldown(cooldown)
 
 
+func set_ability_icon(slot: int, tex: Texture2D) -> void:
+	if slot < 0 or slot >= 4:
+		return
+	if not is_node_ready():
+		await ready
+	abilities[slot].icon_texture = tex
+
+
 func set_spell(slot: int, cooldown: float) -> void:
 	if slot < 0 or slot >= 2:
 		push_error("HUDv2.set_spell: slot fuera de rango (%d)" % slot)
@@ -146,7 +154,7 @@ func set_spell(slot: int, cooldown: float) -> void:
 	spells[slot].set_cooldown(cooldown)
 
 
-func set_item(slot: int, icon: Texture2D, stacks: int) -> void:
+func set_item(slot: int, icon: Texture2D, stacks: int, p_name: String = "", p_id: String = "") -> void:
 	if slot < 0 or slot >= 6:
 		push_error("HUDv2.set_item: slot fuera de rango (%d)" % slot)
 		return
@@ -154,6 +162,20 @@ func set_item(slot: int, icon: Texture2D, stacks: int) -> void:
 		await ready
 	items[slot].icon = icon
 	items[slot].stacks = stacks
+	if p_name != "":
+		items[slot].item_name = p_name
+	if p_id != "":
+		items[slot].item_id = p_id
+	items[slot]._update_tooltip()
+	items[slot].queue_redraw()
+
+
+func use_quickslot(slot_idx: int) -> bool:
+	if not is_node_ready():
+		return false
+	if slot_idx >= 0 and slot_idx < items.size():
+		return items[slot_idx].use_item()
+	return false
 
 
 func set_trinket(charges: int) -> void:

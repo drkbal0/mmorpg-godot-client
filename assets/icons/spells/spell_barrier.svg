@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <radialGradient id="shieldGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ecfdf5"/>
+      <stop offset="40%" stop-color="#34d399"/>
+      <stop offset="80%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#064e3b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hexBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a7f3d0"/>
+      <stop offset="50%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="20" fill="#04140e"/>
+  <circle cx="64" cy="64" r="50" fill="url(#shieldGlow)" opacity="0.5"/>
+  <!-- Outer Hexagon -->
+  <polygon points="64,18 102,40 102,88 64,110 26,88 26,40" fill="#064e3b" fill-opacity="0.4" stroke="url(#hexBorder)" stroke-width="5" stroke-linejoin="round"/>
+  <!-- Inner Hexagon -->
+  <polygon points="64,30 90,46 90,82 64,98 38,82 38,46" fill="#10b981" fill-opacity="0.25" stroke="#6ee7b7" stroke-width="3" stroke-linejoin="round"/>
+  <!-- Prismatic Core -->
+  <polygon points="64,44 78,54 78,74 64,84 50,74 50,54" fill="#a7f3d0" fill-opacity="0.7" stroke="#ffffff" stroke-width="2"/>
+  <!-- Shield Emblem Cross Lines -->
+  <line x1="64" y1="18" x2="64" y2="110" stroke="#a7f3d0" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+  <line x1="26" y1="64" x2="102" y2="64" stroke="#a7f3d0" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+</svg>

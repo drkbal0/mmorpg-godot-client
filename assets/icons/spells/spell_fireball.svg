@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <radialGradient id="fireGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="25%" stop-color="#f59e0b"/>
+      <stop offset="65%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#7f1d1d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="flame" x1="0%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#dc2626"/>
+      <stop offset="50%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#fef08a"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="20" fill="#140707"/>
+  <circle cx="64" cy="68" r="50" fill="url(#fireGlow)" opacity="0.7"/>
+  <!-- Fireball Tails -->
+  <path d="M 40 92 C 30 70 36 40 64 16 C 54 44 76 42 66 66 C 78 52 88 56 88 72 C 88 94 68 106 40 92 Z" fill="url(#flame)"/>
+  <path d="M 52 90 C 44 76 50 56 64 36 C 60 52 74 54 68 70 C 76 62 80 66 78 78 C 76 92 64 98 52 90 Z" fill="#fed7aa"/>
+  <!-- Core Plasma -->
+  <circle cx="62" cy="74" r="16" fill="#fff7ed"/>
+  <circle cx="62" cy="74" r="8" fill="#ffffff"/>
+  <!-- Sparks -->
+  <circle cx="36" cy="38" r="3" fill="#fdba74"/>
+  <circle cx="88" cy="32" r="2.5" fill="#fca5a5"/>
+  <circle cx="96" cy="56" r="3" fill="#fef08a"/>
+</svg>
