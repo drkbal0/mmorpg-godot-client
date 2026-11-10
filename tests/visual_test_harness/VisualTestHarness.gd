@@ -32,6 +32,9 @@ const METEOR_SPELL_ID := 5
 const SLOT_PX := 64
 const OFFLINE_GATEWAY := "offline://visual-test-harness"
 
+const TacticalPingWheel = preload("res://ui/components/TacticalPing/TacticalPingWheel.gd")
+const TacticalPingMarker = preload("res://ui/components/TacticalPing/TacticalPingMarker.gd")
+
 @onready var _stage: Control = $Stage
 @onready var _caption_title: Label = $CaptionLayer/CaptionPanel/CaptionVBox/Title
 @onready var _caption_subtitle: Label = $CaptionLayer/CaptionPanel/CaptionVBox/Subtitle
@@ -204,6 +207,8 @@ func _run_scenarios() -> void:
 	await _scenario_spell_vector_icons()
 	await _clear_stage()
 	await _scenario_party_frames()
+	await _clear_stage()
+	await _scenario_tactical_ping()
 	await _clear_stage()
 
 	var all_pass := true
@@ -1110,5 +1115,90 @@ func _scenario_party_frames() -> void:
 			"member_count_is_three": party.get_all_frames().size() == 3,
 			"kaelen_is_downed": party.get_member_frame(103) != null and party.get_member_frame(103).is_downed,
 		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 14: Rueda de Pings Tácticos (Atajo G) & Marcadores 3D Screen-Space
+# ---------------------------------------------------------------------------
+
+func _scenario_tactical_ping() -> void:
+	_set_caption("Escenario 14 · Rueda de Pings Tácticos (Atajo G) & Marcadores Screen-Space",
+		"Señalización no verbal para escuadras: Rueda modal radial de 4 cuadrantes (0x1A UDP) y marcadores con pulso de radar y distancia")
+
+	# 1. Rueda de Ping en posición central izquierda
+	var wheel_scene: PackedScene = load("res://ui/components/TacticalPing/TacticalPingWheel.tscn")
+	var wheel: TacticalPingWheel = wheel_scene.instantiate() as TacticalPingWheel
+	_stage.add_child(wheel)
+	wheel.open_at(Vector2(260, 360))
+	wheel.active_selection = TacticalPingWheel.PingType.ATTACK # Resaltar cuadrante Norte (ATACAR)
+
+	# 2. Marcadores Screen-Space en el mundo a la derecha
+	var marker_scene: PackedScene = load("res://ui/components/TacticalPing/TacticalPingMarker.tscn")
+
+	# Marcador 1: PELIGRO (Ámbar)
+	var m_danger: TacticalPingMarker = marker_scene.instantiate() as TacticalPingMarker
+	m_danger.position = Vector2(560, 200)
+	_stage.add_child(m_danger)
+	m_danger.setup(TacticalPingMarker.PingType.DANGER, "Sylvia (Maga)", Vector3(12, 0, 30), 28.0)
+
+	# Marcador 2: ATACAR (Carmesí)
+	var m_attack: TacticalPingMarker = marker_scene.instantiate() as TacticalPingMarker
+	m_attack.position = Vector2(820, 260)
+	_stage.add_child(m_attack)
+	m_attack.setup(TacticalPingMarker.PingType.ATTACK, "Valerius (Líder)", Vector3(-4, 0, 18), 14.5)
+
+	# Marcador 3: EXTRAER (Esmeralda)
+	var m_extract: TacticalPingMarker = marker_scene.instantiate() as TacticalPingMarker
+	m_extract.position = Vector2(640, 420)
+	_stage.add_child(m_extract)
+	m_extract.setup(TacticalPingMarker.PingType.EXTRACT, "Kaelen (Cazador)", Vector3(45, 0, 95), 62.0)
+
+	# 3. Panel explicativo de arquitectura
+	var info_box := PanelContainer.new()
+	info_box.position = Vector2(560, 520)
+	info_box.custom_minimum_size = Vector2(580, 140)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.06, 0.08, 0.11, 0.95)
+	sb.border_color = Color(0.2, 0.35, 0.45, 0.8)
+	sb.set_border_width_all(1)
+	sb.set_corner_radius_all(10)
+	info_box.add_theme_stylebox_override("panel", sb)
+	_stage.add_child(info_box)
+
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 16)
+	margin.add_theme_constant_override("margin_top", 12)
+	margin.add_theme_constant_override("margin_right", 16)
+	margin.add_theme_constant_override("margin_bottom", 12)
+	info_box.add_child(margin)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 6)
+	margin.add_child(vbox)
+
+	var title := Label.new()
+	title.text = "ARQUITECTURA DE PINGS TÁCTICOS (PHASE 9.5 & 9.6 / ADR 097)"
+	title.add_theme_font_size_override("font_size", 12)
+	title.add_theme_color_override("font_color", Color("#46e3c1"))
+	vbox.add_child(title)
+
+	var desc := Label.new()
+	desc.text = "• Protocolo UDP 0x1A: Paquete Little-Endian de 22B (opcode, sender_sid, ping_type, world_pos, target_sid).\n• Anti-Spoofing: Servidor Rust ECS sobrescribe player_id con el ID de sesión autenticado del socket UDP.\n• Token-Bucket Anti-Spam: Máximo 3 pings por ventana de 5s (100 ticks) descartados en silencio (O(1)).\n• Aislamiento de Escuadra: Retransmisión confinada exclusivamente a miembros del mismo party_id activo."
+	desc.add_theme_font_size_override("font_size", 10)
+	desc.add_theme_color_override("font_color", Color(0.85, 0.9, 0.95))
+	vbox.add_child(desc)
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	await _capture("evidence_tactical_ping_wheel.png", 14,
+		"Rueda de pings tácticos modal y marcadores Screen-Space con radar expansivo y distancia en metros", {
+			"wheel_instantiated": wheel.is_inside_tree(),
+			"wheel_active": wheel.is_active,
+			"marker_danger_ok": m_danger.is_inside_tree(),
+			"marker_attack_ok": m_attack.is_inside_tree(),
+			"marker_extract_ok": m_extract.is_inside_tree(),
+		})
+
 
 
