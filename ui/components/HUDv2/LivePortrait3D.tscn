@@ -55,3 +55,4 @@ mesh = SubResource("BoxMesh_visor")
 [node name="ChestMesh" type="MeshInstance3D" parent="CharacterRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
 mesh = SubResource("BoxMesh_chest")
+

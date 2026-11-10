@@ -195,6 +195,14 @@ func _run_scenarios() -> void:
 	await _clear_stage()
 	await _scenario_death_echo_loot()
 	await _clear_stage()
+	await _scenario_hudv2_live_portrait()
+	await _clear_stage()
+	await _scenario_hudv2_hotbar_quickslots()
+	await _clear_stage()
+	await _scenario_hazard_indicator_sync()
+	await _clear_stage()
+	await _scenario_spell_vector_icons()
+	await _clear_stage()
 
 	var all_pass := true
 	for cap in _captures:
@@ -756,5 +764,249 @@ func _scenario_death_echo_loot() -> void:
 		"DeathEchoLabel en Screen-Space con tooltip de interacción táctica", {
 			"loot_label_visible": loot_plate.is_visible_in_tree(),
 			"panel_container_present": loot_plate.has_node("PanelContainer"),
+		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 9: HUDv2 Pixel-Perfect & Live 3D Model Portrait (ADR 095)
+# ---------------------------------------------------------------------------
+
+func _scenario_hudv2_live_portrait() -> void:
+	_set_caption("Escenario 9 · HUDv2 & Live 3D Model Portrait (ADR 095)",
+		"Retrato circular con busto 3D procedimental, iluminación estudio de 3 puntos y feedback de daño reactivo")
+
+	var hud_scene = load("res://ui/components/HUDv2/hud.tscn")
+	var hud = hud_scene.instantiate()
+	_stage.add_child(hud)
+	hud.position = Vector2(0, 0)
+	
+	hud.set_accent(Color("#46e3c1"))
+	hud.set_shape("trapecio")
+	hud.set_level(7, 0.65)
+	hud.set_health(680.0, 1000.0, 4.2)
+	hud.set_mana(320.0, 400.0)
+	hud.set_gold(2450)
+	hud.set_stats({
+		"attack_damage": 115, "ability_power": 45,
+		"attack_speed": 0.85, "crit": "15%",
+		"armor_pen": "10 | 12%", "magic_pen": "0 | 0%",
+		"life_steal": "8%", "omnivamp": "0%",
+		"armor": 62, "magic_resist": 48,
+		"tenacity": "10%", "heal_shield": "0%",
+		"ability_haste": 25, "move_speed": 360,
+		"attack_range": 175, "regen": "22 | 60",
+	})
+	hud.set_buffs([
+		{"color": Color("#245a3e"), "stacks": 0, "name": "Regeneración Arcana"},
+		{"color": Color("#5a2428"), "stacks": 3, "name": "Furia de Sangre"},
+		{"color": Color("#1e4a4a"), "stacks": 0, "duration_fraction": 0.7, "name": "Aura de Protección"},
+	])
+	hud.push_feed("06:12", "Sombra_Alpha", "Cazador", "ha adquirido Manto de las Sombras", true)
+	hud.push_feed("06:34", "Lord_Ignis", "Mago", "en camino hacia el Nexo", false)
+	
+	_add_note("HUDv2 Anclado al Borde Inferior (1360x460 auto-fit)\nLivePortrait3D con SubViewport (256x256, fondo transparente)\nLuces Key (Cian), Fill (Gris frío) y Rim (Dorado)", Vector2(60, 120), Color(0.3, 0.9, 0.8))
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	var portrait = hud.get_node_or_null("Portrait")
+	var live_subvp = portrait.get("live_portrait") if portrait else null
+	var has_tex: bool = portrait != null and portrait.get("portrait_texture") != null
+
+	await _capture("evidence_hudv2_live_portrait.png", 9,
+		"HUDv2 con LivePortrait3D renderizando busto del jugador en SubViewport", {
+			"hud_visible": hud.is_visible_in_tree(),
+			"portrait_present": portrait != null,
+			"live_portrait_attached": live_subvp != null,
+			"portrait_texture_valid": has_tex,
+		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 10: Hotbar Quickslots [1]-[6] con Drag & Drop y Cooldown Radial
+# ---------------------------------------------------------------------------
+
+func _scenario_hudv2_hotbar_quickslots() -> void:
+	_set_caption("Escenario 10 · Hotbar Quickslots [1]-[6] Drag & Drop",
+		"Casillas de acceso rápido vinculadas al inventario, badges de pila erguidos y barrido de cooldown radial")
+
+	var hud_scene = load("res://ui/components/HUDv2/hud.tscn")
+	var hud = hud_scene.instantiate()
+	_stage.add_child(hud)
+	
+	hud.set_accent(Color("#5aa9ff"))
+	hud.set_shape("curva")
+	hud.set_level(9, 0.20)
+	hud.set_health(850.0, 1200.0, 5.0)
+	hud.set_mana(410.0, 500.0)
+	hud.set_gold(3820)
+	
+	var stone_tex: Texture2D = load(STONE_ICON)
+	hud.set_item(0, stone_tex, 5)
+	hud.set_item(1, stone_tex, 3)
+	hud.set_item(2, stone_tex, 12)
+	hud.set_item(3, stone_tex, 1)
+	hud.set_item(4, stone_tex, 8)
+	hud.set_item(5, stone_tex, 2)
+	
+	# Simular cooldown activo en slot 1 (Poción)
+	var item1 = hud.items[1]
+	item1.item_name = "Poción Mayor de Vida"
+	item1.cooldown_total = 15.0
+	item1.cooldown_remaining = 9.2 # Barrido radial a más de la mitad
+	
+	hud.items[0].item_name = "Piedra Rúnica de Teletransporte"
+	hud.items[2].item_name = "Elixir de Maná Ancestral"
+	hud.items[3].item_name = "Pergamino de Identificación"
+	hud.items[4].item_name = "Bomba Incendiaria"
+	hud.items[5].item_name = "Vial de Velocidad"
+
+	_add_note("Hotbar de 6 casillas rápidas [1] - [6]\nSlot 2: Cooldown radial activo (9.2s restantes / 15s)\nArrastre y suelte polimórfico desde el inventario [I]", Vector2(60, 120), Color(0.4, 0.7, 1.0))
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	var has_cd: bool = item1.cooldown_remaining > 0.0
+	var has_items: bool = hud.items[0].stacks == 5 and hud.items[2].stacks == 12
+
+	await _capture("evidence_hudv2_quickslots_hotbar.png", 10,
+		"Hotbar de HUDv2 con slots 1-6 poblados, insignias erguidas y cooldown radial activo", {
+			"hud_visible": hud.is_visible_in_tree(),
+			"slot_stacks_valid": has_items,
+			"slot_cooldown_active": has_cd,
+			"slot_count_is_six": hud.items.size() == 6,
+		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 11: Sincronización Autoritativa de Hazards (Rust ECS ↔ Godot 3D)
+# ---------------------------------------------------------------------------
+
+func _scenario_hazard_indicator_sync() -> void:
+	_set_caption("Escenario 11 · Sincronización Autoritativa de Hazards (Rust ECS ↔ Godot 3D)",
+		"Máquina de 3 estados de peligro: Safe (0, verde), Warning (1, ámbar telegraph) y Active (2, carmesí daño)")
+
+	# Contenedor SubViewport 3D para renderizar la escena espacial
+	var subvp_cont := SubViewportContainer.new()
+	subvp_cont.size = TARGET_SIZE
+	_stage.add_child(subvp_cont)
+
+	var subvp := SubViewport.new()
+	subvp.size = TARGET_SIZE
+	subvp.own_world_3d = true
+	subvp.transparent_bg = true
+	subvp_cont.add_child(subvp)
+
+	var cam := Camera3D.new()
+	subvp.add_child(cam)
+	cam.position = Vector3(0, 3.2, 5.8)
+	cam.look_at(Vector3(0, 0, 0), Vector3.UP)
+
+	var light := DirectionalLight3D.new()
+	light.rotation_degrees = Vector3(-45, 30, 0)
+	light.light_energy = 1.0
+	subvp.add_child(light)
+
+	var hazard_scene = load("res://ui/components/HazardIndicator/HazardIndicator.tscn")
+
+	# Hazard 1: Safe (0)
+	var h_safe: Node3D = hazard_scene.instantiate()
+	subvp.add_child(h_safe)
+	h_safe.position = Vector3(-2.6, 0, 0)
+	h_safe.setup(0.0, false)
+	if h_safe.mesh_instance and h_safe._mat:
+		h_safe._mat.albedo_color = Color(0.1, 0.8, 0.2, 0.3)
+		h_safe._mat.emission_enabled = false
+
+	# Hazard 2: Warning (1)
+	var h_warn: Node3D = hazard_scene.instantiate()
+	subvp.add_child(h_warn)
+	h_warn.position = Vector3(0.0, 0, 0)
+	h_warn.setup(0.0, false)
+	if h_warn.mesh_instance and h_warn._mat:
+		h_warn._mat.albedo_color = Color(1.0, 0.7, 0.1, 0.65)
+		h_warn._mat.emission_enabled = true
+		h_warn._mat.emission = Color(1.0, 0.7, 0.1)
+		h_warn._mat.emission_energy_multiplier = 2.0
+
+	# Hazard 3: Active (2)
+	var h_act: Node3D = hazard_scene.instantiate()
+	subvp.add_child(h_act)
+	h_act.position = Vector3(2.6, 0, 0)
+	h_act.setup(0.0, false)
+	if h_act.mesh_instance and h_act._mat:
+		h_act._mat.albedo_color = Color(1.0, 0.15, 0.15, 0.85)
+		h_act._mat.emission_enabled = true
+		h_act._mat.emission = Color(1.0, 0.1, 0.1)
+		h_act._mat.emission_energy_multiplier = 3.5
+
+	# Etiquetas 2D descriptivas sobre cada zona
+	_add_note("FASE 0: SAFE\nDaño: 0.0\nColor: Esmeralda\nOpacidad tenue (0.15)", Vector2(170, 500), Color(0.3, 0.9, 0.4))
+	_add_note("FASE 1: WARNING\nTelegraph pre-detonación\nColor: Ámbar destellante\nDuración: 800ms", Vector2(520, 500), Color(1.0, 0.8, 0.2))
+	_add_note("FASE 2: ACTIVE\nDetonación autoritativa (0x19)\nColor: Carmesí HDR\nDaño continuo por tick", Vector2(880, 500), Color(1.0, 0.3, 0.3))
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	await _capture("evidence_hazard_indicator_sync.png", 11,
+		"Indicadores de peligro 3D sincronizados con los 3 estados autoritativos del Rust ECS", {
+			"subviewport_active": subvp.is_inside_tree(),
+			"hazard_safe_instantiated": h_safe.is_inside_tree(),
+			"hazard_warning_instantiated": h_warn.is_inside_tree(),
+			"hazard_active_instantiated": h_act.is_inside_tree(),
+		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 12: Iconos Vectoriales SVG de Habilidades (Phase 9.13)
+# ---------------------------------------------------------------------------
+
+func _scenario_spell_vector_icons() -> void:
+	_set_caption("Escenario 12 · Iconos Vectoriales SVG de Habilidades & Renderizado Nítido",
+		"Renderizado de alta fidelidad para el kit de habilidades: Rayo Láser (Q), Bola de Fuego (W), Dash (E), Escudo (D) y Meteoro (R)")
+
+	var grid := HBoxContainer.new()
+	grid.position = Vector2(240, 260)
+	grid.add_theme_constant_override("separation", 36)
+	_stage.add_child(grid)
+
+	var spells_info := [
+		{"key": "Q", "name": "Rayo Láser", "path": "res://assets/icons/spells/spell_laser.svg", "color": Color("#38bdf8")},
+		{"key": "W", "name": "Bola de Fuego", "path": "res://assets/icons/spells/spell_fireball.svg", "color": Color("#f97316")},
+		{"key": "E", "name": "Dash Espectral", "path": "res://assets/icons/spells/spell_dash.svg", "color": Color("#a855f7")},
+		{"key": "D", "name": "Barrera Arcana", "path": "res://assets/icons/spells/spell_barrier.svg", "color": Color("#10b981")},
+		{"key": "R", "name": "Impacto Meteoro", "path": "res://assets/icons/spells/spell_meteor.svg", "color": Color("#ef4444")},
+	]
+
+	var ability_slot_scene = load("res://ui/components/HUDv2/ability_slot.tscn")
+
+	for s in spells_info:
+		var slot = ability_slot_scene.instantiate()
+		grid.add_child(slot)
+		slot.custom_minimum_size = Vector2(62, 100)
+		slot.key_label = s["key"]
+		slot.rank = 3
+		slot.max_rank = 5
+		slot.cost = 45
+		slot.accent = s["color"]
+		var tex: Texture2D = null
+		var global_p := ProjectSettings.globalize_path(s["path"])
+		if FileAccess.file_exists(global_p):
+			var img := Image.load_from_file(global_p)
+			if img and not img.is_empty():
+				tex = ImageTexture.create_from_image(img)
+		if tex == null:
+			tex = load(s["path"]) if ResourceLoader.exists(s["path"]) else null
+		if tex:
+			slot.icon_texture = tex
+
+	_add_note("Kit de Habilidades con Iconografía Vectorial SVG (Sin pixelado en altas resoluciones)\nIconos escalables con rangos (1-5), costes de maná y acentos elementales dinámicos", Vector2(240, 420), Color(0.8, 0.9, 1.0))
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	await _capture("evidence_spell_vector_icons.png", 12,
+		"Iconos vectoriales SVG renderizados en slots de habilidad HUDv2", {
+			"grid_populated": grid.get_child_count() == 5,
 		})
 

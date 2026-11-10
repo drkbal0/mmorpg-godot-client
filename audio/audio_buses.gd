@@ -29,3 +29,4 @@ enum HitmarkerType {
 	SHIELD,   # Absorción por barrera arcana
 	HURT_SELF # Daño recibido por el jugador
 }
+

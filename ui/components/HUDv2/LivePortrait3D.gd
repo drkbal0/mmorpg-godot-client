@@ -98,3 +98,4 @@ func set_custom_model(model_node: Node3D) -> void:
 	var copy = model_node.duplicate()
 	copy.transform = Transform3D.IDENTITY
 	character_root.add_child(copy)
+
