@@ -1,0 +1,280 @@
+[gd_scene load_steps=3 format=3 uid="uid://marketplace_window_scene_uid"]
+
+[ext_resource type="Script" path="res://ui/windows/MarketplaceWindow/MarketplaceWindow.gd" id="1_market"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_market"]
+bg_color = Color(0.06, 0.08, 0.11, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.27, 0.89, 0.76, 0.85)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.7)
+shadow_size = 14
+
+[node name="MarketplaceWindow" type="PanelContainer"]
+custom_minimum_size = Vector2(800, 520)
+offset_left = 60.0
+offset_top = 40.0
+offset_right = 860.0
+offset_bottom = 560.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_market")
+script = ExtResource("1_market")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Header" type="ColorRect" parent="VBox"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+color = Color(0.08, 0.12, 0.18, 0.95)
+
+[node name="TitleLabel" type="Label" parent="VBox/Header"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_right = -44.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.27, 0.89, 0.76, 1)
+theme_override_font_sizes/font_size = 13
+text = "⚖️ MERCADO GLOBAL DE EXPLORADORES (P2P ESCROW)"
+vertical_alignment = 1
+
+[node name="CloseButton" type="Button" parent="VBox/Header"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_top = 3.0
+offset_right = -4.0
+offset_bottom = -3.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "✕"
+
+[node name="TopBarMargin" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+
+[node name="TopBar" type="HBoxContainer" parent="VBox/TopBarMargin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TabBuyButton" type="Button" parent="VBox/TopBarMargin/TopBar"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+text = "🛒 Comprar Listados"
+
+[node name="TabSellButton" type="Button" parent="VBox/TopBarMargin/TopBar"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+text = "📦 Vender / Publicar"
+
+[node name="Spacer" type="Control" parent="VBox/TopBarMargin/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WalletLabel" type="Label" parent="VBox/TopBarMargin/TopBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "BILLETERA: 850 SILVER"
+vertical_alignment = 1
+
+[node name="BuyContainer" type="VBoxContainer" parent="VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="FilterMargin" type="MarginContainer" parent="VBox/BuyContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_right = 12
+
+[node name="FilterBar" type="HBoxContainer" parent="VBox/BuyContainer/FilterMargin"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="SearchInput" type="LineEdit" parent="VBox/BuyContainer/FilterMargin/FilterBar"]
+custom_minimum_size = Vector2(300, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "🔍 Buscar por nombre o palabra clave..."
+
+[node name="CategoryOption" type="OptionButton" parent="VBox/BuyContainer/FilterMargin/FilterBar"]
+custom_minimum_size = Vector2(180, 32)
+layout_mode = 2
+
+[node name="SortButton" type="Button" parent="VBox/BuyContainer/FilterMargin/FilterBar"]
+custom_minimum_size = Vector2(180, 32)
+layout_mode = 2
+text = "Precio: ⬆ Menor a Mayor"
+
+[node name="Scroll" type="ScrollContainer" parent="VBox/BuyContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollMargin" type="MarginContainer" parent="VBox/BuyContainer/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 4
+
+[node name="ListingsGrid" type="GridContainer" parent="VBox/BuyContainer/Scroll/ScrollMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 10
+columns = 2
+
+[node name="SellContainer" type="VBoxContainer" parent="VBox"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="SellMargin" type="MarginContainer" parent="VBox/SellContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 16
+
+[node name="SellForm" type="VBoxContainer" parent="VBox/SellContainer/SellMargin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="SellFormTitle" type="Label" parent="VBox/SellContainer/SellMargin/SellForm"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.27, 0.89, 0.76, 1)
+theme_override_font_sizes/font_size = 14
+text = "PUBLICAR NUEVO OBJETO EN MERCADO P2P"
+
+[node name="ItemHBox" type="HBoxContainer" parent="VBox/SellContainer/SellMargin/SellForm"]
+layout_mode = 2
+
+[node name="ItemLabel" type="Label" parent="VBox/SellContainer/SellMargin/SellForm/ItemHBox"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Nombre del Ítem:"
+
+[node name="SellItemInput" type="LineEdit" parent="VBox/SellContainer/SellMargin/SellForm/ItemHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Ej. Lingote de Titanio Forjado"
+
+[node name="PriceHBox" type="HBoxContainer" parent="VBox/SellContainer/SellMargin/SellForm"]
+layout_mode = 2
+
+[node name="PriceLabel" type="Label" parent="VBox/SellContainer/SellMargin/SellForm/PriceHBox"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Precio Unitario (🪙):"
+
+[node name="SellPriceInput" type="SpinBox" parent="VBox/SellContainer/SellMargin/SellForm/PriceHBox"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+min_value = 1.0
+max_value = 100000.0
+value = 100.0
+
+[node name="QtyHBox" type="HBoxContainer" parent="VBox/SellContainer/SellMargin/SellForm"]
+layout_mode = 2
+
+[node name="QtyLabel" type="Label" parent="VBox/SellContainer/SellMargin/SellForm/QtyHBox"]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "Cantidad:"
+
+[node name="SellQtyInput" type="SpinBox" parent="VBox/SellContainer/SellMargin/SellForm/QtyHBox"]
+custom_minimum_size = Vector2(160, 32)
+layout_mode = 2
+min_value = 1.0
+max_value = 999.0
+value = 1.0
+
+[node name="FeeLabel" type="Label" parent="VBox/SellContainer/SellMargin/SellForm"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
+theme_override_font_sizes/font_size = 12
+text = "Total Venta: 100 Silver | Depósito Custodia (5%): 5 Silver"
+
+[node name="PublishButton" type="Button" parent="VBox/SellContainer/SellMargin/SellForm"]
+custom_minimum_size = Vector2(220, 38)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Publicar Listado en Custodia"
+
+[node name="FeedbackMargin" type="MarginContainer" parent="VBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 6
+
+[node name="FeedbackLabel" type="Label" parent="VBox/FeedbackMargin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Mercado sincronizado con la bóveda atómica de custodia."
+vertical_alignment = 1
+
+[node name="ConfirmModal" type="PanelContainer" parent="."]
+visible = false
+custom_minimum_size = Vector2(400, 160)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="ModalMargin" type="MarginContainer" parent="ConfirmModal"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="ModalVBox" type="VBoxContainer" parent="ConfirmModal/ModalMargin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="ConfirmTitle" type="Label" parent="ConfirmModal/ModalMargin/ModalVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.27, 0.89, 0.76, 1)
+theme_override_font_sizes/font_size = 13
+text = "CONFIRMACIÓN DE COMPRA EN CUSTODIA"
+horizontal_alignment = 1
+
+[node name="ConfirmText" type="Label" parent="ConfirmModal/ModalMargin/ModalVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "¿Deseas adquirir el ítem por 450 Silver?"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ButtonsHBox" type="HBoxContainer" parent="ConfirmModal/ModalMargin/ModalVBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 16
+
+[node name="ConfirmBuyButton" type="Button" parent="ConfirmModal/ModalMargin/ModalVBox/ButtonsHBox"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Confirmar"
+
+[node name="CancelBuyButton" type="Button" parent="ConfirmModal/ModalMargin/ModalVBox/ButtonsHBox"]
+custom_minimum_size = Vector2(120, 32)
+layout_mode = 2
+text = "Cancelar"

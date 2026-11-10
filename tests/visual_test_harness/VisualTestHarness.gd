@@ -34,6 +34,9 @@ const OFFLINE_GATEWAY := "offline://visual-test-harness"
 
 const TacticalPingWheel = preload("res://ui/components/TacticalPing/TacticalPingWheel.gd")
 const TacticalPingMarker = preload("res://ui/components/TacticalPing/TacticalPingMarker.gd")
+const MarketplaceWindow = preload("res://ui/windows/MarketplaceWindow/MarketplaceWindow.gd")
+const KiSpectralVision = preload("res://ui/components/KiSpectralVision/KiSpectralVision.gd")
+const BossEncounterFrame = preload("res://ui/components/BossEncounterFrame/BossEncounterFrame.gd")
 
 @onready var _stage: Control = $Stage
 @onready var _caption_title: Label = $CaptionLayer/CaptionPanel/CaptionVBox/Title
@@ -209,6 +212,12 @@ func _run_scenarios() -> void:
 	await _scenario_party_frames()
 	await _clear_stage()
 	await _scenario_tactical_ping()
+	await _clear_stage()
+	await _scenario_marketplace_window()
+	await _clear_stage()
+	await _scenario_ki_spectral_vision()
+	await _clear_stage()
+	await _scenario_boss_encounter_frame()
 	await _clear_stage()
 
 	var all_pass := true
@@ -1199,6 +1208,194 @@ func _scenario_tactical_ping() -> void:
 			"marker_attack_ok": m_attack.is_inside_tree(),
 			"marker_extract_ok": m_extract.is_inside_tree(),
 		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 15: Mercado P2P, Bóveda de Custodia (Escrow) y Buscador Inteligente
+# ---------------------------------------------------------------------------
+
+func _scenario_marketplace_window() -> void:
+	_set_caption("Escenario 15 · Mercado P2P, Bóveda de Custodia (Escrow) y Buscador Inteligente",
+		"Comercio entre exploradores con prevención de doble compra atómica, buscador insensible a acentos y tasa del 5%")
+
+	var market_scene: PackedScene = load("res://ui/windows/MarketplaceWindow/MarketplaceWindow.tscn")
+	var market: MarketplaceWindow = market_scene.instantiate() as MarketplaceWindow
+	market.position = Vector2(240, 90)
+	_stage.add_child(market)
+
+	# Simular saldo y búsqueda
+	market.player_silver = 1450
+	market._update_wallet_display()
+	market.search_input.text = "Katana"
+	market._on_search_changed("Katana")
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	await _capture("evidence_marketplace_p2p_escrow.png", 15,
+		"Ventana de mercado P2P con filtrado por categoría, tarjetas de listados y saldo en bóveda", {
+			"market_instantiated": market.is_inside_tree(),
+			"listings_count": market.get_filtered_listings().size(),
+			"wallet_balance": market.player_silver,
+		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 16: Visión Espectral de Ki, Desaturación Monocroma y Auras de Atributos
+# ---------------------------------------------------------------------------
+
+func _scenario_ki_spectral_vision() -> void:
+	_set_caption("Escenario 16 · Visión Espectral de Ki, Desaturación Monocroma y Auras de Atributos",
+		"Post-procesado de geometría etérea con penetración tras muros (<=8m) y color de aura decodificado por atributos")
+
+	# 1. Instanciar controlador de Visión de Ki
+	var ki_scene: PackedScene = load("res://ui/components/KiSpectralVision/KiSpectralVision.tscn")
+	var ki: KiSpectralVision = ki_scene.instantiate() as KiSpectralVision
+	_stage.add_child(ki)
+	ki.set_vision_active(true)
+
+	# 2. Tarjetas de entidades detectadas en el mundo etéreo
+	var container := HBoxContainer.new()
+	container.position = Vector2(100, 240)
+	container.add_theme_constant_override("separation", 24)
+	_stage.add_child(container)
+
+	var targets := [
+		{"name": "Guerrero Carmesí", "role": "Fuerza Dominante (85 STR)", "color": KiSpectralVision.COLOR_STRENGTH, "icon": "⚔️"},
+		{"name": "Cazador Sombrío", "role": "Agilidad Dominante (90 AGI)", "color": KiSpectralVision.COLOR_AGILITY, "icon": "🏹"},
+		{"name": "Maga Crepuscular", "role": "Inteligencia Dominante (95 INT)", "color": KiSpectralVision.COLOR_INTELLIGENCE, "icon": "🔮"},
+		{"name": "Val'Gorath (World Boss)", "role": "Entidad Élite Celestial", "color": KiSpectralVision.COLOR_BOSS, "icon": "👑"}
+	]
+
+	for t in targets:
+		var card := PanelContainer.new()
+		card.custom_minimum_size = Vector2(250, 200)
+		var csb := StyleBoxFlat.new()
+		csb.bg_color = Color(0.05, 0.07, 0.1, 0.95)
+		csb.border_color = t["color"]
+		csb.set_border_width_all(2)
+		csb.set_corner_radius_all(10)
+		csb.shadow_color = t["color"]
+		csb.shadow_size = 8
+		card.add_theme_stylebox_override("panel", csb)
+		container.add_child(card)
+
+		var mv := MarginContainer.new()
+		mv.add_theme_constant_override("margin_left", 14)
+		mv.add_theme_constant_override("margin_top", 14)
+		mv.add_theme_constant_override("margin_right", 14)
+		mv.add_theme_constant_override("margin_bottom", 14)
+		card.add_child(mv)
+
+		var vb := VBoxContainer.new()
+		vb.alignment = BoxContainer.ALIGNMENT_CENTER
+		vb.add_theme_constant_override("separation", 10)
+		mv.add_child(vb)
+
+		var ic := Label.new()
+		ic.text = t["icon"]
+		ic.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		ic.add_theme_font_size_override("font_size", 36)
+		vb.add_child(ic)
+
+		var nl := Label.new()
+		nl.text = t["name"]
+		nl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		nl.add_theme_font_size_override("font_size", 13)
+		nl.add_theme_color_override("font_color", t["color"])
+		vb.add_child(nl)
+
+		var rl := Label.new()
+		rl.text = t["role"]
+		rl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		rl.add_theme_font_size_override("font_size", 10)
+		rl.add_theme_color_override("font_color", Color(0.8, 0.85, 0.9))
+		vb.add_child(rl)
+
+		var pen := Label.new()
+		pen.text = "Penetración LoS: 4.2m / 8.0m [OK]"
+		pen.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		pen.add_theme_font_size_override("font_size", 9)
+		pen.add_theme_color_override("font_color", Color(0.5, 0.7, 0.8))
+		vb.add_child(pen)
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	await _capture("evidence_ki_spectral_vision_auras.png", 16,
+		"Visión Espectral de Ki con desaturación de escenario y auras cromáticas decodificadas por atributo", {
+			"ki_active": ki.is_active,
+			"targets_displayed": targets.size(),
+		})
+
+
+# ---------------------------------------------------------------------------
+# Escenario 17: Encuentro con Boss de Raid & Threat Table con Histéresis
+# ---------------------------------------------------------------------------
+
+func _scenario_boss_encounter_frame() -> void:
+	_set_caption("Escenario 17 · Encuentro de Raid con World Boss, Barra Segmentada y Threat Table",
+		"Sincronización UDP 0x1B con histéresis de aggro (110% melee / 130% rango), canalización y temporizador de enrage")
+
+	var boss_scene: PackedScene = load("res://ui/components/BossEncounterFrame/BossEncounterFrame.tscn")
+	var frame: BossEncounterFrame = boss_scene.instantiate() as BossEncounterFrame
+	frame.position = Vector2(280, 70)
+	_stage.add_child(frame)
+
+	frame.setup_boss(5001, "Val'Gorath, Devorador de Almas", 100000.0, 3, 225)
+	frame.set_hp(72500.0)
+	frame.set_phase(2)
+	frame.start_cast("Pulso de Vacío Cósmico", 5.0)
+	frame.update_cast_progress(0.55)
+	frame.set_threat(100, true) # Simular que el jugador tiene el aggro directo
+
+	# Panel explicativo de arquitectura debajo
+	var info_box := PanelContainer.new()
+	info_box.position = Vector2(280, 260)
+	info_box.custom_minimum_size = Vector2(720, 200)
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.06, 0.08, 0.12, 0.95)
+	sb.border_color = Color(0.88, 0.23, 0.23, 0.85)
+	sb.set_border_width_all(1)
+	sb.set_corner_radius_all(10)
+	info_box.add_theme_stylebox_override("panel", sb)
+	_stage.add_child(info_box)
+
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 18)
+	margin.add_theme_constant_override("margin_top", 14)
+	margin.add_theme_constant_override("margin_right", 18)
+	margin.add_theme_constant_override("margin_bottom", 14)
+	info_box.add_child(margin)
+
+	var vbox := VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 8)
+	margin.add_child(vbox)
+
+	var title := Label.new()
+	title.text = "ARQUITECTURA DE WORLD BOSS & THREAT TABLE RUST ECS (PHASE 9.6 / ADR 098)"
+	title.add_theme_font_size_override("font_size", 12)
+	title.add_theme_color_override("font_color", Color("#ef4444"))
+	vbox.add_child(title)
+
+	var desc := Label.new()
+	desc.text = "• Protocolo UDP 0x1B: Paquete binario de 16B (boss_id: u32, phase: u8, enrage_timer_sec: u16, top_threat_player_id: u32, threat_pct: u8, cast_spell_id: u16, cast_progress_pct: u8).\n• Histéresis Anti-Flicker: Desafíos cuerpo a cuerpo (<=3.5m) requieren >=110% de amenaza del tanque para robar aggro; atacantes a distancia (>3.5m) requieren >=130%.\n• Mecánica de Taunt: Provocación autoritativa escala instantáneamente la amenaza a max(top_threat * 1.25, 150.0) garantizando fijación del jefe.\n• Enrage Determinista: Temporizador de 300s decrece por tick; al llegar a 0s, daño escala un +300% detonando alerta roja estroboscópica."
+	desc.add_theme_font_size_override("font_size", 10)
+	desc.add_theme_color_override("font_color", Color(0.85, 0.9, 0.95))
+	vbox.add_child(desc)
+
+	await _settle(4)
+	await _wait_seconds(0.5)
+
+	await _capture("evidence_boss_encounter_threat_table.png", 17,
+		"Encuentro con World Boss en Fase 2, canalización activa, temporizador de enrage y alerta de aggro", {
+			"frame_instantiated": frame.is_inside_tree(),
+			"boss_hp": frame.current_hp,
+			"boss_phase": frame.current_phase,
+			"is_casting": frame.is_casting,
+			"holding_aggro": frame.is_holding_aggro,
+		})
+
 
 
 

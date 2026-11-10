@@ -24,6 +24,7 @@ func _register_initial_windows() -> void:
 	register("vendor_window", "res://ui/windows/VendorWindow/VendorWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 	register("codex_window", "res://ui/windows/CodexDiaryWindow/CodexDiaryWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 	register("party_frames", "res://ui/components/PartyFrames/PartyFrames.tscn", UITypes.WindowCategory.HUD)
+	register("marketplace_window", "res://ui/windows/MarketplaceWindow/MarketplaceWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 
 
 func register(id: String, scene_path: String, category: int) -> void:
