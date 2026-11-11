@@ -497,9 +497,9 @@ func _try_select_target():
 	query.collide_with_areas = true
 	query.collide_with_bodies = false # Ignore physics bodies (Layers 1-3)
 	query.collision_mask = 48 # Layer 5 (16) + Layer 6 (32) = 48
-	if player:
-		var excludes: Array[RID] = [player.get_rid()]
-		var area = player.get_node_or_null("Area3D")
+	if local_player and is_instance_valid(local_player):
+		var excludes: Array[RID] = [local_player.get_rid()]
+		var area = local_player.get_node_or_null("Area3D")
 		if area and area is CollisionObject3D:
 			excludes.append(area.get_rid())
 		query.exclude = excludes
