@@ -10,3 +10,4 @@ offset_bottom = 240.0
 mouse_filter = 2
 theme = ExtResource("2_theme")
 script = ExtResource("1_script")
+

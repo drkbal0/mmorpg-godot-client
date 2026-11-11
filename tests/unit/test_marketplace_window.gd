@@ -197,3 +197,4 @@ func test_tab_switching() -> void:
 	_assert(win.sell_container.visible == false, "Sell container is hidden")
 	
 	win.queue_free()
+

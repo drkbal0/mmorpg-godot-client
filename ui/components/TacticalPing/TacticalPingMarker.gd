@@ -161,3 +161,4 @@ func _draw() -> void:
 		Vector2(c.x, tip_y)
 	])
 	draw_colored_polygon(pts, col)
+

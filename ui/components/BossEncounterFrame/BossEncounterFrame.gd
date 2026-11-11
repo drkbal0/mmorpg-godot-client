@@ -176,3 +176,4 @@ static func _format_number(n: int) -> String:
 		if count % 3 == 0 and i > 0:
 			res = "," + res
 	return res
+

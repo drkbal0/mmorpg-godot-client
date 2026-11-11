@@ -278,3 +278,4 @@ text = "Confirmar"
 custom_minimum_size = Vector2(120, 32)
 layout_mode = 2
 text = "Cancelar"
+

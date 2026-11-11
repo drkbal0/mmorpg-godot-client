@@ -180,3 +180,4 @@ func test_threat_table_and_aggro_warning() -> void:
 	_assert(aggro_signal["state"] == false, "Carried false aggro state")
 	
 	frame.queue_free()
+

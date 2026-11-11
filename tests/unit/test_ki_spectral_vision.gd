@@ -122,3 +122,4 @@ func test_vision_toggle_and_signals() -> void:
 	_assert(node.color_rect.visible == false, "ShaderRect hidden again")
 	
 	node.queue_free()
+
