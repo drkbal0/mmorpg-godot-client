@@ -48,11 +48,76 @@ var is_holding_aggro: bool = false
 @onready var threat_label: Label = find_child("ThreatTextLabel", true, false)
 @onready var aggro_warning_badge: PanelContainer = find_child("AggroWarningBadge", true, false)
 
+## Tamaño de cada segmento de la barra de vida (100k HP -> 10 segmentos).
+const HP_SEGMENT_SIZE := 10000.0
+
+var _hp_segments: Control = null
+var _aggro_pulse_phase: float = 0.0
+
 func _ready() -> void:
+	_style_bars()
+	_build_hp_segments()
 	_update_header_display()
 	_update_hp_display()
 	_update_threat_display()
 	_update_cast_display()
+
+
+func _process(delta: float) -> void:
+	# Banner de aggro pulsante (≈2 Hz) mientras el jugador sostiene la amenaza.
+	if aggro_warning_badge and aggro_warning_badge.visible:
+		_aggro_pulse_phase += delta * TAU * 2.0
+		aggro_warning_badge.modulate.a = 0.55 + 0.45 * absf(sin(_aggro_pulse_phase))
+	if is_enraged and enrage_label:
+		enrage_label.modulate.a = 0.6 + 0.4 * absf(sin(_aggro_pulse_phase * 1.5 + 0.7))
+
+
+## Aplica la paleta del encuentro a las barras (sin esto se ven con el gris
+## por defecto del tema de Godot).
+func _style_bars() -> void:
+	_set_bar_colors(hp_ghost_bar, COLOR_HEALTH_GHOST, Color(0.05, 0.03, 0.04, 0.95))
+	_set_bar_colors(hp_bar, COLOR_HEALTH_NORMAL, Color(0, 0, 0, 0)) # el fondo lo pinta la barra fantasma
+	_set_bar_colors(cast_bar, COLOR_CAST_BAR, Color(0.04, 0.07, 0.09, 0.95))
+	_set_bar_colors(threat_bar, COLOR_THREAT_SAFE, Color(0.04, 0.05, 0.08, 0.95))
+
+
+static func _set_bar_colors(bar: ProgressBar, fill: Color, bg: Color) -> void:
+	if bar == null:
+		return
+	var fill_sb := StyleBoxFlat.new()
+	fill_sb.bg_color = fill
+	fill_sb.set_corner_radius_all(3)
+	var bg_sb := StyleBoxFlat.new()
+	bg_sb.bg_color = bg
+	bg_sb.set_corner_radius_all(3)
+	bar.add_theme_stylebox_override("fill", fill_sb)
+	bar.add_theme_stylebox_override("background", bg_sb)
+
+
+## Superpone divisores verticales cada HP_SEGMENT_SIZE sobre la barra de vida.
+func _build_hp_segments() -> void:
+	if hp_bar == null or _hp_segments != null:
+		return
+	_hp_segments = Control.new()
+	_hp_segments.name = "HPSegments"
+	_hp_segments.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_hp_segments.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_hp_segments.draw.connect(_draw_hp_segments)
+	hp_bar.add_child(_hp_segments)
+
+
+func get_segment_count() -> int:
+	return maxi(1, int(ceil(max_hp / HP_SEGMENT_SIZE)))
+
+
+func _draw_hp_segments() -> void:
+	var n := get_segment_count()
+	if n <= 1:
+		return
+	var sz := _hp_segments.size
+	for i in range(1, n):
+		var x := roundf(sz.x * float(i) / float(n))
+		_hp_segments.draw_line(Vector2(x, 1), Vector2(x, sz.y - 1), Color(0.02, 0.02, 0.04, 0.85), 2.0)
 
 func setup_boss(id: int, b_name: String, m_hp: float, phases: int = 3, enrage_sec: int = 300) -> void:
 	boss_id = id
@@ -65,6 +130,8 @@ func setup_boss(id: int, b_name: String, m_hp: float, phases: int = 3, enrage_se
 	is_enraged = false
 	_update_header_display()
 	_update_hp_display()
+	if _hp_segments:
+		_hp_segments.queue_redraw()
 
 func set_hp(new_hp: float) -> void:
 	current_hp = clamp(new_hp, 0.0, max_hp)
@@ -165,6 +232,10 @@ func _update_threat_display() -> void:
 		
 	if threat_label:
 		threat_label.add_theme_color_override("font_color", color)
+	if threat_bar:
+		var sb := threat_bar.get_theme_stylebox("fill") as StyleBoxFlat
+		if sb:
+			sb.bg_color = color
 
 static func _format_number(n: int) -> String:
 	var s = str(n)

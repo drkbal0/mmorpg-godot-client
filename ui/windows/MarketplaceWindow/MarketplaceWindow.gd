@@ -328,7 +328,17 @@ func _create_listing_card(item: Dictionary) -> Control:
 	time_lbl.add_theme_font_size_override("font_size", 9)
 	time_lbl.add_theme_color_override("font_color", Color(0.5, 0.6, 0.7))
 	vbox.add_child(time_lbl)
-	
+
+	# Liquidación de custodia: misma fórmula entera que el backend Go
+	# (domain.CalculateTax, floor 5%): tasa + neto == precio, sin perder silver.
+	var split := escrow_split(int(item["price"]))
+	var escrow_lbl := Label.new()
+	escrow_lbl.name = "EscrowLabel"
+	escrow_lbl.text = "Custodia 5%%: %d · Vendedor recibe: %d" % [split["fee"], split["net"]]
+	escrow_lbl.add_theme_font_size_override("font_size", 9)
+	escrow_lbl.add_theme_color_override("font_color", Color("#46e3c1"))
+	vbox.add_child(escrow_lbl)
+
 	# Precio y Acción a la derecha
 	var right_box := VBoxContainer.new()
 	right_box.custom_minimum_size = Vector2(90, 0)
@@ -350,6 +360,11 @@ func _create_listing_card(item: Dictionary) -> Control:
 	right_box.add_child(buy_btn)
 	
 	return panel
+
+## Reparto de una venta: comisión de custodia (floor 5%) y neto del vendedor.
+static func escrow_split(total_silver: int) -> Dictionary:
+	var fee: int = (total_silver * 5) / 100 if total_silver > 0 else 0
+	return {"fee": fee, "net": total_silver - fee}
 
 func _prompt_purchase(item: Dictionary) -> void:
 	_pending_purchase_listing = item

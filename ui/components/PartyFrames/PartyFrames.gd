@@ -118,6 +118,30 @@ func get_all_frames() -> Array[PartyMemberFrame]:
 	return get_member_frames()
 
 
+## Badge de política de botín de la escuadra ("FREE_FOR_ALL" | "ROUND_ROBIN"),
+## dibujado justo encima de la lista de miembros.
+var loot_policy: String = ""
+
+func set_loot_policy(policy: String) -> void:
+	loot_policy = policy.to_upper()
+	var badge: PanelContainer = get_node_or_null("LootPolicyBadge")
+	if badge == null:
+		badge = PanelContainer.new()
+		badge.name = "LootPolicyBadge"
+		badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		badge.add_theme_stylebox_override("panel", T.box(Color(0.05, 0.09, 0.12, 0.92), 4, 1, Color("#46e3c1")))
+		var lbl := Label.new()
+		lbl.name = "LootPolicyLabel"
+		lbl.add_theme_font_override("font", T.font("bold"))
+		lbl.add_theme_font_size_override("font_size", 9)
+		lbl.add_theme_color_override("font_color", Color("#46e3c1"))
+		badge.add_child(lbl)
+		add_child(badge)
+		badge.position = Vector2(0, -22)
+	var label_text := "BOTÍN: ROUND-ROBIN (TURNOS)" if loot_policy == "ROUND_ROBIN" else "BOTÍN: LIBRE (FREE-FOR-ALL)"
+	(badge.get_node("LootPolicyLabel") as Label).text = "  ◆ " + label_text + "  "
+
+
 ## Limpia y libera todos los frames actuales del grupo.
 func clear_party() -> void:
 	_frames_by_id.clear()

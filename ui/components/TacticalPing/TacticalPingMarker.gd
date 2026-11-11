@@ -149,7 +149,7 @@ func _draw() -> void:
 	D.draw_text_aligned(self, font_bold, 9, r_title, title_text, col, HORIZONTAL_ALIGNMENT_LEFT)
 
 	# Línea 2: Distancia
-	var dist_text := "%dm" % maxi(0, roundi(distance_meters))
+	var dist_text := "%.1fm" % maxf(0.0, distance_meters)
 	var r_dist := Rect2(box_rect.position.x + 28, box_rect.position.y + 15, 90, 12)
 	D.draw_text_aligned(self, font_med, 8, r_dist, dist_text, Color(T.TEXT_SECONDARY, _fade_alpha), HORIZONTAL_ALIGNMENT_LEFT)
 

@@ -223,14 +223,20 @@ func _on_draw_ticks() -> void:
 	if bar_w <= 1.0 or bar_h <= 1.0:
 		return
 
+	# Paso adaptativo: 100 HP por defecto; si los ticks quedarían a < 3 px
+	# (p. ej. un World Boss de 100k HP) se escala x10 para no ennegrecer la barra.
 	var hp_step = 100.0
+	while hp_step < max_health and (hp_step / max_health) * bar_w < 3.0:
+		hp_step *= 10.0
+	var major_step = hp_step * 10.0
+	var medium_step = hp_step * 5.0
 	var total_ticks = int(max_health / hp_step)
 
 	for i in range(1, total_ticks):
 		var hp_val = i * hp_step
 		var x = (hp_val / max_health) * bar_w
 
-		if int(hp_val) % 1000 == 0:
+		if is_zero_approx(fmod(hp_val, major_step)):
 			# 1000 HP Major Separator (LoL Chunk / Cuadro)
 			ticks_overlay.draw_line(
 				Vector2(x, 0.0),
@@ -238,7 +244,7 @@ func _on_draw_ticks() -> void:
 				Color(0.0, 0.0, 0.0, 1.0),
 				2.5
 			)
-		elif int(hp_val) % 500 == 0:
+		elif is_zero_approx(fmod(hp_val, medium_step)):
 			# 500 HP Medium Tick
 			ticks_overlay.draw_line(
 				Vector2(x, 0.0),

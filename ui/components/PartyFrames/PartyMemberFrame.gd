@@ -74,6 +74,10 @@ signal hovered(player_id: int, is_hovered: bool)
 		_update_distance_label()
 
 @export var status: String = "NORMAL"
+@export var is_leader: bool = false:
+	set(value):
+		is_leader = value
+		_update_leader_crown()
 @export var is_downed: bool = false
 @export var bleedout_seconds: float = 0.0
 
@@ -129,6 +133,8 @@ func _ready() -> void:
 	if not mouse_exited.is_connected(_on_mouse_exited):
 		mouse_exited.connect(_on_mouse_exited)
 
+	_update_leader_crown()
+
 	# Sincronización inicial
 	set_hp(current_hp, max_hp, true)
 	set_mana(current_mana, max_mana, true)
@@ -162,6 +168,8 @@ func setup(data: Dictionary) -> void:
 
 	var dist: float = float(data.get("distance", data.get("dist", 0.0)))
 	set_distance(dist)
+
+	is_leader = bool(data.get("is_leader", false))
 
 	var downed: bool = bool(data.get("is_downed", false))
 	var timer_sec: float = float(data.get("timer_sec", data.get("downed_timer", 0.0)))
@@ -318,6 +326,41 @@ func _update_downed_flash_visuals() -> void:
 
 	if hp_bar:
 		hp_bar.queue_redraw()
+
+
+## Corona dorada vectorial delante del nombre del líder de escuadra.
+func _update_leader_crown() -> void:
+	if not is_inside_tree() or not name_label:
+		return
+	var row := name_label.get_parent()
+	var crown: Control = row.get_node_or_null("LeaderCrown")
+	if is_leader and crown == null:
+		crown = Control.new()
+		crown.name = "LeaderCrown"
+		crown.custom_minimum_size = Vector2(14, 12)
+		crown.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		crown.tooltip_text = "Líder de escuadra"
+		crown.draw.connect(_draw_leader_crown.bind(crown))
+		row.add_child(crown)
+		row.move_child(crown, name_label.get_index())
+	elif not is_leader and crown != null:
+		crown.queue_free()
+
+
+func _draw_leader_crown(crown: Control) -> void:
+	var w := crown.size.x
+	var h := crown.size.y
+	var base_y := h * 0.5 + 4.0
+	var pts := PackedVector2Array([
+		Vector2(1, base_y), Vector2(1, base_y - 7), Vector2(w * 0.28, base_y - 3.5),
+		Vector2(w * 0.5, base_y - 9), Vector2(w * 0.72, base_y - 3.5),
+		Vector2(w - 1, base_y - 7), Vector2(w - 1, base_y),
+	])
+	crown.draw_colored_polygon(pts, Color("#ffcc33"))
+	var outline := pts.duplicate()
+	outline.append(pts[0])
+	crown.draw_polyline(outline, Color("#7a5200"), 1.0, true)
+	crown.draw_circle(Vector2(w * 0.5, base_y - 9), 1.4, Color("#fff2b3"))
 
 
 func _update_status_visuals() -> void:

@@ -2,7 +2,9 @@ extends CanvasLayer
 
 ## ScreenSpaceManager.gd - Next-Gen Screen-Space 2D Projection Engine
 ## Projects high-resolution 2D widgets (Nameplates, Segmented HP bars, Loot Labels)
-## onto CanvasLayer (Z=50) using camera.unproject_position().
+## onto CanvasLayer (Z=5) using camera.unproject_position().
+## Z=5: above the Ki Spectral post-process (1) and HUDv2 (2), but below the
+## UIOrchestrator window layer (10) so open windows are never covered by plates.
 ## Eliminates SubViewport overhead, perspective blur, and Label3D pixelation.
 
 static var instance: CanvasLayer = null
@@ -12,7 +14,7 @@ var _cached_cam: Camera3D = null
 var _frame_counter: int = 0
 
 func _init() -> void:
-	layer = 50
+	layer = 5
 	if instance == null:
 		instance = self
 

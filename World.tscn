@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://world-root"]
+[gd_scene load_steps=11 format=3 uid="uid://world-root"]
 
 [ext_resource type="Script" path="res://World.gd" id="1_world_script"]
 
@@ -15,12 +15,35 @@ background_mode = 2
 sky = SubResource("Sky_sky")
 tonemap_mode = 2
 glow_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.56, 0.62, 0.7, 1)
+fog_density = 0.006
+fog_sky_affect = 0.35
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
 size = Vector2(500, 500)
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ground"]
+noise_type = 1
+frequency = 0.035
+fractal_octaves = 4
+
+[sub_resource type="Gradient" id="Gradient_ground"]
+offsets = PackedFloat32Array(0, 0.55, 1)
+colors = PackedColorArray(0.55, 0.56, 0.52, 1, 0.82, 0.83, 0.78, 1, 1, 1, 0.96, 1)
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ground"]
+width = 512
+height = 512
+seamless = true
+color_ramp = SubResource("Gradient_ground")
+noise = SubResource("FastNoiseLite_ground")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
-albedo_color = Color(0.2, 0.22, 0.25, 1)
+albedo_color = Color(0.36, 0.38, 0.36, 1)
+albedo_texture = SubResource("NoiseTexture2D_ground")
+roughness = 0.92
+uv1_scale = Vector3(40, 40, 40)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_bse"]
 data = PackedVector3Array(250, 0, 250, -250, 0, 250, 250, 0, -250, -250, 0, 250, -250, 0, -250, 250, 0, -250)

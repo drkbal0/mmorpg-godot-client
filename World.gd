@@ -28,6 +28,8 @@ var extraction_label: Label = null
 var current_zone_id: int = 1
 var debug_overlay_layer: CanvasLayer = null
 var debug_overlay_label: Label = null
+## F9 compacto: una sola línea de telemetría (XYZ | Zone | Yaw | FPS | Ping).
+var debug_overlay_compact: bool = false
 var portal_vortices: Array = [] # Rotating Black Hole component dicts
 
 func _ready():
@@ -1013,6 +1015,7 @@ func _setup_debug_overlay() -> void:
 	margin.anchor_left = 1.0
 	margin.anchor_right = 1.0
 	margin.offset_left = -340
+	margin.grow_horizontal = Control.GROW_DIRECTION_BEGIN # la línea de telemetría crece hacia la izquierda
 	margin.offset_top = 15
 	margin.offset_right = -15
 	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -1084,8 +1087,13 @@ func _update_debug_overlay() -> void:
 	
 	var net_prof = GameConfig.get_active_profile_summary() if GameConfig.has_method("get_active_profile_summary") else ""
 	
+	if debug_overlay_compact:
+		debug_overlay_label.text = get_telemetry_line()
+		return
+
 	debug_overlay_label.text = (
 		"== MMORPG 3D [DEBUG F9] ==\n" +
+		get_telemetry_line() + "\n" +
 		"Perfil: %s\n" % net_prof +
 		"Mapa: %s\n" % zone_str +
 		"XYZ: %.2f / %.2f / %.2f\n" % [px, py, pz] +
@@ -1094,6 +1102,30 @@ func _update_debug_overlay() -> void:
 		"Session ID: %d | Entidades: %d\n" % [sid, entities_count] +
 		"Hitboxes: ACTIVAS (Rayos X)"
 	)
+
+## Línea compacta de telemetría F9:
+## "XYZ: (x, y, z) | Zone: N (Nombre) | Yaw: N° | FPS: N | Ping: N ms"
+## El ping solo se muestra si NetworkManager expone una medición RTT real
+## ("rtt_ms"); sin socket UDP conectado se informa "offline".
+func get_telemetry_line() -> String:
+	var p := Vector3.ZERO
+	var yaw := 0.0
+	if local_player and is_instance_valid(local_player):
+		p = local_player.global_position
+		yaw = fposmod(rad_to_deg(local_player.global_rotation.y), 360.0)
+	var ping_str := "offline"
+	if NetworkManager.udp_peer and NetworkManager.udp_peer.is_socket_connected() and NetworkManager.my_session_id > 0:
+		var rtt = NetworkManager.get("rtt_ms")
+		ping_str = ("%dms" % int(rtt)) if rtt != null else "--"
+	return "XYZ: (%.1f, %.1f, %.1f) | Zone: %d (%s) | Yaw: %d° | FPS: %d | Ping: %s" % [
+		p.x, p.y, p.z, current_zone_id, get_zone_display_name(current_zone_id),
+		int(round(yaw)) % 360, int(Engine.get_frames_per_second()), ping_str]
+
+func get_zone_display_name(zone_id: int) -> String:
+	match zone_id:
+		1: return "Overworld"
+		2: return "Cripta Ancestral"
+		_: return "Dungeon Shard"
 
 func _process_portal_vortices(delta: float) -> void:
 	for vortex in portal_vortices:
