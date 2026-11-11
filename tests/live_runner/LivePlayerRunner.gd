@@ -44,11 +44,14 @@ const TacticalPingWheel = preload("res://ui/components/TacticalPing/TacticalPing
 const TacticalPingMarker = preload("res://ui/components/TacticalPing/TacticalPingMarker.gd")
 const TacticalPingBeam3D = preload("res://world/TacticalPingBeam3D.gd")
 const ThreatTablePanel = preload("res://ui/components/BossEncounterFrame/ThreatTablePanel.gd")
+const BossEncounterFrame = preload("res://ui/components/BossEncounterFrame/BossEncounterFrame.gd")
+const PartyFrames = preload("res://ui/components/PartyFrames/PartyFrames.gd")
 const MarketplaceWindow = preload("res://ui/windows/MarketplaceWindow/MarketplaceWindow.gd")
 const EvidenceAudit = preload("res://tests/live_runner/EvidenceAudit.gd")
 const Codec = preload("res://shared-core/ExtractionReviveCodec.gd")
-## Escenas 1-6 (Fases 9.5/9.6) + 7-8 (Fase 9.7: convoy móvil y reanimación [F]).
-const SCENE_COUNT := 8
+const MercenaryCodec = preload("res://shared-core/MercenaryCodec.gd")
+## Escenas 1-6 (Fases 9.5/9.6) + 7-8 (Fase 9.7: convoy y revivir) + 9 (Fase 10: mercenarios IA).
+const SCENE_COUNT := 9
 
 var _output_dir := ""
 var _captures: Array = []
@@ -222,6 +225,8 @@ func _run_live_session() -> void:
 	await _scene_07_mobile_extraction_convoy()
 	await _reset_scene()
 	await _scene_08_contextual_revive()
+	await _reset_scene()
+	await _scene_09_mercenary_companion()
 
 	_write_manifest()
 	var all_pass := _captures.size() == SCENE_COUNT
@@ -861,8 +866,8 @@ func _scene_06_party_combat() -> void:
 	party.set_loot_policy("ROUND_ROBIN")
 	await _wait_seconds(0.3)
 
-	var kaelen := party.get_member_frame(605)
-	var valerius := party.get_member_frame(603)
+	var kaelen = party.get_member_frame(605)
+	var valerius = party.get_member_frame(603)
 	await _capture(6, "live_player_06_party_combat_vitals.png",
 		"Combate en escuadra con PartyFrames",
 		"PartyFrames con 3 compañeros (corona de líder en Valerius), Kaelen abatido con bleedout de 30 s en rojo pulsante y badge de botín Round-Robin; combate 3D con trazador hitscan y daño flotante.",
@@ -1071,3 +1076,72 @@ func _reset_phase97() -> void:
 	if _world.revive_modal:
 		_world.revive_modal.visible = false
 	_world._clear_revive_beam()
+
+
+# ===========================================================================
+# Escena 9: Mercenario IA y Compañero de Escuadra (Fase 10 / ADR 101)
+# ===========================================================================
+
+func _scene_09_mercenary_companion() -> void:
+	# 1. Posicionar jugador en 3ª persona mirando hacia el horizonte del mundo 3D
+	var p_start := Vector3(0.0, 1.0, 8.5)
+	_place_player(p_start, Vector3(0.0, 1.0, -2.0), -15.0, 0.15, 4.2, 5.0)
+
+	# 2. Spawnear entidad 3D del Mercenario Guardián a 3.5 m a la derecha-frente del jugador
+	var merc_pos := Vector3(2.5, 1.0, 6.0)
+	var merc_entity := _spawn_entity(1001, 3, merc_pos, "Centinela Vaelen (Guardián)", 1500.0)
+	_tint(merc_entity, Color(0.2, 0.8, 0.9)) # Tinte cian/Hextech de aliado
+	merc_entity.add_to_group("mercenary_allies")
+	merc_entity.set_meta("mercenary_id", 1001)
+
+	# 3. Configurar slot de mercenario en PartyFrames (CanvasLayer 8)
+	var party_frames: PartyFrames = (load("res://ui/components/PartyFrames/PartyFrames.tscn") as PackedScene).instantiate()
+	_combat_layer.add_child(party_frames)
+	_track(party_frames)
+	party_frames.position = Vector2(16, 44)
+	party_frames.set_mercenary({
+		"mercenary_id": 1001,
+		"role": MercenaryCodec.ROLE_GUARDIAN,
+		"stance": MercenaryCodec.STANCE_FOLLOW,
+		"hp_pct": 95,
+		"name": "Centinela Vaelen (Guardián)",
+	})
+	party_frames.update_mercenary_distance(3.5)
+
+	# 4. Validar paquete Little-Endian 0x1E MERCENARY_SYNC (16 B)
+	var pkt := MercenaryCodec.encode_mercenary({
+		"role": MercenaryCodec.ROLE_GUARDIAN,
+		"stance": MercenaryCodec.STANCE_FOLLOW,
+		"hp_pct": 95,
+		"mercenary_id": 1001,
+		"owner_sid": 42,
+		"target_entity_id": 0,
+	})
+	var msync := MercenaryCodec.decode_mercenary(pkt)
+
+	await _wait_seconds(0.4)
+
+	var dist := Vector2(_player.global_position.x - merc_pos.x, _player.global_position.z - merc_pos.z).length()
+	var cam := get_viewport().get_camera_3d()
+	await _capture(9, "live_player_09_mercenary_companion.png",
+		"Mercenario IA Guardián en formación táctica de anclaje (10m)",
+		"Jugador explorando en tercera persona acompañado por el mercenario Centinela Vaelen (Guardián) a 3.5 m de distancia (zona de confort <= 10m); HUD de grupo con slot dedicado mostrando retrato del rol [G], barra de vida al 95%, postura táctica [Alt+1] SEGUIR y telemetría de tethering sincronizada por el protocolo 0x1E de 16 bytes.",
+		{
+			"mercenary_spawned_in_world": merc_entity != null and is_instance_valid(merc_entity),
+			"mercenary_in_camera_frustum": cam.is_position_in_frustum(merc_pos),
+			"tether_within_10m": dist <= MercenaryCodec.TETHER_RADIUS_M,
+			"packet_0x1e_16_bytes": pkt.size() == 16 and pkt[0] == 0x1E,
+			"codec_roundtrip_ok": msync.get("role") == MercenaryCodec.ROLE_GUARDIAN and msync.get("hp_pct") == 95,
+			"party_frames_has_mercenary": party_frames.has_mercenary(),
+			"companion_slot_visible": party_frames.is_visible_in_tree(),
+			"hudv2_visible": _hud.is_visible_in_tree(),
+		},
+		{
+			"mercenary_name": "Centinela Vaelen (Guardián)",
+			"mercenary_role": "Guardian",
+			"mercenary_stance": "Follow (Alt+1)",
+			"mercenary_hp_pct": 95,
+			"tether_distance_m": snappedf(dist, 0.01),
+			"tether_status": "InBounds (Comfort Zone <= 10m)",
+			"packet_0x1e_hex": pkt.hex_encode(),
+		})

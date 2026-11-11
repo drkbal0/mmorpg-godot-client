@@ -33,8 +33,11 @@ signal hazard_sync_received(hazard_sid: int, phase: int, remaining_ms: int, tota
 ## Fase 9.7 (ADR 099/100): convoy de extracción móvil y reanimación contextual.
 signal extraction_beacon_received(beacon: Dictionary)
 signal revive_sync_received(sync: Dictionary)
+## Fase 10 (ADR 101): Mercenarios IA y compañeros de escuadra.
+signal mercenary_sync_received(sync: Dictionary)
 
 const ExtractionReviveCodec = preload("res://shared-core/ExtractionReviveCodec.gd")
+const MercenaryCodec = preload("res://shared-core/MercenaryCodec.gd")
 
 var last_server_heartbeat : float = 0.0
 const SERVER_TIMEOUT : float = 8.0 # If no packet from server in 8s, we are disconnected
@@ -330,6 +333,10 @@ func _process(delta):
 				var rsync := ExtractionReviveCodec.decode_revive(packet)
 				if not rsync.is_empty():
 					revive_sync_received.emit(rsync)
+			elif packet_type == MercenaryCodec.OPCODE_MERCENARY_SYNC: # 0x1E (ADR 101)
+				var msync := MercenaryCodec.decode_mercenary(packet)
+				if not msync.is_empty():
+					mercenary_sync_received.emit(msync)
 
 func send_heartbeat():
 	if udp_peer.is_socket_connected():
@@ -447,4 +454,17 @@ func send_revive_request(downed_sid: int, cancel: bool) -> void:
 		udp_peer.put_packet(ExtractionReviveCodec.encode_revive({
 			"state": ExtractionReviveCodec.REVIVE_INTERRUPTED if cancel else ExtractionReviveCodec.REVIVE_STARTED,
 			"downed_player_id": downed_sid,
+		}))
+
+## Petición de comando táctico para mercenario IA (0x1E, ADR 101).
+## [Alt+1] Seguir (0), [Alt+2] Atacar objetivo (1), [Alt+3] Mantener posición (2).
+func send_mercenary_command(mercenary_id: int, stance: int, target_id: int = 0) -> void:
+	if udp_peer.is_socket_connected() and my_session_id > 0:
+		udp_peer.put_packet(MercenaryCodec.encode_mercenary({
+			"role": MercenaryCodec.ROLE_GUARDIAN,
+			"stance": stance,
+			"hp_pct": 100,
+			"mercenary_id": mercenary_id,
+			"owner_sid": my_session_id,
+			"target_entity_id": target_id,
 		}))
