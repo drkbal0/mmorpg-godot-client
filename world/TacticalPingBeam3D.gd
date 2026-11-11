@@ -6,10 +6,10 @@ class_name TacticalPingBeam3D
 ## del terreno donde se confirmó el ping (0x1A TACTICAL_PING).
 
 const PING_COLORS := [
-	Color("#ff4655"), # 0 ATTACK
-	Color("#ffb020"), # 1 DANGER
-	Color("#46e3c1"), # 2 ASSIST
-	Color("#3ddc84"), # 3 EXTRACT
+	Color("#facc15"), # 0 MISSING ?? (Yellow)
+	Color("#ff3344"), # 1 DANGER (Red Alert)
+	Color("#0284c7"), # 2 ASSIST (Blue)
+	Color("#10b981"), # 3 ON_MY_WAY (Green)
 ]
 
 @export var ping_type: int = 0

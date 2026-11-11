@@ -95,7 +95,14 @@ func setup(p_name: String, p_hp: float, p_max_hp: float, is_hostile: bool = fals
 		else:
 			title_label.visible = false
 
-	# Apply theme colors
+	# Apply theme colors and level badge orientation (Hostile: Level on RIGHT, Friendly: Level on LEFT)
+	var health_frame = get_node_or_null("VBoxContainer/HealthFrame")
+	if health_frame and level_badge:
+		if is_hostile_unit:
+			health_frame.move_child(level_badge, health_frame.get_child_count() - 1)
+		else:
+			health_frame.move_child(level_badge, 0)
+
 	_apply_bar_colors()
 
 	if hp_bar_main:

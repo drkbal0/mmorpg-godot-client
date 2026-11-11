@@ -45,6 +45,22 @@ var revive_beam: Node3D = null
 var _convoy_latch: Dictionary = {} # beacon_id -> bool (histéresis 10 m / 11.5 m)
 var _phase97_layer: CanvasLayer = null
 
+# --- Fases 9.5 & 9.6: Pings Tácticos [G] y Visión Espectral de Ki [P] ---
+const KiSpectralVisionScene = preload("res://ui/components/KiSpectralVision/KiSpectralVision.tscn")
+const KiAuraProjectorScript = preload("res://ui/components/KiSpectralVision/KiAuraProjector.gd")
+const TacticalPingWheelScene = preload("res://ui/components/TacticalPing/TacticalPingWheel.tscn")
+const TacticalPingBeam3DScene = preload("res://world/TacticalPingBeam3D.gd")
+const WorldNameplateScene = preload("res://ui/screenspace/WorldNameplate.tscn")
+
+var ki_layer: CanvasLayer = null
+var ki_vision: KiSpectralVision = null
+var ki_projector: KiAuraProjector = null
+var _ki_pulse_tween: Tween = null
+
+var ping_layer: CanvasLayer = null
+var ping_wheel: TacticalPingWheel = null
+var overworld_archetypes: Array[Node3D] = []
+
 func _ready():
 	print("[World] Entry point reached. Initializing world state.")
 	
@@ -73,6 +89,8 @@ func _ready():
 	_setup_extraction_ui()
 	_setup_debug_overlay()
 	_build_map_topography()
+	_setup_ping_and_ki_systems()
+	_spawn_overworld_archetypes()
 	add_to_group("hitbox_debug")
 	
 	# 3. Handle Spawn and Connection
@@ -443,6 +461,23 @@ func _on_connection_restored():
 	print("[World] Connection Restored.")
 
 func _unhandled_input(event):
+	# 1. Rueda de Pings Tácticos [G] (mantener pulsado, arrastrar y soltar; clic derecho cancela)
+	if event is InputEventKey and not event.is_echo():
+		if event.keycode == KEY_G:
+			if event.pressed:
+				if ping_wheel and not ping_wheel.is_active:
+					var mpos = get_viewport().get_mouse_position()
+					ping_wheel.open_at(mpos)
+					get_viewport().set_input_as_handled()
+			else:
+				if ping_wheel and ping_wheel.is_active:
+					ping_wheel.close_and_confirm()
+					get_viewport().set_input_as_handled()
+		elif event.keycode == KEY_P and event.pressed:
+			trigger_ki_spectral_pulse()
+			get_viewport().set_input_as_handled()
+			return
+
 	if UIOrchestrator.is_mouse_over_ui():
 		return
 		
@@ -462,6 +497,12 @@ func _try_select_target():
 	query.collide_with_areas = true
 	query.collide_with_bodies = false # Ignore physics bodies (Layers 1-3)
 	query.collision_mask = 48 # Layer 5 (16) + Layer 6 (32) = 48
+	if player:
+		var excludes: Array[RID] = [player.get_rid()]
+		var area = player.get_node_or_null("Area3D")
+		if area and area is CollisionObject3D:
+			excludes.append(area.get_rid())
+		query.exclude = excludes
 	var result = space_state.intersect_ray(query)
 	
 	if result:
@@ -1312,4 +1353,234 @@ func _clear_revive_beam() -> void:
 	if revive_beam and is_instance_valid(revive_beam):
 		revive_beam.queue_free()
 	revive_beam = null
+
+
+# -------------------------------------------------------------------------
+# Fases 9.5 & 9.6: Tactical Pings [G], Ki Spectral Pulse [P], Live Archetypes
+# -------------------------------------------------------------------------
+
+func _setup_ping_and_ki_systems() -> void:
+	# 1. Ki Spectral Vision Layer (CanvasLayer 1: directly above 3D world, below HUD)
+	ki_layer = CanvasLayer.new()
+	ki_layer.name = "KiSpectralVisionLayer"
+	ki_layer.layer = 1
+	add_child(ki_layer)
+
+	ki_vision = KiSpectralVisionScene.instantiate()
+	ki_layer.add_child(ki_vision)
+	ki_vision.set_vision_active(false)
+
+	ki_projector = KiAuraProjectorScript.new()
+	ki_projector.name = "KiAuraProjector"
+	ki_layer.add_child(ki_projector)
+	ki_projector.visible = false
+
+	# 2. Tactical Ping Wheel Layer (CanvasLayer 15: top overlay)
+	ping_layer = CanvasLayer.new()
+	ping_layer.name = "TacticalPingLayer"
+	ping_layer.layer = 15
+	add_child(ping_layer)
+
+	ping_wheel = TacticalPingWheelScene.instantiate()
+	ping_wheel.name = "TacticalPingWheel"
+	ping_layer.add_child(ping_wheel)
+	ping_wheel.ping_selected.connect(_on_tactical_ping_confirmed)
+
+
+func trigger_ki_spectral_pulse() -> void:
+	if not ki_vision or not ki_projector: return
+	if _ki_pulse_tween and _ki_pulse_tween.is_valid():
+		_ki_pulse_tween.kill()
+
+	if has_node("/root/SoundManager"):
+		var sm = get_node("/root/SoundManager")
+		sm.play_ui_sfx(&"ki_pulse")
+
+	ki_vision.set_vision_active(true)
+	ki_projector.visible = true
+	ki_vision.desaturation = 0.0
+
+	_ki_pulse_tween = create_tween()
+	# 1. Smoothly fade in to 0.85 over 0.4s
+	_ki_pulse_tween.tween_property(ki_vision, "desaturation", 0.85, 0.4).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	# 2. Hold pulse for 4.5 seconds
+	_ki_pulse_tween.tween_interval(4.5)
+	# 3. Smoothly fade back out to 0.0 over 0.6s
+	_ki_pulse_tween.tween_property(ki_vision, "desaturation", 0.0, 0.6).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	_ki_pulse_tween.tween_callback(func():
+		ki_vision.set_vision_active(false)
+		ki_projector.visible = false
+	)
+	print("[World] Ki Spectral Vision pulse activated for 5.5s.")
+
+
+func _on_tactical_ping_confirmed(type: int, ping_name: String) -> void:
+	var ground_pos: Vector3 = Vector3.ZERO
+	if local_player and is_instance_valid(local_player):
+		ground_pos = local_player.get_ground_cursor_position()
+	else:
+		var camera = get_viewport().get_camera_3d()
+		if camera:
+			var mpos = get_viewport().get_mouse_position()
+			var from = camera.project_ray_origin(mpos)
+			var dir = camera.project_ray_normal(mpos)
+			ground_pos = from + dir * (-from.y / dir.y) if abs(dir.y) > 0.001 else from + dir * 15.0
+
+	# 1. Auditory SFX
+	if has_node("/root/SoundManager"):
+		var sm = get_node("/root/SoundManager")
+		match type:
+			1: # DANGER (Red)
+				sm.play_ui_sfx(&"ping_danger")
+			0: # MISSING ?? (Yellow)
+				sm.play_ui_sfx(&"ping_missing")
+			3: # ON_MY_WAY (Green)
+				sm.play_ui_sfx(&"ping_on_my_way")
+			2: # ASSIST (Blue)
+				sm.play_ui_sfx(&"ping_assist")
+
+	# 2. Local player aura feedback
+	if local_player and is_instance_valid(local_player):
+		var aura_col: Color = Color("#ff3344") if type == 1 else (Color("#facc15") if type == 0 else (Color("#10b981") if type == 3 else Color("#0284c7")))
+		_spawn_temporary_player_aura(local_player, aura_col, 3.0)
+
+	# 3. 3D World marker
+	var beam = TacticalPingBeam3DScene.new()
+	beam.ping_type = type
+	beam.position = ground_pos
+	add_child(beam)
+	var t = create_tween()
+	t.tween_interval(5.0)
+	t.tween_callback(beam.queue_free)
+
+	# 4. Network broadcast (Protocol 0x1A)
+	if NetworkManager and NetworkManager.has_method("send_tactical_ping"):
+		NetworkManager.send_tactical_ping(type, ground_pos, 0)
+
+	print("[World] Tactical ping emitted: %s (Type %d) at %s" % [ping_name, type, str(ground_pos)])
+
+
+func _spawn_temporary_player_aura(p_node: Node3D, col: Color, dur: float) -> void:
+	var ring = MeshInstance3D.new()
+	var torus = TorusMesh.new()
+	torus.inner_radius = 1.1
+	torus.outer_radius = 1.4
+	ring.mesh = torus
+	ring.position.y = 0.08
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = col
+	mat.emission_enabled = true
+	mat.emission = col
+	mat.emission_energy_multiplier = 3.0
+	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	ring.material_override = mat
+	p_node.add_child(ring)
+
+	var tw = create_tween()
+	tw.tween_property(mat, "albedo_color:a", 0.0, dur)
+	tw.tween_callback(ring.queue_free)
+
+
+func _spawn_overworld_archetypes() -> void:
+	for a in overworld_archetypes:
+		if is_instance_valid(a):
+			a.queue_free()
+	overworld_archetypes.clear()
+
+	# 1. Gildas el Mercader (Puesto Comercial P2P)
+	var gildas = Area3D.new()
+	gildas.name = "NPC_Gildas"
+	gildas.position = Vector3(4.0, 1.0, 4.0)
+	gildas.collision_layer = 48
+	gildas.collision_mask = 48
+	gildas.add_to_group("interactable")
+	var gildas_col = CollisionShape3D.new()
+	var gildas_shape = CapsuleShape3D.new()
+	gildas_shape.radius = 0.45
+	gildas_shape.height = 1.8
+	gildas_col.shape = gildas_shape
+	gildas.add_child(gildas_col)
+
+	var gildas_mesh = MeshInstance3D.new()
+	var g_cap = CapsuleMesh.new()
+	g_cap.radius = 0.4
+	g_cap.height = 1.8
+	gildas_mesh.mesh = g_cap
+	var g_mat = StandardMaterial3D.new()
+	g_mat.albedo_color = Color(0.2, 0.5, 0.85)
+	g_mat.roughness = 0.4
+	gildas_mesh.material_override = g_mat
+	gildas.add_child(gildas_mesh)
+
+	var gildas_script = load("res://world/GildasMerchant.gd")
+	if gildas_script:
+		gildas.set_script(gildas_script)
+	add_child(gildas)
+	overworld_archetypes.append(gildas)
+
+	if has_node("/root/ScreenSpaceManager"):
+		var np = WorldNameplateScene.instantiate()
+		np.setup("Gildas el Mercader", 1000.0, 1000.0, false, "‹ MERCADO P2P ›", 25)
+		ScreenSpaceManager.register_target(gildas, np, Vector3(0, 2.2, 0))
+
+	# 2. Guardia Carmesí (Fuerza / Red Aura #ff3344, Nivel 12)
+	var carmesi = _create_mock_mob("Guardia Carmesí", Vector3(-6.0, 1.0, 8.0), Color(0.95, 0.25, 0.25), 12, 1200.0, "‹ DOMINANCIA FUERZA ›")
+	if ki_projector:
+		ki_projector.track(carmesi, KiSpectralVision.COLOR_STRENGTH, "Guardia Carmesí", 1.2, 1.0)
+
+	# 3. Explorador Esmeralda (Agilidad / Green Aura #00ff88, Nivel 14)
+	var esmeralda = _create_mock_mob("Explorador Esmeralda", Vector3(-10.0, 1.0, 12.0), Color(0.15, 0.88, 0.45), 14, 950.0, "‹ DOMINANCIA AGILIDAD ›")
+	if ki_projector:
+		ki_projector.track(esmeralda, KiSpectralVision.COLOR_AGILITY, "Explorador Esmeralda", 1.2, 1.0)
+
+	# 4. Mago del Vacío (Inteligencia / Void Purple #aa44ff, Nivel 16)
+	var vacio = _create_mock_mob("Mago del Vacío", Vector3(-8.0, 1.0, 18.0), Color(0.68, 0.28, 0.98), 16, 800.0, "‹ DOMINANCIA INTELIGENCIA ›")
+	if ki_projector:
+		ki_projector.track(vacio, KiSpectralVision.COLOR_INTELLIGENCE, "Mago del Vacío", 1.2, 1.0)
+
+	# 5. Val'Gorath (Jefe Mundial / Celestial Gold #ffd700, Nivel 50)
+	var boss = _create_mock_mob("Val'Gorath el Devorador", Vector3(0.0, 2.2, 24.0), Color(0.92, 0.72, 0.15), 50, 100000.0, "‹ JEFE MUNDIAL - FASE 3/3 ›", 2.2)
+	if ki_projector:
+		ki_projector.track(boss, KiSpectralVision.COLOR_BOSS, "Val'Gorath", 2.6, 2.2)
+
+	print("[World] %d Arquetipos de Overworld desplegados correctamente." % overworld_archetypes.size())
+
+
+func _create_mock_mob(p_name: String, pos: Vector3, col: Color, lvl: int, hp: float, title: String, mob_scale: float = 1.0) -> Node3D:
+	var mob = Area3D.new()
+	mob.name = p_name.replace(" ", "_")
+	mob.position = pos
+	mob.scale = Vector3.ONE * mob_scale
+	mob.collision_layer = 48
+	mob.collision_mask = 48
+	mob.add_to_group("hitbox_debug")
+
+	var col_shape = CollisionShape3D.new()
+	var cap = CapsuleShape3D.new()
+	cap.radius = 0.4 * mob_scale
+	cap.height = 1.8 * mob_scale
+	col_shape.shape = cap
+	mob.add_child(col_shape)
+
+	var mesh_inst = MeshInstance3D.new()
+	var c_mesh = CapsuleMesh.new()
+	c_mesh.radius = 0.38 * mob_scale
+	c_mesh.height = 1.8 * mob_scale
+	mesh_inst.mesh = c_mesh
+	var mat = StandardMaterial3D.new()
+	mat.albedo_color = col
+	mat.roughness = 0.5
+	mesh_inst.material_override = mat
+	mob.add_child(mesh_inst)
+
+	add_child(mob)
+	overworld_archetypes.append(mob)
+
+	# Hostile nameplate -> Nivel a la DERECHA
+	if has_node("/root/ScreenSpaceManager"):
+		var np = WorldNameplateScene.instantiate()
+		np.setup(p_name, hp, hp, true, title, lvl)
+		ScreenSpaceManager.register_target(mob, np, Vector3(0, 2.2 * mob_scale, 0))
+
+	return mob
 

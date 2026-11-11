@@ -29,6 +29,8 @@ const STATS_HEADER_H := 18.0
 
 ## Scale the HUD down (never up) when the viewport is narrower than 1360px.
 @export var auto_fit: bool = true
+## Compact footprint factor: 60% of original canvas size as requested
+const DEFAULT_HUD_SCALE: float = 0.60
 
 @onready var shape_node = $Shape
 @onready var portrait = $Portrait
@@ -68,10 +70,10 @@ func _ready() -> void:
 func _fit_to_viewport() -> void:
 	pivot_offset = Vector2(T.HUD_SIZE.x * 0.5, T.HUD_SIZE.y)
 	if not auto_fit:
-		scale = Vector2.ONE
+		scale = Vector2.ONE * DEFAULT_HUD_SCALE
 		return
 	var vw := get_viewport_rect().size.x
-	var s := minf(1.0, vw / T.HUD_SIZE.x)
+	var s := minf(1.0, vw / T.HUD_SIZE.x) * DEFAULT_HUD_SCALE
 	scale = Vector2(s, s)
 
 

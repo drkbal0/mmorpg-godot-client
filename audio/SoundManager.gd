@@ -256,6 +256,19 @@ func _generate_procedural_fallbacks() -> void:
 	# Hazard warning riser
 	_sfx_bank[&"hazard_warning"] = _create_synthetic_beep(330.0, 0.8, 0.6)
 
+	# Tactical LoL-Style Pings
+	_sfx_bank[&"ping_danger"] = _create_synthetic_beep(880.0, 0.22, 0.75)
+	_sfx_bank[&"ping_missing"] = _create_synthetic_beep(587.33, 0.26, 0.65)
+	_sfx_bank[&"ping_on_my_way"] = _create_synthetic_beep(659.25, 0.20, 0.70)
+	_sfx_bank[&"ping_assist"] = _create_synthetic_beep(493.88, 0.24, 0.70)
+
+	# Combat Spells & Skills
+	_sfx_bank[&"spell_fireball"] = _create_synthetic_beep(280.0, 0.35, 0.70)
+	_sfx_bank[&"spell_hitscan"] = _create_synthetic_beep(1200.0, 0.08, 0.60)
+	_sfx_bank[&"spell_barrier"] = _create_synthetic_beep(550.0, 0.40, 0.50)
+	_sfx_bank[&"ki_pulse"] = _create_synthetic_beep(220.0, 0.50, 0.45)
+	_sfx_bank[&"extraction_hum"] = _create_synthetic_beep(110.0, 1.20, 0.35)
+
 
 func _create_synthetic_beep(freq: float, duration_sec: float, max_vol: float = 0.5) -> AudioStreamWAV:
 	var wav := AudioStreamWAV.new()

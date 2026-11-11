@@ -56,7 +56,7 @@ func _apply_shader_state() -> void:
 				mat.set_shader_parameter("desaturation", desaturation)
 	if state_badge:
 		state_badge.visible = is_active
-		state_badge.text = "👁️ VISIÓN ESPECTRAL DE KI [V]: ACTIVA"
+		state_badge.text = "👁️ PULSO DE VISIÓN DE KI [P]: ACTIVO"
 
 ## Determina el color cromático del aura de una entidad según sus atributos dominantes
 static func get_aura_color(strength: float, agility: float, intelligence: float, is_boss: bool = false) -> Color:

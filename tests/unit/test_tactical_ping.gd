@@ -48,33 +48,33 @@ func _run() -> void:
 	check(wheel.global_position == Vector2(280, 180), "Centrado en el punto solicitado (400-120, 300-120)")
 
 	# -------------------------------------------------------------------------
-	# 2. Resolución de Cuadrantes Angulares
+	# 2. Resolución de Cuadrantes Angulares (Disposición LoL Solicitada)
 	# -------------------------------------------------------------------------
 	print("\n--- 2. Resolución de Cuadrantes Angulares ---")
-	# Norte (-90°) -> ATTACK
+	# Norte (-90°) -> DANGER (Rojo LoL)
 	var q_north = TacticalPingWheel.get_quadrant_from_angle(-PI * 0.5)
-	check(q_north == TacticalPingWheel.PingType.ATTACK, "Ángulo -90° (Norte) resuelve a ATTACK (0)")
+	check(q_north == TacticalPingWheel.PingType.DANGER, "Ángulo -90° (Norte) resuelve a DANGER (1)")
 
-	# Este (0°) -> DANGER
+	# Este (0°) -> ON_MY_WAY (Verde LoL)
 	var q_east = TacticalPingWheel.get_quadrant_from_angle(0.0)
-	check(q_east == TacticalPingWheel.PingType.DANGER, "Ángulo 0° (Este) resuelve a DANGER (1)")
+	check(q_east == TacticalPingWheel.PingType.ON_MY_WAY, "Ángulo 0° (Este) resuelve a ON_MY_WAY (3)")
 
-	# Sur (90°) -> EXTRACT
+	# Sur (90°) -> ASSIST (Azul LoL)
 	var q_south = TacticalPingWheel.get_quadrant_from_angle(PI * 0.5)
-	check(q_south == TacticalPingWheel.PingType.EXTRACT, "Ángulo 90° (Sur) resuelve a EXTRACT (3, protocolo Rust 0x1A)")
+	check(q_south == TacticalPingWheel.PingType.ASSIST, "Ángulo 90° (Sur) resuelve a ASSIST (2, protocolo Rust 0x1A)")
 
-	# Oeste (180°) -> ASSIST
+	# Oeste (180°) -> MISSING (Amarillo LoL ??)
 	var q_west = TacticalPingWheel.get_quadrant_from_angle(PI)
-	check(q_west == TacticalPingWheel.PingType.ASSIST, "Ángulo 180° (Oeste) resuelve a ASSIST (2, protocolo Rust 0x1A)")
+	check(q_west == TacticalPingWheel.PingType.MISSING, "Ángulo 180° (Oeste) resuelve a MISSING (0, protocolo Rust 0x1A)")
 
 	# Cuadrantes diagonales limítrofes
-	check(TacticalPingWheel.get_quadrant_from_angle(-PI * 0.6) == TacticalPingWheel.PingType.ATTACK, "-108° resuelve a ATTACK")
-	check(TacticalPingWheel.get_quadrant_from_angle(PI * 0.2) == TacticalPingWheel.PingType.DANGER, "36° resuelve a DANGER")
-	check(TacticalPingWheel.get_quadrant_from_angle(PI * 0.6) == TacticalPingWheel.PingType.EXTRACT, "108° resuelve a EXTRACT")
-	check(TacticalPingWheel.get_quadrant_from_angle(-PI * 0.85) == TacticalPingWheel.PingType.ASSIST, "-153° resuelve a ASSIST")
+	check(TacticalPingWheel.get_quadrant_from_angle(-PI * 0.6) == TacticalPingWheel.PingType.DANGER, "-108° resuelve a DANGER")
+	check(TacticalPingWheel.get_quadrant_from_angle(PI * 0.2) == TacticalPingWheel.PingType.ON_MY_WAY, "36° resuelve a ON_MY_WAY")
+	check(TacticalPingWheel.get_quadrant_from_angle(PI * 0.6) == TacticalPingWheel.PingType.ASSIST, "108° resuelve a ASSIST")
+	check(TacticalPingWheel.get_quadrant_from_angle(-PI * 0.85) == TacticalPingWheel.PingType.MISSING, "-153° resuelve a MISSING")
 
 	# Confirmación y Emisión de Señal
-	wheel.active_selection = TacticalPingWheel.PingType.ATTACK
+	wheel.active_selection = TacticalPingWheel.PingType.DANGER
 	var event_data := {"type": -1, "name": "", "cancelled": false}
 	wheel.ping_selected.connect(func(t: int, n: String):
 		event_data["type"] = t
@@ -82,10 +82,10 @@ func _run() -> void:
 	)
 
 	var confirmed = wheel.close_and_confirm()
-	check(confirmed == TacticalPingWheel.PingType.ATTACK, "close_and_confirm retorna ATTACK")
+	check(confirmed == TacticalPingWheel.PingType.DANGER, "close_and_confirm retorna DANGER")
 	check(wheel.visible == false, "close_and_confirm oculta la rueda")
-	check(event_data["type"] == TacticalPingWheel.PingType.ATTACK, "Señal ping_selected emitió tipo ATTACK")
-	check(event_data["name"] == "ATACAR", "Señal ping_selected emitió nombre 'ATACAR'")
+	check(event_data["type"] == TacticalPingWheel.PingType.DANGER, "Señal ping_selected emitió tipo DANGER")
+	check(event_data["name"] == "PELIGRO", "Señal ping_selected emitió nombre 'PELIGRO'")
 
 	# Cancelación sin selección
 	wheel.open_at(Vector2(500, 500))

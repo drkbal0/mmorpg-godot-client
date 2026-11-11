@@ -66,7 +66,8 @@ func _draw() -> void:
 	var h := T.STAT_ROW_HEIGHT
 	var cy := h * 0.5
 	draw_circle(Vector2(T.STAT_DOT * 0.5 + 1.0, cy), T.STAT_DOT * 0.5, dot_color)
-	var name_rect := Rect2(T.STAT_DOT + 7.0, 0, size.x - T.STAT_DOT - 7.0, h)
-	# Spec: "Secundario: #9aa6ae. Cero: #7c8992."
+	# Non-overlapping dedicated name column and tabular right-aligned value column
+	var name_rect := Rect2(T.STAT_DOT + 6.0, 0, size.x - T.STAT_DOT - 48.0, h)
+	var val_rect := Rect2(size.x - 45.0, 0, 42.0, h)
 	D.draw_text_aligned(self, T.font("medium"), T.FS_STAT_NAME, name_rect, stat_name, T.TEXT_SECONDARY, HORIZONTAL_ALIGNMENT_LEFT)
-	D.draw_text_aligned(self, T.font("bold"), T.FS_STAT_VALUE, Rect2(0, 0, size.x, h), value_text, get_value_color(), HORIZONTAL_ALIGNMENT_RIGHT)
+	D.draw_text_aligned(self, T.font("bold"), T.FS_STAT_VALUE, val_rect, value_text, get_value_color(), HORIZONTAL_ALIGNMENT_RIGHT)

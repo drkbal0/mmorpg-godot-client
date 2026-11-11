@@ -48,7 +48,12 @@ func _unhandled_input(event: InputEvent):
 		_handle_hitbox_debug()
 		get_viewport().set_input_as_handled()
 
-	# 7. DEPRECATED / DESACTIVADO (F8)
+	# 7. VISIÓN ESPECTRAL DE KI PULSO (P)
+	elif (event.is_action_pressed("toggle_ki_vision") or (event is InputEventKey and event.pressed and event.keycode == KEY_P)) and not event.is_echo():
+		_handle_ki_pulse()
+		get_viewport().set_input_as_handled()
+
+	# 8. DEPRECATED / DESACTIVADO (F8)
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_F8 and not event.is_echo():
 		print("[UIInputRouter] F8 ignorado: El atajo fue desactivado. Usa F9 para alternar hitboxes.")
 		get_viewport().set_input_as_handled()
@@ -112,3 +117,10 @@ func _handle_hitbox_debug():
 	hitbox_debug_active = !hitbox_debug_active
 	print("[UIInputRouter] F9: Hitbox Debug toggled to: ", hitbox_debug_active)
 	get_tree().call_group("hitbox_debug", "set_hitbox_debug_visible", hitbox_debug_active)
+
+func _handle_ki_pulse():
+	var world = get_tree().current_scene
+	if world and world.has_method("trigger_ki_spectral_pulse"):
+		world.trigger_ki_spectral_pulse()
+	else:
+		print("[UIInputRouter] P: Ki spectral pulse no disponible en la escena actual.")

@@ -219,5 +219,25 @@ static func draw_glyph(ci: CanvasItem, kind: String, center: Vector2, size: floa
 		"coin":
 			ci.draw_circle(center, h, color)
 			ci.draw_arc(center, h * 0.62, 0, TAU, 24, color.darkened(0.35), maxf(1.0, width * 0.6), true)
+		"hazard":
+			# Danger exclamation triangle
+			var pts := PackedVector2Array([
+				center + Vector2(0, -h), center + Vector2(h * 0.9, h * 0.8),
+				center + Vector2(-h * 0.9, h * 0.8), center + Vector2(0, -h)
+			])
+			ci.draw_polyline(pts, color, width, true)
+			ci.draw_line(center + Vector2(0, -h * 0.4), center + Vector2(0, h * 0.2), color, width, true)
+			ci.draw_circle(center + Vector2(0, h * 0.5), width * 0.6, color)
+		"question":
+			# Missing "?" question mark
+			ci.draw_arc(center + Vector2(0, -h * 0.35), h * 0.45, -PI, PI * 0.3, 16, color, width, true)
+			ci.draw_line(center + Vector2(h * 0.2, -h * 0.05), center + Vector2(0, h * 0.2), color, width, true)
+			ci.draw_circle(center + Vector2(0, h * 0.6), width * 0.6, color)
+		"arrow_right":
+			# On my way directional arrow
+			ci.draw_line(center + Vector2(-h * 0.7, 0), center + Vector2(h * 0.7, 0), color, width, true)
+			ci.draw_polyline(PackedVector2Array([
+				center + Vector2(h * 0.2, -h * 0.5), center + Vector2(h * 0.7, 0), center + Vector2(h * 0.2, h * 0.5)
+			]), color, width, true)
 		_:
 			ci.draw_circle(center, h * 0.4, color)

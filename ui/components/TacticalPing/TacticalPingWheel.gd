@@ -10,10 +10,10 @@ const T = preload("res://ui/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 enum PingType {
-	ATTACK = 0,
-	DANGER = 1,
-	ASSIST = 2,   # Sincronizado con Rust PING_TYPE_ASSIST (protocolo 0x1A)
-	EXTRACT = 3,
+	MISSING = 0,    # Oeste / Izquierda (Amarillo ??) — Wire PING_TYPE_ATTACK
+	DANGER = 1,     # Norte / Arriba (Rojo ¡PELIGRO!) — Wire PING_TYPE_DANGER
+	ASSIST = 2,     # Sur / Abajo (Azul VOY EN CAMINO) — Wire PING_TYPE_ASSIST
+	ON_MY_WAY = 3,  # Este / Derecha (Verde EN CAMINO) — Wire PING_TYPE_EXTRACT
 	NONE = -1
 }
 
@@ -26,36 +26,36 @@ const DEADZONE := 18.0
 
 const PING_CONFIG := [
 	{
-		"type": PingType.ATTACK,
-		"name": "ATACAR",
-		"color": Color("#ef4444"), # Carmesí
-		"angle": -PI * 0.5,       # Norte (-90°)
-		"glyph": "target",
-		"desc": "Foco de daño prioritario"
-	},
-	{
 		"type": PingType.DANGER,
 		"name": "PELIGRO",
-		"color": Color("#f59e0b"), # Ámbar
-		"angle": 0.0,             # Este (0°)
+		"color": Color("#ef4444"), # Carmesí LoL Alert
+		"angle": -PI * 0.5,       # Norte (-90°)
 		"glyph": "hazard",
-		"desc": "Amenaza hostil inminente"
+		"desc": "¡PELIGRO! Alerta de amenaza inminente"
 	},
 	{
-		"type": PingType.EXTRACT,
-		"name": "EXTRAER",
-		"color": Color("#10b981"), # Esmeralda
-		"angle": PI * 0.5,        # Sur (90°)
-		"glyph": "recall",
-		"desc": "Punto de repliegue y portal"
+		"type": PingType.ON_MY_WAY,
+		"name": "EN CAMINO",
+		"color": Color("#10b981"), # Esmeralda LoL OMW
+		"angle": 0.0,             # Este (0°)
+		"glyph": "arrow_right",
+		"desc": "En camino al objetivo"
 	},
 	{
 		"type": PingType.ASSIST,
-		"name": "ASISTIR",
-		"color": Color("#06b6d4"), # Cian
+		"name": "VOY EN CAMINO",
+		"color": Color("#0284c7"), # Azul LoL Assist
+		"angle": PI * 0.5,        # Sur (90°)
+		"glyph": "shield",
+		"desc": "Apoyo y asistencia en posición"
+	},
+	{
+		"type": PingType.MISSING,
+		"name": "DESAPARECIDO",
+		"color": Color("#facc15"), # Amarillo LoL Missing '??'
 		"angle": PI,              # Oeste (180°)
-		"glyph": "user",
-		"desc": "Solicitud de apoyo o cura"
+		"glyph": "question",
+		"desc": "Enemigo desaparecido (??)"
 	}
 ]
 
@@ -112,6 +112,18 @@ func cancel() -> void:
 	cancelled.emit()
 
 
+func _unhandled_input(event: InputEvent) -> void:
+	if not is_active:
+		return
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			cancel()
+			get_viewport().set_input_as_handled()
+		elif event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			close_and_confirm()
+			get_viewport().set_input_as_handled()
+
+
 func _process(_delta: float) -> void:
 	if not is_active:
 		return
@@ -134,18 +146,18 @@ func _process(_delta: float) -> void:
 ## Retorna el cuadrante angular según el ángulo del ratón respecto al centro.
 static func get_quadrant_from_angle(angle: float) -> int:
 	# Cuadrantes en cruz (45° de tolerancia por sector):
-	# Norte (-90°): [-3PI/4, -PI/4]
-	# Este (0°):    [-PI/4, PI/4]
-	# Sur (90°):    [PI/4, 3PI/4]
-	# Oeste (180°): resto
+	# Norte (-90°): [-3PI/4, -PI/4] -> DANGER (Up, Red)
+	# Este (0°):    [-PI/4, PI/4]   -> ON_MY_WAY (Right, Green)
+	# Sur (90°):    [PI/4, 3PI/4]   -> ASSIST (Down, Blue)
+	# Oeste (180°): resto           -> MISSING (Left, Yellow ??)
 	if angle >= -PI * 0.75 and angle < -PI * 0.25:
-		return PingType.ATTACK
-	elif angle >= -PI * 0.25 and angle < PI * 0.25:
 		return PingType.DANGER
+	elif angle >= -PI * 0.25 and angle < PI * 0.25:
+		return PingType.ON_MY_WAY
 	elif angle >= PI * 0.25 and angle < PI * 0.75:
-		return PingType.EXTRACT
-	else:
 		return PingType.ASSIST
+	else:
+		return PingType.MISSING
 
 
 static func get_ping_config(p_type: int) -> Dictionary:

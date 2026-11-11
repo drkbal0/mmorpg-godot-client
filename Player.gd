@@ -46,6 +46,12 @@ var is_dead = false
 @onready var death_overlay = get_node_or_null("DeathOverlay")
 var crosshair_layer: CanvasLayer = null
 
+## League of Legends / Diablo Camera Standard
+const LOL_CAM_PITCH_DEG: float = -58.0
+const LOL_CAM_FOV: float = 45.0
+const LOL_CAM_OFFSET: Vector3 = Vector3(0.0, 18.0, 11.25)
+var force_camera_top_down: bool = false
+
 func _on_position_corrected(new_pos: Vector3):
 	var dist = position.distance_to(new_pos)
 	if dist > 1.5:
@@ -230,11 +236,13 @@ func setup_camera():
 	if camera_mode == CameraMode.TOP_DOWN:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		camera.top_level = true
-		camera.position = position + Vector3(0, 10, 10)
-		camera.rotation_degrees = Vector3(-45, 0, 0)
+		camera.fov = LOL_CAM_FOV
+		camera.position = position + LOL_CAM_OFFSET
+		camera.rotation_degrees = Vector3(LOL_CAM_PITCH_DEG, 0, 0)
 	else:
 		camera.top_level = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		camera.fov = 75.0
 		camera.position = Vector3(0, 2.5, 4.0)
 		camera.rotation_degrees = Vector3(-15, 0, 0)
 	
@@ -263,6 +271,11 @@ func _setup_crosshair():
 	crosshair_layer.visible = (camera_mode == CameraMode.THIRD_PERSON)
 
 func toggle_camera_mode():
+	if force_camera_top_down:
+		print("[Player] Camera toggle locked: Top-Down perspective enforced on this map.")
+		camera_mode = CameraMode.TOP_DOWN
+		setup_camera()
+		return
 	if camera_mode == CameraMode.TOP_DOWN:
 		camera_mode = CameraMode.THIRD_PERSON
 	else:
@@ -427,8 +440,8 @@ func _physics_process(delta):
 		velocity.y = JUMP_VELOCITY
 		
 	if camera_mode == CameraMode.TOP_DOWN:
-		var target_cam_pos = position + Vector3(0, 10, 10)
-		camera.position = camera.position.lerp(target_cam_pos, delta * 5.0)
+		var target_cam_pos = position + LOL_CAM_OFFSET
+		camera.position = camera.position.lerp(target_cam_pos, delta * 8.0)
 	
 	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	if input_dir.is_zero_approx():
@@ -511,6 +524,11 @@ func get_ground_cursor_position() -> Vector3:
 	query.collide_with_areas = true
 	query.collide_with_bodies = true
 	query.collision_mask = 48 # Layers 5 & 6 (Targetable Entities)
+	var excludes: Array[RID] = [get_rid()]
+	var area = get_node_or_null("Area3D")
+	if area and area is CollisionObject3D:
+		excludes.append(area.get_rid())
+	query.exclude = excludes
 	var result = space_state.intersect_ray(query)
 	if result:
 		return result.position
@@ -531,6 +549,15 @@ func _cast_skill(skill_id: int):
 		SpellManager.trigger_cooldown(skill_id)
 	var target = get_ground_cursor_position()
 	network.send_cast_skill(skill_id, target)
+
+	if has_node("/root/SoundManager"):
+		var sm = get_node("/root/SoundManager")
+		if skill_id == 1:
+			sm.play_spatial_sfx(&"spell_fireball", global_position, 2)
+		elif skill_id == 3:
+			sm.play_spatial_sfx(&"spell_hitscan", global_position, 2)
+		elif skill_id == 4:
+			sm.play_spatial_sfx(&"spell_barrier", global_position, 2)
 
 
 func send_position():
