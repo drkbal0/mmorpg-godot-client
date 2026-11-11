@@ -11,7 +11,10 @@ signal listing_created(listing_id: String, item_name: String, price: int, qty: i
 enum Category { ALL, WEAPONS, ARMOR, CONSUMABLES, MATERIALS }
 enum SortOrder { PRICE_ASC, PRICE_DESC, TIME_LEFT }
 
-const LISTING_FEE_PERCENT := 0.05 # 5% de depósito de custodia (escrow)
+# Custodia 5% en aritmética entera, idéntica al backend Go (domain.CalculateTax,
+# 500 bp): floor(price * 5 / 100). Sin floats ni ceil: tasa + neto == precio.
+const ESCROW_FEE_NUM := 5
+const ESCROW_FEE_DEN := 100
 
 # Mapeo de colores por rareza
 const RARITY_COLORS := {
@@ -363,8 +366,16 @@ func _create_listing_card(item: Dictionary) -> Control:
 
 ## Reparto de una venta: comisión de custodia (floor 5%) y neto del vendedor.
 static func escrow_split(total_silver: int) -> Dictionary:
-	var fee: int = (total_silver * 5) / 100 if total_silver > 0 else 0
+	var fee: int = listing_deposit(total_silver)
 	return {"fee": fee, "net": total_silver - fee}
+
+## Depósito de custodia de un listado: floor(price * 5 / 100), entero (int64 en GDScript).
+## Misma fórmula que el backend Go; antes el cliente usaba max(1, ceil(price * 0.05)).
+static func listing_deposit(total_silver: int) -> int:
+	if total_silver <= 0:
+		return 0
+	@warning_ignore("integer_division")
+	return (total_silver * ESCROW_FEE_NUM) / ESCROW_FEE_DEN
 
 func _prompt_purchase(item: Dictionary) -> void:
 	_pending_purchase_listing = item
@@ -424,7 +435,7 @@ func _on_sell_form_changed(_val: float) -> void:
 	var unit_price = int(sell_price_input.value)
 	var qty = int(sell_qty_input.value)
 	var total_price = unit_price * qty
-	var fee = max(1, int(ceil(total_price * LISTING_FEE_PERCENT)))
+	var fee: int = listing_deposit(total_price)
 	fee_label.text = "Total Venta: %d Silver | Depósito Custodia (5%%): %d Silver" % [total_price, fee]
 	if publish_button:
 		publish_button.disabled = (unit_price <= 0 or qty <= 0 or fee > player_silver)
@@ -443,7 +454,7 @@ func _on_publish_pressed() -> void:
 		return
 
 	var total = unit_price * qty
-	var fee = max(1, int(ceil(total * LISTING_FEE_PERCENT)))
+	var fee: int = listing_deposit(total)
 	
 	if player_silver < fee:
 		_show_feedback("No tienes suficiente saldo para cubrir el depósito de custodia (%d Silver)." % fee, Color("#ff4444"))

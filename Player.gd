@@ -14,6 +14,16 @@ const SEND_RATE = 1.0 / 20.0
 const world_hp_bar_scene = preload("res://ui/components/WorldHPBar/WorldHPBar.tscn")
 const player_hud_scene = preload("res://ui/components/PlayerHUD/PlayerHUD.tscn")
 const screen_space_nameplate_scene = preload("res://ui/screenspace/WorldNameplate.tscn")
+const ReviveInteraction = preload("res://shared-core/ReviveInteraction.gd")
+
+## Fase 9.7 / ADR 100: reanimación contextual con [F].
+signal revive_requested(downed_node: Node3D)
+signal revive_released(downed_sid: int)
+## Session id del aliado que se está reanimando (0 = ninguno).
+var reviving_sid: int = 0
+## true mientras un aliado nos reanima: el servidor rechaza movimiento (snapback),
+## el cliente además congela la velocidad para no arrastrarse fuera de 2.5 m.
+var is_pinned: bool = false
 
 var player_hud_instance : Node
 var world_hp_bar_instance : Node3D
@@ -288,10 +298,17 @@ func _input(event):
 	if event.is_action_pressed("dash_evade"):
 		_trigger_dash()
 
-	# Contextual Interact
+	# Contextual Interact — ADR 100: un aliado abatido a <= 2.5 m tiene PRIORIDAD 1
+	# ABSOLUTA sobre cofres o DeathEcho; el evento se consume para que nadie más lo vea.
 	if event.is_action_pressed("interact"):
 		if not UIOrchestrator.is_mouse_over_ui():
-			_try_interact()
+			if handle_interact_pressed():
+				get_viewport().set_input_as_handled()
+				return
+	elif event.is_action_released("interact") and reviving_sid != 0:
+		handle_interact_released()
+		get_viewport().set_input_as_handled()
+		return
 		
 	if event is InputEventMouseMotion and camera_mode == CameraMode.THIRD_PERSON:
 		rotate_y(-event.relative.x * mouse_sensitivity)
@@ -332,6 +349,29 @@ func _trigger_dash():
 		network.send_cast_skill(2, target)
 		velocity = dash_dir * DASH_SPEED
 		send_position()
+
+## Devuelve true si [F] inició una reanimación (y por tanto el evento debe consumirse).
+func handle_interact_pressed() -> bool:
+	var choice := ReviveInteraction.resolve_in_tree(get_tree(), global_position)
+	if choice["kind"] == ReviveInteraction.KIND_REVIVE:
+		var target: Node3D = choice["node"]
+		reviving_sid = ReviveInteraction.session_id_of(target)
+		if network and network.has_method("send_revive_request"):
+			network.send_revive_request(reviving_sid, false)
+		revive_requested.emit(target)
+		return true
+	_try_interact()
+	return false
+
+
+## Soltar [F]: cancela la canalización (0x1D state=1).
+func handle_interact_released() -> void:
+	var sid := reviving_sid
+	reviving_sid = 0
+	if network and network.has_method("send_revive_request"):
+		network.send_revive_request(sid, true)
+	revive_released.emit(sid)
+
 
 func _try_interact():
 	var from = global_position + Vector3(0, 1.0, 0)
@@ -374,7 +414,7 @@ func _try_interact():
 			closest_target.interact(self)
 
 func _physics_process(delta):
-	if is_dead: 
+	if is_dead or is_pinned:
 		velocity = Vector3.ZERO
 		move_and_slide()
 		return
@@ -409,7 +449,8 @@ func _physics_process(delta):
 
 	# Crouch handling via authoritative InputMap action
 	var wants_crouch = Input.is_action_pressed("crouch")
-	is_crouching = wants_crouch
+	# ADR 100: el reanimador se arrodilla mientras mantiene [F] sobre un aliado abatido.
+	is_crouching = wants_crouch or reviving_sid != 0
 	var target_factor = 1.0 if is_crouching else 0.0
 	crouch_factor = lerp(crouch_factor, target_factor, delta * 12.0)
 

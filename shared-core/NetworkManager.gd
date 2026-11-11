@@ -30,6 +30,11 @@ signal combat_event_received(source_sid: int, target_sid: int, spell_id: int, da
 signal echo_item_collected(echo_id: String, item_id: String, is_empty: bool)
 signal zone_transition_received(zone_id: int, pos: Vector3)
 signal hazard_sync_received(hazard_sid: int, phase: int, remaining_ms: int, total_ms: int)
+## Fase 9.7 (ADR 099/100): convoy de extracción móvil y reanimación contextual.
+signal extraction_beacon_received(beacon: Dictionary)
+signal revive_sync_received(sync: Dictionary)
+
+const ExtractionReviveCodec = preload("res://shared-core/ExtractionReviveCodec.gd")
 
 var last_server_heartbeat : float = 0.0
 const SERVER_TIMEOUT : float = 8.0 # If no packet from server in 8s, we are disconnected
@@ -317,6 +322,14 @@ func _process(delta):
 					var remaining_ms = reader.get_u32()
 					var total_ms = reader.get_u32()
 					hazard_sync_received.emit(hazard_sid, phase, remaining_ms, total_ms)
+			elif packet_type == ExtractionReviveCodec.OPCODE_EXTRACTION_BEACON_SYNC: # 0x1C (ADR 099)
+				var beacon := ExtractionReviveCodec.decode_beacon(packet)
+				if not beacon.is_empty():
+					extraction_beacon_received.emit(beacon)
+			elif packet_type == ExtractionReviveCodec.OPCODE_REVIVE_SYNC: # 0x1D (ADR 100)
+				var rsync := ExtractionReviveCodec.decode_revive(packet)
+				if not rsync.is_empty():
+					revive_sync_received.emit(rsync)
 
 func send_heartbeat():
 	if udp_peer.is_socket_connected():
@@ -426,3 +439,12 @@ func send_despawn_echo(echo_id: String) -> void:
 		packet.append_array(utf8)
 		udp_peer.put_packet(packet)
 		print("[NetworkManager] Sent authoritative DespawnEcho request for ID: ", echo_id)
+
+## Petición de reanimación (0x1D, ADR 100). cancel=false al pulsar [F], true al soltarla.
+## reviver_player_id viaja como 0: el servidor lo sustituye por la sesión autenticada.
+func send_revive_request(downed_sid: int, cancel: bool) -> void:
+	if udp_peer.is_socket_connected() and my_session_id > 0:
+		udp_peer.put_packet(ExtractionReviveCodec.encode_revive({
+			"state": ExtractionReviveCodec.REVIVE_INTERRUPTED if cancel else ExtractionReviveCodec.REVIVE_STARTED,
+			"downed_player_id": downed_sid,
+		}))

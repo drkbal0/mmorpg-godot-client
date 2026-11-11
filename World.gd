@@ -32,6 +32,19 @@ var debug_overlay_label: Label = null
 var debug_overlay_compact: bool = false
 var portal_vortices: Array = [] # Rotating Black Hole component dicts
 
+# --- Fase 9.7 (ADR 099/100): convoy de extracción móvil y reanimación contextual ---
+const MobileExtractionConvoyScene = preload("res://world/MobileExtractionConvoy.tscn")
+const ExtractionConvoyHUDScript = preload("res://ui/components/ExtractionHUD/ExtractionConvoyHUD.gd")
+const ReviveProgressModalScript = preload("res://ui/modals/ReviveProgressModal.gd")
+const RevivePlasmaBeamScript = preload("res://world/RevivePlasmaBeam3D.gd")
+const ExtractionReviveCodec = preload("res://shared-core/ExtractionReviveCodec.gd")
+var extraction_convoys: Dictionary = {} # beacon_id -> MobileExtractionConvoy
+var convoy_hud: Control = null
+var revive_modal: Control = null
+var revive_beam: Node3D = null
+var _convoy_latch: Dictionary = {} # beacon_id -> bool (histéresis 10 m / 11.5 m)
+var _phase97_layer: CanvasLayer = null
+
 func _ready():
 	print("[World] Entry point reached. Initializing world state.")
 	
@@ -50,6 +63,8 @@ func _ready():
 	NetworkManager.combat_event_received.connect(_on_combat_event_received)
 	NetworkManager.echo_item_collected.connect(_on_echo_item_collected)
 	NetworkManager.zone_transition_received.connect(_on_zone_transition_received)
+	NetworkManager.extraction_beacon_received.connect(_on_extraction_beacon_received)
+	NetworkManager.revive_sync_received.connect(_on_revive_sync_received)
 	
 	AuthManager.profile_fetched.connect(_on_profile_loaded)
 	
@@ -1209,3 +1224,92 @@ func _build_map_topography() -> void:
 		body.add_child(mesh_inst)
 
 		add_child(body)
+
+
+# ===========================================================================
+# Fase 9.7 — Convoy de extracción móvil (0x1C) y reanimación contextual (0x1D)
+# ===========================================================================
+
+func _phase97_ui_layer() -> CanvasLayer:
+	if _phase97_layer == null:
+		_phase97_layer = CanvasLayer.new()
+		_phase97_layer.name = "Phase97Layer"
+		_phase97_layer.layer = 9 # sobre nameplates (5) y marcos de combate (8), bajo ventanas (10)
+		add_child(_phase97_layer)
+	return _phase97_layer
+
+
+func get_convoy_hud() -> Control:
+	if convoy_hud == null:
+		convoy_hud = ExtractionConvoyHUDScript.new()
+		convoy_hud.name = "ExtractionConvoyHUD"
+		_phase97_ui_layer().add_child(convoy_hud)
+		# Centrado bajo la franja superior (el panel F9 ocupa la esquina superior derecha).
+		convoy_hud.position = Vector2((get_viewport().get_visible_rect().size.x - ExtractionConvoyHUDScript.PANEL_SIZE.x) * 0.5, 58)
+	return convoy_hud
+
+
+func get_revive_modal() -> Control:
+	if revive_modal == null:
+		revive_modal = ReviveProgressModalScript.new()
+		revive_modal.name = "ReviveProgressModal"
+		_phase97_ui_layer().add_child(revive_modal)
+		var vp := get_viewport().get_visible_rect().size
+		# Bajo la retícula y sobre el HUDv2: no tapa a los personajes del centro.
+		revive_modal.position = Vector2((vp.x - ReviveProgressModalScript.PANEL_SIZE.x) * 0.5, vp.y * 0.5 + 92)
+	return revive_modal
+
+
+func _on_extraction_beacon_received(b: Dictionary) -> void:
+	var bid := int(b.get("beacon_id", 0))
+	var convoy = extraction_convoys.get(bid)
+	if convoy == null or not is_instance_valid(convoy):
+		convoy = MobileExtractionConvoyScene.instantiate()
+		convoy.name = "Convoy_%d" % bid
+		add_child(convoy)
+		extraction_convoys[bid] = convoy
+	convoy.apply_beacon_sync(b)
+	# El HUD solo se muestra al jugador local que está dentro (misma histéresis que Rust).
+	if local_player and is_instance_valid(local_player):
+		var inside: bool = convoy.is_inside(local_player.global_position, bool(_convoy_latch.get(bid, false)))
+		_convoy_latch[bid] = inside
+		var hud := get_convoy_hud()
+		if inside:
+			hud.apply_beacon(b)
+		else:
+			hud.set_remaining_ms(0)
+
+
+func _on_revive_sync_received(s: Dictionary) -> void:
+	var me := NetworkManager.my_session_id
+	var downed_sid := int(s.get("downed_player_id", 0))
+	var reviver_sid := int(s.get("reviver_player_id", 0))
+	var state := int(s.get("state", -1))
+	var downed_node: Node3D = local_player if downed_sid == me else remote_players.get(downed_sid)
+	var reviver_node: Node3D = local_player if reviver_sid == me else remote_players.get(reviver_sid)
+
+	# ADR 100 §5: el abatido queda inmovilizado mientras le reaniman.
+	if downed_sid == me and local_player and "is_pinned" in local_player:
+		local_player.is_pinned = state == ExtractionReviveCodec.REVIVE_STARTED
+
+	if reviver_sid == me:
+		var target_name := str(remote_identities.get(downed_sid, "aliado"))
+		get_revive_modal().apply_revive_sync(s, target_name)
+
+	if state == ExtractionReviveCodec.REVIVE_STARTED and downed_node and reviver_node:
+		_clear_revive_beam()
+		revive_beam = RevivePlasmaBeamScript.new()
+		revive_beam.name = "RevivePlasmaBeam"
+		add_child(revive_beam)
+		revive_beam.setup(reviver_node, downed_node)
+	elif state != ExtractionReviveCodec.REVIVE_STARTED:
+		_clear_revive_beam()
+		if state == ExtractionReviveCodec.REVIVE_COMPLETED and downed_node and downed_node.is_in_group("downed_allies"):
+			downed_node.remove_from_group("downed_allies")
+
+
+func _clear_revive_beam() -> void:
+	if revive_beam and is_instance_valid(revive_beam):
+		revive_beam.queue_free()
+	revive_beam = null
+

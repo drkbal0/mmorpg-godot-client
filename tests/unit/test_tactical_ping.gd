@@ -61,11 +61,11 @@ func _run() -> void:
 
 	# Sur (90°) -> EXTRACT
 	var q_south = TacticalPingWheel.get_quadrant_from_angle(PI * 0.5)
-	check(q_south == TacticalPingWheel.PingType.EXTRACT, "Ángulo 90° (Sur) resuelve a EXTRACT (2)")
+	check(q_south == TacticalPingWheel.PingType.EXTRACT, "Ángulo 90° (Sur) resuelve a EXTRACT (3, protocolo Rust 0x1A)")
 
 	# Oeste (180°) -> ASSIST
 	var q_west = TacticalPingWheel.get_quadrant_from_angle(PI)
-	check(q_west == TacticalPingWheel.PingType.ASSIST, "Ángulo 180° (Oeste) resuelve a ASSIST (3)")
+	check(q_west == TacticalPingWheel.PingType.ASSIST, "Ángulo 180° (Oeste) resuelve a ASSIST (2, protocolo Rust 0x1A)")
 
 	# Cuadrantes diagonales limítrofes
 	check(TacticalPingWheel.get_quadrant_from_angle(-PI * 0.6) == TacticalPingWheel.PingType.ATTACK, "-108° resuelve a ATTACK")
@@ -124,6 +124,18 @@ func _run() -> void:
 
 	marker.ping_type = TacticalPingMarker.PingType.ASSIST
 	check(marker.get_ping_color() == Color("#06b6d4"), "ASSIST color cian (#06b6d4)")
+
+	# Valores de cable sincronizados con Rust (protocol.rs PING_TYPE_*, opcode 0x1A)
+	print("
+--- 3. Paridad de PingType con el protocolo Rust 0x1A ---")
+	check(TacticalPingWheel.PingType.ATTACK == 0, "Wheel ATTACK == 0 (PING_TYPE_ATTACK)")
+	check(TacticalPingWheel.PingType.DANGER == 1, "Wheel DANGER == 1 (PING_TYPE_DANGER)")
+	check(TacticalPingWheel.PingType.ASSIST == 2, "Wheel ASSIST == 2 (PING_TYPE_ASSIST)")
+	check(TacticalPingWheel.PingType.EXTRACT == 3, "Wheel EXTRACT == 3 (PING_TYPE_EXTRACT)")
+	check(TacticalPingMarker.PingType.ASSIST == TacticalPingWheel.PingType.ASSIST, "Marker y Wheel comparten ASSIST")
+	check(TacticalPingMarker.PingType.EXTRACT == TacticalPingWheel.PingType.EXTRACT, "Marker y Wheel comparten EXTRACT")
+	check(TacticalPingWheel.get_ping_config(3)["name"] == "EXTRAER", "get_ping_config(3) resuelve EXTRAER")
+	check(TacticalPingWheel.get_ping_config(2)["name"] == "ASISTIR", "get_ping_config(2) resuelve ASISTIR")
 
 	# Limpieza
 	wheel.queue_free()

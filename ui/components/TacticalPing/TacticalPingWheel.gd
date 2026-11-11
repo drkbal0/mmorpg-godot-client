@@ -12,8 +12,8 @@ const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 enum PingType {
 	ATTACK = 0,
 	DANGER = 1,
-	EXTRACT = 2,
-	ASSIST = 3,
+	ASSIST = 2,   # Sincronizado con Rust PING_TYPE_ASSIST (protocolo 0x1A)
+	EXTRACT = 3,
 	NONE = -1
 }
 

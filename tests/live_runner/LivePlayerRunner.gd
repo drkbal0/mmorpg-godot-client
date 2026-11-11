@@ -46,6 +46,9 @@ const TacticalPingBeam3D = preload("res://world/TacticalPingBeam3D.gd")
 const ThreatTablePanel = preload("res://ui/components/BossEncounterFrame/ThreatTablePanel.gd")
 const MarketplaceWindow = preload("res://ui/windows/MarketplaceWindow/MarketplaceWindow.gd")
 const EvidenceAudit = preload("res://tests/live_runner/EvidenceAudit.gd")
+const Codec = preload("res://shared-core/ExtractionReviveCodec.gd")
+## Escenas 1-6 (Fases 9.5/9.6) + 7-8 (Fase 9.7: convoy móvil y reanimación [F]).
+const SCENE_COUNT := 8
 
 var _output_dir := ""
 var _captures: Array = []
@@ -176,7 +179,7 @@ func _validate_manifest_and_files(manifest_path: String) -> bool:
 	if not (data is Dictionary) or not data.has("captures"):
 		push_error("[LivePlayerRunner] Manifest inválido")
 		return false
-	var all_ok: bool = str(data.get("overall_status", "")) == "PASS" and data["captures"].size() == 6
+	var all_ok: bool = str(data.get("overall_status", "")) == "PASS" and data["captures"].size() == SCENE_COUNT
 	for cap in data["captures"]:
 		var file := str(cap.get("file", ""))
 		var audit := audit_png(_output_dir.path_join(file))
@@ -215,9 +218,13 @@ func _run_live_session() -> void:
 	await _scene_05_marketplace()
 	await _reset_scene()
 	await _scene_06_party_combat()
+	await _reset_scene()
+	await _scene_07_mobile_extraction_convoy()
+	await _reset_scene()
+	await _scene_08_contextual_revive()
 
 	_write_manifest()
-	var all_pass := _captures.size() == 6
+	var all_pass := _captures.size() == SCENE_COUNT
 	for c in _captures:
 		all_pass = all_pass and c["status"] == "PASS"
 	print("[LivePlayerRunner] %d capturas -> %s" % [_captures.size(), "PASS" if all_pass else "FAIL"])
@@ -383,6 +390,7 @@ func _reset_scene() -> void:
 	_anchored.clear()
 	_auras.clear_targets()
 	_ki.set_vision_active(false)
+	_reset_phase97()
 	if UIOrchestrator:
 		UIOrchestrator.close_all_windows()
 		UIOrchestrator.close_window("player_hud", true)
@@ -487,11 +495,11 @@ func _capture(index: int, file_name: String, title: String, description: String,
 
 
 func _write_manifest() -> void:
-	var all_pass := _captures.size() == 6
+	var all_pass := _captures.size() == SCENE_COUNT
 	for c in _captures:
 		all_pass = all_pass and c["status"] == "PASS"
 	var manifest := {
-		"suite": "LivePlayerRunner — Fase 9.5 & 9.6 (perspectiva de jugador en el cliente real)",
+		"suite": "LivePlayerRunner — Fases 9.5, 9.6 & 9.7 (perspectiva de jugador en el cliente real)",
 		"generated_at": Time.get_datetime_string_from_system(true) + "Z",
 		"godot_version": Engine.get_version_info()["string"],
 		"rendering_driver": RenderingServer.get_current_rendering_driver_name(),
@@ -502,7 +510,7 @@ func _write_manifest() -> void:
 		"network_mode": "offline (sin servidor; entidades inyectadas vía World._on_static_entity_spawned)",
 		"warmup": {"process_frames": 6, "physics_frames": 2, "frame_post_draw": true},
 		"audit_thresholds": {"size": [TARGET_SIZE.x, TARGET_SIZE.y], "min_bytes": MIN_PNG_BYTES, "min_mean_luminance": MIN_MEAN_LUMA},
-		"canvas_layers": {"ki_spectral_vision": 1, "hudv2": 2, "nameplates": 5, "combat_frames": 8, "ui_orchestrator_windows": 10, "ping_wheel": 12, "crosshair": 15, "f9_telemetry": 110},
+		"canvas_layers": {"ki_spectral_vision": 1, "hudv2": 2, "nameplates": 5, "combat_frames": 8, "extraction_hud_and_revive_modal": 9, "ui_orchestrator_windows": 10, "ping_wheel": 12, "crosshair": 15, "f9_telemetry": 110},
 		"duration_sec": snappedf((Time.get_ticks_msec() - _started_msec) / 1000.0, 0.01),
 		"overall_status": "PASS" if all_pass else "FAIL",
 		"captures": _captures,
@@ -867,3 +875,199 @@ func _scene_06_party_combat() -> void:
 			"enemies_in_world": e1 != null and e2 != null and mage != null,
 		},
 		{"bleedout_remaining_s": snappedf(kaelen.bleedout_seconds if kaelen else 0.0, 0.01)})
+
+
+# ===========================================================================
+# Escena 7 — Convoy de extracción móvil (ADR 099, paquete 0x1C)
+# ===========================================================================
+
+const CONVOY_BEACON_ID := 9701
+const CONVOY_HUD_TEXT := "CONVOY DE EXTRACCIÓN EN MOVIMIENTO - TIEMPO RESTANTE: 07.4s"
+
+func _scene_07_mobile_extraction_convoy() -> void:
+	var p_start := Vector3(2.0, 1.0, 12.0)
+	_place_player(p_start, Vector3(-1.5, 1.0, 1.0), -25.0)
+	# Dos syncs consecutivos del servidor (20 Hz): el convoy avanza por su ruta.
+	# Ruta real de red: bytes Little-Endian de 24 B -> codec -> handler de World.gd.
+	var pos_a := Vector3(-1.4, 0.0, 4.9)
+	var pos_b := Vector3(-0.9, 0.0, 4.4)
+	var pkt_a := Codec.encode_beacon({"beacon_id": CONVOY_BEACON_ID, "pos": pos_a, "radius": 10.0,
+		"remaining_ms": 7450, "players_inside_count": 1, "is_panic": false})
+	_world._on_extraction_beacon_received(Codec.decode_beacon(pkt_a))
+	var convoy: Node3D = _world.extraction_convoys.get(CONVOY_BEACON_ID)
+	if convoy:
+		_track(convoy)
+	await _wait_seconds(0.25)
+	var pkt_b := Codec.encode_beacon({"beacon_id": CONVOY_BEACON_ID, "pos": pos_b, "radius": 10.0,
+		"remaining_ms": 7400, "players_inside_count": 1, "is_panic": false})
+	var beacon := Codec.decode_beacon(pkt_b)
+	_world._on_extraction_beacon_received(beacon)
+	# Sin servidor no llegan más syncs: el HUD queda congelado en el último valor
+	# autoritativo (07.4s) en vez de seguir descontando sin re-sincronizar.
+	var hud: Control = _world.convoy_hud
+	if hud:
+		hud.set_process(false)
+		hud.queue_redraw()
+	# Un saqueador lejano da vida a la escena sin provocar pánico (> 15 m del convoy).
+	var raider := _spawn_entity(701, 3, Vector3(13.0, 1.0, -17.0), "Saqueador del Páramo", 1100.0)
+	await _wait_seconds(0.45)
+
+	var cam := get_viewport().get_camera_3d()
+	var dist := Vector2(_player.global_position.x - pos_b.x, _player.global_position.z - pos_b.z).length()
+	var rings: Node3D = convoy.get_node_or_null("CaptureRings") if convoy else null
+	await _capture(7, "live_player_07_mobile_extraction_convoy.png",
+		"Convoy de extracción móvil",
+		"Jugador dentro del radio (10 m) del convoy blindado en movimiento: anillos concéntricos cian #00f0ff como nodo 3D hijo del convoy, baliza vertical de luz y HUD superior con la cuenta atrás de 10 s ('07.4s'). Sync 0x1C de 24 B decodificado y aplicado por World._on_extraction_beacon_received.",
+		{
+			"convoy_spawned_via_world_handler": convoy != null and is_instance_valid(convoy),
+			"packet_0x1c_24_bytes": pkt_b.size() == 24 and pkt_b[0] == 0x1C,
+			"rings_native_child_of_convoy": rings != null and rings.get_parent() == convoy,
+			"three_concentric_rings": convoy != null and convoy.get_ring_count() == 3,
+			"rings_cyan_00f0ff": convoy != null and convoy.get_ring_color() == Color("#00f0ff") and not convoy.is_panic,
+			"ring_radius_10m": convoy != null and is_equal_approx(convoy.get_outer_ring_radius(), 10.0),
+			"beacon_light_on": convoy != null and convoy.get_node_or_null("BeaconLight") != null and convoy.get_node_or_null("BeaconMast") != null,
+			"convoy_in_camera_frustum": convoy != null and cam.is_position_in_frustum(convoy.global_position + Vector3(0, 1.5, 0)),
+			"convoy_moving": convoy != null and convoy.server_position == pos_b and convoy.global_position.distance_to(pos_a) > 0.05,
+			"player_inside_radius": dist <= 10.0 and bool(_world._convoy_latch.get(CONVOY_BEACON_ID, false)),
+			"convoy_hud_visible": hud != null and hud.is_visible_in_tree(),
+			"convoy_hud_text_07_4s": hud != null and hud.get_title_text() == CONVOY_HUD_TEXT,
+			"hudv2_visible": _hud.is_visible_in_tree(),
+			"no_panic_without_combat": raider != null and not beacon["is_panic"],
+		},
+		{
+			"convoy_hud_text": hud.get_title_text() if hud else "",
+			"convoy_pos": _v3(convoy.global_position) if convoy else [],
+			"player_distance_to_convoy_m": snappedf(dist, 0.01),
+			"beacon_packet_hex": pkt_b.hex_encode(),
+			"beacon": {"beacon_id": beacon["beacon_id"], "radius": beacon["radius"], "remaining_ms": beacon["remaining_ms"],
+				"players_inside_count": beacon["players_inside_count"], "is_panic": beacon["is_panic"]},
+			"countdown_frozen_at_last_sync": true,
+		})
+
+
+# ===========================================================================
+# Escena 8 — Reanimación contextual [F] de Kaelen (ADR 100, paquete 0x1D)
+# ===========================================================================
+
+const LOCAL_SID := 600
+const KAELEN_SID := 605
+
+func _scene_08_contextual_revive() -> void:
+	var prev_sid: int = NetworkManager.my_session_id
+	NetworkManager.my_session_id = LOCAL_SID # offline: send_* no emite (sin socket)
+
+	# Kaelen tendido a la IZQUIERDA del jugador (2.1 m): el haz queda perpendicular
+	# a la cámara y las dos placas de nombre no se solapan.
+	var p_start := Vector3(0.9, 1.0, 9.2)
+	var kaelen_pos := Vector3(-1.1, 0.45, 8.6)
+	_place_player(p_start, Vector3(p_start.x, 1.0, p_start.z - 10.0), -36.0, 0.2, 4.4, 5.0)
+
+	# Kaelen abatido en el suelo (miembro de escuadra a 0 HP, sangrado 17.4 s -> "ABATIDO 18s").
+	var kaelen := _spawn_entity(KAELEN_SID, 4, kaelen_pos, "Kaelen", 1100.0)
+	kaelen.rotation_degrees = Vector3(0, 35, 90)
+	_tint(kaelen, Color(0.55, 0.2, 0.2))
+	kaelen.add_to_group("downed_allies")
+	kaelen.set_meta("session_id", KAELEN_SID)
+	_world.remote_identities[KAELEN_SID] = "Kaelen"
+	var plate = kaelen.screenspace_nameplate_instance if "screenspace_nameplate_instance" in kaelen else null
+	if plate and plate.has_method("set_downed"):
+		plate.set_downed(17.4)
+
+	# Un cofre MÁS cerca que Kaelen: [F] debe ignorarlo (prioridad 1 de la reanimación).
+	var chest := _build_loot_chest(p_start + Vector3(1.1, -1.0, -0.5))
+
+	var mesh: MeshInstance3D = _player.get_node("MeshInstance3D")
+
+	# Mantener [F]: evento de acción real entregado al handler de entrada del Player.
+	var ev := InputEventAction.new()
+	ev.action = "interact"
+	ev.pressed = true
+	_player._input(ev)
+	var consumed := get_viewport().is_input_handled()
+	var reviving_ok: bool = _player.reviving_sid == KAELEN_SID
+
+	# Respuesta autoritativa del servidor: REVIVE_SYNC Started (16 B) -> codec -> World.
+	var pkt := Codec.encode_revive({"state": Codec.REVIVE_STARTED, "progress_pct": 0,
+		"downed_player_id": KAELEN_SID, "reviver_player_id": LOCAL_SID})
+	var rsync := Codec.decode_revive(pkt)
+	_world._on_revive_sync_received(rsync)
+	var modal: Control = _world.revive_modal
+	var beam: Node3D = _world.revive_beam
+	# Canalización al 65% (3.9 s de 6 s); congelada para la captura offline.
+	if modal:
+		modal.set_progress_pct(65)
+		modal.set_process(false)
+		modal.queue_redraw()
+	if beam:
+		beam.progress = 0.65
+	await _wait_seconds(0.45)
+
+	var dist := Vector2(_player.global_position.x - kaelen_pos.x, _player.global_position.z - kaelen_pos.z).length()
+	var cam := get_viewport().get_camera_3d()
+	await _capture(8, "live_player_08_contextual_revive_ally.png",
+		"Reanimación contextual de Kaelen [F]",
+		"Jugador arrodillado junto a Kaelen abatido manteniendo [F]: la reanimación (≤ 2.5 m) tiene prioridad absoluta sobre el cofre cercano y consume el evento; REVIVE_SYNC 0x1D de 16 B abre la canalización 'Reanimando a Kaelen [65%]', haz de plasma verde entre ambos y nameplate 'ABATIDO 18s'.",
+		{
+			"kaelen_downed_on_ground": kaelen != null and kaelen.is_in_group("downed_allies"),
+			"nameplate_abatido_18s": plate != null and plate.is_visible_in_tree() and plate.title_label.text == "ABATIDO 18s",
+			"f_input_consumed": consumed,
+			"f_starts_revive_of_kaelen": reviving_ok,
+			"f_priority_over_chest": chest.get("used") == 0 and _player.global_position.distance_to(chest.global_position) < _player.global_position.distance_to(kaelen.global_position),
+			"reviver_within_2_5m": dist <= 2.5,
+			"packet_0x1d_16_bytes": pkt.size() == 16 and pkt[0] == 0x1D,
+			"revive_modal_visible": modal != null and modal.is_visible_in_tree(),
+			"revive_label_65pct": modal != null and modal.get_label_text() == "Reanimando a Kaelen [65%]",
+			"plasma_beam_green": beam != null and is_instance_valid(beam) and beam.COLOR_PLASMA == Color("#3dff8a") and beam.get_length() > 0.5 and beam.get_length() < 3.5,
+			"plasma_beam_in_frustum": beam != null and cam.is_position_in_frustum(beam.global_position),
+			"player_kneeling": _player.is_crouching and mesh.scale.y < 0.8, # postura real de Player.gd al reanimar
+			"hudv2_visible": _hud.is_visible_in_tree(),
+		},
+		{
+			"revive_label": modal.get_label_text() if modal else "",
+			"revive_packet_hex": pkt.hex_encode(),
+			"reviver_distance_m": snappedf(dist, 0.01),
+			"kaelen_nameplate": plate.title_label.text if plate else "",
+			"player_pose": "kneeling",
+			"progress_frozen_for_offline_capture": true,
+		})
+
+	# Restaurar estado (soltar [F] -> se levanta; sesión).
+	_player.handle_interact_released()
+	NetworkManager.my_session_id = prev_sid
+
+
+func _build_loot_chest(at: Vector3) -> Node3D:
+	var s := GDScript.new()
+	s.source_code = "extends Node3D\nvar used := 0\nfunc interact(_p):\n\tused += 1\n"
+	s.reload()
+	var root := Node3D.new()
+	root.set_script(s)
+	root.name = "LootChest"
+	_world.add_child(root)
+	_track(root)
+	root.global_position = at
+	root.add_to_group("interactable")
+	var wood := StandardMaterial3D.new()
+	wood.albedo_color = Color(0.42, 0.27, 0.15)
+	var gold := StandardMaterial3D.new()
+	gold.albedo_color = Color(0.95, 0.75, 0.25)
+	gold.metallic = 0.7
+	gold.roughness = 0.3
+	_box(root, Vector3(0, 0.3, 0), Vector3(0.9, 0.6, 0.6), wood)
+	_box(root, Vector3(0, 0.62, 0), Vector3(0.94, 0.08, 0.64), gold)
+	return root
+
+
+func _reset_phase97() -> void:
+	for bid in _world.extraction_convoys.keys():
+		var c = _world.extraction_convoys[bid]
+		if is_instance_valid(c):
+			c.queue_free()
+	_world.extraction_convoys.clear()
+	_world._convoy_latch.clear()
+	if _world.convoy_hud:
+		_world.convoy_hud.set_process(true)
+		_world.convoy_hud.set_remaining_ms(0)
+	if _world.revive_modal:
+		_world.revive_modal.visible = false
+	_world._clear_revive_beam()

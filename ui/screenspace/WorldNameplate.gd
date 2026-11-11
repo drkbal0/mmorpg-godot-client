@@ -120,6 +120,34 @@ func setup(p_name: String, p_hp: float, p_max_hp: float, is_hostile: bool = fals
 			modulate.a = _bg_opacity
 
 
+## Fase 9.7 (ADR 100): estado abatido. A diferencia de la muerte (0 HP oculta la
+## placa), un aliado abatido sigue visible con su cuenta de sangrado "ABATIDO 18s".
+var is_downed: bool = false
+
+static func format_downed(bleedout_sec: float) -> String:
+	return "ABATIDO %ds" % int(ceil(maxf(bleedout_sec, 0.0)))
+
+
+func set_downed(bleedout_sec: float) -> void:
+	_ensure_node_refs()
+	is_downed = true
+	is_dead = false
+	current_health = 0.0
+	_previous_hp_percent = 0.0
+	visible = true
+	modulate.a = _bg_opacity
+	if hp_bar_main:
+		hp_bar_main.value = 0.0
+	if hp_bar_ghost:
+		hp_bar_ghost.value = 0.0
+	if title_label:
+		title_label.text = format_downed(bleedout_sec)
+		title_label.visible = true
+		title_label.modulate = Color(1.0, 0.32, 0.32, 1.0)
+	if name_label:
+		name_label.modulate = Color(1.0, 0.75, 0.75)
+
+
 func _apply_bar_colors() -> void:
 	_ensure_node_refs()
 	if hp_bar_main == null:
