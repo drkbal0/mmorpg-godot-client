@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMORPG · Equipo e inventario</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- ============ COLUMNA 1: PERSONAJE ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 88px; width: 400px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 24px; font-weight: 700; line-height: 1">Kael</span>
+<span style="font-size: 14px; color: #9aa6ae">Nivel 32 · Tejedor de grietas</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end">
+<span class="caps">Nivel de objeto</span>
+<span class="num" style="font-size: 30px; font-weight: 700; line-height: 1; color: {{accent}}">412</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span class="caps">Conjuntos de equipo</span>
+<div style="display: flex; gap: 6px">
+<span class="chip" style="background: rgba(70,227,193,0.14); color: #eef2f4; box-shadow: inset 0 0 0 1px {{accent}}">Daño<span class="kbd" style="height: 16px; font-size: 10px">F1</span></span>
+<span class="chip">Tanque<span class="kbd" style="height: 16px; font-size: 10px">F2</span></span>
+<span class="chip">Recolección<span class="kbd" style="height: 16px; font-size: 10px">F3</span></span>
+<span class="chip" style="padding: 0 9px">+</span>
+</div>
+</div>
+<div style="position: relative; flex: 1; display: flex; justify-content: space-between">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{leftSlots}}" as="s" hint-placeholder-count="6">
+<div style="width: 50px; height: 50px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1.5px {{s.c}}; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{s.c}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{s.icon}}"></path></svg>
+</div>
+</sc-for>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px">
+<svg width="150" height="260" viewBox="0 0 150 260" aria-hidden="true">
+<ellipse cx="75" cy="248" rx="54" ry="8" fill="rgba(70,227,193,0.12)"></ellipse>
+<circle cx="75" cy="40" r="22" fill="#1a252c" stroke="#2c3b44" stroke-width="2"></circle>
+<path d="M40 82c6-12 18-18 35-18s29 6 35 18l10 70-18 4-6-40-4 98H58l-4-98-6 40-18-4z" fill="#1a252c" stroke="#2c3b44" stroke-width="2" stroke-linejoin="round"></path>
+</svg>
+<span style="font-size: 12px; color: #7c8992">Arrastra para girar · rueda para acercar</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<sc-for list="{{rightSlots}}" as="s" hint-placeholder-count="6">
+<div style="width: 50px; height: 50px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1.5px {{s.c}}; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{s.c}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{s.icon}}"></path></svg>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{keyStats}}" as="k" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border-radius: 10px; background: #121a20">
+<span style="display: flex; align-items: center; gap: 5px; font-size: 11px; color: #9aa6ae"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="{{k.c}}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{k.i}}"></path></svg>{{k.l}}</span>
+<span class="num" style="font-size: 18px; font-weight: 700">{{k.v}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+
+<!-- ============ COLUMNA 2: INVENTARIO ============ -->
+<div class="card" style="position: absolute; left: 444px; top: 88px; width: 572px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; justify-content: space-between"><span style="font-size: 20px; font-weight: 700">Inventario</span><span class="num" style="font-size: 14px; color: #9aa6ae">38 / 54</span></div>
+<div style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px {{accent}}; box-sizing: border-box; font-size: 15px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>
+<span>anillos con celeridad mayor a 5 %</span>
+<span style="margin-left: auto; font-size: 13px; color: {{accent}}">3 resultados</span>
+</div>
+<div style="display: flex; gap: 6px; flex-wrap: wrap">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="6">
+<span class="chip" style="height: 26px; color: {{f.color}}; background: {{f.bg}}">{{f.l}}<span class="num" style="color: #7c8992">{{f.n}}</span></span>
+</sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{bag}}" as="b" hint-placeholder-count="54">
+<div style="position: relative; height: 54px; border-radius: 12px; background: {{b.bg}}; box-shadow: {{b.ring}}; opacity: {{b.op}}; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{b.c}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{b.icon}}"></path></svg>
+<sc-if value="{{b.n}}" hint-placeholder-val="{{ false }}"><span class="num" style="position: absolute; right: 5px; bottom: 2px; font-size: 12px; font-weight: 700; text-shadow: 0 1px 2px #000000">{{b.n}}</span></sc-if>
+<sc-if value="{{b.isNew}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; right: 5px; top: 5px; width: 7px; height: 7px; border-radius: 50%; background: {{accent}}"></span></sc-if>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; margin-top: auto">
+<button class="btn">Ordenar <span class="kbd">R</span></button>
+<button class="btn">Vender basura · <span class="num" style="color: #f5c35b">340</span></button>
+<button class="btn">Desguazar</button>
+</div>
+</div>
+
+<!-- ============ COLUMNA 3: COMPARACIÓN ============ -->
+<div class="card" style="position: absolute; left: 1032px; top: 88px; width: 380px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<span class="caps">Seleccionado</span>
+<div style="display: flex; gap: 12px; align-items: center">
+<div style="width: 60px; height: 60px; border-radius: 14px; background: #2a1d3a; box-shadow: inset 0 0 0 2px #b47bff; display: flex; align-items: center; justify-content: center; flex: none">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dcc3ff" stroke-width="2" aria-hidden="true"><circle cx="12" cy="14" r="6"></circle><path d="M9 5l3 3 3-3"></path></svg>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 20px; font-weight: 700; color: #cfa8ff">Anillo de la deriva</span>
+<span class="num" style="font-size: 14px; color: #9aa6ae">Épico · Anillo · Nv. obj. 420</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; border-radius: 12px; background: #121a20">
+<span style="font-size: 12px; color: #9aa6ae">Contra lo que llevas: Anillo del umbral (404)</span>
+<sc-for list="{{deltas}}" as="d" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 15px">
+<span style="width: 24px; height: 24px; border-radius: 7px; background: {{d.bg}}; display: flex; align-items: center; justify-content: center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="{{d.c2}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{d.i}}"></path></svg></span><span>{{d.l}}</span>
+<span class="num" style="margin-left: auto; font-weight: 700">{{d.v}}</span>
+<span class="num" style="width: 64px; text-align: right; font-weight: 700; color: {{d.c}}">{{d.d}}</span>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Impacto estimado por conjunto</span>
+<sc-for list="{{impact}}" as="m" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span>{{m.l}}</span><span class="num" style="font-weight: 700; color: {{m.c}}">{{m.v}}</span></div>
+<div style="position: relative; height: 6px; border-radius: 3px; background: #121a20"><div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #3a4a54"></div><div style="position: absolute; top: 0; bottom: 0; left: {{m.left}}%; width: {{m.w}}%; border-radius: 3px; background: {{m.c}}"></div></div>
+</div>
+</sc-for>
+<span style="font-size: 12px; color: #7c8992">Simulado con tu rotación de los últimos 10 combates.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto">
+<button class="btn" style="background: {{accent}}; color: #071012; box-shadow: none">Equipar en «Daño» <span class="kbd" style="background: rgba(0,0,0,0.2); color: #071012; box-shadow: none">E</span></button>
+<div style="display: flex; gap: 8px"><button class="btn" style="flex: 1">Probar en vestidor</button><button class="btn" style="flex: 1">Fijar comparación</button></div>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const ST = {
+dano: { n: 'Daño de ataque', s: 'DA', c: '#ff9a4d', i: 'M14 4h6v6L10 20l-6-6zM4 14l6 6M3 21l2-2' },
+poder: { n: 'Poder de habilidad', s: 'PH', c: '#a58bff', i: 'M12 3v5M12 16v5M3 12h5M16 12h5M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3' },
+armadura: { n: 'Armadura', s: 'ARM', c: '#e0b04a', i: 'M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z' },
+resmag: { n: 'Resistencia mágica', s: 'RM', c: '#4fc8ff', i: 'M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 8l4 2.3v4.4L12 17l-4-2.3v-4.4z' },
+velatq: { n: 'Velocidad de ataque', s: 'VA', c: '#ffd36b', i: 'M5 6l6 6-6 6M12 6l6 6-6 6' },
+celeridad: { n: 'Celeridad', s: 'CEL', c: '#b8f0ff', i: 'M7 3h10M7 21h10M8 3c0 5 8 5 8 9s-8 4-8 9M16 3c0 5-8 5-8 9' },
+critico: { n: 'Golpe crítico', s: 'CRÍT', c: '#ff5d5d', i: 'M12 3v5M12 16v5M3 12h5M16 12h5M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6' },
+velmov: { n: 'Velocidad de movimiento', s: 'VM', c: '#9fe36a', i: 'M3 17c4 0 6-2 8-6s5-6 10-6c-1 6-4 12-11 12H3zM8 14l4-4' },
+penarm: { n: 'Penetración de armadura', s: 'PEN', c: '#ff7a59', i: 'M3 21L21 3M15 3h6v6M6 9l-2 2 9 9 2-2' },
+penmag: { n: 'Penetración mágica', s: 'PEN M', c: '#d08bff', i: 'M3 21L13 11M13 11a4 4 0 1 1 4 4M17 7h.01' },
+robo: { n: 'Robo de vida', s: 'RV', c: '#ff4d7a', i: 'M12 3C9 7 6 10 6 14a6 6 0 0 0 12 0c0-4-3-7-6-11zM10 13l2 3 2-3' },
+omni: { n: 'Omnivampirismo', s: 'OMNI', c: '#e66bc4', i: 'M8 4C6 7 4 9 4 12a4 4 0 0 0 8 0c0-3-2-5-4-8zM16 8c-2 3-4 5-4 8a4 4 0 0 0 8 0c0-3-2-5-4-8z' },
+alcance: { n: 'Alcance', s: 'ALC', c: '#c3ccd3', i: 'M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4' },
+tenacidad: { n: 'Tenacidad', s: 'TEN', c: '#9a7bff', i: 'M12 7a2 2 0 1 0 0-4a2 2 0 1 0 0 4M12 7v14M5 14a7 7 0 0 0 14 0M8 11h8' },
+curacion: { n: 'Curación y escudos', s: 'CUR', c: '#4fe39a', i: 'M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6zM12 9v6M9 12h6' },
+regen: { n: 'Regeneración', s: 'REG', c: '#6fe0a0', i: 'M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10zM12 10v5M9.5 12.5h5' }
+};
+const stat = (k, v, zeroDim) => { const s = ST[k]; const zero = /^0([ ,.]0+)?\s?%?$|^0 \| 0 ?%$/.test(v); return { n: s.n, s: s.s, c: s.c, i: s.i, v, bg: s.c + '22', vc: zero && zeroDim !== false ? '#7c8992' : '#eef2f4' }; };
+
+const I = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14', users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5',
+layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6',
+helm: 'M5 14a7 7 0 0 1 14 0v4H5zM12 7v4', shoulder: 'M4 14c0-5 4-8 8-8s8 3 8 8l-4 2-4-3-4 3z', chest: 'M6 4l6 3 6-3 2 6-3 2v8H7v-8l-3-2z', hands: 'M7 20v-8l-2-3 2-2 2 3V5h2v7h2V4h2v8h2V7h2v9l-3 4z',
+belt: 'M3 10h18v4H3zM10 9h4v6h-4z', legs: 'M7 3h10l-1 18h-3l-1-12-1 12H8z', feet: 'M6 4h5v10l8 3v3H6z', ring: 'M12 8a6 6 0 1 0 0 12a6 6 0 1 0 0-12M9 5l3 3 3-3',
+neck: 'M5 4c0 6 3 9 7 9s7-3 7-9M12 13v3M10 16h4l-2 5z', cape: 'M6 4h12l2 17-8-3-8 3z', sword: 'M5 19L19 5M14 5h5v5M7 15l2 2', orb: 'M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16M8 12a4 4 0 0 1 4-4',
+potion: 'M9 3h6M10 3v5l-4 8a3 3 0 0 0 3 5h6a3 3 0 0 0 3-5l-4-8V3', leaf: 'M5 19c0-9 6-14 14-14 0 8-5 14-14 14zM5 19l7-7', ore: 'M4 15l4-8h8l4 8-8 5z', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3'
+};
+const R = { c: '#b8c3ca', u: '#4fe39a', r: '#5aa9ff', e: '#b47bff', l: '#f5a742', d: A };
+const tabs = [['Equipo', 'C', I.user], ['Poderes', 'N', I.orbs], ['Misiones', 'L', I.scroll], ['Mapa', 'M', I.map], ['Códice', 'J', I.book], ['Social', 'O', I.users], ['Refugio', 'H', I.home], ['Comercio', 'P', I.bag]];
+const active = 'Equipo';
+const pattern = [['ring', 'e', 0, 1, 1], ['ring', 'r', 0, 1, 1], ['potion', 'c', 12, 1, 0], ['ring', 'l', 0, 0, 1], ['sword', 'u', 0, 0, 0], ['leaf', 'c', 37, 0, 0], ['ore', 'u', 8, 0, 0], ['scroll', 'r', 0, 0, 0], ['chest', 'u', 0, 0, 0],
+['potion', 'u', 4, 0, 0], ['helm', 'c', 0, 0, 0], ['leaf', 'u', 14, 0, 0], ['orb', 'e', 0, 0, 0], ['ore', 'c', 22, 0, 0], ['feet', 'r', 0, 0, 0], ['scroll', 'c', 3, 0, 0], ['belt', 'u', 0, 0, 0], ['neck', 'd', 0, 0, 0]];
+const bag = [];
+for (let i = 0; i < 54; i++) {
+if (i < 38) {
+const p = pattern[i % pattern.length];
+const match = i < 4 && p[4] === 1;
+const col = R[p[1]];
+bag.push({ icon: I[p[0]], c: col, bg: '#121a20', n: p[2] ? String(p[2]) : '', isNew: i < 3, op: match ? 1 : 0.32,
+ring: match ? '0 0 0 2px ' + A + ', inset 0 0 0 1px ' + col : 'inset 0 0 0 1px ' + col + '55' });
+} else bag.push({ icon: '', c: '#000000', bg: '#0a0f13', n: '', isNew: false, op: 1, ring: 'inset 0 0 0 1px rgba(255,255,255,0.06)' });
+}
+return {
+accent: A,
+tabs: tabs.map(([label, k, icon]) => ({ label, k, icon, color: label === active ? '#eef2f4' : '#9aa6ae', bar: label === active ? A : 'transparent' })),
+leftSlots: [['helm', 'e'], ['neck', 'r'], ['shoulder', 'e'], ['cape', 'u'], ['chest', 'l'], ['belt', 'r']].map(([i, r]) => ({ icon: I[i], c: R[r] })),
+rightSlots: [['hands', 'e'], ['legs', 'r'], ['feet', 'u'], ['ring', 'r'], ['ring', 'e'], ['orb', 'd']].map(([i, r]) => ({ icon: I[i], c: R[r] })),
+keyStats: [['Daño', '1.842', 'dano'], ['Armadura', '1.204', 'armadura'], ['Celeridad', '18 %', 'celeridad'], ['Crítico', '24 %', 'critico']].map(([l, v, k]) => ({ l, v, c: ST[k].c, i: ST[k].i })),
+filters: [
+{ l: 'Todo', n: '38', color: '#eef2f4', bg: '#1c2a33' }, { l: 'Equipo', n: '12', color: '#c3ccd3', bg: '#18242b' }, { l: 'Consumibles', n: '9', color: '#c3ccd3', bg: '#18242b' },
+{ l: 'Materiales', n: '14', color: '#c3ccd3', bg: '#18242b' }, { l: 'Misión', n: '3', color: '#c3ccd3', bg: '#18242b' }, { l: 'Nuevos', n: '3', color: A, bg: 'rgba(70,227,193,0.12)' }
+],
+bag,
+deltas: [
+['Celeridad', '+5,8 %', '▲ 3,1 %', '#4fe39a', 'celeridad'], ['Daño', '+142', '▲ 40', '#4fe39a', 'dano'],
+['Crítico', '+2,0 %', '= 0', '#9aa6ae', 'critico'], ['Armadura', '+60', '▼ 38', '#ff7a7a', 'armadura']
+].map(([l, v, d, c, k]) => ({ l, v, d, c, c2: ST[k].c, i: ST[k].i, bg: ST[k].c + '22' })),
+impact: [
+{ l: 'Daño', v: '+3,2 %', c: '#4fe39a', left: 50, w: 32 },
+{ l: 'Tanque', v: '−1,1 %', c: '#ff7a7a', left: 39, w: 11 },
+{ l: 'Recolección', v: 'sin cambio', c: '#9aa6ae', left: 49, w: 2 }
+]
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>Barras de vida y marcos</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div style="position: absolute; inset: 0; background: #0b0f13"></div>
+<div style="position: absolute; left: 40px; top: 30px; display: flex; flex-direction: column; gap: 4px"><span class="caps" style="color: #46e3c1">Sistema de diseño</span><span style="font-size: 30px; font-weight: 700">Barras de vida y marcos</span><span style="font-size: 14px; color: #9aa6ae">Color = quién es · lado de la insignia = amigo o amenaza · borde = qué le pasa · marco = rango</span></div>
+<div style="position: absolute; left: 40px; right: 40px; top: 130px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 11px; height: 650px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 17px; font-weight: 700">1 · Quién es</span><span style="font-size: 12px; color: #9aa6ae">Verde tú, amarillo jugadores y neutrales, rojo amenaza. Amigos a la izquierda, amenazas a la derecha.</span></div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Kael (tú)</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3ccf73; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>32</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 72%; background: #3ccf73"></div><div style="position: absolute; left: 72%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Verde. Nivel a la izquierda.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Brisa</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>28</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 90%; background: #f5c35b"></div><div style="position: absolute; left: 90%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Otro jugador: amarillo, nivel a la izquierda.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Toro · tu grupo</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>34</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 58%; background: #46e3c1"></div><div style="position: absolute; left: 58%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Propuesta: tu grupo en turquesa para encontrarlo rápido.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Orla, mercader</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 8px; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg></span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #e0c060"></div><div style="position: absolute; left: 100%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">PNJ neutral: amarillo, icono a la izquierda.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #ffb3b3; text-align: right; padding: 0 30px">Lobo de ceniza</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 2; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #e25555; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>30</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 72%; background: #e25555"></div><div style="position: absolute; left: 72%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Enemigo: rojo, nivel a la derecha.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #ffb3b3; text-align: right; padding: 0 30px">Centinela élite</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 2; width: 26px; height: 26px; border-radius: 6px; background: #3a2a14; border: 1.5px solid #f5c35b; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #f5c35b; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f5c35b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 9-7 9-7-9z"></path></svg></span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 72%; background: #e25555"></div><div style="position: absolute; left: 72%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Élite: rombo dorado a la derecha.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #ffb3b3; text-align: right; padding: 0 30px">Guardián del Umbral</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 2; width: 26px; height: 26px; border-radius: 6px; background: #3a1d22; border: 2px solid #ff6b6b; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #ff8a8a; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff8a8a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18h16M4 18l-1-10 5 4 4-7 4 7 5-4-1 10"></path></svg></span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 68%; background: #e25555"></div><div style="position: absolute; left: 68%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Jefe: corona, barra con más segmentos.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #ff8a8a; text-align: right; padding: 0 30px">Grukk_99 · Matahumanos</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 2; width: 26px; height: 26px; border-radius: 6px; background: #2a1014; border: 2px solid #ff3b4a; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #ff6b6b; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a7 7 0 0 0-4 12.5V19h8v-3.5A7 7 0 0 0 12 3zM9.5 11h.01M14.5 11h.01"></path></svg></span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1.5px solid #ff3b4a; box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 72%; background: #a8323a"></div><div style="position: absolute; left: 72%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Jugador con PK alto: rojo oscuro y calavera a la derecha.</span>
+</div>
+
+</div>
+
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 11px; height: 650px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 17px; font-weight: 700">2 · Qué le pasa (borde)</span><span style="font-size: 12px; color: #9aa6ae">El borde y el brillo cuentan el estado sin leer iconos.</span></div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Inmune</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #ffd76b; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #ffd76b; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#ffd76b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>★</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 2px solid #ffd76b; box-shadow: 0 0 10px rgba(255,215,107,0.7); overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #f5c35b"></div><div style="position: absolute; left: 100%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Borde dorado: no recibe daño (narradores, fases de jefe, zona segura).</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Curándose</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>32</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 0 0 1.5px #4fe39a, 0 0 12px rgba(79,227,154,0.8); overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 55%; background: #3ccf73"></div><div style="position: absolute; left: 55%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Brillo verde alrededor.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Con escudo</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>32</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 60%; background: #3ccf73"></div><div style="position: absolute; left: 60%; top: 0; bottom: 0; width: 14%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Tramo blanco al final de la vida.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Desangrándose</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>32</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1.5px dashed #ff5d5d; box-shadow: 0 0 10px rgba(255,93,93,0.6); overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 38%; background: #3ccf73"></div><div style="position: absolute; left: 38%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Borde rojo discontinuo; la vida baja sola.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">PK activo</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>41</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 2px solid #ff3b4a; box-shadow: 0 0 0 2px #070a0c, 0 0 0 4px #ff3b4a; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 80%; background: #f5c35b"></div><div style="position: absolute; left: 80%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Doble borde rojo: acaba de atacar a un jugador.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #9aa6ae; text-align: left; padding: 0 30px">Dormido (desconectado)</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h6l-6 7h6M14 13h4l-4 5h4"></path></svg></span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px dashed rgba(255,255,255,0.25); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 61%; background: #56646d"></div><div style="position: absolute; left: 61%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Gris: su jugador no está, pero el personaje sigue aquí.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">En zona segura</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>28</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1.5px solid #7fe0ff; box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #f5c35b"></div><div style="position: absolute; left: 100%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Borde turquesa fino: no se le puede atacar.</span>
+</div>
+
+</div>
+
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 11px; height: 650px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 17px; font-weight: 700">3 · Rango (marco de la insignia)</span><span style="font-size: 12px; color: #9aa6ae">Al inicio es el nivel. Más adelante, el marco cambia con el rango.</span></div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Nivel 1–29</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>12</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 72%; background: #f5c35b"></div><div style="position: absolute; left: 72%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Marco simple con número.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Veterano</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #26333b; border: 2px solid #c3ccd3; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #eef2f4; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>45</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 72%; background: #f5c35b"></div><div style="position: absolute; left: 72%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Marco de plata.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Maestro</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 8px; background: #3a2a14; border: 2px solid #f5c35b; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #f5c35b; flex: none"><svg width="0" height="0" viewBox="0 0 24 24" fill="none" stroke="#f5c35b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>80</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 72%; background: #f5c35b"></div><div style="position: absolute; left: 72%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Marco dorado hexagonal.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Mira · Administradora</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #eef2f4; border: 2px solid #ffffff; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #0d1216; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0d1216" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6v12M12 9C9 5 5 5 3 7c1 4 5 5 9 5M12 9c3-4 7-4 9-2-1 4-5 5-9 5"></path></svg></span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #f5c35b"></div><div style="position: absolute; left: 100%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Ángel: alas blancas.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Dren · Moderador</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 8px; background: #1d2f55; border: 2px solid #6cb8ff; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #cfe2ff; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#cfe2ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6zM12 8v8M9 12h6"></path></svg></span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #f5c35b"></div><div style="position: absolute; left: 100%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Caballero: escudo azul.</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">Aurel · Narrador</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #3a2a14; border: 2px solid #ffd76b; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #ffd76b; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffd76b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5c0 8-4 12-10 12zM5 19l5-5"></path></svg></span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 2px solid #ffd76b; box-shadow: 0 0 10px rgba(255,215,107,0.7); overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #f5c35b"></div><div style="position: absolute; left: 100%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Pluma + vida de borde dorado (inmune).</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; text-align: left; padding: 0 30px">LaStream · Creadora</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: 0; width: 26px; height: 26px; border-radius: 50%; background: #2a1d3a; border: 2px solid #c39bff; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #dcc8ff; flex: none"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#dcc8ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h12v10H4zM16 10l4-2v8l-4-2"></path></svg></span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: 1px solid rgba(255,255,255,0.14); box-shadow: none; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 72%; background: #f5c35b"></div><div style="position: absolute; left: 72%; top: 0; bottom: 0; width: 0%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Cámara violeta.</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

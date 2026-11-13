@@ -1,0 +1,511 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMORPG · HUD en el mundo</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.glass{background:rgba(9,13,16,0.84);border-radius:14px;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.07),0 10px 30px rgba(0,0,0,0.35)}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div class="scene" style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4">
+
+<!-- ================= GRUPO (arriba izquierda) ================= -->
+<div class="glass" style="position: absolute; left: 20px; top: 20px; width: 236px; padding: 10px 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; justify-content: space-between"><span class="caps">Grupo · 5</span><span style="font-size: 12px; color: #9aa6ae">Amenaza</span></div>
+
+<div style="display: flex; align-items: center; gap: 8px; opacity: 1">
+<div style="width: 22px; height: 22px; border-radius: 6px; background: #2b4a8a; display: flex; align-items: center; justify-content: center; flex: none">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"></path></svg>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<div style="display: flex; align-items: baseline; gap: 6px; font-size: 13px; line-height: 15px">
+<span style="font-weight: 600; color: #eef2f4">Toro</span>
+<span class="num" style="margin-left: auto; font-size: 12px; color: #9aa6ae">tanque</span>
+</div>
+<div style="position: relative; height: 7px; border-radius: 4px; background: #070a0c; overflow: hidden"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 74%; background: #3ccf73"></div></div>
+<div style="height: 2px; border-radius: 1px; background: #070a0c; overflow: hidden"><div style="height: 2px; width: 60%; background: #3f82f2"></div></div>
+</div>
+<div style="width: 4px; height: 26px; border-radius: 2px; background: #1d272e; position: relative; overflow: hidden; flex: none"><div style="position: absolute; left: 0; right: 0; bottom: 0; height: 100%; background: #ff6b6b"></div></div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 8px; opacity: 1">
+<div style="width: 22px; height: 22px; border-radius: 6px; background: #2a7a4a; display: flex; align-items: center; justify-content: center; flex: none">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<div style="display: flex; align-items: baseline; gap: 6px; font-size: 13px; line-height: 15px">
+<span style="font-weight: 600; color: #eef2f4">Brisa</span>
+<span class="num" style="margin-left: auto; font-size: 12px; color: #9aa6ae">92 %</span>
+</div>
+<div style="position: relative; height: 7px; border-radius: 4px; background: #070a0c; overflow: hidden"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 92%; background: #3ccf73"></div></div>
+<div style="height: 2px; border-radius: 1px; background: #070a0c; overflow: hidden"><div style="height: 2px; width: 71%; background: #3f82f2"></div></div>
+</div>
+<div style="width: 4px; height: 26px; border-radius: 2px; background: #1d272e; position: relative; overflow: hidden; flex: none"><div style="position: absolute; left: 0; right: 0; bottom: 0; height: 22%; background: #f5c35b"></div></div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 8px; opacity: 1">
+<div style="width: 22px; height: 22px; border-radius: 6px; background: #8a3a2b; display: flex; align-items: center; justify-content: center; flex: none">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<div style="display: flex; align-items: baseline; gap: 6px; font-size: 13px; line-height: 15px">
+<span style="font-weight: 600; color: #46e3c1">Kael (tú)</span>
+<span class="num" style="margin-left: auto; font-size: 12px; color: #9aa6ae">61 %</span>
+</div>
+<div style="position: relative; height: 7px; border-radius: 4px; background: #070a0c; overflow: hidden"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 61%; background: #3ccf73"></div></div>
+<div style="height: 2px; border-radius: 1px; background: #070a0c; overflow: hidden"><div style="height: 2px; width: 84%; background: #3f82f2"></div></div>
+</div>
+<div style="width: 4px; height: 26px; border-radius: 2px; background: #1d272e; position: relative; overflow: hidden; flex: none"><div style="position: absolute; left: 0; right: 0; bottom: 0; height: 38%; background: #f5c35b"></div></div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 8px; opacity: 1">
+<div style="width: 22px; height: 22px; border-radius: 6px; background: #8a3a2b; display: flex; align-items: center; justify-content: center; flex: none">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<div style="display: flex; align-items: baseline; gap: 6px; font-size: 13px; line-height: 15px">
+<span style="font-weight: 600; color: #eef2f4">Nox</span>
+<span class="num" style="margin-left: auto; font-size: 12px; color: #9aa6ae">veneno</span>
+</div>
+<div style="position: relative; height: 7px; border-radius: 4px; background: #070a0c; overflow: hidden"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 45%; background: #9a7bff"></div></div>
+<div style="height: 2px; border-radius: 1px; background: #070a0c; overflow: hidden"><div style="height: 2px; width: 50%; background: #3f82f2"></div></div>
+</div>
+<div style="width: 4px; height: 26px; border-radius: 2px; background: #1d272e; position: relative; overflow: hidden; flex: none"><div style="position: absolute; left: 0; right: 0; bottom: 0; height: 30%; background: #f5c35b"></div></div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 8px; opacity: 0.45">
+<div style="width: 22px; height: 22px; border-radius: 6px; background: #8a3a2b; display: flex; align-items: center; justify-content: center; flex: none">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<div style="display: flex; align-items: baseline; gap: 6px; font-size: 13px; line-height: 15px">
+<span style="font-weight: 600; color: #eef2f4">Vela</span>
+<span class="num" style="margin-left: auto; font-size: 12px; color: #9aa6ae">28 m</span>
+</div>
+<div style="position: relative; height: 7px; border-radius: 4px; background: #070a0c; overflow: hidden"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #3ccf73"></div></div>
+<div style="height: 2px; border-radius: 1px; background: #070a0c; overflow: hidden"><div style="height: 2px; width: 90%; background: #3f82f2"></div></div>
+</div>
+<div style="width: 4px; height: 26px; border-radius: 2px; background: #1d272e; position: relative; overflow: hidden; flex: none"><div style="position: absolute; left: 0; right: 0; bottom: 0; height: 12%; background: #f5c35b"></div></div>
+</div>
+
+</div>
+
+<!-- ================= OBJETIVO + LÍNEA DE TIEMPO (arriba centro) ================= -->
+
+<div style="position: absolute; left: 470px; top: 20px; width: 500px; display: flex; flex-direction: column; gap: 8px">
+<div class="glass" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px">
+<div style="position: relative; width: 52px; height: 52px; flex: none">
+<div style="width: 52px; height: 52px; border-radius: 50%; background: #3a1d22; box-shadow: 0 0 0 2px #ff6b6b; display: flex; align-items: center; justify-content: center">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#ffb3b3" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c4 0 7 4 7 9s-3 9-7 9-7-4-7-9 3-9 7-9zM12 7c2 0 3 2 3 5s-1 5-3 5-3-2-3-5 1-5 3-5"></path></svg>
+</div>
+<span class="num" style="position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); padding: 0 6px; height: 16px; border-radius: 8px; background: #ff6b6b; color: #1a0707; font-size: 11px; font-weight: 700; line-height: 16px">32</span>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 5px">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="font-size: 17px; font-weight: 700">Guardián del Umbral</span>
+<span style="padding: 0 6px; height: 18px; border-radius: 5px; background: #3a2a14; color: #f5c35b; font-size: 11px; font-weight: 700; line-height: 18px; letter-spacing: 0.08em">ÉLITE</span>
+<span style="margin-left: auto; display: flex; gap: 4px">
+<span class="num" style="width: 22px; height: 22px; border-radius: 6px; background: #2a1d3a; font-size: 10px; font-weight: 700; display: flex; align-items: flex-end; justify-content: flex-end; padding: 1px 3px; box-sizing: border-box">6</span>
+<span class="num" style="width: 22px; height: 22px; border-radius: 6px; background: #1c3a3a; font-size: 10px; font-weight: 700; display: flex; align-items: flex-end; justify-content: flex-end; padding: 1px 3px; box-sizing: border-box">12</span>
+</span>
+</div>
+<div style="position: relative; height: 16px; border-radius: 5px; background: #070a0c; overflow: hidden; border: 2px solid #ff6b6b; box-sizing: border-box">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 68%; background: #e25555"></div>
+<div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 23px, rgba(0,0,0,0.55) 23px 24px)"></div>
+<div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #f5c35b"></div>
+<div class="num sh" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700">68 % · 1,24 M</div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="position: relative; flex: 1; height: 10px; border-radius: 5px; background: #070a0c; overflow: hidden"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 55%; background: #ff9a4d"></div></div>
+<span style="font-size: 12px; color: #ffc9a3; white-space: nowrap">Grieta dimensional · 1,8 s</span>
+</div>
+</div>
+</div>
+<div style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 30px; border-radius: 15px; background: rgba(70,227,193,0.14); box-shadow: inset 0 0 0 1px #46e3c1; font-size: 14px">
+<span style="font-weight: 700; color: #46e3c1">Interrumpible</span>
+<span>usa</span><span class="kbd">4</span><span style="font-weight: 600">Corte de fase</span>
+</div>
+<!-- Línea de tiempo del encuentro -->
+<div class="glass" style="padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between"><span class="caps">Próximas mecánicas</span><span style="font-size: 12px; color: #9aa6ae">Fase 1 de 3</span></div>
+<div style="position: relative; height: 34px">
+<div style="position: absolute; left: 0; right: 0; top: 16px; height: 2px; background: #26333b"></div>
+<div style="position: absolute; left: 0; top: 10px; width: 3px; height: 14px; border-radius: 2px; background: #46e3c1"></div>
+<span class="num" style="position: absolute; left: 0; top: 24px; font-size: 10px; color: #9aa6ae">ahora</span>
+<span class="num" style="position: absolute; left: 33%; top: 24px; font-size: 10px; color: #7c8992">10 s</span>
+<span class="num" style="position: absolute; left: 66%; top: 24px; font-size: 10px; color: #7c8992">20 s</span>
+<div style="position: absolute; left: 26%; top: 0; display: flex; align-items: center; gap: 4px; padding: 0 7px; height: 22px; border-radius: 11px; background: #3a1d22; box-shadow: inset 0 0 0 1px #ff6b6b; font-size: 12px; font-weight: 600; white-space: nowrap; transform: translateX(-50%)"><span class="num">8 s</span> Grieta · esquiva</div>
+<div style="position: absolute; left: 70%; top: 0; display: flex; align-items: center; gap: 4px; padding: 0 7px; height: 22px; border-radius: 11px; background: #1d2f55; box-shadow: inset 0 0 0 1px #5aa9ff; font-size: 12px; font-weight: 600; white-space: nowrap; transform: translateX(-50%)"><span class="num">21 s</span> Oleada · agrúpense</div>
+<div style="position: absolute; right: 0; top: 0; display: flex; align-items: center; gap: 4px; padding: 0 7px; height: 22px; border-radius: 11px; background: #3a2a14; box-shadow: inset 0 0 0 1px #f5c35b; font-size: 12px; font-weight: 600; white-space: nowrap">Fase 2 al 50 %</div>
+</div>
+</div>
+</div>
+
+
+<!-- ================= BARRAS DE VIDA EN EL MUNDO (sistema DS-Barras) ================= -->
+<div style="position: absolute; left: 520px; top: 400px; display: flex; flex-direction: column; gap: 3px; width: 170px">
+<span class="sh" style="font-size: 12px; font-weight: 700; padding-left: 30px">Brisa</span>
+<div style="display: flex; align-items: center; gap: 4px"><span class="num" style="width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3a4a54; box-sizing: border-box; font-size: 12px; font-weight: 700; line-height: 23px; text-align: center">28</span><div style="flex: 1; position: relative; height: 14px; border-radius: 5px; background: #070a0c; overflow: hidden; box-shadow: 0 0 0 1.5px #4fe39a, 0 0 12px rgba(79,227,154,0.8)"><div style="position: absolute; inset: 0; width: 70%; background: #f5c35b"></div></div></div>
+</div>
+<div style="position: absolute; left: 760px; top: 360px; display: flex; flex-direction: column; gap: 3px; width: 170px">
+<span class="sh" style="font-size: 12px; font-weight: 700; color: #ffb3b3; text-align: right; padding-right: 30px">Lobo de ceniza</span>
+<div style="display: flex; align-items: center; gap: 4px"><div style="flex: 1; position: relative; height: 14px; border-radius: 5px; background: #070a0c; overflow: hidden; border: 1.5px dashed #ff5d5d; box-sizing: border-box"><div style="position: absolute; inset: 0; width: 44%; background: #e25555"></div></div><span class="num" style="width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #e25555; box-sizing: border-box; font-size: 12px; font-weight: 700; line-height: 23px; text-align: center">30</span></div>
+</div>
+<div style="position: absolute; left: 980px; top: 430px; display: flex; flex-direction: column; gap: 3px; width: 170px">
+<span class="sh" style="font-size: 12px; font-weight: 700; color: #ff8a8a; text-align: right; padding-right: 30px">Grukk_99</span>
+<div style="display: flex; align-items: center; gap: 4px"><div style="flex: 1; position: relative; height: 14px; border-radius: 5px; background: #070a0c; overflow: hidden; box-shadow: 0 0 0 2px #070a0c, 0 0 0 4px #ff3b4a"><div style="position: absolute; inset: 0; width: 86%; background: #a8323a"></div></div><span style="width: 26px; height: 26px; border-radius: 6px; background: #2a1014; border: 2px solid #ff3b4a; box-sizing: border-box; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2.2" stroke-linecap="round" role="img" aria-label="Matahumanos"><path d="M12 3a7 7 0 0 0-4 12.5V19h8v-3.5A7 7 0 0 0 12 3zM9.5 11h.01M14.5 11h.01"></path></svg></span></div>
+</div>
+
+<!-- ================= MINIMAPA (arriba derecha) ================= -->
+<div style="position: absolute; right: 24px; top: 20px; width: 190px; display: flex; flex-direction: column; align-items: center; gap: 8px">
+<div style="position: relative; width: 170px; height: 170px">
+<div class="scene" style="position: absolute; inset: 0; border-radius: 50%; background-size: 760px auto; background-position: 38% 55%; box-shadow: 0 0 0 3px #0d1216, 0 0 0 4px rgba(255,255,255,0.12), 0 10px 30px rgba(0,0,0,0.5)"></div>
+<div style="position: absolute; inset: 0; border-radius: 50%; background: rgba(5,8,10,0.25)"></div>
+<span class="sh" style="position: absolute; left: 50%; top: 4px; transform: translateX(-50%); font-size: 12px; font-weight: 700; color: #46e3c1">N</span>
+<span class="sh" style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: 600; color: #c3ccd3">E</span>
+<span class="sh" style="position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%); font-size: 11px; font-weight: 600; color: #c3ccd3">S</span>
+<span class="sh" style="position: absolute; left: 6px; top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: 600; color: #c3ccd3">O</span>
+<svg width="18" height="18" viewBox="0 0 24 24" style="position: absolute; left: 76px; top: 76px" aria-hidden="true"><path d="M12 2l7 19-7-4-7 4z" fill="#ffffff" stroke="#0d1216" stroke-width="1.5"></path></svg>
+<div style="position: absolute; left: 112px; top: 46px; width: 12px; height: 12px; transform: rotate(45deg); background: #f5c35b; box-shadow: 0 0 0 2px #0d1216"></div>
+<div style="position: absolute; left: 62px; top: 104px; width: 9px; height: 9px; border-radius: 50%; background: #6cb8ff; box-shadow: 0 0 0 2px #0d1216"></div>
+<div style="position: absolute; left: 94px; top: 112px; width: 9px; height: 9px; border-radius: 50%; background: #6cb8ff; box-shadow: 0 0 0 2px #0d1216"></div>
+<div style="position: absolute; left: 40px; top: 52px; width: 26px; height: 26px; border-radius: 50%; background: rgba(255,107,107,0.25); box-shadow: inset 0 0 0 1.5px #ff6b6b"></div>
+</div>
+<div class="sh" style="display: flex; flex-direction: column; align-items: center; gap: 1px">
+<span style="font-size: 14px; font-weight: 600">Bosque de Verdalia</span>
+<span class="num" style="font-size: 12px; color: #c3ccd3">19:42 · 38 ms · <span style="color: #46e3c1">Brecha estable</span></span>
+</div>
+</div>
+
+<!-- ================= SEGUIMIENTO DE MISIONES (derecha) ================= -->
+<div style="position: absolute; right: 24px; top: 262px; width: 250px; display: flex; flex-direction: column; gap: 6px">
+<span class="caps sh" style="color: #c3ccd3">Objetivo ahora</span>
+<div class="glass" style="padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: inset 0 0 0 1px #46e3c1">
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="width: 10px; height: 10px; transform: rotate(45deg); background: #f5c35b; flex: none"></div>
+<span style="font-size: 15px; font-weight: 700">Sellar la grieta menor</span>
+</div>
+<span style="font-size: 13px; color: #c3ccd3">Derrota al Guardián del Umbral</span>
+<div style="display: flex; align-items: center; gap: 8px">
+<div style="flex: 1; height: 5px; border-radius: 3px; background: #070a0c; overflow: hidden"><div style="height: 5px; width: 66%; background: #46e3c1"></div></div>
+<span class="num" style="font-size: 12px; color: #c3ccd3">2/3</span>
+<span class="num" style="font-size: 12px; color: #46e3c1">↗ 40 m</span>
+</div>
+</div>
+
+
+<span class="sh" style="font-size: 12px; color: #9aa6ae">+2 misiones ocultas durante el combate</span>
+
+</div>
+
+<!-- ================= DESCUBRIMIENTO (va al Códice) ================= -->
+<div class="glass" style="position: absolute; right: 24px; bottom: 290px; width: 250px; padding: 9px 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 3px; box-shadow: inset 0 0 0 1px #c39bff">
+<div style="display: flex; align-items: center; gap: 8px"><span style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; color: #c39bff">DESCUBRIMIENTO</span><span style="margin-left: auto; font-size: 11px; color: #f5c35b">eres el 1.º</span></div>
+<span style="font-size: 14px; font-weight: 700">«???» → Guardián del Umbral</span>
+<span style="font-size: 12px; color: #c3ccd3">Guardado como secreto. Decide luego si publicarlo <span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">J</span></span>
+</div>
+
+<!-- ================= BOTÍN (derecha, sobre la forma) ================= -->
+<div class="glass" style="position: absolute; right: 24px; bottom: 214px; width: 250px; padding: 10px 12px; display: flex; gap: 10px; align-items: center; box-sizing: border-box; box-shadow: inset 0 0 0 1px #b47bff">
+<div style="width: 40px; height: 40px; border-radius: 10px; background: #2a1d3a; box-shadow: inset 0 0 0 1px #b47bff; display: flex; align-items: center; justify-content: center; flex: none">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dcc3ff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; font-weight: 700; color: #cfa8ff">Hoja de la grieta</span>
+<span class="num" style="font-size: 12px; color: #a9f0c3">Nv. obj. 418 · ▲ 6 vs. equipada</span>
+</div>
+<span class="kbd" style="height: 22px">E</span>
+</div>
+
+<!-- ================= CHAT (abajo izquierda) ================= -->
+<div class="glass" style="position: absolute; left: 20px; bottom: 214px; width: 400px; padding: 8px 12px 10px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px; opacity: 0.6">
+<div style="display: flex; gap: 4px; font-size: 13px">
+<span style="padding: 2px 9px; border-radius: 6px; background: #1c2a33; font-weight: 600">General</span>
+<span style="padding: 2px 9px; border-radius: 6px; color: #9aa6ae">Grupo</span>
+<span style="padding: 2px 9px; border-radius: 6px; color: #9aa6ae; display: flex; align-items: center; gap: 4px">Gremio <span class="num" style="min-width: 15px; height: 15px; border-radius: 8px; background: #46e3c1; color: #071012; font-size: 10px; font-weight: 700; line-height: 15px; text-align: center">2</span></span>
+<span style="padding: 2px 9px; border-radius: 6px; color: #9aa6ae">Comercio</span>
+</div>
+
+<div style="font-size: 14px; line-height: 18px">
+<span style="color: #6cb8ff; font-weight: 600">[Grupo]</span>
+<span style="color: #6cb8ff">Brisa:</span>
+<span>Lista. Ojo con la grieta a los 8 s.</span>
+
+</div>
+
+<div style="font-size: 14px; line-height: 18px">
+<span style="color: #b8c3ca; font-weight: 600">[General]</span>
+<span style="color: #b8c3ca">Joao:</span>
+<span>¿Alguien para la Bóveda de Ferrum?</span>
+<span style="display: block; font-size: 11px; color: #7c8992">Traducido del portugués · ver original</span>
+</div>
+
+<div style="font-size: 14px; line-height: 18px">
+<span style="color: #4fe39a; font-weight: 600">[Gremio]</span>
+<span style="color: #4fe39a">Mira:</span>
+<span>Raid mañana 21:00, confirmen.</span>
+
+</div>
+
+<div style="font-size: 14px; line-height: 18px">
+<span style="color: #f5c35b; font-weight: 600">[Botín]</span>
+<span style="color: #f5c35b"></span>
+<span>Obtuviste Hoja de la grieta.</span>
+
+</div>
+
+<div style="display: flex; align-items: center; gap: 8px; height: 28px; padding: 0 10px; border-radius: 8px; background: #070a0c; font-size: 13px; color: #7c8992">Escribe un mensaje o / para comandos<span class="kbd" style="margin-left: auto">Enter</span></div>
+</div>
+
+<!-- ================= FORMA INFERIOR (estilo Final v2) ================= -->
+<svg width="1440" height="810" viewBox="0 0 1440 810" style="position: absolute; left: 0; top: 0; filter: drop-shadow(0 -6px 22px rgba(0,0,0,0.5))" aria-hidden="true">
+<path d="M150 811L198 610H1242L1290 811Z" fill="#0d1216" fill-opacity="0.97"></path>
+<path d="M150 811L198 610H1242L1290 811Z" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="1.5"></path>
+</svg>
+<div style="position: absolute; left: 640px; top: 609px; width: 160px; height: 2px; border-radius: 2px; background: #46e3c1"></div>
+
+<!-- Barra de lanzamiento propia -->
+
+<div style="position: absolute; left: 580px; top: 548px; width: 280px; display: flex; flex-direction: column; gap: 4px">
+<div class="sh" style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Haz de grieta</span><span class="num">0,6 s</span></div>
+<div style="height: 8px; border-radius: 4px; background: rgba(7,10,12,0.85); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)"><div style="height: 8px; width: 70%; background: #46e3c1"></div></div>
+</div>
+
+
+<!-- Efectos sobre el borde -->
+<div style="position: absolute; left: 456px; top: 596px; display: flex; gap: 6px">
+
+<div style="position: relative; width: 28px; height: 28px; border-radius: 8px; background: #1f4a3a; box-shadow: 0 0 0 2px #0d1216, inset 0 0 0 1px rgba(255,255,255,0.14)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 10px; font-weight: 700">3</span></div>
+
+<div style="position: relative; width: 28px; height: 28px; border-radius: 8px; background: #4a2420; box-shadow: 0 0 0 2px #0d1216, inset 0 0 0 1px rgba(255,255,255,0.14)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 10px; font-weight: 700"></span></div>
+
+<div style="position: relative; width: 28px; height: 28px; border-radius: 8px; background: #4a3a1c; box-shadow: 0 0 0 2px #0d1216, inset 0 0 0 1px rgba(255,255,255,0.14)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 10px; font-weight: 700">12</span></div>
+
+<div style="position: relative; width: 28px; height: 28px; border-radius: 8px; background: #1e2a4e; box-shadow: 0 0 0 2px #0d1216, inset 0 0 0 1px rgba(255,255,255,0.14)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 10px; font-weight: 700"></span></div>
+
+<div style="position: relative; width: 28px; height: 28px; border-radius: 8px; background: #18404a; box-shadow: 0 0 0 2px #0d1216, inset 0 0 0 1px rgba(255,255,255,0.14)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 10px; font-weight: 700"></span></div>
+
+<div style="position: relative; width: 28px; height: 28px; border-radius: 8px; background: #2a1d3a; box-shadow: 0 0 0 2px #0d1216, inset 0 0 0 1px rgba(255,255,255,0.14)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 10px; font-weight: 700">2</span></div>
+
+</div>
+
+<!-- Retrato -->
+<div style="position: absolute; left: 226px; bottom: 22px; display: flex; align-items: flex-end; gap: 12px">
+<div style="position: relative; width: 92px; height: 100px">
+<svg width="92" height="92" viewBox="0 0 92 92" style="position: absolute; left: 0; top: 0" role="img" aria-label="Experiencia 62 por ciento">
+<circle cx="46" cy="46" r="43" fill="none" stroke="#1d272e" stroke-width="4"></circle>
+<circle cx="46" cy="46" r="43" fill="none" stroke="#9a7bff" stroke-width="4" stroke-linecap="round" stroke-dasharray="167 270" transform="rotate(-90 46 46)"></circle>
+</svg>
+<div style="position: absolute; left: 8px; top: 8px; width: 76px; height: 76px; border-radius: 50%; background: #1a252c; display: flex; align-items: center; justify-content: center">
+<svg width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="#5d6d77" stroke-width="2" aria-hidden="true"><circle cx="24" cy="18" r="8"></circle><path d="M8 42c2-9 9-13 16-13s14 4 16 13"></path></svg>
+</div>
+<div class="num" style="position: absolute; left: 28px; bottom: 0; width: 36px; height: 22px; border-radius: 999px; background: #46e3c1; color: #071012; font-size: 15px; font-weight: 700; line-height: 22px; text-align: center; box-shadow: 0 0 0 3px #0d1216">32</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 3px; padding-bottom: 6px">
+<span style="font-size: 17px; font-weight: 700">Kael</span>
+<span style="font-size: 12px; color: #9aa6ae">Tejedor de grietas</span>
+<span class="num" style="font-size: 12px; color: #c4b3ff">XP 62 %</span>
+<div class="num" style="display: grid; grid-template-columns: repeat(2, auto); column-gap: 12px; row-gap: 2px; margin-top: 2px; font-size: 13px; font-weight: 700">
+<span style="display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff9a4d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Daño de ataque"><path d="M14 4h6v6L10 20l-6-6zM4 14l6 6M3 21l2-2"></path></svg>1.842</span>
+<span style="display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e0b04a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Armadura"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"></path></svg>1.204</span>
+<span style="display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b8f0ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Celeridad"><path d="M7 3h10M7 21h10M8 3c0 5 8 5 8 9s-8 4-8 9M16 3c0 5-8 5-8 9"></path></svg>18 %</span>
+<span style="display: flex; align-items: center; gap: 4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff5d5d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Golpe crítico"><path d="M12 3v5M12 16v5M3 12h5M16 12h5M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6"></path></svg>24 %</span>
+</div>
+</div>
+</div>
+
+<!-- Barras + barra de acciones de 2 filas -->
+<div style="position: absolute; left: 453px; bottom: 18px; width: 534px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; flex-direction: column; gap: 4px; margin-bottom: 4px">
+<div style="position: relative; height: 18px; border-radius: 9px; background: #070a0c; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06)">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 61%; background: #3ccf73"></div>
+<div style="position: absolute; left: 61%; top: 0; bottom: 0; width: 9%; background: rgba(255,255,255,0.55)"></div>
+<div class="num" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; text-shadow: 0 1px 2px #000000">18.420 / 30.100 <span style="font-weight: 600; color: #e8edf0; margin-left: 6px">+2.700 escudo</span></div>
+</div>
+<div style="display: flex; gap: 4px">
+<div style="position: relative; flex: 3; height: 10px; border-radius: 5px; background: #070a0c; overflow: hidden"><div style="position: absolute; inset: 0; width: 84%; background: #3f82f2"></div></div>
+<div style="position: relative; flex: 2; height: 10px; border-radius: 5px; background: #070a0c; overflow: hidden"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 40%; background: #f5c35b"></div></div>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px; opacity: 1">
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #4a1d22; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v5l-4 8a3 3 0 0 0 3 5h6a3 3 0 0 0 3-5l-4-8V3"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #c3ccd3">⇧1</span>
+<span class="num sh" style="position: absolute; left: 4px; top: 2px; font-size: 11px; font-weight: 700">3</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1a2e22; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 19l5-9 4 5 3-6 6 10"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #c3ccd3">⇧2</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #2a1d3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c4 0 7 4 7 9s-3 9-7 9-7-4-7-9 3-9 7-9zM12 7c2 0 3 2 3 5s-1 5-3 5-3-2-3-5 1-5 3-5"></path></svg>
+<div class="num" style="position: absolute; inset: 0; background: rgba(6,9,11,0.72); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">12m</div>
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #c3ccd3">⇧3</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1d2f55; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #c3ccd3">⇧4</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1a2e22; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #c3ccd3">⇧5</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #0a0f13; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #c3ccd3">⇧6</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #0a0f13; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d=""></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #c3ccd3">⇧7</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1c3a3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10c3-4 6-4 9 0s6 4 9 0M3 16c3-4 6-4 9 0s6 4 9 0"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #c3ccd3">⇧8</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1d2f55; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #c3ccd3">⇧9</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #4a3a1c; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 10px; font-weight: 700; color: #c3ccd3">⇧0</span>
+
+</div>
+
+</div>
+<div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px">
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1c3a3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M9 20l11-11M4 15L15 4"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">1</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1c3a3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h12M12 6l6 6-6 6M4 6v12"></path></svg>
+<div class="num" style="position: absolute; inset: 0; background: rgba(6,9,11,0.72); display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700">4</div>
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">2</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1d2f55; box-shadow: 0 0 0 2px #46e3c1, 0 0 16px #46e3c1; display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 14h6l-1 7 8-11h-6z"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">3</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #4a2a1a; box-shadow: 0 0 0 2px #46e3c1, 0 0 16px #46e3c1; display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">4</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1c3a3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10c3-4 6-4 9 0s6 4 9 0M3 16c3-4 6-4 9 0s6 4 9 0"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">5</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #2a1d3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c4 0 7 4 7 9s-3 9-7 9-7-4-7-9 3-9 7-9zM12 7c2 0 3 2 3 5s-1 5-3 5-3-2-3-5 1-5 3-5"></path></svg>
+<div class="num" style="position: absolute; inset: 0; background: rgba(6,9,11,0.72); display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700">18</div>
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">6</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1c3a3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 7-7 11-7-11z"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">7</span>
+<span class="num sh" style="position: absolute; left: 4px; top: 2px; font-size: 11px; font-weight: 700">2</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1d2f55; box-shadow: inset 0 0 0 1px rgba(255,107,107,0.6); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff8a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">8</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #2a1d3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z"></path></svg>
+<div class="num" style="position: absolute; inset: 0; background: rgba(6,9,11,0.72); display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 700">1:20</div>
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">9</span>
+
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #4a2a1a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; overflow: hidden">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg>
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">0</span>
+
+</div>
+
+</div>
+</div>
+
+<!-- Derecha de la forma: rendimiento o utilidades -->
+<div style="position: absolute; left: 1008px; bottom: 20px; width: 214px">
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span class="caps">Rendimiento</span>
+<div style="display: flex; align-items: baseline; gap: 8px"><span class="num" style="font-size: 28px; font-weight: 700; line-height: 1">4.218</span><span style="font-size: 13px; color: #9aa6ae">daño/s</span><span class="num" style="margin-left: auto; font-size: 13px; color: #a9f0c3">▲ 6 %</span></div>
+<svg width="214" height="34" viewBox="0 0 214 34" role="img" aria-label="Daño por segundo en los últimos 60 segundos"><polyline points="0,28 18,24 36,26 54,18 72,20 90,14 108,16 126,10 144,13 162,8 180,11 198,6 214,7" fill="none" stroke="#46e3c1" stroke-width="2" stroke-linejoin="round"></polyline><line x1="0" y1="33" x2="214" y2="33" stroke="#26333b"></line></svg>
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Amenaza</span><span class="num" style="font-weight: 700">38 %</span><span style="color: #9aa6ae">Combate</span><span class="num" style="font-weight: 700">01:42</span></div>
+</div>
+
+
+</div>
+
+<!-- Experiencia: línea en el borde inferior -->
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(0,0,0,0.7)"><div style="height: 4px; width: 62%; background: #9a7bff"></div></div>
+
+</div>
+</div>
+
+
+
+</body></html>

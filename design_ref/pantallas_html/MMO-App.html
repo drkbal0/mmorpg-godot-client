@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>El Nido móvil</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+
+<div style="position: absolute; inset: 0; background: #0b0f13"></div>
+
+<!-- Teléfono 1: el refugio en vertical -->
+<div style="position: absolute; left: 90px; top: 24px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<span style="font-size: 15px; font-weight: 600; color: #9aa6ae">El mismo corte lateral, en vertical</span>
+<div style="width: 340px; height: 720px; border-radius: 46px; background: #000000; padding: 10px; box-sizing: border-box; box-shadow: 0 0 0 2px #26333b, 0 30px 60px rgba(0,0,0,0.6)">
+<div style="position: relative; width: 320px; height: 700px; border-radius: 38px; background: #090c12; overflow: hidden; padding: 30px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg width="28" height="28" viewBox="0 0 48 48" role="img" aria-label="Insignia del Refugio"><circle cx="24" cy="24" r="22" fill="none" stroke="#46e3c1" stroke-width="2.5"></circle><path d="M10 17h28l-5 10-6 4-3 9-3-9-6-4z" fill="#46e3c1"></path><rect x="21" y="20" width="6" height="5" rx="1" fill="#0d1216"></rect></svg>
+<span style="font-size: 18px; font-weight: 700">El Nido</span><span style="margin-left: auto; font-size: 11px; color: #4fe39a">● sincronizado</span>
+</div>
+<div style="display: flex; gap: 6px"><span style="flex: 1; height: 30px; border-radius: 9px; background: #121a20; display: flex; align-items: center; justify-content: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; transform: rotate(45deg); background: #46e3c1"></span><span class="num" style="font-size: 14px; font-weight: 700">1.240</span></span><span style="flex: 1; height: 30px; border-radius: 9px; background: #121a20; display: flex; align-items: center; justify-content: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; transform: rotate(45deg); background: #b8c3ca"></span><span class="num" style="font-size: 14px; font-weight: 700">380</span></span><span style="flex: 1; height: 30px; border-radius: 9px; background: #121a20; display: flex; align-items: center; justify-content: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; transform: rotate(45deg); background: #f5c35b"></span><span class="num" style="font-size: 14px; font-weight: 700">12.480</span></span></div>
+<div style="height: 8px; border-radius: 4px; background: #2f5a3a"></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: -4px"><div style="height: 46px; border-radius: 10px; background: #12241a; padding: 6px 8px; box-sizing: border-box; display: flex; flex-direction: column"><span style="font-size: 12px; font-weight: 700">Huerto</span><span class="num" style="font-size: 11px; color: #4fe39a">22 listas</span></div><div style="height: 46px; border-radius: 10px; background: #12241a; padding: 6px 8px; box-sizing: border-box; display: flex; flex-direction: column"><span style="font-size: 12px; font-weight: 700">Pispa</span><span class="num" style="font-size: 11px; color: #9aa6ae">12 min</span></div><div style="height: 46px; border-radius: 10px; background: #12241a; padding: 6px 8px; box-sizing: border-box; display: flex; flex-direction: column"><span style="font-size: 12px; font-weight: 700">Portal</span><span class="num" style="font-size: 11px; color: #f5c35b">¡Elige!</span></div></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 8px; border-radius: 14px; background: #141a21">
+
+<div style="grid-column: span 2; height: 56px; border-radius: 10px; background: #0f141a; border: 1px solid rgba(255,255,255,0.1); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 1px">
+<div style="display: flex; align-items: center; gap: 6px"><span style="width: 7px; height: 7px; border-radius: 2px; background: #6cb8ff"></span><span style="font-size: 13px; font-weight: 700; color: #eef2f4">Recámara</span><span class="num" style="margin-left: auto; padding: 0 6px; border-radius: 8px; background: transparent; color: transparent; font-size: 10px; font-weight: 700; line-height: 16px"></span></div>
+<span style="font-size: 11px; color: #9aa6ae">XP extra al descansar</span>
+</div>
+
+<div style="grid-column: span 1; height: 56px; border-radius: 10px; background: #0f141a; border: 1px solid rgba(255,255,255,0.1); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 1px">
+<div style="display: flex; align-items: center; gap: 6px"><span style="width: 7px; height: 7px; border-radius: 2px; background: #ff9a4d"></span><span style="font-size: 13px; font-weight: 700; color: #eef2f4">Taller</span><span class="num" style="margin-left: auto; padding: 0 6px; border-radius: 8px; background: #4fe39a; color: #071012; font-size: 10px; font-weight: 700; line-height: 16px">▲</span></div>
+<span style="font-size: 11px; color: #9aa6ae">Lingotes 7/10</span>
+</div>
+
+<div style="grid-column: span 1; height: 56px; border-radius: 10px; background: rgba(79,227,154,0.06); border: 1.5px dashed #4fe39a; padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 1px">
+<div style="display: flex; align-items: center; gap: 6px"><span style="width: 7px; height: 7px; border-radius: 2px; background: #4fe39a"></span><span style="font-size: 13px; font-weight: 700; color: #eef2f4">Rincón de resina</span><span class="num" style="margin-left: auto; padding: 0 6px; border-radius: 8px; background: transparent; color: transparent; font-size: 10px; font-weight: 700; line-height: 16px"></span></div>
+<span style="font-size: 11px; color: #9aa6ae">En obra · 1:20 h</span>
+</div>
+
+<div style="grid-column: span 2; height: 56px; border-radius: 10px; background: #0f141a; border: 1px solid rgba(255,255,255,0.1); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 1px">
+<div style="display: flex; align-items: center; gap: 6px"><span style="width: 7px; height: 7px; border-radius: 2px; background: #46e3c1"></span><span style="font-size: 13px; font-weight: 700; color: #eef2f4">Sótano</span><span class="num" style="margin-left: auto; padding: 0 6px; border-radius: 8px; background: #4fe39a; color: #071012; font-size: 10px; font-weight: 700; line-height: 16px">340</span></div>
+<span style="font-size: 11px; color: #9aa6ae">42 esquirlas por hora</span>
+</div>
+
+<div style="grid-column: span 1; height: 56px; border-radius: 10px; background: #0f141a; border: 1px solid rgba(255,255,255,0.1); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 1px">
+<div style="display: flex; align-items: center; gap: 6px"><span style="width: 7px; height: 7px; border-radius: 2px; background: #b8c3ca"></span><span style="font-size: 13px; font-weight: 700; color: #eef2f4">Despensa</span><span class="num" style="margin-left: auto; padding: 0 6px; border-radius: 8px; background: transparent; color: transparent; font-size: 10px; font-weight: 700; line-height: 16px"></span></div>
+<span style="font-size: 11px; color: #9aa6ae">412 / 600</span>
+</div>
+
+<div style="grid-column: span 1; height: 56px; border-radius: 10px; background: #151022; border: 1px solid rgba(195,155,255,0.45); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 1px">
+<div style="display: flex; align-items: center; gap: 6px"><span style="width: 7px; height: 7px; border-radius: 2px; background: #c39bff"></span><span style="font-size: 13px; font-weight: 700; color: #c39bff">???</span><span class="num" style="margin-left: auto; padding: 0 6px; border-radius: 8px; background: transparent; color: transparent; font-size: 10px; font-weight: 700; line-height: 16px"></span></div>
+<span style="font-size: 11px; color: #9aa6ae">Excava para descubrir</span>
+</div>
+
+</div>
+<div style="position: absolute; left: 12px; right: 12px; bottom: 76px; display: flex; gap: 8px; align-items: center">
+<span style="width: 64px; height: 52px; border-radius: 14px; background: #18242b; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 14px">Ronda<br>2 min</span>
+<span style="flex: 1; height: 56px; border-radius: 16px; background: #46e3c1; color: #071012; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center">Recoger todo · 5</span>
+<span style="width: 64px; height: 52px; border-radius: 14px; background: #18242b; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">Construir</span>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 68px; background: #0a0f13; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); display: flex; justify-content: space-around; align-items: center; padding-bottom: 8px"><span style="font-size: 11px; font-weight: 600; color: #46e3c1">Refugio</span><span style="font-size: 11px; font-weight: 600; color: #7c8992">Viajes</span><span style="font-size: 11px; font-weight: 600; color: #7c8992">Mercado</span><span style="font-size: 11px; font-weight: 600; color: #7c8992">Gremio</span><span style="font-size: 11px; font-weight: 600; color: #7c8992">Chat</span></div>
+</div>
+</div>
+</div>
+
+<!-- Teléfonos 2 y 3 -->
+
+<div style="position: absolute; left: 550px; top: 24px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<span style="font-size: 15px; font-weight: 600; color: #9aa6ae">Ronda de 2 minutos: todo con un pulgar</span>
+<div style="width: 340px; height: 720px; border-radius: 46px; background: #000000; padding: 10px; box-sizing: border-box; box-shadow: 0 0 0 2px #26333b, 0 30px 60px rgba(0,0,0,0.6)">
+<div style="position: relative; width: 320px; height: 700px; border-radius: 38px; background: #0d1216; overflow: hidden; padding: 30px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; justify-content: space-between"><span style="font-size: 22px; font-weight: 700">Ronda</span><span style="font-size: 12px; color: #9aa6ae">2 de 4 · ~1 min</span></div>
+
+<div style="padding: 11px 13px; border-radius: 16px; background: #121a20; box-shadow: none; display: flex; flex-direction: column; gap: 5px; opacity: 0.6">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 700; color: #4fe39a">Recoger 5 cosas</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">hecho ✓</span></div>
+<span style="font-size: 13px; line-height: 17px; color: #c3ccd3">Esquirlas, hierbas y la cosecha de Ysolde.</span>
+
+</div>
+
+<div style="padding: 11px 13px; border-radius: 16px; background: #121a20; box-shadow: inset 0 0 0 1.5px #f5c35b; display: flex; flex-direction: column; gap: 5px; opacity: 1">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 700; color: #f5c35b">Torq: bifurcación</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">20 min</span></div>
+<span style="font-size: 13px; line-height: 17px; color: #c3ccd3">Si no eliges, irá por el puente.</span>
+<div style="display: flex; gap: 6px; margin-top: 3px"><span style="flex: 1; height: 44px; border-radius: 12px; background: #46e3c1; color: #071012; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">Túnel · +50 %</span><span style="flex: 1; height: 44px; border-radius: 12px; background: #18242b; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">Puente · seguro</span></div>
+</div>
+
+<div style="padding: 11px 13px; border-radius: 16px; background: #121a20; box-shadow: none; display: flex; flex-direction: column; gap: 5px; opacity: 1">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 700; color: #eef2f4">Replantar parcelas</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap"></span></div>
+<span style="font-size: 13px; line-height: 17px; color: #c3ccd3">Lo mismo que la última vez: hierbas de la brecha.</span>
+<div style="display: flex; gap: 6px; margin-top: 3px"><span style="flex: 1; height: 44px; border-radius: 12px; background: #46e3c1; color: #071012; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">Replantar igual</span><span style="flex: 1; height: 44px; border-radius: 12px; background: #18242b; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">Cambiar</span></div>
+</div>
+
+<div style="padding: 11px 13px; border-radius: 16px; background: #121a20; box-shadow: none; display: flex; flex-direction: column; gap: 5px; opacity: 1">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 700; color: #eef2f4">Bolsa de Pispa 14/20</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap"></span></div>
+<span style="font-size: 13px; line-height: 17px; color: #c3ccd3">Vacíala para que siga buscando.</span>
+<div style="display: flex; gap: 6px; margin-top: 3px"><span style="flex: 1; height: 44px; border-radius: 12px; background: #46e3c1; color: #071012; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">Vaciar al almacén</span></div>
+</div>
+
+<span style="position: absolute; left: 16px; right: 16px; bottom: 26px; font-size: 12px; text-align: center; color: #9aa6ae">Al terminar: «Todo al día». No hay nada más que hacer hasta la tarde.</span>
+</div>
+</div>
+</div>
+
+<div style="position: absolute; left: 1010px; top: 24px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<span style="font-size: 15px; font-weight: 600; color: #9aa6ae">Tú mandas en los avisos</span>
+<div style="width: 340px; height: 720px; border-radius: 46px; background: #000000; padding: 10px; box-sizing: border-box; box-shadow: 0 0 0 2px #26333b, 0 30px 60px rgba(0,0,0,0.6)">
+<div style="position: relative; width: 320px; height: 700px; border-radius: 38px; background: #0d1216; overflow: hidden; padding: 30px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; justify-content: space-between"><span style="font-size: 22px; font-weight: 700">Avisos</span><span style="font-size: 12px; color: #9aa6ae">máx. 3 al día</span></div>
+
+<div style="padding: 11px 13px; border-radius: 16px; background: #121a20; box-shadow: none; display: flex; flex-direction: column; gap: 5px; opacity: 1">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 700; color: #eef2f4">Solo lo que elijas</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">activos: 3</span></div>
+<span style="font-size: 13px; line-height: 17px; color: #c3ccd3">Decisiones de expedición · Obra terminada · Raid del gremio.</span>
+
+</div>
+
+<div style="padding: 11px 13px; border-radius: 16px; background: #121a20; box-shadow: none; display: flex; flex-direction: column; gap: 5px; opacity: 1">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 700; color: #eef2f4">Horario de silencio</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">22:00–9:00</span></div>
+<span style="font-size: 13px; line-height: 17px; color: #c3ccd3">Nada suena de noche. Lo pendiente espera.</span>
+
+</div>
+
+<div style="padding: 11px 13px; border-radius: 16px; background: #121a20; box-shadow: none; display: flex; flex-direction: column; gap: 5px; opacity: 1">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 700; color: #eef2f4">Sin conexión</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">2 en cola</span></div>
+<span style="font-size: 13px; line-height: 17px; color: #c3ccd3">Tus acciones se guardan y se envían al volver la señal.</span>
+
+</div>
+
+<div style="padding: 11px 13px; border-radius: 16px; background: #121a20; box-shadow: inset 0 0 0 1.5px #46e3c1; display: flex; flex-direction: column; gap: 5px; opacity: 1">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 700; color: #eef2f4">Seguir en el PC</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">hace 1 min</span></div>
+<span style="font-size: 13px; line-height: 17px; color: #c3ccd3">El refugio es el mismo en los dos. Abre el juego y continúa donde lo dejaste.</span>
+
+</div>
+
+<span style="position: absolute; left: 16px; right: 16px; bottom: 26px; font-size: 12px; text-align: center; color: #9aa6ae">Sin rachas, sin cuentas atrás falsas, sin castigo por no entrar.</span>
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+
+</body></html>

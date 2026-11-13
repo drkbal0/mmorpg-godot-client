@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMO-Produccion</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: #46e3c1; margin-right: 12px">MENÚ</span>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7"></path></svg>Equipo<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">C</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6"></path></svg>Poderes<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">N</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5"></path></svg>Misiones<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">L</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"></path></svg>Mapa<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">M</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14"></path></svg>Códice<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">J</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5"></path></svg>Social<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">O</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #eef2f4; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6"></path></svg>Refugio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">H</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: #46e3c1"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0"></path></svg>Comercio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">P</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- Subnavegación del refugio -->
+<div style="position: absolute; left: 28px; top: 80px; display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07)">
+<span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Refugio</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: #1c2a33; color: #eef2f4; font-size: 14px; font-weight: 600; line-height: 32px">Producción</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Expediciones</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Pispa</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Mejoras</span>
+</div>
+
+<div class="card" style="position: absolute; left: 28px; top: 128px; width: 1384px; height: 654px"></div>
+<div style="position: absolute; left: 52px; top: 146px; right: 52px; display: flex; align-items: baseline; gap: 14px">
+<span style="font-size: 20px; font-weight: 700">Cadenas de producción</span><span style="font-size: 13px; color: #9aa6ae">por hora · se actualiza en vivo</span>
+<span style="margin-left: auto; display: flex; gap: 16px; font-size: 12px; color: #9aa6ae"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 18px; height: 3px; background: #4a5a64"></span>Fluye bien</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 18px; height: 3px; background: #ff6b6b"></span>Atasco</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 18px; height: 3px; border-top: 2px dashed #4fe39a"></span>En construcción</span></span>
+</div>
+<span class="caps" style="position: absolute; left: 60px; top: 186px">Materias primas</span><span class="caps" style="position: absolute; left: 400px; top: 186px">Talleres</span><span class="caps" style="position: absolute; left: 740px; top: 186px">Productos</span><span class="caps" style="position: absolute; left: 1080px; top: 186px">Destino</span>
+<svg width="1440" height="810" viewBox="0 0 1440 810" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+<path d="M280 482C340 482 340 482 400 482M280 562C340 562 340 562 400 562M620 482C680 482 680 482 740 482M620 562C680 562 680 562 740 562M960 482C1020 482 1020 442 1080 442M960 562C1020 562 1020 562 1080 562M960 262C1020 262 1020 242 1080 242" fill="none" stroke="#4a5a64" stroke-width="2.5"></path>
+<path d="M280 242C340 242 340 262 400 262M280 322C340 322 340 262 400 262M620 262C680 262 680 262 740 262M960 262C1020 262 1020 322 1080 322" fill="none" stroke="#ff6b6b" stroke-width="3"></path>
+<path d="M280 402C340 402 340 402 400 402M620 402C680 402 680 402 740 402M960 402C1020 402 1020 442 1080 442" fill="none" stroke="#4fe39a" stroke-width="2.5" stroke-dasharray="7 6"></path>
+</svg>
+
+<div style="position: absolute; left: 60px; top: 210px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #4fe39a; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Hierbas</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">22 /h · Invernadero</span></div>
+</div>
+
+<div style="position: absolute; left: 60px; top: 290px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #46e3c1; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Esquirlas</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">42 /h · Destilador</span></div>
+</div>
+
+<div style="position: absolute; left: 60px; top: 370px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #c79a5b; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Resina</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">8 /h · Invernadero</span></div>
+</div>
+
+<div style="position: absolute; left: 60px; top: 450px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #b8c3ca; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Metal</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">8 /h · expediciones</span></div>
+</div>
+
+<div style="position: absolute; left: 60px; top: 530px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #e0c060; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Grano</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">12 /h · Parcelas</span></div>
+</div>
+
+<div style="position: absolute; left: 400px; top: 230px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #2a1418; box-shadow: inset 0 0 0 1.5px #ff6b6b; display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #ff6b6b; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Destilería</span><span class="num" style="font-size: 12px; color: #ff8a8a; white-space: nowrap">100 % · atascada</span></div>
+</div>
+
+<div style="position: absolute; left: 400px; top: 370px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: transparent; box-shadow: inset 0 0 0 1.5px #4fe39a; display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #4fe39a; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Taller de resina</span><span class="num" style="font-size: 12px; color: #4fe39a; white-space: nowrap">construyendo · 1:20 h</span></div>
+</div>
+
+<div style="position: absolute; left: 400px; top: 450px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #ff9a4d; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Forja</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">70 % de uso</span></div>
+</div>
+
+<div style="position: absolute; left: 400px; top: 530px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #e0c060; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Molino</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">40 % de uso</span></div>
+</div>
+
+<div style="position: absolute; left: 740px; top: 230px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #4fe39a; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Tónicos</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">6 /h</span></div>
+</div>
+
+<div style="position: absolute; left: 740px; top: 370px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: transparent; box-shadow: inset 0 0 0 1.5px #4fe39a; display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #c79a5b; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Barniz</span><span class="num" style="font-size: 12px; color: #4fe39a; white-space: nowrap">pronto</span></div>
+</div>
+
+<div style="position: absolute; left: 740px; top: 450px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #b8c3ca; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Lingotes</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">4 /h</span></div>
+</div>
+
+<div style="position: absolute; left: 740px; top: 530px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #e0c060; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Pan de Verdalia</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">10 /h</span></div>
+</div>
+
+<div style="position: absolute; left: 1080px; top: 210px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #f5c35b; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Mercado</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">vendes 4 /h</span></div>
+</div>
+
+<div style="position: absolute; left: 1080px; top: 290px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1.5px #46e3c1; display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #46e3c1; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Misión: Hierbas de la brecha</span><span class="num" style="font-size: 12px; color: #46e3c1; white-space: nowrap">pide 4 tónicos</span></div>
+</div>
+
+<div style="position: absolute; left: 1080px; top: 410px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #9aa6ae; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Mejoras del refugio</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">Forja nv 3 pide 20 lingotes</span></div>
+</div>
+
+<div style="position: absolute; left: 1080px; top: 530px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: #121a20; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: #f5b546; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">Pispa</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">bocadillos</span></div>
+</div>
+
+<div class="sub" style="position: absolute; left: 52px; right: 52px; bottom: 44px; padding: 12px 16px; display: flex; align-items: center; gap: 14px; box-shadow: inset 0 0 0 1px rgba(255,107,107,0.45)">
+<span style="font-size: 14px; font-weight: 700; color: #ff8a8a">Atasco en la Destilería</span>
+<span style="font-size: 13px; color: #c3ccd3">22 hierbas esperan. Tu misión y el mercado piden más tónicos de los que salen.</span>
+<span class="chip" style="margin-left: auto; color: #46e3c1">Mejorar a nivel 4</span><span class="chip">Construir una 2.ª</span><span class="chip">Mandar hierbas a Pispa</span>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

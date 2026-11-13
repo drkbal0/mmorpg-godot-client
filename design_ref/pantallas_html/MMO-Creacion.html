@@ -1,0 +1,133 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMORPG · Creación de personaje</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.78)"></div>
+
+<!-- Pasos -->
+<div style="position: absolute; left: 0; right: 0; top: 24px; display: flex; justify-content: center; gap: 10px">
+
+<div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 18px; background: rgba(13,18,22,0.9); box-shadow: none; font-size: 14px; font-weight: 600; color: #9aa6ae"><span class="num" style="width: 20px; height: 20px; border-radius: 50%; background: #4fe39a; color: #071012; font-size: 12px; line-height: 20px; text-align: center">✓</span>Origen</div>
+
+<div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 18px; background: rgba(13,18,22,0.95); box-shadow: inset 0 0 0 1.5px #46e3c1; font-size: 14px; font-weight: 600; color: #eef2f4"><span class="num" style="width: 20px; height: 20px; border-radius: 50%; background: #46e3c1; color: #071012; font-size: 12px; line-height: 20px; text-align: center">2</span>Clase</div>
+
+<div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 18px; background: rgba(13,18,22,0.7); box-shadow: none; font-size: 14px; font-weight: 600; color: #7c8992"><span class="num" style="width: 20px; height: 20px; border-radius: 50%; background: #26333b; color: #9aa6ae; font-size: 12px; line-height: 20px; text-align: center">3</span>Apariencia</div>
+
+<div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 18px; background: rgba(13,18,22,0.7); box-shadow: none; font-size: 14px; font-weight: 600; color: #7c8992"><span class="num" style="width: 20px; height: 20px; border-radius: 50%; background: #26333b; color: #9aa6ae; font-size: 12px; line-height: 20px; text-align: center">4</span>Nombre</div>
+
+</div>
+
+<!-- Clases -->
+<div style="position: absolute; left: 30px; top: 90px; width: 360px; display: flex; flex-direction: column; gap: 10px">
+<div class="sub" style="padding: 10px 12px; display: flex; align-items: center; gap: 10px; background: rgba(18,26,32,0.92)"><span style="width: 10px; height: 10px; border-radius: 50%; background: #9fe36a"></span><span style="font-size: 14px">Origen: <span style="font-weight: 700">Verdalia</span></span><span style="margin-left: auto; font-size: 12px; color: #46e3c1">cambiar</span></div>
+<span class="caps sh" style="color: #c3ccd3">Elige tu clase</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+
+<div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 0 0 2px #46e3c1, 0 20px 50px rgba(0,0,0,0.45)">
+<span style="font-size: 15px; font-weight: 700">Tejedor de grietas</span>
+<div style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 6px; height: 18px; border-radius: 5px; background: #8a3a2b; font-size: 11px; font-weight: 700; line-height: 18px">Daño</span><span style="font-size: 11px; color: #9aa6ae">distancia · media</span></div>
+
+</div>
+
+<div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<span style="font-size: 15px; font-weight: 700">Guardiana rúnica</span>
+<div style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 6px; height: 18px; border-radius: 5px; background: #2b4a8a; font-size: 11px; font-weight: 700; line-height: 18px">Tanque</span><span style="font-size: 11px; color: #9aa6ae">cuerpo a cuerpo</span></div>
+<span style="font-size: 11px; color: #46e3c1">Recomendada para empezar</span>
+</div>
+
+<div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<span style="font-size: 15px; font-weight: 700">Druida errante</span>
+<div style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 6px; height: 18px; border-radius: 5px; background: #2a7a4a; font-size: 11px; font-weight: 700; line-height: 18px">Sanador</span><span style="font-size: 11px; color: #9aa6ae">curación en área</span></div>
+
+</div>
+
+<div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<span style="font-size: 15px; font-weight: 700">Herrero de Ferrum</span>
+<div style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 6px; height: 18px; border-radius: 5px; background: #8a3a2b; font-size: 11px; font-weight: 700; line-height: 18px">Daño</span><span style="font-size: 11px; color: #9aa6ae">cuerpo · fabrica más</span></div>
+
+</div>
+
+<div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<span style="font-size: 15px; font-weight: 700">Ingeniera</span>
+<div style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 6px; height: 18px; border-radius: 5px; background: #5b3a8a; font-size: 11px; font-weight: 700; line-height: 18px">Apoyo</span><span style="font-size: 11px; color: #9aa6ae">torretas · escudos</span></div>
+
+</div>
+
+<div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<span style="font-size: 15px; font-weight: 700">Sombra del eco</span>
+<div style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 6px; height: 18px; border-radius: 5px; background: #8a3a2b; font-size: 11px; font-weight: 700; line-height: 18px">Daño</span><span style="font-size: 11px; color: #9aa6ae">sigilo · difícil</span></div>
+
+</div>
+
+</div>
+</div>
+
+<!-- Vista previa -->
+<div style="position: absolute; left: 470px; top: 100px; width: 500px; height: 600px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end">
+<svg width="280" height="490" viewBox="0 0 150 260" aria-hidden="true"><circle cx="75" cy="40" r="22" fill="#1a252c" stroke="#2c3b44" stroke-width="2"></circle><path d="M40 82c6-12 18-18 35-18s29 6 35 18l10 70-18 4-6-40-4 98H58l-4-98-6 40-18-4z" fill="#1a252c" stroke="#2c3b44" stroke-width="2" stroke-linejoin="round"></path></svg>
+<div style="width: 340px; height: 40px; margin-top: -20px; border-radius: 50%; box-shadow: 0 0 0 2px #9fe36a, 0 0 40px rgba(159,227,106,0.3); background: rgba(159,227,106,0.08)"></div>
+</div>
+<div class="card" style="position: absolute; left: 880px; top: 600px; width: 150px; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<svg width="44" height="56" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="10" ry="2.5" fill="rgba(159,227,106,0.5)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#8a3a2b"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#2b1d14"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 11px; text-align: center; color: #9aa6ae">Así se verá en tu refugio</span>
+</div>
+
+<!-- Detalle de clase -->
+<div class="card" style="position: absolute; right: 30px; top: 90px; width: 360px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 24px; font-weight: 700">Tejedor de grietas</span>
+<span style="font-size: 14px; line-height: 20px; color: #c3ccd3">Abre grietas que explotan y arrastran a los enemigos. Daño en área desde media distancia.</span>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span style="width: 100px; color: #9aa6ae">Daño</span><div style="flex: 1; display: flex; gap: 3px"><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #26333b"></span></div></div>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span style="width: 100px; color: #9aa6ae">Control</span><div style="flex: 1; display: flex; gap: 3px"><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #26333b"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #26333b"></span></div></div>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span style="width: 100px; color: #9aa6ae">Supervivencia</span><div style="flex: 1; display: flex; gap: 3px"><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #26333b"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #26333b"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #26333b"></span></div></div>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span style="width: 100px; color: #9aa6ae">Dificultad</span><div style="flex: 1; display: flex; gap: 3px"><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #46e3c1"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #26333b"></span><span style="flex: 1; height: 6px; border-radius: 3px; background: #26333b"></span></div></div>
+
+<div style="height: 150px; border-radius: 12px; background: #121a20; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px">
+<svg width="36" height="36" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(255,255,255,0.1)"></circle><path d="M10 8l6 4-6 4z" fill="#eef2f4"></path></svg>
+<span style="font-size: 12px; color: #9aa6ae">Combate de 20 s con esta clase</span>
+</div>
+<div class="sub" style="padding: 10px 12px; font-size: 13px; color: #c3ccd3; box-shadow: inset 0 0 0 1px rgba(70,227,193,0.35)">Puedes jugarla 5 minutos en una arena antes de crearla.</div>
+</div>
+
+<!-- Acciones -->
+<div style="position: absolute; left: 0; right: 0; bottom: 30px; display: flex; justify-content: center; gap: 10px">
+<button class="btn" style="height: 46px; padding: 0 22px">Atrás</button>
+<button class="btn" style="height: 46px; padding: 0 22px">Probar la clase</button>
+<button class="btn" style="height: 46px; padding: 0 28px; background: #46e3c1; color: #071012; box-shadow: none">Siguiente: apariencia</button>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

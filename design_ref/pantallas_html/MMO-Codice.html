@@ -1,0 +1,295 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>Códice</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: #46e3c1; margin-right: 12px">MENÚ</span>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7"></path></svg>Equipo<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">C</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6"></path></svg>Poderes<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">N</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5"></path></svg>Misiones<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">L</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"></path></svg>Mapa<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">M</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #eef2f4; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14"></path></svg>Códice<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">J</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: #46e3c1"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5"></path></svg>Social<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">O</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6"></path></svg>Refugio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">H</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0"></path></svg>Comercio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">P</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- Subnavegación del refugio -->
+<div style="position: absolute; left: 28px; top: 80px; display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07)">
+<span style="padding: 0 14px; height: 32px; border-radius: 9px; background: #1c2a33; color: #eef2f4; font-size: 14px; font-weight: 600; line-height: 32px">Entradas</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Por decidir · 3</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Mis secretos</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Publicados</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Inversiones</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Propuestas a la wiki</span>
+</div>
+
+<!-- ============ IZQUIERDA: CATEGORÍAS ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 128px; width: 280px; height: 654px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1); font-size: 13px; color: #7c8992"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>Buscar en tu Códice</div>
+
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 9px; background: transparent; color: #c3ccd3; font-size: 14px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14"></path></svg>
+<span style="flex: 1">Todo</span><span class="num" style="font-size: 12px; color: #7c8992">412</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 9px; background: #1c2a33; color: #eef2f4; font-size: 14px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#46e3c1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 7-7 11-7-11z"></path></svg>
+<span style="flex: 1">Objetos</span><span class="num" style="font-size: 12px; color: #7c8992">180</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 9px; background: transparent; color: #c3ccd3; font-size: 14px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 18c0-6 3-10 7-10s7 4 7 10M8 8L6 4M16 8l2-4M10 13h.01M14 13h.01"></path></svg>
+<span style="flex: 1">Criaturas</span><span class="num" style="font-size: 12px; color: #7c8992">64</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 9px; background: transparent; color: #c3ccd3; font-size: 14px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7"></path></svg>
+<span style="flex: 1">Personajes</span><span class="num" style="font-size: 12px; color: #7c8992">38</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 9px; background: transparent; color: #c3ccd3; font-size: 14px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12zM12 7a2 2 0 1 0 0 4"></path></svg>
+<span style="flex: 1">Lugares</span><span class="num" style="font-size: 12px; color: #7c8992">51</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 9px; background: transparent; color: #c3ccd3; font-size: 14px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6"></path></svg>
+<span style="flex: 1">Poderes y fórmulas</span><span class="num" style="font-size: 12px; color: #7c8992">46</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 9px; background: transparent; color: #c3ccd3; font-size: 14px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"></path></svg>
+<span style="flex: 1">Recetas</span><span class="num" style="font-size: 12px; color: #7c8992">22</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 9px; background: transparent; color: #c3ccd3; font-size: 14px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg>
+<span style="flex: 1">Mecánicas</span><span class="num" style="font-size: 12px; color: #7c8992">11</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: 9px; background: transparent; color: #c3ccd3; font-size: 14px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3"></path></svg>
+<span style="flex: 1">Historia</span><span class="num" style="font-size: 12px; color: #7c8992">—</span>
+</div>
+
+<span class="caps" style="margin-top: 8px">Estado</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span class="chip" style="height: 24px; font-size: 12px; color: #c39bff">Mis secretos 9</span>
+<span class="chip" style="height: 24px; font-size: 12px; color: #4fe39a">Publicados 23</span>
+<span class="chip" style="height: 24px; font-size: 12px; color: #f5c35b">Soy pionero 6</span>
+<span class="chip" style="height: 24px; font-size: 12px">Vistos de lejos 14</span>
+</div>
+<span style="margin-top: auto; font-size: 12px; line-height: 17px; color: #7c8992">El total del mundo nunca se revela: siempre puede haber algo más por descubrir.</span>
+</div>
+
+<!-- ============ CENTRO: ENTRADAS ============ -->
+<div class="card" style="position: absolute; left: 324px; top: 128px; width: 700px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; gap: 12px"><span style="font-size: 20px; font-weight: 700">Objetos</span><span class="num" style="font-size: 13px; color: #9aa6ae">180 descubiertos</span><span class="chip" style="margin-left: auto; height: 26px">Más recientes</span></div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 0 2px #46e3c1; opacity: 1">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #b47bff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d"></span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: rgba(245,195,91,0.18); color: #f5c35b; font-size: 11px; font-weight: 700; line-height: 20px">PIONERO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #eef2f4">Amuleto Vacío Ancestral</span>
+<span style="font-size: 11px; color: #7c8992">Reliquia · hace 2 días</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 1">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #b47bff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d"></span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: #18242b; color: #9aa6ae; font-size: 11px; font-weight: 700; line-height: 20px">CONOCIDO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #eef2f4">Hoja de la grieta</span>
+<span style="font-size: 11px; color: #7c8992">Arma · todos la conocen</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 1">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #5aa9ff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d"></span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: rgba(195,155,255,0.18); color: #c39bff; font-size: 11px; font-weight: 700; line-height: 20px">SECRETO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #eef2f4">Pluma de grieta</span>
+<span style="font-size: 11px; color: #7c8992">Material raro · Pispa</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 1">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #f5b546; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d"></span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: rgba(195,155,255,0.18); color: #c39bff; font-size: 11px; font-weight: 700; line-height: 20px">SECRETO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #eef2f4">Llave oxidada</span>
+<span style="font-size: 11px; color: #7c8992">Misterio · Runavell</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 1">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #4fe39a; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d"></span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: rgba(79,227,154,0.15); color: #4fe39a; font-size: 11px; font-weight: 700; line-height: 20px">PUBLICADO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #eef2f4">Resina de Verdalia</span>
+<span style="font-size: 11px; color: #7c8992">Material · publicado</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 0.75">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #3a4a54; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d">?</span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: #18242b; color: #7c8992; font-size: 11px; font-weight: 700; line-height: 20px">VISTO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #7c8992">???</span>
+<span style="font-size: 11px; color: #7c8992">Visto en un cofre de Ferrum</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 1">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #4fe39a; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d"></span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: #18242b; color: #9aa6ae; font-size: 11px; font-weight: 700; line-height: 20px">CONOCIDO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #eef2f4">Tónico triple</span>
+<span style="font-size: 11px; color: #7c8992">Consumible</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 1">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #4fe39a; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d"></span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: rgba(245,195,91,0.18); color: #f5c35b; font-size: 11px; font-weight: 700; line-height: 20px">PIONERO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #eef2f4">Lingote de ferrum ★★★</span>
+<span style="font-size: 11px; color: #7c8992">Material · tu receta</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 0.75">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #3a4a54; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d">?</span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: #18242b; color: #7c8992; font-size: 11px; font-weight: 700; line-height: 20px">VISTO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #7c8992">???</span>
+<span style="font-size: 11px; color: #7c8992">Lo llevaba un jugador</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 1">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #5aa9ff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d"></span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: #18242b; color: #9aa6ae; font-size: 11px; font-weight: 700; line-height: 20px">CONOCIDO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #eef2f4">Escudo del vado</span>
+<span style="font-size: 11px; color: #7c8992">Armadura</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 1">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #5aa9ff; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d"></span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: rgba(79,227,154,0.15); color: #4fe39a; font-size: 11px; font-weight: 700; line-height: 20px">PUBLICADO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #eef2f4">Daga de eco</span>
+<span style="font-size: 11px; color: #7c8992">Arma · publicado por ti</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; opacity: 0.75">
+<div style="display: flex; justify-content: space-between; align-items: flex-start">
+<span style="width: 40px; height: 40px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px #3a4a54; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #56646d">?</span>
+<span style="padding: 0 7px; height: 20px; border-radius: 10px; background: #18242b; color: #7c8992; font-size: 11px; font-weight: 700; line-height: 20px">VISTO</span>
+</div>
+<span style="font-size: 13px; font-weight: 700; line-height: 16px; color: #7c8992">???</span>
+<span style="font-size: 11px; color: #7c8992">Brillo bajo el Vado Roto</span>
+</div>
+
+</div>
+</div>
+
+<!-- ============ DERECHA: ENTRADA SELECCIONADA ============ -->
+<div class="card" style="position: absolute; left: 1040px; top: 128px; width: 372px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; gap: 12px; align-items: center">
+<span style="width: 52px; height: 52px; border-radius: 12px; background: #1a1430; box-shadow: inset 0 0 0 2px #b47bff; flex: none"></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 18px; font-weight: 700; color: #cfa8ff">Amuleto Vacío Ancestral</span><span style="font-size: 12px; color: #9aa6ae">Reliquia · #arcano #secreto</span></div>
+</div>
+<div class="sub" style="padding: 10px 12px; display: flex; align-items: center; gap: 10px; box-shadow: inset 0 0 0 1px rgba(245,195,91,0.45)">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5c35b" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8"></path></svg>
+<span style="font-size: 13px; color: #c3ccd3">Eres el <span style="color: #f5c35b; font-weight: 700">pionero</span>. Los demás jugadores lo ven como <span style="font-weight: 700">«???»</span>.</span>
+</div>
+<span class="caps" style="margin-top: 4px">¿Qué haces con este conocimiento?</span>
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: inset 0 0 0 1.5px #c39bff">
+<div style="display: flex; align-items: center; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c39bff" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 11V8a6 6 0 0 1 12 0v3M5 11h14v10H5z"></path></svg><span style="font-size: 15px; font-weight: 700">Guardar el secreto</span><span style="margin-left: auto; font-size: 11px; color: #c39bff">actual</span></div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">• Solo tú ves su nombre, dónde aparece y qué hace.</span><span style="font-size: 12px; line-height: 16px; color: #c3ccd3">• Tu mapa marca dónde lo encontraste.</span><span style="font-size: 12px; line-height: 16px; color: #c3ccd3">• Puedes crear un «Mapa del hallazgo» y venderlo en el mercado.</span>
+<span class="chip" style="height: 26px; align-self: flex-start; color: #c39bff">Crear mapa del hallazgo · vender</span>
+</div>
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4fe39a" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"></path></svg><span style="font-size: 15px; font-weight: 700">Publicar en la wiki</span></div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">• Pionero en la wiki web (Hall of Fame) y título «Archivista».</span><span style="font-size: 12px; line-height: 16px; color: #c3ccd3">• +500 oro y +1 % de oro en ventas de este objeto, para siempre.</span><span style="font-size: 12px; line-height: 16px; color: #c3ccd3">• Después puedes proponer cambios a la entrada.</span>
+</div>
+<span style="font-size: 11px; line-height: 15px; color: #7c8992">Publicar es permanente. Guardar el secreto no: puedes publicarlo cuando quieras, pero si otro lo publica antes, pierdes el título de pionero de la wiki.</span>
+<div style="display: flex; gap: 8px; margin-top: auto">
+<button class="btn" style="flex: 1">Seguir guardándolo</button>
+<button class="btn" style="flex: 1; background: #4fe39a; color: #071012; box-shadow: none">Publicar · +500</button>
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

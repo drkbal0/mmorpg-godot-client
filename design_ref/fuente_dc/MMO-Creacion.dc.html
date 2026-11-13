@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMORPG · Creación de personaje</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.78)"></div>
+
+<!-- Pasos -->
+<div style="position: absolute; left: 0; right: 0; top: 24px; display: flex; justify-content: center; gap: 10px">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 18px; background: {{s.bg}}; box-shadow: {{s.ring}}; font-size: 14px; font-weight: 600; color: {{s.c}}"><span class="num" style="width: 20px; height: 20px; border-radius: 50%; background: {{s.nb}}; color: {{s.nc}}; font-size: 12px; line-height: 20px; text-align: center">{{s.i}}</span>{{s.n}}</div>
+</sc-for>
+</div>
+
+<!-- Clases -->
+<div style="position: absolute; left: 30px; top: 90px; width: 360px; display: flex; flex-direction: column; gap: 10px">
+<div class="sub" style="padding: 10px 12px; display: flex; align-items: center; gap: 10px; background: rgba(18,26,32,0.92)"><span style="width: 10px; height: 10px; border-radius: 50%; background: #9fe36a"></span><span style="font-size: 14px">Origen: <span style="font-weight: 700">Verdalia</span></span><span style="margin-left: auto; font-size: 12px; color: {{accent}}">cambiar</span></div>
+<span class="caps sh" style="color: #c3ccd3">Elige tu clase</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{classes}}" as="c" hint-placeholder-count="6">
+<div class="card" style="padding: 12px; display: flex; flex-direction: column; gap: 5px; box-shadow: {{c.ring}}">
+<span style="font-size: 15px; font-weight: 700">{{c.n}}</span>
+<div style="display: flex; align-items: center; gap: 6px"><span style="padding: 0 6px; height: 18px; border-radius: 5px; background: {{c.rb}}; font-size: 11px; font-weight: 700; line-height: 18px">{{c.role}}</span><span style="font-size: 11px; color: #9aa6ae">{{c.d}}</span></div>
+<sc-if value="{{c.tag}}" hint-placeholder-val="{{ false }}"><span style="font-size: 11px; color: {{accent}}">{{c.tag}}</span></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+
+<!-- Vista previa -->
+<div style="position: absolute; left: 470px; top: 100px; width: 500px; height: 600px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end">
+<svg width="280" height="490" viewBox="0 0 150 260" aria-hidden="true"><circle cx="75" cy="40" r="22" fill="#1a252c" stroke="#2c3b44" stroke-width="2"></circle><path d="M40 82c6-12 18-18 35-18s29 6 35 18l10 70-18 4-6-40-4 98H58l-4-98-6 40-18-4z" fill="#1a252c" stroke="#2c3b44" stroke-width="2" stroke-linejoin="round"></path></svg>
+<div style="width: 340px; height: 40px; margin-top: -20px; border-radius: 50%; box-shadow: 0 0 0 2px #9fe36a, 0 0 40px rgba(159,227,106,0.3); background: rgba(159,227,106,0.08)"></div>
+</div>
+<div class="card" style="position: absolute; left: 880px; top: 600px; width: 150px; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<svg width="44" height="56" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="10" ry="2.5" fill="rgba(159,227,106,0.5)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#8a3a2b"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#2b1d14"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 11px; text-align: center; color: #9aa6ae">Así se verá en tu refugio</span>
+</div>
+
+<!-- Detalle de clase -->
+<div class="card" style="position: absolute; right: 30px; top: 90px; width: 360px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 24px; font-weight: 700">Tejedor de grietas</span>
+<span style="font-size: 14px; line-height: 20px; color: #c3ccd3">Abre grietas que explotan y arrastran a los enemigos. Daño en área desde media distancia.</span>
+<sc-for list="{{bars}}" as="b" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span style="width: 100px; color: #9aa6ae">{{b.n}}</span><div style="flex: 1; display: flex; gap: 3px"><sc-for list="{{b.d}}" as="d" hint-placeholder-count="5"><span style="flex: 1; height: 6px; border-radius: 3px; background: {{d.c}}"></span></sc-for></div></div>
+</sc-for>
+<div style="height: 150px; border-radius: 12px; background: #121a20; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 6px">
+<svg width="36" height="36" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="rgba(255,255,255,0.1)"></circle><path d="M10 8l6 4-6 4z" fill="#eef2f4"></path></svg>
+<span style="font-size: 12px; color: #9aa6ae">Combate de 20 s con esta clase</span>
+</div>
+<div class="sub" style="padding: 10px 12px; font-size: 13px; color: #c3ccd3; box-shadow: inset 0 0 0 1px rgba(70,227,193,0.35)">Puedes jugarla 5 minutos en una arena antes de crearla.</div>
+</div>
+
+<!-- Acciones -->
+<div style="position: absolute; left: 0; right: 0; bottom: 30px; display: flex; justify-content: center; gap: 10px">
+<button class="btn" style="height: 46px; padding: 0 22px">Atrás</button>
+<button class="btn" style="height: 46px; padding: 0 22px">Probar la clase</button>
+<button class="btn" style="height: 46px; padding: 0 28px; background: {{accent}}; color: #071012; box-shadow: none">Siguiente: apariencia</button>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Talentos', 'N', TI.star], ['Misiones', 'L', TI.book], ['Mapa', 'M', TI.map], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Interfaz', 'F10', TI.layout]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'WORLD' ? '#eef2f4' : '#9aa6ae', bar: label === 'WORLD' ? A : 'transparent' }));
+const st = (i, n, state) => state === 'done' ? { i: '✓', n, bg: 'rgba(13,18,22,0.9)', ring: 'none', c: '#9aa6ae', nb: '#4fe39a', nc: '#071012' }
+: state === 'now' ? { i, n, bg: 'rgba(13,18,22,0.95)', ring: 'inset 0 0 0 1.5px ' + A, c: '#eef2f4', nb: A, nc: '#071012' }
+: { i, n, bg: 'rgba(13,18,22,0.7)', ring: 'none', c: '#7c8992', nb: '#26333b', nc: '#9aa6ae' };
+const RB = { Daño: '#8a3a2b', Tanque: '#2b4a8a', Sanador: '#2a7a4a', Apoyo: '#5b3a8a' };
+const cl = (n, role, d, tag, sel) => ({ n, role, d, tag: tag || '', rb: RB[role], ring: sel ? '0 0 0 2px ' + A + ', 0 20px 50px rgba(0,0,0,0.45)' : '0 0 0 1px rgba(255,255,255,0.07)' });
+const dots = (n) => Array.from({ length: 5 }, (_, i) => ({ c: i < n ? A : '#26333b' }));
+const extra = {
+steps: [st('1', 'Origen', 'done'), st('2', 'Clase', 'now'), st('3', 'Apariencia', ''), st('4', 'Nombre', '')],
+classes: [
+cl('Tejedor de grietas', 'Daño', 'distancia · media', '', true), cl('Guardiana rúnica', 'Tanque', 'cuerpo a cuerpo', 'Recomendada para empezar'),
+cl('Druida errante', 'Sanador', 'curación en área'), cl('Herrero de Ferrum', 'Daño', 'cuerpo · fabrica más'),
+cl('Ingeniera', 'Apoyo', 'torretas · escudos'), cl('Sombra del eco', 'Daño', 'sigilo · difícil')
+],
+bars: [{ n: 'Daño', d: dots(4) }, { n: 'Control', d: dots(3) }, { n: 'Supervivencia', d: dots(2) }, { n: 'Dificultad', d: dots(3) }]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

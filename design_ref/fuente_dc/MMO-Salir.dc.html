@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Salir y extraer</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.72)"></div>
+<div style="position: absolute; left: 50%; top: 60px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 6px"><span style="font-size: 34px; font-weight: 700">¿Dónde dejas a Kael?</span><span style="font-size: 15px; color: #c3ccd3">Tu personaje se queda en el mundo cuando te desconectas. No hay teletransporte.</span></div>
+<div style="position: absolute; left: 110px; right: 110px; top: 170px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{opts}}" as="o" hint-placeholder-count="3">
+<div class="card" style="padding: 20px; height: 440px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; box-shadow: {{o.ring}}">
+<div style="display: flex; align-items: center; justify-content: space-between"><span style="font-size: 20px; font-weight: 700">{{o.n}}</span><span style="padding: 0 9px; height: 22px; border-radius: 11px; background: {{o.rb}}; color: {{o.rc}}; font-size: 12px; font-weight: 700; line-height: 22px">{{o.risk}}</span></div>
+<span style="font-size: 13px; line-height: 18px; color: #c3ccd3">{{o.d}}</span>
+<sc-for list="{{o.rows}}" as="r" hint-placeholder-count="4"><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">{{r.l}}</span><span class="num" style="font-weight: 700; color: {{r.c}}">{{r.v}}</span></div></sc-for>
+<div class="sub" style="padding: 10px 12px; font-size: 12px; line-height: 17px; color: #c3ccd3; margin-top: auto">{{o.tip}}</div>
+<button class="btn" style="height: 42px; background: {{o.bb}}; color: {{o.bc}}; box-shadow: none">{{o.cta}}</button>
+</div>
+</sc-for>
+</div>
+<div style="position: absolute; left: 110px; right: 110px; bottom: 60px; display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 14px; background: rgba(13,18,22,0.95); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)">
+<span style="font-size: 14px; font-weight: 700">¿Se te cayó la conexión?</span><span style="font-size: 13px; color: #c3ccd3">Tienes 3 minutos de reconexión rápida: el personaje se protege y sigue donde estaba.</span>
+<span class="chip" style="margin-left: auto">Bolsa segura: 3 objetos nunca se pierden</span><button class="btn">Seguir jugando <span class="kbd">Esc</span></button>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'WORLD' ? '#eef2f4' : '#9aa6ae', bar: label === 'WORLD' ? A : 'transparent' }));
+const r = (l, v, c) => ({ l, v, c: c || '#eef2f4' });
+const extra = { opts: [
+{ n: 'Extraer a zona segura', risk: 'Sin riesgo', rb: 'rgba(79,227,154,0.15)', rc: '#4fe39a', d: 'Camina o toma la caravana hasta el Puesto del Vado. Ahí puedes salir y volver cuando quieras, o subir a El Nido.', rows: [r('Puesto del Vado', '240 m · 2 min'), r('Caravana', 'sale en 1 min'), r('Al volver', 'apareces en el patio')], tip: 'Recomendado: llevas 2 objetos épicos sin asegurar.', cta: 'Marcar ruta de extracción', bb: A, bc: '#071012', ring: '0 0 0 1.5px ' + A + ', 0 20px 50px rgba(0,0,0,0.45)' },
+{ n: 'Acampar aquí', risk: 'Riesgo medio', rb: 'rgba(245,195,91,0.15)', rc: '#f5c35b', d: 'Kael enciende una fogata y duerme. Criaturas y jugadores pueden encontrarlo. Tu grupo puede vigilarlo.', rows: [r('Fogata', 'dura 8 h'), r('Zona', 'lobos de noche', '#f5c35b'), r('Vigilan', 'Toro, Brisa', '#6cb8ff'), r('Si lo atacan', 'te avisa la app')], tip: 'Descansar acampado da menos XP extra que dormir en casa.', cta: 'Acampar · 1 kit de fogata', bb: '#18242b', bc: '#eef2f4', ring: '0 0 0 1px rgba(255,255,255,0.07)' },
+{ n: 'Salir ahora', risk: 'Riesgo alto', rb: 'rgba(255,107,107,0.15)', rc: '#ff8a8a', d: 'Kael se queda de pie donde está, sin fogata. Si muere, pierde lo que no esté en la bolsa segura.', rows: [r('Enemigos cerca', '2 a 40 m', '#ff8a8a'), r('En riesgo', '2 épicos · 1.240 oro', '#ff8a8a'), r('Bolsa segura', '3 / 3 objetos')], tip: 'Solo para emergencias. Mantén pulsado 3 s para confirmar.', cta: 'Mantén para salir', bb: '#3a1d22', bc: '#ff8a8a', ring: '0 0 0 1px rgba(255,255,255,0.07)' }
+] };
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

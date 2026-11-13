@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>Selección</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.72)"></div>
+<span style="position: absolute; left: 40px; top: 32px; font-size: 22px; font-weight: 700; letter-spacing: 0.3em; color: #46e3c1">[NOMBRE DEL JUEGO]</span>
+<span style="position: absolute; right: 40px; top: 36px; font-size: 14px; color: #c3ccd3">Reino <span style="color: #eef2f4; font-weight: 600">Umbral</span> · Español · <span class="num">24 ms</span> · población alta</span>
+
+<!-- Lista de personajes -->
+<div style="position: absolute; left: 40px; top: 110px; width: 320px; display: flex; flex-direction: column; gap: 10px">
+
+<div class="card" style="padding: 14px 16px; display: flex; gap: 12px; align-items: center; box-shadow: 0 0 0 2px #46e3c1, 0 20px 50px rgba(0,0,0,0.45)">
+<div style="width: 48px; height: 48px; border-radius: 50%; background: #1a252c; box-shadow: 0 0 0 2px #9fe36a; flex: none"></div>
+<div style="display: flex; flex-direction: column; gap: 2px; flex: 1"><span style="font-size: 18px; font-weight: 700">Kael</span><span style="font-size: 13px; color: #9aa6ae">Tejedor de grietas</span><span style="font-size: 12px; color: #9fe36a">Verdalia · hace 2 días</span></div>
+<span class="num" style="font-size: 22px; font-weight: 700; color: #c3ccd3">32</span>
+</div>
+
+<div class="card" style="padding: 14px 16px; display: flex; gap: 12px; align-items: center; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<div style="width: 48px; height: 48px; border-radius: 50%; background: #1a252c; box-shadow: 0 0 0 2px #f5b546; flex: none"></div>
+<div style="display: flex; flex-direction: column; gap: 2px; flex: 1"><span style="font-size: 18px; font-weight: 700">Ysolde</span><span style="font-size: 13px; color: #9aa6ae">Guardiana rúnica</span><span style="font-size: 12px; color: #f5b546">Runavell · hace 1 semana</span></div>
+<span class="num" style="font-size: 22px; font-weight: 700; color: #c3ccd3">18</span>
+</div>
+
+<div class="card" style="padding: 14px 16px; display: flex; gap: 12px; align-items: center; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<div style="width: 48px; height: 48px; border-radius: 50%; background: #1a252c; box-shadow: 0 0 0 2px #5aa9ff; flex: none"></div>
+<div style="display: flex; flex-direction: column; gap: 2px; flex: 1"><span style="font-size: 18px; font-weight: 700">Torq</span><span style="font-size: 13px; color: #9aa6ae">Herrero de Ferrum</span><span style="font-size: 12px; color: #5aa9ff">Ferrum · hace 3 semanas</span></div>
+<span class="num" style="font-size: 22px; font-weight: 700; color: #c3ccd3">45</span>
+</div>
+
+<div class="card" style="padding: 14px 16px; display: flex; gap: 12px; align-items: center; box-shadow: 0 0 0 1.5px #f5c35b">
+<div style="width: 48px; height: 48px; border-radius: 50%; background: #1a252c; box-shadow: 0 0 0 2px #f5c35b; flex: none"></div>
+<div style="display: flex; flex-direction: column; gap: 2px; flex: 1"><span style="font-size: 18px; font-weight: 700">Aurel</span><span style="font-size: 13px; color: #9aa6ae">Narrador · personaje especial</span><span style="font-size: 12px; color: #f5c35b">Asignado por el equipo · 27 días</span></div>
+<span class="num" style="font-size: 22px; font-weight: 700; color: #c3ccd3"></span>
+</div>
+
+<div style="height: 64px; border-radius: 18px; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; color: #c3ccd3">+ Crear personaje <span style="color: #7c8992">· 2 espacios libres</span></div>
+</div>
+
+<!-- Personaje -->
+<div style="position: absolute; left: 520px; top: 110px; width: 400px; height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end">
+<svg width="260" height="460" viewBox="0 0 150 260" aria-hidden="true">
+<circle cx="75" cy="40" r="22" fill="#1a252c" stroke="#2c3b44" stroke-width="2"></circle>
+<path d="M40 82c6-12 18-18 35-18s29 6 35 18l10 70-18 4-6-40-4 98H58l-4-98-6 40-18-4z" fill="#1a252c" stroke="#2c3b44" stroke-width="2" stroke-linejoin="round"></path>
+</svg>
+<div style="width: 320px; height: 40px; margin-top: -20px; border-radius: 50%; box-shadow: 0 0 0 2px #46e3c1, 0 0 40px rgba(70,227,193,0.35); background: rgba(70,227,193,0.08)"></div>
+<span style="margin-top: 18px; font-size: 32px; font-weight: 700">Kael</span>
+<span style="font-size: 15px; color: #9aa6ae">Tejedor de grietas · nivel 32 · nivel de objeto 412</span>
+</div>
+
+<!-- Mientras no estabas -->
+<div class="card" style="position: absolute; right: 40px; top: 110px; width: 360px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Mientras no estabas</span>
+
+<div style="display: flex; gap: 10px; align-items: flex-start">
+<span style="width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: #46e3c1; flex: none"></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">Tu refugio tiene 5 cosas listas</span><span style="font-size: 13px; color: #9aa6ae">Pispa volvió · Torq espera una decisión</span></div>
+</div>
+
+<div style="display: flex; gap: 10px; align-items: flex-start">
+<span style="width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: #4fe39a; flex: none"></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">Tu fabricación terminó</span><span style="font-size: 13px; color: #9aa6ae">10 lingotes de ferrum en la forja</span></div>
+</div>
+
+<div style="display: flex; gap: 10px; align-items: flex-start">
+<span style="width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: #6cb8ff; flex: none"></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">Raid del gremio mañana 21:00</span><span style="font-size: 13px; color: #9aa6ae">Mira te invitó · 18/20 confirmados</span></div>
+</div>
+
+<div style="display: flex; gap: 10px; align-items: flex-start">
+<span style="width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: #f5c35b; flex: none"></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">Vendiste Daga de eco</span><span style="font-size: 13px; color: #9aa6ae">+820 oro en el correo</span></div>
+</div>
+
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; box-shadow: inset 0 0 0 1px #46e3c1">
+<span class="caps" style="color: #46e3c1">Continúa donde lo dejaste</span>
+<span style="font-size: 15px; font-weight: 600">Sellar la grieta menor · 2/3</span>
+<span style="font-size: 13px; color: #9aa6ae">Vado Roto, Verdalia · 40 m de tu posición</span>
+</div>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 50px; display: flex; justify-content: center; gap: 12px">
+<button class="btn" style="height: 56px; padding: 0 26px; font-size: 17px">Ir a El Nido <span class="num" style="padding: 0 7px; height: 20px; border-radius: 10px; background: #46e3c1; color: #071012; font-size: 12px; line-height: 20px">5</span></button>
+<button class="btn" style="height: 56px; padding: 0 40px; font-size: 20px; background: #46e3c1; color: #071012; box-shadow: none">Entrar al mundo <span class="kbd" style="background: rgba(0,0,0,0.2); color: #071012; box-shadow: none">Enter</span></button>
+</div>
+<div style="position: absolute; left: 40px; bottom: 56px; display: flex; gap: 8px"><span class="chip">Ajustes</span><span class="chip">Accesibilidad</span><span class="chip">Créditos</span></div>
+
+</div>
+</div>
+
+
+
+</body></html>

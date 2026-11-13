@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMORPG · HUD de raid (sanador)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.25)"></div>
+
+<!-- Jefe -->
+<div style="position: absolute; left: 470px; top: 20px; width: 500px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: baseline; gap: 10px" class="sh"><span style="font-size: 17px; font-weight: 700">Coloso de Runavell</span><span style="font-size: 13px; color: #f5c35b">Fase 2</span><span class="num" style="margin-left: auto; font-size: 13px">04:12</span></div>
+<div style="position: relative; height: 14px; border-radius: 7px; background: rgba(7,10,12,0.9); overflow: hidden"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 43%; background: #e25555"></div><div class="num" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; text-shadow: 0 1px 2px #000000">43 %</div></div>
+</div>
+
+<!-- Alerta central -->
+<div style="position: absolute; left: 50%; top: 170px; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; padding: 14px 26px; border-radius: 16px; background: rgba(58,29,34,0.92); box-shadow: inset 0 0 0 2px #ff6b6b, 0 10px 40px rgba(0,0,0,0.5)">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffb3b3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 26px; font-weight: 700">Todos a la izquierda</span><span style="font-size: 14px; color: #ffc9c9">Terremoto rúnico · también suena desde la derecha</span></div>
+<span class="num" style="font-size: 44px; font-weight: 700; color: #ff8a8a; margin-left: 8px">3</span>
+</div>
+
+<!-- Marcos de raid -->
+<div style="position: absolute; left: 40px; top: 290px; display: flex; flex-direction: column; gap: 10px">
+<div class="sh" style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span class="caps" style="color: #c3ccd3">Raid · 20</span><span style="color: #9aa6ae">Clic: Sanar · Clic der.: Escudo · Shift+clic: Purificar</span></div>
+<div style="display: grid; grid-template-columns: repeat(4, 128px); gap: 10px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 3px">
+<sc-for list="{{g.m}}" as="m" hint-placeholder-count="5">
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: {{m.ring}}; opacity: {{m.op}}">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: {{m.hp}}%; background: {{m.col}}"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: {{m.hp}}%; width: {{m.inc}}%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: {{m.dmgL}}%; width: {{m.dmg}}%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">{{m.n}}</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">{{m.s}}</span>
+<sc-if value="{{m.debuff}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; right: 7px; top: 7px; width: 11px; height: 11px; transform: rotate(45deg); background: #b47bff; box-shadow: 0 0 0 2px #070a0c"></span></sc-if>
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: {{m.role}}"></span>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<div class="sh" style="display: flex; gap: 14px; font-size: 12px; color: #c3ccd3">
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 8px; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.85) 0 3px, rgba(245,195,91,0.2) 3px 6px)"></span>Daño previsto (3 s)</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 8px; background: rgba(60,207,115,0.45)"></span>Curación entrante</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 9px; height: 9px; transform: rotate(45deg); background: #b47bff"></span>Purificable</span>
+</div>
+</div>
+
+<!-- Forma inferior compacta del sanador -->
+<svg width="1440" height="810" viewBox="0 0 1440 810" style="position: absolute; left: 0; top: 0; filter: drop-shadow(0 -6px 22px rgba(0,0,0,0.5))" aria-hidden="true">
+<path d="M380 811L420 690H1020L1060 811Z" fill="#0d1216" fill-opacity="0.97"></path>
+<path d="M380 811L420 690H1020L1060 811Z" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="1.5"></path>
+</svg>
+<div style="position: absolute; left: 453px; bottom: 16px; width: 534px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; gap: 4px">
+<div style="position: relative; flex: 1; height: 14px; border-radius: 7px; background: #070a0c; overflow: hidden"><div style="position: absolute; inset: 0; width: 88%; background: #3ccf73"></div></div>
+<div style="position: relative; flex: 1; height: 14px; border-radius: 7px; background: #070a0c; overflow: hidden"><div style="position: absolute; inset: 0; width: 52%; background: #3f82f2"></div><div class="num" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; text-shadow: 0 1px 2px #000000">Maná 52 % · dura ~1:40 a este ritmo</div></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{bar}}" as="b" hint-placeholder-count="10">
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: {{b.bg}}; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+<sc-if value="{{b.cd}}" hint-placeholder-val="{{ false }}"><div class="num" style="position: absolute; inset: 0; background: rgba(6,9,11,0.72); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">{{b.cd}}</div></sc-if>
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">{{b.k}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Talentos', 'N', TI.star], ['Misiones', 'L', TI.book], ['Mapa', 'M', TI.map], ['Social', 'O', TI.users], ['Interfaz', 'F10', TI.layout]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'WORLD' ? '#eef2f4' : '#9aa6ae', bar: label === 'WORLD' ? A : 'transparent' }));
+const ROLE = { t: '#5aa9ff', h: '#4fe39a', d: '#ff9a4d' };
+const m = (n, hp, role, o) => {
+const x = o || {};
+const dead = x.dead;
+return { n, hp: dead ? 0 : hp, role: ROLE[role], s: dead ? 'Muerto · resucitar' : (x.s || hp + ' %'),
+inc: x.inc || 0, dmg: x.dmg || 0, dmgL: Math.max(0, (dead ? 0 : hp) - (x.dmg || 0)), debuff: !!x.debuff,
+col: x.debuff ? '#7a5bd0' : '#3ccf73', op: x.far ? 0.4 : (dead ? 0.6 : 1),
+ring: x.aggro ? 'inset 0 0 0 2px #ff6b6b' : (x.sel ? 'inset 0 0 0 2px ' + A : 'inset 0 0 0 1px rgba(255,255,255,0.08)') };
+};
+const extra = {
+groups: [
+{ m: [m('Toro', 58, 't', { aggro: true, dmg: 30, inc: 12 }), m('Brisa', 92, 'h'), m('Kael', 61, 'd', { dmg: 20 }), m('Nox', 40, 'd', { debuff: true, sel: true, inc: 18 }), m('Vela', 100, 'd', { far: true, s: '42 m' })] },
+{ m: [m('Ulric', 88, 't'), m('Sasha', 74, 'h'), m('Dren', 30, 'd', { dmg: 22 }), m('Ivo', 0, 'd', { dead: true }), m('Lune', 95, 'd')] },
+{ m: [m('Mira', 100, 'h'), m('Joao', 66, 'd', { debuff: true }), m('Aren', 81, 'd'), m('Pim', 52, 'd', { dmg: 25 }), m('Kora', 90, 'd')] },
+{ m: [m('Tess', 77, 'h'), m('Bram', 45, 'd', { dmg: 30 }), m('Oda', 100, 'd'), m('Rhea', 63, 'd'), m('Finn', 88, 'd')] }
+],
+bar: [
+{ k: '1', bg: '#1a2e22' }, { k: '2', bg: '#1a2e22', cd: '' }, { k: '3', bg: '#1d2f55' }, { k: '4', bg: '#2a1d3a', cd: '6' }, { k: '5', bg: '#1a2e22' },
+{ k: '6', bg: '#1c3a3a', cd: '22' }, { k: '7', bg: '#1d2f55' }, { k: '8', bg: '#4a3a1c', cd: '1:40' }, { k: '9', bg: '#1a2e22' }, { k: '0', bg: '#4a1d22' }
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

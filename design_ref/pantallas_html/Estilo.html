@@ -1,0 +1,392 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>HUD estilo Prisma</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#a99cff}a:hover{color:#d2caff}
+.cham{clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px)}
+.hex{clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}
+.chs{clip-path:polygon(6px 0,100% 0,100% calc(100% - 6px),calc(100% - 6px) 100%,0 100%,0 6px)}
+.pip{width:7px;height:7px;transform:rotate(45deg);background:#2a2638}
+.slot{width:50px;height:50px;background:#0a0911;border:1px solid #2a2638;box-sizing:border-box}
+.cost{display:flex;align-items:center;gap:3px;color:#8fb6ff;font-size:13px;font-weight:600;line-height:1}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="width: 1320px; height: 460px; box-sizing: border-box; padding: 24px; background: #07060c; font-family: 'Chakra Petch', system-ui, sans-serif; color: #ece9f5; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px">
+
+<!-- Registro de eventos -->
+<div class="chs" style="width: 480px; padding: 10px 14px; background: rgba(17, 15, 26, 0.9); display: flex; flex-direction: column; gap: 6px; font-size: 15px; line-height: 20px">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="color: #9a96ad; font-variant-numeric: tabular-nums; width: 40px">04:01</span>
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4fe3d2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Ping en camino"><path d="M4 12h13"></path><path d="M13 7l5 5-5 5"></path></svg>
+<span style="color: #6fb8ff; font-weight: 600">EST JimRising</span>
+<span style="color: #9a96ad">[Campeón]</span>
+<span>está en camino</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="color: #9a96ad; font-variant-numeric: tabular-nums; width: 40px">04:21</span>
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4fe3d2" stroke-width="2.2" stroke-linejoin="round" role="img" aria-label="Compra"><path d="M12 3l8 9-8 9-8-9z"></path></svg>
+<span style="color: #6fb8ff; font-weight: 600">Ascendant</span>
+<span style="color: #9a96ad">[Campeón]</span>
+<span class="chs" style="padding: 0 8px; background: #1d1830; color: #d9d2ff">Baliza de control</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="color: #9a96ad; font-variant-numeric: tabular-nums; width: 40px">04:39</span>
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4fe3d2" stroke-width="2.2" stroke-linejoin="round" role="img" aria-label="Compra"><path d="M12 3l8 9-8 9-8-9z"></path></svg>
+<span style="color: #6fb8ff; font-weight: 600">xdfaster500</span>
+<span style="color: #9a96ad">[Campeón]</span>
+<span class="chs" style="padding: 0 8px; background: #1d1830; color: #d9d2ff">Baliza de control</span>
+</div>
+</div>
+
+<!-- Efectos activos -->
+<div style="display: flex; gap: 6px; padding-left: 4px">
+<div class="hex" style="position: relative; width: 38px; height: 33px; background: #1b3a33"><span style="position: absolute; right: 8px; bottom: 2px; font-size: 11px; font-weight: 700">0</span></div>
+<div class="hex" style="width: 38px; height: 33px; background: #3a1b22"></div>
+<div class="hex" style="position: relative; width: 38px; height: 33px; background: #3a3018"><span style="position: absolute; right: 6px; bottom: 2px; font-size: 11px; font-weight: 700">600</span></div>
+<div class="hex" style="width: 38px; height: 33px; background: #1b2140"></div>
+<div class="hex" style="width: 38px; height: 33px; background: #22183a"></div>
+</div>
+
+<div style="display: flex; align-items: flex-end; gap: 12px">
+
+<!-- Panel principal -->
+<div class="cham" style="padding: 1px; background: #2a2638">
+<div class="cham" style="position: relative; display: flex; align-items: center; gap: 16px; padding: 16px 18px; background: #110f1a">
+<div style="position: absolute; left: 18px; top: 0; width: 64px; height: 2px; background: #a99cff"></div>
+<div style="position: absolute; left: 86px; top: 0; width: 14px; height: 2px; background: #4fe3d2"></div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<button aria-label="Opción 1" class="chs" style="width: 28px; height: 28px; background: #1a1726; border: 0; padding: 0"></button>
+<button aria-label="Opción 2" class="chs" style="width: 28px; height: 28px; background: #1a1726; border: 0; padding: 0"></button>
+<button aria-label="Opción 3" class="chs" style="width: 28px; height: 28px; background: #1a1726; border: 0; padding: 0"></button>
+</div>
+
+<div style="position: relative; width: 112px; height: 98px; flex: none">
+<svg width="112" height="98" viewBox="0 0 112 98" style="position: absolute; left: 0; top: 0" role="img" aria-label="Experiencia hacia el nivel 6">
+<path d="M29 3H83L109 49L83 95H29L3 49Z" fill="none" stroke="#2a2638" stroke-width="4" stroke-linejoin="round"></path>
+<path d="M29 3H83L109 49L83 95H29L3 49Z" fill="none" stroke="#4fe3d2" stroke-width="4" stroke-linejoin="round" stroke-dasharray="96 400"></path>
+</svg>
+<div class="hex" style="position: absolute; left: 12px; top: 11px; width: 88px; height: 76px; background: #1a1630; display: flex; align-items: center; justify-content: center">
+<svg width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="#a99cff" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M24 4L42 14V34L24 44L6 34V14Z"></path><path d="M24 4V44M6 14L42 34M42 14L6 34"></path><circle cx="24" cy="24" r="6"></circle></svg>
+</div>
+<div style="position: absolute; left: 41px; bottom: -12px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center">
+<div style="position: absolute; inset: 3px; transform: rotate(45deg); background: #07060c; border: 2px solid #a99cff"></div>
+<span style="position: relative; font-size: 15px; font-weight: 700">5</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: flex-start; gap: 10px">
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 6px">
+<div class="hex" style="width: 48px; height: 42px; padding: 2px; box-sizing: border-box; background: #3a3550">
+<div class="hex" style="width: 100%; height: 100%; background: #1a1630; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d9d2ff" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle><path d="M12 5v14M5 12h14"></path></svg>
+</div>
+</div>
+<span style="font-size: 10px; color: #9a96ad; letter-spacing: 0.12em">PASIVA</span>
+</div>
+
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 62px; height: 54px">
+<div class="hex" style="width: 62px; height: 54px; padding: 2px; box-sizing: border-box; background: #a99cff">
+<div class="hex" style="width: 100%; height: 100%; background: #1a1630; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f2efff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M9 19l10-10M5 15L15 5"></path></svg>
+
+</div>
+</div>
+<span class="chs" style="position: absolute; left: -2px; bottom: -4px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; background: #a99cff; color: #07060c; font-size: 12px; font-weight: 700; line-height: 18px; text-align: center">Q</span>
+</div>
+<div style="display: flex; gap: 4px; height: 10px; align-items: center">
+<span class="pip" style="background: #a99cff"></span><span class="pip" style="background: #a99cff"></span><span class="pip" style="background: #a99cff"></span><span class="pip" style="background: #2a2638"></span><span class="pip" style="background: #2a2638"></span>
+</div>
+<span class="cost" style="color: #8fb6ff"><svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M5 0L9 6L5 12L1 6Z" fill="#8fb6ff"></path></svg>24</span>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 62px; height: 54px">
+<div class="hex" style="width: 62px; height: 54px; padding: 2px; box-sizing: border-box; background: #a99cff">
+<div class="hex" style="width: 100%; height: 100%; background: #1a1630; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f2efff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7z"></path></svg>
+
+</div>
+</div>
+<span class="chs" style="position: absolute; left: -2px; bottom: -4px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; background: #a99cff; color: #07060c; font-size: 12px; font-weight: 700; line-height: 18px; text-align: center">W</span>
+</div>
+<div style="display: flex; gap: 4px; height: 10px; align-items: center">
+<span class="pip" style="background: #a99cff"></span><span class="pip" style="background: #2a2638"></span><span class="pip" style="background: #2a2638"></span><span class="pip" style="background: #2a2638"></span><span class="pip" style="background: #2a2638"></span>
+</div>
+<span class="cost" style="color: #8fb6ff"><svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M5 0L9 6L5 12L1 6Z" fill="#8fb6ff"></path></svg>50</span>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 62px; height: 54px">
+<div class="hex" style="width: 62px; height: 54px; padding: 2px; box-sizing: border-box; background: #a99cff">
+<div class="hex" style="width: 100%; height: 100%; background: #1a1630; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f2efff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h12M12 6l6 6-6 6M4 6v12"></path></svg>
+
+</div>
+</div>
+<span class="chs" style="position: absolute; left: -2px; bottom: -4px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; background: #a99cff; color: #07060c; font-size: 12px; font-weight: 700; line-height: 18px; text-align: center">E</span>
+</div>
+<div style="display: flex; gap: 4px; height: 10px; align-items: center">
+<span class="pip" style="background: #a99cff"></span><span class="pip" style="background: #2a2638"></span><span class="pip" style="background: #2a2638"></span><span class="pip" style="background: #2a2638"></span><span class="pip" style="background: #2a2638"></span>
+</div>
+<span class="cost" style="color: #8fb6ff"><svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M5 0L9 6L5 12L1 6Z" fill="#8fb6ff"></path></svg>60</span>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 62px; height: 54px">
+<div class="hex" style="width: 62px; height: 54px; padding: 2px; box-sizing: border-box; background: #2a2638">
+<div class="hex" style="width: 100%; height: 100%; background: #141220; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#5d5873" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z"></path></svg>
+<span style="font-size: 10px; line-height: 1; color: #b3aec6">Nv. 6</span>
+</div>
+</div>
+<span class="chs" style="position: absolute; left: -2px; bottom: -4px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; background: #3a3550; color: #07060c; font-size: 12px; font-weight: 700; line-height: 18px; text-align: center">R</span>
+</div>
+<div style="display: flex; gap: 4px; height: 10px; align-items: center">
+<span class="pip" style="background: #2a2638"></span><span class="pip" style="background: #2a2638"></span><span class="pip" style="background: #2a2638"></span>
+</div>
+<span class="cost" style="color: #6f6b85"><svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M5 0L9 6L5 12L1 6Z" fill="#6f6b85"></path></svg>100</span>
+</div>
+
+
+<div style="width: 1px; align-self: stretch; background: #2a2638; margin: 0 2px"></div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 4px">
+<div style="position: relative; width: 50px; height: 44px">
+<div class="hex" style="position: relative; width: 50px; height: 44px; background: #172447; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9cc0ff" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 14h6l-1 7 8-11h-6z"></path></svg>
+<div style="position: absolute; inset: 0; background: rgba(7, 6, 12, 0.74); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700">87</div>
+</div>
+<span class="chs" style="position: absolute; left: -2px; bottom: -4px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; background: #3a3550; color: #ece9f5; font-size: 12px; font-weight: 700; line-height: 18px; text-align: center">D</span>
+</div>
+<span style="font-size: 11px; color: #9a96ad">en espera</span>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 4px">
+<div style="position: relative; width: 50px; height: 44px">
+<div class="hex" style="position: relative; width: 50px; height: 44px; background: #3a2018; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffb08a" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c3 4 6 6 6 10a6 6 0 0 1-12 0c0-3 2-4 3-7 1 2 2 3 3 3 0-2 0-4 0-6z"></path></svg>
+<div style="position: absolute; inset: 0; background: rgba(7, 6, 12, 0.74); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700">39</div>
+</div>
+<span class="chs" style="position: absolute; left: -2px; bottom: -4px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; background: #3a3550; color: #ece9f5; font-size: 12px; font-weight: 700; line-height: 18px; text-align: center">F</span>
+</div>
+<span style="font-size: 11px; color: #9a96ad">en espera</span>
+</div>
+
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 5px">
+<div style="position: relative; height: 22px; background: #0a0911; clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 61%; background: #3fcf74"></div>
+<div style="position: absolute; inset: 0; display: grid; grid-template-columns: repeat(10, minmax(0, 1fr))">
+<span style="border-right: 1px solid rgba(7, 6, 12, 0.55)"></span><span style="border-right: 1px solid rgba(7, 6, 12, 0.55)"></span><span style="border-right: 1px solid rgba(7, 6, 12, 0.55)"></span><span style="border-right: 1px solid rgba(7, 6, 12, 0.55)"></span><span style="border-right: 1px solid rgba(7, 6, 12, 0.55)"></span><span style="border-right: 1px solid rgba(7, 6, 12, 0.55)"></span><span style="border-right: 1px solid rgba(7, 6, 12, 0.55)"></span><span style="border-right: 1px solid rgba(7, 6, 12, 0.55)"></span><span style="border-right: 1px solid rgba(7, 6, 12, 0.55)"></span><span></span>
+</div>
+<div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: #ffffff; text-shadow: 0 1px 2px #000000; font-variant-numeric: tabular-nums">612 / 1003</div>
+<div style="position: absolute; right: 14px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 13px; font-weight: 600; color: #b9f5cd; text-shadow: 0 1px 2px #000000">+3.9</div>
+</div>
+<div style="position: relative; height: 15px; background: #0a0911; clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #3d7cf0"></div>
+<div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #ffffff; text-shadow: 0 1px 2px #000000; font-variant-numeric: tabular-nums">403 / 403</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Inventario -->
+<div class="cham" style="padding: 1px; background: #2a2638">
+<div class="cham" style="position: relative; display: flex; flex-direction: column; gap: 10px; padding: 16px 14px 14px; background: #110f1a">
+<div style="position: absolute; left: 14px; top: 0; width: 40px; height: 2px; background: #a99cff"></div>
+<div style="display: flex; gap: 10px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<div class="slot chs" style="position: relative; background: #1a1f3a; border: 0; display: flex; align-items: center; justify-content: center">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a9c4ff" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10l-2 6 4 3-7 9-7-9 4-3z"></path></svg>
+<span style="position: absolute; right: 4px; bottom: 1px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">23</span>
+</div>
+<div class="slot chs"></div>
+<div class="slot chs"></div>
+<div class="slot chs"></div>
+<div class="slot chs"></div>
+<div class="slot chs"></div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+<div style="position: relative; width: 46px; height: 40px">
+<div class="hex" style="width: 46px; height: 40px; padding: 2px; box-sizing: border-box; background: #a99cff">
+<div class="hex" style="width: 100%; height: 100%; background: #1a1630; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a99cff" stroke-width="2" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>
+</div>
+</div>
+<span style="position: absolute; right: -4px; top: -4px; width: 16px; height: 16px; background: #4fe3d2; color: #07060c; font-size: 11px; font-weight: 700; line-height: 16px; text-align: center; border-radius: 50%">1</span>
+<span class="chs" style="position: absolute; left: -4px; bottom: -4px; min-width: 16px; height: 16px; padding: 0 3px; box-sizing: border-box; background: #3a3550; font-size: 11px; font-weight: 700; line-height: 16px; text-align: center">4</span>
+</div>
+<button aria-label="Regresar a base" class="chs" style="position: relative; width: 36px; height: 34px; background: #172447; border: 0; padding: 0; display: flex; align-items: center; justify-content: center; color: #c9dcff; font-family: inherit; font-size: 12px; font-weight: 700">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9dcff" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-3-6.2"></path><path d="M20 4v5h-5"></path></svg>B
+</button>
+<button aria-label="Tienda" class="chs" style="position: relative; width: 36px; height: 34px; background: #1d1830; border: 0; padding: 0; display: flex; align-items: center; justify-content: center; color: #d9d2ff; font-family: inherit; font-size: 12px; font-weight: 700">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d9d2ff" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7z"></path><path d="M9 8a3 3 0 0 1 6 0"></path></svg>P
+</button>
+</div>
+</div>
+<div class="chs" style="display: flex; align-items: center; justify-content: center; gap: 8px; height: 34px; background: #0a0911">
+<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L20 8L16 22H8L4 8Z" fill="#4fe3d2"></path><path d="M12 2L12 22M4 8L20 8" stroke="#07060c" stroke-width="1.4" fill="none"></path></svg>
+<span style="font-size: 22px; font-weight: 700; color: #ece9f5; font-variant-numeric: tabular-nums">1665</span>
+<span style="font-size: 11px; color: #9a96ad; letter-spacing: 0.1em">ESQUIRLAS</span>
+</div>
+</div>
+</div>
+
+<!-- Progreso -->
+<div class="cham" style="padding: 1px; background: #2a2638">
+<div class="cham" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 16px 12px; background: #110f1a">
+<svg width="46" height="40" viewBox="0 0 46 40" role="img" aria-label="Progreso">
+<path d="M12 2H34L44 20L34 38H12L2 20Z" fill="none" stroke="#2a2638" stroke-width="3.5" stroke-linejoin="round"></path>
+<path d="M12 2H34L44 20L34 38H12L2 20Z" fill="none" stroke="#a99cff" stroke-width="3.5" stroke-linejoin="round" stroke-dasharray="90 200"></path>
+</svg>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4fe3d2" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c3 4 6 6 6 10a6 6 0 0 1-12 0c0-3 2-4 3-7 1 2 2 3 3 3 0-2 0-4 0-6z"></path></svg>
+</div>
+</div>
+
+<!-- Estadísticas -->
+<div class="cham" style="padding: 1px; background: #2a2638">
+<div class="cham" style="position: relative; width: 288px; box-sizing: border-box; padding: 14px; background: #110f1a; display: flex; flex-direction: column; gap: 8px">
+<div style="position: absolute; left: 14px; top: 0; width: 40px; height: 2px; background: #a99cff"></div>
+
+<div style="display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: #a99cff">OFENSIVA</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; row-gap: 1px">
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #ff9a4d"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Daño ataque</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #ece9f5">89</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #a99cff"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Poder hab.</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #85819a">0</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #ffd36b"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Vel. ataque</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #ece9f5">0.72</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #ff5d5d"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Crítico</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #85819a">0%</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #ff7a59"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Pen. armad.</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #85819a">0 | 0%</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #c58bff"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Pen. mágica</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #85819a">0 | 0%</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #ff4d7a"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Robo vida</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #85819a">0%</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #e05dbf"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Omnivamp.</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #85819a">0%</span>
+</div>
+
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: #a99cff">DEFENSA</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; row-gap: 1px">
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #ffcf6b"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Armadura</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #ece9f5">49</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #4fc8ff"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Res. mágica</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #ece9f5">38</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #9a7bff"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Tenacidad</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #85819a">0%</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #4fe39a"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Cur./escudo</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #85819a">0%</span>
+</div>
+
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: #a99cff">UTILIDAD</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; row-gap: 1px">
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #e6e3f0"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Celeridad</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #ece9f5">10</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #e6e3f0"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Vel. mov.</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #ece9f5">348</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #c9c5d8"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Alcance</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #ece9f5">175</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; transform: rotate(45deg); flex: none; background: #4fe39a"></span>
+<span style="font-size: 12px; color: #9a96ad; flex: 1; white-space: nowrap">Regen.</span>
+<span style="font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; color: #ece9f5">19 | 55</span>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+
+</body></html>

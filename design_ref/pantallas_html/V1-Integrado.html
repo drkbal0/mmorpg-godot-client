@@ -1,0 +1,312 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>HUD variante integrada al fondo</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.slot{width:44px;height:44px;border-radius:11px;background:rgba(8,12,15,0.78);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08);box-sizing:border-box}
+.chip{position:absolute;left:5px;top:4px;font-size:11px;font-weight:700;line-height:1;color:#c3ccd3}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div class="scene" style="position: relative; width: 1360px; height: 460px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4">
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 320px; background: linear-gradient(to top, rgba(4,7,9,0.96) 0%, rgba(4,7,9,0.86) 38%, rgba(4,7,9,0.45) 70%, rgba(4,7,9,0) 100%)"></div>
+
+<!-- Registro de eventos -->
+<div class="sh" style="position: absolute; left: 28px; bottom: 210px; display: flex; flex-direction: column; gap: 4px; font-size: 16px; line-height: 20px">
+<div style="display: flex; align-items: center; gap: 8px; opacity: 0.7">
+<span class="num" style="font-size: 13px; color: #b4bec4">04:01</span>
+<span style="color: #7cc2ff; font-weight: 600">EST JimRising</span>
+<span>está en camino</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; opacity: 0.85">
+<span class="num" style="font-size: 13px; color: #b4bec4">04:21</span>
+<span style="color: #7cc2ff; font-weight: 600">Ascendant</span>
+<span style="color: #b4bec4">compró</span>
+<span style="color: #f5c35b">Baliza de control</span>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<span class="num" style="font-size: 13px; color: #b4bec4">04:39</span>
+<span style="color: #7cc2ff; font-weight: 600">xdfaster500</span>
+<span style="color: #b4bec4">compró</span>
+<span style="color: #f5c35b">Baliza de control</span>
+</div>
+</div>
+
+<!-- Grupo central -->
+<div style="position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); display: flex; align-items: flex-end; gap: 22px">
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+<div style="position: relative; width: 92px; height: 100px">
+<svg width="92" height="92" viewBox="0 0 92 92" style="position: absolute; left: 0; top: 0" role="img" aria-label="Experiencia hacia el nivel 6">
+<circle cx="46" cy="46" r="43" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="4"></circle>
+<circle cx="46" cy="46" r="43" fill="none" stroke="#46e3c1" stroke-width="4" stroke-linecap="round" stroke-dasharray="81 270" transform="rotate(-90 46 46)"></circle>
+</svg>
+<div style="position: absolute; left: 8px; top: 8px; width: 76px; height: 76px; border-radius: 50%; background: #1a252c; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 18px rgba(0,0,0,0.6)">
+<svg width="40" height="40" viewBox="0 0 48 48" fill="none" stroke="#5d6d77" stroke-width="2" aria-hidden="true"><circle cx="24" cy="18" r="8"></circle><path d="M8 42c2-9 9-13 16-13s14 4 16 13"></path></svg>
+</div>
+<div class="num" style="position: absolute; left: 28px; bottom: 0; width: 36px; height: 22px; border-radius: 999px; background: #46e3c1; color: #071012; font-size: 15px; font-weight: 700; line-height: 22px; text-align: center">5</div>
+</div>
+<div style="display: flex; gap: 6px">
+<button aria-label="Opción 1" style="width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 0; padding: 0"></button>
+<button aria-label="Opción 2" style="width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 0; padding: 0"></button>
+<button aria-label="Opción 3" style="width: 20px; height: 20px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 0; padding: 0"></button>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; gap: 5px">
+
+<div style="position: relative; width: 26px; height: 26px; border-radius: 7px; background: #1f4a3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 11px; font-weight: 700">0</span></div>
+
+<div style="position: relative; width: 26px; height: 26px; border-radius: 7px; background: #4a2420; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 11px; font-weight: 700"></span></div>
+
+<div style="position: relative; width: 26px; height: 26px; border-radius: 7px; background: #4a3a1c; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 11px; font-weight: 700">600</span></div>
+
+<div style="position: relative; width: 26px; height: 26px; border-radius: 7px; background: #1e2a4e; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 11px; font-weight: 700"></span></div>
+
+<div style="position: relative; width: 26px; height: 26px; border-radius: 7px; background: #18404a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 11px; font-weight: 700"></span></div>
+
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<div style="position: relative; height: 18px; border-radius: 9px; background: rgba(0,0,0,0.65); overflow: hidden">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 61%; background: #3ccf73"></div>
+<div class="num sh" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700">612 / 1003</div>
+<div class="num sh" style="position: absolute; right: 10px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 12px; font-weight: 600; color: #a9f0c3">+3.9</div>
+</div>
+<div style="position: relative; height: 11px; border-radius: 6px; background: rgba(0,0,0,0.65); overflow: hidden">
+<div style="position: absolute; inset: 0; background: #3f82f2"></div>
+<div class="num sh" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700">403 / 403</div>
+</div>
+</div>
+<div style="display: flex; align-items: flex-start; gap: 8px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 8px">
+<div style="width: 42px; height: 42px; border-radius: 11px; background: rgba(22,32,38,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dbe4ea" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2.5"></circle></svg>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 58px; height: 58px; border-radius: 14px; background: rgba(26,38,46,0.95); box-shadow: 0 0 0 2px #46e3c1, 0 6px 16px rgba(0,0,0,0.55); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M9 20l11-11M4 15L15 4"></path></svg>
+
+<span class="chip">Q</span>
+</div>
+<div style="display: flex; gap: 3px; width: 58px">
+<span style="flex: 1; height: 4px; border-radius: 2px; background: #46e3c1"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: #46e3c1"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: #46e3c1"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span>
+</div>
+<span class="num sh" style="display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; line-height: 1; color: #9cc3ff"><svg width="9" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M5 0C3 3 1 5 1 7.5a4 4 0 0 0 8 0C9 5 7 3 5 0z" fill="#9cc3ff"></path></svg>24</span>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 58px; height: 58px; border-radius: 14px; background: rgba(26,38,46,0.95); box-shadow: 0 0 0 2px #46e3c1, 0 6px 16px rgba(0,0,0,0.55); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"></path></svg>
+
+<span class="chip">W</span>
+</div>
+<div style="display: flex; gap: 3px; width: 58px">
+<span style="flex: 1; height: 4px; border-radius: 2px; background: #46e3c1"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span>
+</div>
+<span class="num sh" style="display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; line-height: 1; color: #9cc3ff"><svg width="9" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M5 0C3 3 1 5 1 7.5a4 4 0 0 0 8 0C9 5 7 3 5 0z" fill="#9cc3ff"></path></svg>50</span>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 58px; height: 58px; border-radius: 14px; background: rgba(26,38,46,0.95); box-shadow: 0 0 0 2px #46e3c1, 0 6px 16px rgba(0,0,0,0.55); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f2f6f8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h12M12 6l6 6-6 6M4 6v12"></path></svg>
+
+<span class="chip">E</span>
+</div>
+<div style="display: flex; gap: 3px; width: 58px">
+<span style="flex: 1; height: 4px; border-radius: 2px; background: #46e3c1"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span>
+</div>
+<span class="num sh" style="display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; line-height: 1; color: #9cc3ff"><svg width="9" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M5 0C3 3 1 5 1 7.5a4 4 0 0 0 8 0C9 5 7 3 5 0z" fill="#9cc3ff"></path></svg>60</span>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 58px; height: 58px; border-radius: 14px; background: rgba(14,20,24,0.85); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5f6d76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z"></path></svg>
+<span style="font-size: 11px; font-weight: 600; line-height: 1; color: #aab4bb">Nv. 6</span>
+<span class="chip">R</span>
+</div>
+<div style="display: flex; gap: 3px; width: 58px">
+<span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span><span style="flex: 1; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.14)"></span>
+</div>
+<span class="num sh" style="display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; line-height: 1; color: #7c8992"><svg width="9" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M5 0C3 3 1 5 1 7.5a4 4 0 0 0 8 0C9 5 7 3 5 0z" fill="#7c8992"></path></svg>100</span>
+</div>
+
+<div style="width: 1px; height: 58px; background: rgba(255,255,255,0.12); margin: 0 3px"></div>
+
+<div style="padding-top: 8px">
+<div style="position: relative; width: 42px; height: 42px; border-radius: 11px; background: #1d2f55; overflow: hidden; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a9c8ff" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M13 3L5 14h6l-1 7 8-11h-6z"></path></svg>
+<div class="num" style="position: absolute; inset: 0; background: rgba(6,9,11,0.72); display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 700">87</div>
+<span class="chip">D</span>
+</div>
+</div>
+
+<div style="padding-top: 8px">
+<div style="position: relative; width: 42px; height: 42px; border-radius: 11px; background: #4a2a1a; overflow: hidden; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffbf94" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c3 4 6 6 6 10a6 6 0 0 1-12 0c0-3 2-4 3-7 1 2 2 3 3 3 0-2 0-4 0-6z"></path></svg>
+<div class="num" style="position: absolute; inset: 0; background: rgba(6,9,11,0.72); display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 700">39</div>
+<span class="chip">F</span>
+</div>
+</div>
+
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; gap: 8px; align-items: flex-start">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px">
+<div class="slot" style="position: relative; background: rgba(27,51,82,0.95); display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c4dcff" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 7-7 11-7-11z"></path></svg>
+<span class="num sh" style="position: absolute; right: 4px; bottom: 1px; font-size: 12px; font-weight: 700">23</span>
+</div>
+<div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 40px; height: 40px; border-radius: 50%; background: #2b2a18; box-shadow: 0 0 0 2px #46e3c1; display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f5d77a" stroke-width="2" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>
+<span class="num" style="position: absolute; right: -4px; top: -4px; width: 16px; height: 16px; border-radius: 50%; background: #46e3c1; color: #071012; font-size: 11px; font-weight: 700; line-height: 16px; text-align: center">1</span>
+</div>
+<button aria-label="Regresar a base" style="width: 40px; height: 22px; border-radius: 7px; background: rgba(255,255,255,0.1); border: 0; padding: 0; color: #eef2f4; font-family: inherit; font-size: 12px; font-weight: 700">B</button>
+<button aria-label="Tienda" style="width: 40px; height: 22px; border-radius: 7px; background: rgba(255,255,255,0.1); border: 0; padding: 0; color: #eef2f4; font-family: inherit; font-size: 12px; font-weight: 700">P</button>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; padding-left: 2px">
+<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg>
+<span class="num sh" style="font-size: 24px; font-weight: 700; color: #f5c35b">1665</span>
+<svg width="18" height="18" viewBox="0 0 44 44" style="margin-left: auto" role="img" aria-label="Progreso"><circle cx="22" cy="22" r="17" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="7"></circle><circle cx="22" cy="22" r="17" fill="none" stroke="#46e3c1" stroke-width="7" stroke-dasharray="80 107" transform="rotate(-90 22 22)"></circle></svg>
+</div>
+</div>
+</div>
+
+<!-- Estadísticas sin caja -->
+<div class="sh" style="position: absolute; right: 28px; bottom: 18px; width: 236px; display: flex; flex-direction: column; gap: 8px">
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; row-gap: 0">
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #ff9a4d"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Daño ataque</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #ffffff">89</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #a58bff"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Poder hab.</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #8794a0">0</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #ffd36b"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Vel. ataque</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #ffffff">0.72</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #ff5d5d"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Crítico</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #8794a0">0%</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #ff7a59"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Pen. armad.</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #8794a0">0 | 0%</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #c58bff"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Pen. mágica</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #8794a0">0 | 0%</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #ff5c86"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Robo vida</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #8794a0">0%</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #e66bc4"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Omnivamp.</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #8794a0">0%</span>
+</div>
+
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; row-gap: 0">
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #ffcf6b"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Armadura</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #ffffff">49</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #4fc8ff"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Res. mágica</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #ffffff">38</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #9a7bff"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Tenacidad</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #8794a0">0%</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #4fe39a"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Cur./escudo</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #8794a0">0%</span>
+</div>
+
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; row-gap: 0">
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #dfe6ea"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Celeridad</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #ffffff">10</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #dfe6ea"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Vel. mov.</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #ffffff">348</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #b8c3ca"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Alcance</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #ffffff">175</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 6px; height: 19px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: #4fe39a"></span>
+<span style="font-size: 12px; color: #b4bec4; flex: 1; white-space: nowrap">Regen.</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #ffffff">19 | 55</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

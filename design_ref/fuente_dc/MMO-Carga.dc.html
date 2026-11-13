@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMORPG · Pantalla de carga</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 420px; background: linear-gradient(to top, rgba(4,7,9,0.97) 0%, rgba(4,7,9,0.85) 50%, rgba(4,7,9,0) 100%)"></div>
+<div class="sh" style="position: absolute; right: 50px; top: 46px; max-width: 420px; text-align: right; font-size: 16px; font-style: italic; line-height: 24px; color: #dbe4ea">«El vado no se rompió: lo partieron desde el otro lado.»<br><span style="font-style: normal; font-size: 13px; color: #9aa6ae">Diario de Mira, día 12</span></div>
+
+<div style="position: absolute; left: 60px; bottom: 120px; display: flex; flex-direction: column; gap: 8px">
+<span class="caps" style="color: {{accent}}">Destino</span>
+<span class="sh" style="font-size: 40px; font-weight: 700; line-height: 1">Vado Roto</span>
+<span class="sh" style="font-size: 16px; color: #c3ccd3">Verdalia · tu objetivo: derrota al Guardián del Umbral</span>
+</div>
+
+<div class="card" style="position: absolute; left: 620px; bottom: 120px; width: 460px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Antes de llegar</span>
+<sc-for list="{{tips}}" as="t" hint-placeholder-count="3">
+<div style="display: flex; gap: 10px; font-size: 14px; line-height: 19px"><span style="width: 8px; height: 8px; margin-top: 6px; transform: rotate(45deg); background: {{t.c}}; flex: none"></span><span style="color: #c3ccd3">{{t.t}}</span></div>
+</sc-for>
+</div>
+<div style="position: absolute; right: 60px; bottom: 120px; width: 230px; display: flex; flex-direction: column; gap: 8px">
+<span class="caps sh" style="color: #c3ccd3">Mientras carga</span>
+<span class="chip" style="background: rgba(13,18,22,0.92)">Cambiar conjunto <span class="kbd">F1–F3</span></span>
+<span class="chip" style="background: rgba(13,18,22,0.92)">Revisar poderes <span class="kbd">N</span></span>
+<span class="chip" style="background: rgba(13,18,22,0.92)">Tu grupo: <span class="num" style="color: #4fe39a">3/5</span> ya dentro</span>
+</div>
+
+<div style="position: absolute; left: 60px; right: 60px; bottom: 48px; display: flex; flex-direction: column; gap: 8px">
+<div class="sh" style="display: flex; justify-content: space-between; font-size: 13px; color: #c3ccd3"><span>Cargando el terreno de Verdalia</span><span class="num">72 % · unos 6 s</span></div>
+<div style="height: 6px; border-radius: 3px; background: rgba(255,255,255,0.12)"><div style="height: 6px; border-radius: 3px; width: 72%; background: {{accent}}"></div></div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.book], ['Mapa', 'M', TI.map], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Interfaz', 'F10', TI.layout]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'WORLD' ? '#eef2f4' : '#9aa6ae', bar: label === 'WORLD' ? A : 'transparent' }));
+const extra = {
+tips: [
+{ t: 'A los 8 s abre una Grieta: apártate hacia un lado.', c: '#ff6b6b' },
+{ t: 'Su lanzamiento largo se interrumpe con Corte de fase [4].', c: A },
+{ t: 'Fase 2 al 50 %: agrúpense para la Oleada.', c: '#5aa9ff' }
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

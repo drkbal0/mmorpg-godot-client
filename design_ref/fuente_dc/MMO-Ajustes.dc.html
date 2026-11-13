@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMO-Ajustes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<div class="card" style="position: absolute; left: 28px; top: 88px; width: 300px; height: 694px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 20px; font-weight: 700">Ajustes</span>
+<div style="display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 12px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1.5px {{accent}}; font-size: 14px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>sombras</div>
+<span style="font-size: 12px; color: #9aa6ae">2 resultados: Gráficos › Calidad de sombras · Interfaz › Sombra del texto</span>
+<sc-for list="{{nav}}" as="n" hint-placeholder-count="7">
+<div style="display: flex; align-items: center; justify-content: space-between; height: 38px; padding: 0 12px; border-radius: 10px; background: {{n.bg}}; color: {{n.c}}; font-size: 15px; font-weight: 600"><span>{{n.n}}</span><sc-if value="{{n.warn}}" hint-placeholder-val="{{ false }}"><span style="width: 8px; height: 8px; border-radius: 50%; background: #f5c35b"></span></sc-if></div>
+</sc-for>
+</div>
+
+<div class="card" style="position: absolute; left: 344px; top: 88px; width: 700px; height: 694px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px"><span style="font-size: 20px; font-weight: 700">Gráficos</span>
+<div style="margin-left: auto; display: flex; gap: 3px; padding: 3px; border-radius: 10px; background: #121a20"><sc-for list="{{presets}}" as="p" hint-placeholder-count="5"><span style="padding: 0 12px; height: 28px; border-radius: 8px; background: {{p.bg}}; color: {{p.c}}; font-size: 13px; font-weight: 600; line-height: 28px">{{p.n}}</span></sc-for></div>
+</div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
+<div style="display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 14px; border-radius: 12px; background: {{r.bg}}; box-shadow: {{r.ring}}">
+<div style="display: flex; flex-direction: column; flex: 1"><span style="font-size: 15px; font-weight: 600">{{r.n}}</span><span style="font-size: 12px; color: #9aa6ae">{{r.d}}</span></div>
+<span class="num" style="font-size: 12px; font-weight: 700; color: {{r.ic}}">{{r.impact}}</span>
+<span style="width: 140px; height: 32px; border-radius: 8px; background: #070a0c; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between; padding: 0 10px; box-sizing: border-box; font-size: 14px">{{r.v}}<span style="color: #7c8992">▾</span></span>
+</div>
+</sc-for>
+</div>
+
+<div class="card" style="position: absolute; left: 1060px; top: 88px; width: 352px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Rendimiento estimado en tu PC</span>
+<sc-for list="{{fps}}" as="f" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span>{{f.n}}</span><span class="num" style="font-weight: 700; color: {{f.c}}">{{f.v}} fps</span></div><div style="height: 8px; border-radius: 4px; background: #121a20"><div style="height: 8px; border-radius: 4px; width: {{f.p}}%; background: {{f.c}}"></div></div></div>
+</sc-for>
+<span style="font-size: 12px; color: #7c8992">Medido en tus últimas sesiones, no en una prueba sintética.</span>
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: inset 0 0 0 1.5px #f5c35b">
+<span style="font-size: 14px; font-weight: 700; color: #f5c35b">Atajo repetido</span>
+<span style="font-size: 13px; color: #c3ccd3"><span class="kbd">G</span> abre Señales y también llama a la montura.</span>
+<div style="display: flex; gap: 6px"><span class="chip" style="height: 26px">Montura → <span class="kbd">Z</span></span><span class="chip" style="height: 26px">Elegir otra</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto">
+<span style="font-size: 13px; color: #9aa6ae"><span class="num" style="color: #eef2f4; font-weight: 700">3</span> cambios sin aplicar · los de pantalla se deshacen solos si no confirmas en 15 s</span>
+<div style="display: flex; gap: 8px"><button class="btn" style="flex: 1">Deshacer</button><button class="btn" style="flex: 1; background: {{accent}}; color: #071012; box-shadow: none">Aplicar</button></div>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'Ajustes' ? '#eef2f4' : '#9aa6ae', bar: label === 'Ajustes' ? A : 'transparent' }));
+const extra = {
+nav: [['Gráficos', true], ['Sonido'], ['Controles', false, true], ['Interfaz'], ['Accesibilidad'], ['Red'], ['Cuenta y privacidad']]
+.map(([n, on, warn]) => ({ n, warn: !!warn, bg: on ? '#1c2a33' : 'transparent', c: on ? '#eef2f4' : '#c3ccd3' })),
+presets: ['Bajo', 'Medio', 'Alto', 'Ultra', 'Personal'].map((n) => n === 'Personal' ? { n, bg: '#1c2a33', c: '#eef2f4' } : { n, bg: 'transparent', c: '#9aa6ae' }),
+rows: [
+{ n: 'Calidad de sombras', d: 'Coincide con tu búsqueda', v: 'Alta', impact: '−8 fps', ic: '#f5c35b', bg: '#121a20', ring: 'inset 0 0 0 1.5px ' + A },
+{ n: 'Distancia de visión', d: 'Afecta al mapa y a las grietas lejanas', v: '80 %', impact: '−5 fps', ic: '#f5c35b', bg: '#121a20', ring: 'none' },
+{ n: 'Efectos de hechizos de otros', d: 'Bajarlos da claridad en raids', v: 'Reducidos', impact: '+12 fps', ic: '#4fe39a', bg: '#121a20', ring: 'none' },
+{ n: 'Escala de resolución', d: 'Con reescalado inteligente', v: '90 %', impact: '+9 fps', ic: '#4fe39a', bg: '#121a20', ring: 'none' },
+{ n: 'Límite de fps en el refugio', d: 'Ahorra energía cuando no hay combate', v: '60', impact: '', ic: '#9aa6ae', bg: '#121a20', ring: 'none' },
+{ n: 'Desenfoque de movimiento', d: 'Apagado si activas «Reducir movimiento»', v: 'No', impact: '', ic: '#9aa6ae', bg: '#121a20', ring: 'none' },
+{ n: 'Brillo de la interfaz', d: 'Independiente del brillo del juego', v: '100 %', impact: '', ic: '#9aa6ae', bg: '#121a20', ring: 'none' }
+],
+fps: [
+{ n: 'Mundo abierto', v: '144', p: 96, c: '#4fe39a' }, { n: 'Raid de 20', v: '118', p: 79, c: '#4fe39a' },
+{ n: 'Ciudad del Nexo', v: '96', p: 64, c: '#f5c35b' }, { n: 'Refugio', v: '60', p: 40, c: '#9aa6ae' }
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

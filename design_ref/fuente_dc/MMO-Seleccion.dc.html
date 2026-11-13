@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Selección</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.72)"></div>
+<span style="position: absolute; left: 40px; top: 32px; font-size: 22px; font-weight: 700; letter-spacing: 0.3em; color: {{accent}}">[NOMBRE DEL JUEGO]</span>
+<span style="position: absolute; right: 40px; top: 36px; font-size: 14px; color: #c3ccd3">Reino <span style="color: #eef2f4; font-weight: 600">Umbral</span> · Español · <span class="num">24 ms</span> · población alta</span>
+
+<!-- Lista de personajes -->
+<div style="position: absolute; left: 40px; top: 110px; width: 320px; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{chars}}" as="c" hint-placeholder-count="3">
+<div class="card" style="padding: 14px 16px; display: flex; gap: 12px; align-items: center; box-shadow: {{c.ring}}">
+<div style="width: 48px; height: 48px; border-radius: 50%; background: #1a252c; box-shadow: 0 0 0 2px {{c.c}}; flex: none"></div>
+<div style="display: flex; flex-direction: column; gap: 2px; flex: 1"><span style="font-size: 18px; font-weight: 700">{{c.n}}</span><span style="font-size: 13px; color: #9aa6ae">{{c.d}}</span><span style="font-size: 12px; color: {{c.c}}">{{c.w}}</span></div>
+<span class="num" style="font-size: 22px; font-weight: 700; color: #c3ccd3">{{c.lv}}</span>
+</div>
+</sc-for>
+<div style="height: 64px; border-radius: 18px; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; color: #c3ccd3">+ Crear personaje <span style="color: #7c8992">· 2 espacios libres</span></div>
+</div>
+
+<!-- Personaje -->
+<div style="position: absolute; left: 520px; top: 110px; width: 400px; height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end">
+<svg width="260" height="460" viewBox="0 0 150 260" aria-hidden="true">
+<circle cx="75" cy="40" r="22" fill="#1a252c" stroke="#2c3b44" stroke-width="2"></circle>
+<path d="M40 82c6-12 18-18 35-18s29 6 35 18l10 70-18 4-6-40-4 98H58l-4-98-6 40-18-4z" fill="#1a252c" stroke="#2c3b44" stroke-width="2" stroke-linejoin="round"></path>
+</svg>
+<div style="width: 320px; height: 40px; margin-top: -20px; border-radius: 50%; box-shadow: 0 0 0 2px {{accent}}, 0 0 40px rgba(70,227,193,0.35); background: rgba(70,227,193,0.08)"></div>
+<span style="margin-top: 18px; font-size: 32px; font-weight: 700">Kael</span>
+<span style="font-size: 15px; color: #9aa6ae">Tejedor de grietas · nivel 32 · nivel de objeto 412</span>
+</div>
+
+<!-- Mientras no estabas -->
+<div class="card" style="position: absolute; right: 40px; top: 110px; width: 360px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Mientras no estabas</span>
+<sc-for list="{{news}}" as="n" hint-placeholder-count="4">
+<div style="display: flex; gap: 10px; align-items: flex-start">
+<span style="width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: {{n.c}}; flex: none"></span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 15px; font-weight: 600">{{n.t}}</span><span style="font-size: 13px; color: #9aa6ae">{{n.d}}</span></div>
+</div>
+</sc-for>
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; box-shadow: inset 0 0 0 1px {{accent}}">
+<span class="caps" style="color: {{accent}}">Continúa donde lo dejaste</span>
+<span style="font-size: 15px; font-weight: 600">Sellar la grieta menor · 2/3</span>
+<span style="font-size: 13px; color: #9aa6ae">Vado Roto, Verdalia · 40 m de tu posición</span>
+</div>
+</div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 50px; display: flex; justify-content: center; gap: 12px">
+<button class="btn" style="height: 56px; padding: 0 26px; font-size: 17px">Ir a El Nido <span class="num" style="padding: 0 7px; height: 20px; border-radius: 10px; background: {{accent}}; color: #071012; font-size: 12px; line-height: 20px">5</span></button>
+<button class="btn" style="height: 56px; padding: 0 40px; font-size: 20px; background: {{accent}}; color: #071012; box-shadow: none">Entrar al mundo <span class="kbd" style="background: rgba(0,0,0,0.2); color: #071012; box-shadow: none">Enter</span></button>
+</div>
+<div style="position: absolute; left: 40px; bottom: 56px; display: flex; gap: 8px"><span class="chip">Ajustes</span><span class="chip">Accesibilidad</span><span class="chip">Créditos</span></div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'WORLD' ? '#eef2f4' : '#9aa6ae', bar: label === 'WORLD' ? A : 'transparent' }));
+const extra = {
+chars: [
+{ n: 'Kael', d: 'Tejedor de grietas', w: 'Verdalia · hace 2 días', lv: '32', c: '#9fe36a', ring: '0 0 0 2px ' + A + ', 0 20px 50px rgba(0,0,0,0.45)' },
+{ n: 'Ysolde', d: 'Guardiana rúnica', w: 'Runavell · hace 1 semana', lv: '18', c: '#f5b546', ring: '0 0 0 1px rgba(255,255,255,0.07)' },
+{ n: 'Torq', d: 'Herrero de Ferrum', w: 'Ferrum · hace 3 semanas', lv: '45', c: '#5aa9ff', ring: '0 0 0 1px rgba(255,255,255,0.07)' },
+{ n: 'Aurel', d: 'Narrador · personaje especial', w: 'Asignado por el equipo · 27 días', lv: '', c: '#f5c35b', ring: '0 0 0 1.5px #f5c35b' }
+],
+news: [
+{ t: 'Tu refugio tiene 5 cosas listas', d: 'Pispa volvió · Torq espera una decisión', c: A },
+{ t: 'Tu fabricación terminó', d: '10 lingotes de ferrum en la forja', c: '#4fe39a' },
+{ t: 'Raid del gremio mañana 21:00', d: 'Mira te invitó · 18/20 confirmados', c: '#6cb8ff' },
+{ t: 'Vendiste Daga de eco', d: '+820 oro en el correo', c: '#f5c35b' }
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

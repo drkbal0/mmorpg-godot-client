@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMORPG · Pantalla de carga</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 420px; background: linear-gradient(to top, rgba(4,7,9,0.97) 0%, rgba(4,7,9,0.85) 50%, rgba(4,7,9,0) 100%)"></div>
+<div class="sh" style="position: absolute; right: 50px; top: 46px; max-width: 420px; text-align: right; font-size: 16px; font-style: italic; line-height: 24px; color: #dbe4ea">«El vado no se rompió: lo partieron desde el otro lado.»<br><span style="font-style: normal; font-size: 13px; color: #9aa6ae">Diario de Mira, día 12</span></div>
+
+<div style="position: absolute; left: 60px; bottom: 120px; display: flex; flex-direction: column; gap: 8px">
+<span class="caps" style="color: #46e3c1">Destino</span>
+<span class="sh" style="font-size: 40px; font-weight: 700; line-height: 1">Vado Roto</span>
+<span class="sh" style="font-size: 16px; color: #c3ccd3">Verdalia · tu objetivo: derrota al Guardián del Umbral</span>
+</div>
+
+<div class="card" style="position: absolute; left: 620px; bottom: 120px; width: 460px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Antes de llegar</span>
+
+<div style="display: flex; gap: 10px; font-size: 14px; line-height: 19px"><span style="width: 8px; height: 8px; margin-top: 6px; transform: rotate(45deg); background: #ff6b6b; flex: none"></span><span style="color: #c3ccd3">A los 8 s abre una Grieta: apártate hacia un lado.</span></div>
+
+<div style="display: flex; gap: 10px; font-size: 14px; line-height: 19px"><span style="width: 8px; height: 8px; margin-top: 6px; transform: rotate(45deg); background: #46e3c1; flex: none"></span><span style="color: #c3ccd3">Su lanzamiento largo se interrumpe con Corte de fase [4].</span></div>
+
+<div style="display: flex; gap: 10px; font-size: 14px; line-height: 19px"><span style="width: 8px; height: 8px; margin-top: 6px; transform: rotate(45deg); background: #5aa9ff; flex: none"></span><span style="color: #c3ccd3">Fase 2 al 50 %: agrúpense para la Oleada.</span></div>
+
+</div>
+<div style="position: absolute; right: 60px; bottom: 120px; width: 230px; display: flex; flex-direction: column; gap: 8px">
+<span class="caps sh" style="color: #c3ccd3">Mientras carga</span>
+<span class="chip" style="background: rgba(13,18,22,0.92)">Cambiar conjunto <span class="kbd">F1–F3</span></span>
+<span class="chip" style="background: rgba(13,18,22,0.92)">Revisar poderes <span class="kbd">N</span></span>
+<span class="chip" style="background: rgba(13,18,22,0.92)">Tu grupo: <span class="num" style="color: #4fe39a">3/5</span> ya dentro</span>
+</div>
+
+<div style="position: absolute; left: 60px; right: 60px; bottom: 48px; display: flex; flex-direction: column; gap: 8px">
+<div class="sh" style="display: flex; justify-content: space-between; font-size: 13px; color: #c3ccd3"><span>Cargando el terreno de Verdalia</span><span class="num">72 % · unos 6 s</span></div>
+<div style="height: 6px; border-radius: 3px; background: rgba(255,255,255,0.12)"><div style="height: 6px; border-radius: 3px; width: 72%; background: #46e3c1"></div></div>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

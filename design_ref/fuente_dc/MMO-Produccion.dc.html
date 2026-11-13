@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMO-Produccion</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- Subnavegación del refugio -->
+<div style="position: absolute; left: 28px; top: 80px; display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07)">
+<sc-for list="{{sub}}" as="s" hint-placeholder-count="5"><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: {{s.bg}}; color: {{s.c}}; font-size: 14px; font-weight: 600; line-height: 32px">{{s.n}}</span></sc-for>
+</div>
+
+<div class="card" style="position: absolute; left: 28px; top: 128px; width: 1384px; height: 654px"></div>
+<div style="position: absolute; left: 52px; top: 146px; right: 52px; display: flex; align-items: baseline; gap: 14px">
+<span style="font-size: 20px; font-weight: 700">Cadenas de producción</span><span style="font-size: 13px; color: #9aa6ae">por hora · se actualiza en vivo</span>
+<span style="margin-left: auto; display: flex; gap: 16px; font-size: 12px; color: #9aa6ae"><span style="display: flex; align-items: center; gap: 6px"><span style="width: 18px; height: 3px; background: #4a5a64"></span>Fluye bien</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 18px; height: 3px; background: #ff6b6b"></span>Atasco</span><span style="display: flex; align-items: center; gap: 6px"><span style="width: 18px; height: 3px; border-top: 2px dashed #4fe39a"></span>En construcción</span></span>
+</div>
+<sc-for list="{{heads}}" as="h" hint-placeholder-count="4"><span class="caps" style="position: absolute; left: {{h.x}}px; top: 186px">{{h.n}}</span></sc-for>
+<svg width="1440" height="810" viewBox="0 0 1440 810" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+<path d="{{edges}}" fill="none" stroke="#4a5a64" stroke-width="2.5"></path>
+<path d="{{hot}}" fill="none" stroke="#ff6b6b" stroke-width="3"></path>
+<path d="{{dash}}" fill="none" stroke="#4fe39a" stroke-width="2.5" stroke-dasharray="7 6"></path>
+</svg>
+<sc-for list="{{nodes}}" as="n" hint-placeholder-count="17">
+<div style="position: absolute; left: {{n.x}}px; top: {{n.y}}px; width: 220px; height: 64px; box-sizing: border-box; padding: 9px 12px; border-radius: 12px; background: {{n.bg}}; box-shadow: {{n.ring}}; display: flex; align-items: center; gap: 10px">
+<span style="width: 10px; height: 10px; border-radius: 3px; transform: rotate(45deg); background: {{n.c}}; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; white-space: nowrap">{{n.n}}</span><span class="num" style="font-size: 12px; color: {{n.sc}}; white-space: nowrap">{{n.s}}</span></div>
+</div>
+</sc-for>
+<div class="sub" style="position: absolute; left: 52px; right: 52px; bottom: 44px; padding: 12px 16px; display: flex; align-items: center; gap: 14px; box-shadow: inset 0 0 0 1px rgba(255,107,107,0.45)">
+<span style="font-size: 14px; font-weight: 700; color: #ff8a8a">Atasco en la Destilería</span>
+<span style="font-size: 13px; color: #c3ccd3">22 hierbas esperan. Tu misión y el mercado piden más tónicos de los que salen.</span>
+<span class="chip" style="margin-left: auto; color: {{accent}}">Mejorar a nivel 4</span><span class="chip">Construir una 2.ª</span><span class="chip">Mandar hierbas a Pispa</span>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'Refugio' ? '#eef2f4' : '#9aa6ae', bar: label === 'Refugio' ? A : 'transparent' }));
+const sub = ['Refugio', 'Producción', 'Expediciones', 'Pispa', 'Mejoras'].map((n) => n === 'Producción' ? { n, bg: '#1c2a33', c: '#eef2f4' } : { n, bg: 'transparent', c: '#9aa6ae' });
+const X = [60, 400, 740, 1080];
+const nd = {};
+const mk = (id, col, y, n, s, c, state) => {
+const st = { ok: ['#121a20', 'inset 0 0 0 1px rgba(255,255,255,0.08)', '#9aa6ae'], hot: ['#2a1418', 'inset 0 0 0 1.5px #ff6b6b', '#ff8a8a'], new: ['transparent', 'inset 0 0 0 1.5px #4fe39a', '#4fe39a'], need: ['#121a20', 'inset 0 0 0 1.5px ' + A, A] }[state || 'ok'];
+nd[id] = { x: X[col], y };
+return { n, s, c, x: X[col], y, bg: st[0], ring: st[1], sc: st[2] };
+};
+const nodes = [
+mk('hierba', 0, 210, 'Hierbas', '22 /h · Invernadero', '#4fe39a'), mk('esq', 0, 290, 'Esquirlas', '42 /h · Destilador', A), mk('resina', 0, 370, 'Resina', '8 /h · Invernadero', '#c79a5b'),
+mk('metal', 0, 450, 'Metal', '8 /h · expediciones', '#b8c3ca'), mk('grano', 0, 530, 'Grano', '12 /h · Parcelas', '#e0c060'),
+mk('dest', 1, 230, 'Destilería', '100 % · atascada', '#ff6b6b', 'hot'), mk('taller', 1, 370, 'Taller de resina', 'construyendo · 1:20 h', '#4fe39a', 'new'),
+mk('forja', 1, 450, 'Forja', '70 % de uso', '#ff9a4d'), mk('molino', 1, 530, 'Molino', '40 % de uso', '#e0c060'),
+mk('tonico', 2, 230, 'Tónicos', '6 /h', '#4fe39a'), mk('barniz', 2, 370, 'Barniz', 'pronto', '#c79a5b', 'new'), mk('lingote', 2, 450, 'Lingotes', '4 /h', '#b8c3ca'), mk('pan', 2, 530, 'Pan de Verdalia', '10 /h', '#e0c060'),
+mk('mercado', 3, 210, 'Mercado', 'vendes 4 /h', '#f5c35b'), mk('mision', 3, 290, 'Misión: Hierbas de la brecha', 'pide 4 tónicos', A, 'need'),
+mk('mejoras', 3, 410, 'Mejoras del refugio', 'Forja nv 3 pide 20 lingotes', '#9aa6ae'), mk('pispa', 3, 530, 'Pispa', 'bocadillos', '#f5b546')
+];
+const e = (a, b) => { const p = nd[a], q = nd[b]; const x1 = p.x + 220, y1 = p.y + 32, x2 = q.x, y2 = q.y + 32, m = (x1 + x2) / 2; return 'M' + x1 + ' ' + y1 + 'C' + m + ' ' + y1 + ' ' + m + ' ' + y2 + ' ' + x2 + ' ' + y2; };
+const extra = {
+sub,
+heads: [{ n: 'Materias primas', x: 60 }, { n: 'Talleres', x: 400 }, { n: 'Productos', x: 740 }, { n: 'Destino', x: 1080 }],
+nodes,
+edges: [e('metal', 'forja'), e('grano', 'molino'), e('forja', 'lingote'), e('molino', 'pan'), e('lingote', 'mejoras'), e('pan', 'pispa'), e('tonico', 'mercado')].join(''),
+hot: [e('hierba', 'dest'), e('esq', 'dest'), e('dest', 'tonico'), e('tonico', 'mision')].join(''),
+dash: [e('resina', 'taller'), e('taller', 'barniz'), e('barniz', 'mejoras')].join('')
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

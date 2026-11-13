@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>El Nido móvil</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+
+<div style="position: absolute; inset: 0; background: #0b0f13"></div>
+
+<!-- Teléfono 1: el refugio en vertical -->
+<div style="position: absolute; left: 90px; top: 24px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<span style="font-size: 15px; font-weight: 600; color: #9aa6ae">El mismo corte lateral, en vertical</span>
+<div style="width: 340px; height: 720px; border-radius: 46px; background: #000000; padding: 10px; box-sizing: border-box; box-shadow: 0 0 0 2px #26333b, 0 30px 60px rgba(0,0,0,0.6)">
+<div style="position: relative; width: 320px; height: 700px; border-radius: 38px; background: #090c12; overflow: hidden; padding: 30px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px">
+<svg width="28" height="28" viewBox="0 0 48 48" role="img" aria-label="Insignia del Refugio"><circle cx="24" cy="24" r="22" fill="none" stroke="{{accent}}" stroke-width="2.5"></circle><path d="M10 17h28l-5 10-6 4-3 9-3-9-6-4z" fill="{{accent}}"></path><rect x="21" y="20" width="6" height="5" rx="1" fill="#0d1216"></rect></svg>
+<span style="font-size: 18px; font-weight: 700">El Nido</span><span style="margin-left: auto; font-size: 11px; color: #4fe39a">● sincronizado</span>
+</div>
+<div style="display: flex; gap: 6px"><sc-for list="{{mres}}" as="r" hint-placeholder-count="3"><span style="flex: 1; height: 30px; border-radius: 9px; background: #121a20; display: flex; align-items: center; justify-content: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 2px; transform: rotate(45deg); background: {{r.c}}"></span><span class="num" style="font-size: 14px; font-weight: 700">{{r.v}}</span></span></sc-for></div>
+<div style="height: 8px; border-radius: 4px; background: #2f5a3a"></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: -4px"><sc-for list="{{mout}}" as="o" hint-placeholder-count="3"><div style="height: 46px; border-radius: 10px; background: #12241a; padding: 6px 8px; box-sizing: border-box; display: flex; flex-direction: column"><span style="font-size: 12px; font-weight: 700">{{o.n}}</span><span class="num" style="font-size: 11px; color: {{o.c}}">{{o.s}}</span></div></sc-for></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; padding: 8px; border-radius: 14px; background: #141a21">
+<sc-for list="{{mrooms}}" as="r" hint-placeholder-count="8">
+<div style="grid-column: span {{r.span}}; height: 56px; border-radius: 10px; background: {{r.bg}}; border: {{r.bd}}; padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 1px">
+<div style="display: flex; align-items: center; gap: 6px"><span style="width: 7px; height: 7px; border-radius: 2px; background: {{r.c}}"></span><span style="font-size: 13px; font-weight: 700; color: {{r.tc}}">{{r.n}}</span><span class="num" style="margin-left: auto; padding: 0 6px; border-radius: 8px; background: {{r.cb}}; color: {{r.cc}}; font-size: 10px; font-weight: 700; line-height: 16px">{{r.chip}}</span></div>
+<span style="font-size: 11px; color: #9aa6ae">{{r.s}}</span>
+</div>
+</sc-for>
+</div>
+<div style="position: absolute; left: 12px; right: 12px; bottom: 76px; display: flex; gap: 8px; align-items: center">
+<span style="width: 64px; height: 52px; border-radius: 14px; background: #18242b; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 14px">Ronda<br>2 min</span>
+<span style="flex: 1; height: 56px; border-radius: 16px; background: {{accent}}; color: #071012; font-size: 17px; font-weight: 700; display: flex; align-items: center; justify-content: center">Recoger todo · 5</span>
+<span style="width: 64px; height: 52px; border-radius: 14px; background: #18242b; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center">Construir</span>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 68px; background: #0a0f13; box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); display: flex; justify-content: space-around; align-items: center; padding-bottom: 8px"><sc-for list="{{mtabs}}" as="t" hint-placeholder-count="5"><span style="font-size: 11px; font-weight: 600; color: {{t.c}}">{{t.n}}</span></sc-for></div>
+</div>
+</div>
+</div>
+
+<!-- Teléfonos 2 y 3 -->
+<sc-for list="{{phones}}" as="p" hint-placeholder-count="2">
+<div style="position: absolute; left: {{p.x}}px; top: 24px; display: flex; flex-direction: column; align-items: center; gap: 12px">
+<span style="font-size: 15px; font-weight: 600; color: #9aa6ae">{{p.label}}</span>
+<div style="width: 340px; height: 720px; border-radius: 46px; background: #000000; padding: 10px; box-sizing: border-box; box-shadow: 0 0 0 2px #26333b, 0 30px 60px rgba(0,0,0,0.6)">
+<div style="position: relative; width: 320px; height: 700px; border-radius: 38px; background: #0d1216; overflow: hidden; padding: 30px 16px 0; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; justify-content: space-between"><span style="font-size: 22px; font-weight: 700">{{p.title}}</span><span style="font-size: 12px; color: #9aa6ae">{{p.sub}}</span></div>
+<sc-for list="{{p.cards}}" as="c" hint-placeholder-count="4">
+<div style="padding: 11px 13px; border-radius: 16px; background: #121a20; box-shadow: {{c.ring}}; display: flex; flex-direction: column; gap: 5px; opacity: {{c.op}}">
+<div style="display: flex; justify-content: space-between; gap: 8px"><span style="font-size: 15px; font-weight: 700; color: {{c.tc}}">{{c.t}}</span><span class="num" style="font-size: 12px; color: #9aa6ae; white-space: nowrap">{{c.r}}</span></div>
+<span style="font-size: 13px; line-height: 17px; color: #c3ccd3">{{c.d}}</span>
+<sc-if value="{{c.b1}}" hint-placeholder-val="{{ false }}"><div style="display: flex; gap: 6px; margin-top: 3px"><span style="flex: 1; height: 44px; border-radius: 12px; background: {{accent}}; color: #071012; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{c.b1}}</span><sc-if value="{{c.b2}}" hint-placeholder-val="{{ false }}"><span style="flex: 1; height: 44px; border-radius: 12px; background: #18242b; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{c.b2}}</span></sc-if></div></sc-if>
+</div>
+</sc-for>
+<span style="position: absolute; left: 16px; right: 16px; bottom: 26px; font-size: 12px; text-align: center; color: #9aa6ae">{{p.foot}}</span>
+</div>
+</div>
+</div>
+</sc-for>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'BARE' ? '#eef2f4' : '#9aa6ae', bar: label === 'BARE' ? A : 'transparent' }));
+const mr = (n, s, c, span, chip, kind, st) => {
+const k = { ready: ['#4fe39a', '#071012'], timer: ['#1c2a33', '#eef2f4'], warn: ['#f5c35b', '#1a1205'] }[kind] || ['transparent', 'transparent'];
+const S = { obra: ['rgba(79,227,154,0.06)', '1.5px dashed #4fe39a', '#eef2f4'], mist: ['#151022', '1px solid rgba(195,155,255,0.45)', '#c39bff'] }[st] || ['#0f141a', '1px solid rgba(255,255,255,0.1)', '#eef2f4'];
+return { n, s, c, span, chip: chip || '', cb: k[0], cc: k[1], bg: S[0], bd: S[1], tc: S[2] };
+};
+const card = (t, r, d, o) => Object.assign({ t, r, d, b1: '', b2: '', ring: 'none', tc: '#eef2f4', op: 1 }, o || {});
+const extra = {
+mres: [{ v: '1.240', c: A }, { v: '380', c: '#b8c3ca' }, { v: '12.480', c: '#f5c35b' }],
+mout: [{ n: 'Huerto', s: '22 listas', c: '#4fe39a' }, { n: 'Pispa', s: '12 min', c: '#9aa6ae' }, { n: 'Portal', s: '¡Elige!', c: '#f5c35b' }],
+mrooms: [
+mr('Recámara', 'XP extra al descansar', '#6cb8ff', 2), mr('Taller', 'Lingotes 7/10', '#ff9a4d', 1, '▲', 'ready'), mr('Rincón de resina', 'En obra · 1:20 h', '#4fe39a', 1, '', '', 'obra'),
+mr('Sótano', '42 esquirlas por hora', A, 2, '340', 'ready'), mr('Despensa', '412 / 600', '#b8c3ca', 1), mr('???', 'Excava para descubrir', '#c39bff', 1, '', '', 'mist')
+],
+mtabs: ['Refugio', 'Viajes', 'Mercado', 'Gremio', 'Chat'].map((n, i) => ({ n, c: i === 0 ? A : '#7c8992' })),
+phones: [
+{ x: 550, label: 'Ronda de 2 minutos: todo con un pulgar', title: 'Ronda', sub: '2 de 4 · ~1 min', foot: 'Al terminar: «Todo al día». No hay nada más que hacer hasta la tarde.', cards: [
+card('Recoger 5 cosas', 'hecho ✓', 'Esquirlas, hierbas y la cosecha de Ysolde.', { tc: '#4fe39a', op: 0.6 }),
+card('Torq: bifurcación', '20 min', 'Si no eliges, irá por el puente.', { ring: 'inset 0 0 0 1.5px #f5c35b', tc: '#f5c35b', b1: 'Túnel · +50 %', b2: 'Puente · seguro' }),
+card('Replantar parcelas', '', 'Lo mismo que la última vez: hierbas de la brecha.', { b1: 'Replantar igual', b2: 'Cambiar' }),
+card('Bolsa de Pispa 14/20', '', 'Vacíala para que siga buscando.', { b1: 'Vaciar al almacén' })
+] },
+{ x: 1010, label: 'Tú mandas en los avisos', title: 'Avisos', sub: 'máx. 3 al día', foot: 'Sin rachas, sin cuentas atrás falsas, sin castigo por no entrar.', cards: [
+card('Solo lo que elijas', 'activos: 3', 'Decisiones de expedición · Obra terminada · Raid del gremio.'),
+card('Horario de silencio', '22:00–9:00', 'Nada suena de noche. Lo pendiente espera.'),
+card('Sin conexión', '2 en cola', 'Tus acciones se guardan y se envían al volver la señal.'),
+card('Seguir en el PC', 'hace 1 min', 'El refugio es el mismo en los dos. Abre el juego y continúa donde lo dejaste.', { ring: 'inset 0 0 0 1.5px ' + A })
+] }
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

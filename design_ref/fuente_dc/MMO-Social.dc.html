@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMO-Social</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- ============ IZQUIERDA: AMIGOS / GREMIO ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 88px; width: 300px; height: 694px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; gap: 6px"><span class="chip" style="background: #1c2a33; color: #eef2f4">Gremio</span><span class="chip">Amigos 14</span><span class="chip">Recientes</span></div>
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 17px; font-weight: 700">Orden del Umbral</span>
+<span class="num" style="font-size: 13px; color: #9aa6ae">42 en línea · nivel de gremio 7</span>
+<span style="font-size: 13px; color: {{accent}}">Raid mañana 21:00 · 18/20 confirmados</span>
+</div>
+<sc-for list="{{people}}" as="p" hint-placeholder-count="8">
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 2px">
+<div style="position: relative; width: 32px; height: 32px; border-radius: 50%; background: #1a252c; flex: none"><span style="position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: {{p.dot}}; box-shadow: 0 0 0 2px #0d1216"></span></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">{{p.n}}</span><span style="font-size: 12px; color: #9aa6ae">{{p.a}}</span></div>
+<sc-if value="{{p.voice}}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{accent}}" stroke-width="2" stroke-linecap="round" role="img" aria-label="En canal de voz"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg></sc-if>
+</div>
+</sc-for>
+</div>
+
+<!-- ============ CENTRO: BUSCADOR DE GRUPO ============ -->
+<div class="card" style="position: absolute; left: 344px; top: 88px; width: 720px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between"><span style="font-size: 20px; font-weight: 700">Buscador de grupo</span><span style="font-size: 13px; color: #9aa6ae">ordenado por compatibilidad contigo</span></div>
+<div style="display: flex; gap: 6px"><span class="chip" style="background: #1c2a33; color: #eef2f4">Mazmorras</span><span class="chip">Raids</span><span class="chip">Mundo</span><span class="chip">JcJ</span><span class="chip">Rol</span><span class="chip" style="margin-left: auto">Nivel 30–35</span><span class="chip">Español + traducción</span></div>
+<sc-for list="{{lfg}}" as="g" hint-placeholder-count="4">
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: {{g.ring}}">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="font-size: 16px; font-weight: 700">{{g.n}}</span>
+<span class="chip" style="height: 22px; font-size: 12px; color: {{g.dc}}">{{g.diff}}</span>
+<span class="num" style="margin-left: auto; font-size: 13px; color: {{g.mc}}; font-weight: 700">{{g.match}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 13px; color: #c3ccd3">
+<span>Líder <span style="color: #eef2f4; font-weight: 600">{{g.leader}}</span></span>
+<span style="color: #4fe39a">{{g.rep}}</span>
+<span class="num">{{g.meta}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px">
+<sc-for list="{{g.slots}}" as="s" hint-placeholder-count="5">
+<span style="width: 26px; height: 26px; border-radius: 7px; background: {{s.bg}}; box-shadow: {{s.ring}}; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="{{s.st}}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{s.icon}}"></path></svg></span>
+</sc-for>
+<span style="width: 10px"></span>
+<sc-for list="{{g.tags}}" as="t" hint-placeholder-count="3"><span class="chip" style="height: 22px; font-size: 12px">{{t.t}}</span></sc-for>
+<button class="btn" style="margin-left: auto; height: 30px; background: {{g.bb}}; color: {{g.bc}}; box-shadow: none">{{g.cta}}</button>
+</div>
+</div>
+</sc-for>
+</div>
+
+<!-- ============ DERECHA: TU PERFIL ============ -->
+<div class="card" style="position: absolute; left: 1080px; top: 88px; width: 332px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Me apunto como</span>
+<sc-for list="{{roles}}" as="r" hint-placeholder-count="3">
+<div class="sub" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; box-shadow: {{r.ring}}">
+<span style="width: 30px; height: 30px; border-radius: 8px; background: {{r.bg}}; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{r.icon}}"></path></svg></span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600">{{r.n}}</span><span class="num" style="font-size: 12px; color: {{r.wc}}">Espera estimada {{r.w}}</span></div>
+<span class="sw {{r.cls}}" style="background: {{r.sbg}}"></span>
+</div>
+</sc-for>
+<span class="caps" style="margin-top: 8px">Tu reputación</span>
+<div class="sub" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px"><span style="padding: 0 10px; height: 26px; border-radius: 13px; background: rgba(79,227,154,0.15); color: #4fe39a; font-size: 14px; font-weight: 700; line-height: 26px">Confiable</span><span class="num" style="font-size: 13px; color: #9aa6ae">96 % de grupos completados</span></div>
+<span style="font-size: 12px; color: #9aa6ae">Elogios recibidos (solo positivos, nunca públicos los negativos)</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span class="chip" style="height: 24px; font-size: 12px">Buen líder <span class="num" style="color: {{accent}}">14</span></span>
+<span class="chip" style="height: 24px; font-size: 12px">Paciente <span class="num" style="color: {{accent}}">9</span></span>
+<span class="chip" style="height: 24px; font-size: 12px">Explica mecánicas <span class="num" style="color: {{accent}}">7</span></span>
+<span class="chip" style="height: 24px; font-size: 12px">Salvó al grupo <span class="num" style="color: {{accent}}">3</span></span>
+</div>
+</div>
+<button class="btn" style="margin-top: auto; background: {{accent}}; color: #071012; box-shadow: none">Crear grupo</button>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'Social' ? '#eef2f4' : '#9aa6ae', bar: label === 'Social' ? A : 'transparent' }));
+const RI = { t: 'M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z', h: 'M12 5v14M5 12h14', d: 'M5 19L19 5M14 5h5v5M7 15l2 2' };
+const RC = { t: '#2b4a8a', h: '#2a7a4a', d: '#8a3a2b' };
+const slot = (r, filled) => filled ? { bg: RC[r], ring: 'none', st: '#ffffff', icon: RI[r] } : { bg: 'transparent', ring: 'inset 0 0 0 1.5px ' + (r === 'h' ? A : '#3a4a54'), st: r === 'h' ? A : '#56646d', icon: RI[r] };
+const extra = {
+people: [
+{ n: 'Mira', a: 'Oficial · en el Nexo', dot: '#4fe39a', voice: true },
+{ n: 'Toro', a: 'En tu grupo', dot: '#4fe39a', voice: true },
+{ n: 'Brisa', a: 'En tu grupo', dot: '#4fe39a', voice: true },
+{ n: 'Ulric', a: 'Bóveda de Ferrum · 3/5', dot: '#f5c35b', voice: false },
+{ n: 'Sasha', a: 'Fabricando · busca hierbas', dot: '#4fe39a', voice: false },
+{ n: 'Dren', a: 'Ausente 20 min', dot: '#9aa6ae', voice: false },
+{ n: 'Ivo', a: 'Desconectado · hace 2 h', dot: '#3a4a54', voice: false },
+{ n: 'Lune', a: 'Desconectada · ayer', dot: '#3a4a54', voice: false }
+],
+lfg: [
+{ n: 'Bóveda de Ferrum', diff: 'Heroica', dc: '#f5b546', match: '94 % compatible', mc: A, leader: 'Ulric', rep: 'Confiable · buen líder ×21', meta: 'ilvl 405+ · ~35 min · voz',
+slots: [slot('t', true), slot('h', false), slot('d', true), slot('d', true), slot('d', false)], tags: [{ t: 'Explicamos mecánicas' }, { t: 'Sin prisa' }], cta: 'Unirme como sanador', bb: A, bc: '#071012', ring: '0 0 0 1.5px ' + A },
+{ n: 'Cripta Rúnica', diff: 'Normal', dc: '#9aa6ae', match: '81 %', mc: '#c3ccd3', leader: 'Joao', rep: 'Nuevo · 0 reportes', meta: 'ilvl 380+ · ~25 min · PT → ES',
+slots: [slot('t', true), slot('h', true), slot('d', true), slot('d', false), slot('d', false)], tags: [{ t: 'Primera vez bienvenida' }, { t: 'Traducción automática' }], cta: 'Solicitar', bb: '#18242b', bc: '#eef2f4', ring: 'none' },
+{ n: 'Coloso de Runavell', diff: 'Jefe del mundo', dc: '#ff9a4d', match: '76 %', mc: '#c3ccd3', leader: 'Mira', rep: 'Oficial de tu gremio', meta: '18:30 · 14/40 · sin requisito',
+slots: [slot('t', true), slot('h', true), slot('d', true), slot('d', true), slot('d', true)], tags: [{ t: 'Gremio' }, { t: 'Botín compartido' }], cta: 'Avisarme', bb: '#18242b', bc: '#eef2f4', ring: 'none' },
+{ n: 'Arena 3c3', diff: 'Clasificatoria', dc: '#ff6b6b', match: '62 %', mc: '#c3ccd3', leader: 'Nox', rep: 'Confiable', meta: 'Índice 1.640 · voz obligatoria',
+slots: [slot('h', true), slot('d', true), slot('d', false)], tags: [{ t: 'Competitivo' }], cta: 'Solicitar', bb: '#18242b', bc: '#eef2f4', ring: 'none' }
+],
+roles: [
+{ n: 'Tanque', icon: RI.t, bg: RC.t, w: '~1 min', wc: '#4fe39a', cls: 'off', sbg: '#2a363d', ring: 'none' },
+{ n: 'Sanador', icon: RI.h, bg: RC.h, w: '~2 min', wc: '#4fe39a', cls: 'on', sbg: A, ring: '0 0 0 1.5px ' + A },
+{ n: 'Daño', icon: RI.d, bg: RC.d, w: '~9 min', wc: '#f5c35b', cls: 'on', sbg: A, ring: '0 0 0 1.5px ' + A }
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Incursiones</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+<div style="position: absolute; left: 28px; right: 400px; top: 88px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+<sc-for list="{{inc}}" as="i" hint-placeholder-count="3">
+<div class="card" style="padding: 20px; height: 694px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; box-shadow: {{i.ring}}">
+<span class="caps" style="color: {{i.c}}">{{i.kind}}</span><span style="font-size: 22px; font-weight: 700; line-height: 1.1">{{i.n}}</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><sc-for list="{{i.tags}}" as="t" hint-placeholder-count="3"><span class="chip" style="height: 24px; font-size: 12px">{{t.t}}</span></sc-for></div>
+<span style="font-size: 13px; line-height: 18px; color: #c3ccd3">{{i.d}}</span>
+<sc-for list="{{i.rows}}" as="r" hint-placeholder-count="5"><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">{{r.l}}</span><span class="num" style="font-weight: 700; color: {{r.c}}">{{r.v}}</span></div></sc-for>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; color: #9aa6ae">Etapas y puntos de extracción</span><div style="display: flex; gap: 4px; align-items: center"><sc-for list="{{i.st}}" as="s" hint-placeholder-count="5"><span style="flex: 1; height: 8px; border-radius: 4px; background: {{s.c}}"></span></sc-for></div></div>
+<button class="btn" style="margin-top: auto; height: 42px; background: {{i.bb}}; color: {{i.bc}}; box-shadow: none">{{i.cta}}</button>
+</div>
+</sc-for>
+</div>
+<div class="card" style="position: absolute; right: 28px; top: 88px; width: 356px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Qué llevas</span>
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: inset 0 0 0 1px rgba(79,227,154,0.45)"><span style="font-size: 14px; font-weight: 700; color: #4fe39a">Bolsa segura · 3 / 3</span><span style="font-size: 12px; color: #c3ccd3">Hoja de la grieta · Anillo de la deriva · Llave oxidada</span></div>
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: inset 0 0 0 1px rgba(255,107,107,0.45)"><span style="font-size: 14px; font-weight: 700; color: #ff8a8a">En riesgo si mueres</span><span style="font-size: 12px; color: #c3ccd3">El resto del equipo, 1.240 oro y todo el botín que encuentres dentro.</span></div>
+<span class="caps" style="margin-top: 4px">Preparación</span>
+<sc-for list="{{prep}}" as="p" hint-placeholder-count="5"><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #c3ccd3">{{p.l}}</span><span style="font-weight: 700; color: {{p.c}}">{{p.v}}</span></div></sc-for>
+<div class="sub" style="margin-top: auto; padding: 12px; font-size: 12px; line-height: 17px; color: #c3ccd3">Solo te llevas el botín si extraes: por una salida, con una bengala o al terminar. Si te desconectas dentro, tu personaje se queda ahí.</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'Misiones' ? '#eef2f4' : '#9aa6ae', bar: label === 'Misiones' ? A : 'transparent' }));
+const r = (l, v, c) => ({ l, v, c: c || '#eef2f4' });
+const st = (arr) => arr.map((k) => ({ c: k === 'x' ? '#4fe39a' : (k === 'b' ? '#ff6b6b' : '#3a4a54') }));
+const extra = {
+inc: [
+{ kind: 'Incursión rápida', c: '#4fe39a', n: 'Grieta menor del Vado', tags: [{ t: '10–15 min' }, { t: '1–3 jugadores' }, { t: 'Riesgo bajo' }], d: 'Entrar, cerrar la grieta y salir. Ideal entre otras cosas.', rows: [r('Botín', 'esquirlas, 1 objeto raro'), r('Extracción', '1 salida al final'), r('Si mueres', 'pierdes el botín de dentro', '#f5c35b'), r('Desconexión', 'protegida 3 min')], st: st(['n', 'n', 'x']), cta: 'Entrar ahora', bb: '#18242b', bc: '#eef2f4', ring: '0 0 0 1px rgba(255,255,255,0.07)' },
+{ kind: 'Incursión media', c: '#f5c35b', n: 'Bóveda de Ferrum', tags: [{ t: '30–40 min' }, { t: '5 jugadores' }, { t: 'Riesgo medio' }], d: 'Mazmorra con 3 jefes. Hay una salida a mitad por si el grupo no puede seguir.', rows: [r('Botín', 'equipo épico, planos'), r('Extracción', 'a mitad y al final'), r('Si mueres', 'tu grupo puede levantarte'), r('Tu grupo', '3 / 5 listos', '#6cb8ff')], st: st(['n', 'b', 'x', 'b', 'x']), cta: 'Ir a la antesala', bb: A, bc: '#071012', ring: '0 0 0 1.5px ' + A + ', 0 20px 50px rgba(0,0,0,0.45)' },
+{ kind: 'Incursión larga', c: '#ff8a8a', n: 'Las Minas Abisales', tags: [{ t: '2–4 h, por tramos' }, { t: '5–10 jugadores' }, { t: 'Riesgo alto' }], d: 'Expedición por niveles. Entre tramos hay campamentos seguros donde puedes desconectarte y seguir otro día.', rows: [r('Botín', 'reliquias, salas «???»'), r('Campamentos', '3 (guardan progreso)', '#4fe39a'), r('Si mueres', 'fardo recuperable 30 min', '#ff8a8a'), r('Bengala de extracción', 'tienes 1')], st: st(['n', 'x', 'b', 'n', 'x', 'b', 'n', 'x', 'b']), cta: 'Planear con el gremio', bb: '#18242b', bc: '#eef2f4', ring: '0 0 0 1px rgba(255,255,255,0.07)' }
+],
+prep: [r('Consumibles', '✓', '#4fe39a'), r('Reparación', '82 %', '#4fe39a'), r('Kit de fogata', '1', '#eef2f4'), r('Bengala de extracción', '1', '#eef2f4'), r('Ruta de vuelta', 'caravana a 240 m', '#4fe39a')]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

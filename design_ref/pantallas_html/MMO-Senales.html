@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMORPG · Menú radial de señales</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.3)"></div>
+
+<!-- Señales ya colocadas en el mundo -->
+<div class="sh" style="position: absolute; left: 1020px; top: 150px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<div style="width: 34px; height: 34px; transform: rotate(45deg); background: #ff6b6b; box-shadow: 0 0 0 3px #0d1216, 0 0 24px #ff6b6b"></div>
+<span style="margin-top: 8px; font-size: 14px; font-weight: 700">Peligro · Guardián del Umbral</span>
+<span class="num" style="font-size: 12px; color: #dbe4ea">élite · 40 m · Kael</span>
+</div>
+<div class="sh" style="position: absolute; left: 230px; top: 250px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<div style="width: 28px; height: 28px; border-radius: 50%; background: #6cb8ff; box-shadow: 0 0 0 3px #0d1216"></div>
+<span style="font-size: 13px; font-weight: 700">Voy · Toro</span>
+<span class="num" style="font-size: 12px; color: #dbe4ea">llega en ~6 s</span>
+</div>
+<div class="sh" style="position: absolute; left: 1150px; top: 520px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<div style="width: 26px; height: 26px; border-radius: 6px; background: #4fe39a; box-shadow: 0 0 0 3px #0d1216"></div>
+<span style="font-size: 13px; font-weight: 700">Recurso · Hierba de la brecha</span>
+<span class="num" style="font-size: 12px; color: #dbe4ea">la necesitan 2 del grupo</span>
+</div>
+
+<!-- Menú radial -->
+<svg width="360" height="360" viewBox="-180 -180 360 360" style="position: absolute; left: 540px; top: 220px" aria-hidden="true">
+<circle r="160" fill="rgba(9,13,16,0.86)"></circle>
+<circle r="70" fill="#0d1216" stroke="rgba(255,255,255,0.1)"></circle>
+<path d="M26.8 -64.7L61.2 -147.8A160 160 0 0 1 147.8 -61.2L64.7 -26.8A70 70 0 0 0 26.8 -64.7Z" fill="rgba(255,107,107,0.28)" stroke="#ff6b6b" stroke-width="2"></path>
+<g stroke="rgba(255,255,255,0.08)" stroke-width="1.5"><path d="M-26.8 -64.7L-61.2 -147.8M26.8 -64.7L61.2 -147.8M64.7 -26.8L147.8 -61.2M64.7 26.8L147.8 61.2M26.8 64.7L61.2 147.8M-26.8 64.7L-61.2 147.8M-64.7 26.8L-147.8 61.2M-64.7 -26.8L-147.8 -61.2"></path></g>
+<circle r="160" fill="none" stroke="rgba(255,255,255,0.1)"></circle>
+</svg>
+
+<div style="position: absolute; left: 720px; top: 285px; width: 90px; margin-left: -45px; margin-top: -26px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff9a4d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg>
+<span style="font-size: 14px; font-weight: 700; color: #c3ccd3">Atacar</span>
+</div>
+
+<div style="position: absolute; left: 801px; top: 319px; width: 90px; margin-left: -45px; margin-top: -26px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l10 18H2zM12 10v5M12 18v.01"></path></svg>
+<span style="font-size: 14px; font-weight: 700; color: #ffffff">Peligro</span>
+</div>
+
+<div style="position: absolute; left: 835px; top: 400px; width: 90px; margin-left: -45px; margin-top: -26px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6cb8ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h13M13 7l5 5-5 5"></path></svg>
+<span style="font-size: 14px; font-weight: 700; color: #c3ccd3">Voy</span>
+</div>
+
+<div style="position: absolute; left: 801px; top: 481px; width: 90px; margin-left: -45px; margin-top: -26px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4fe39a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-9 6-14 14-14 0 8-5 14-14 14zM5 19l7-7"></path></svg>
+<span style="font-size: 14px; font-weight: 700; color: #c3ccd3">Recurso</span>
+</div>
+
+<div style="position: absolute; left: 720px; top: 515px; width: 90px; margin-left: -45px; margin-top: -26px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f5c35b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v.01M12 11v6M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18"></path></svg>
+<span style="font-size: 14px; font-weight: 700; color: #c3ccd3">Ayuda</span>
+</div>
+
+<div style="position: absolute; left: 639px; top: 481px; width: 90px; margin-left: -45px; margin-top: -26px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#46e3c1" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16a8 8 0 1 0 0-16M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6"></path></svg>
+<span style="font-size: 14px; font-weight: 700; color: #c3ccd3">Reunirse</span>
+</div>
+
+<div style="position: absolute; left: 605px; top: 400px; width: 90px; margin-left: -45px; margin-top: -26px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14M16 5v14"></path></svg>
+<span style="font-size: 14px; font-weight: 700; color: #c3ccd3">Esperar</span>
+</div>
+
+<div style="position: absolute; left: 639px; top: 319px; width: 90px; margin-left: -45px; margin-top: -26px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#5aa9ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"></path></svg>
+<span style="font-size: 14px; font-weight: 700; color: #c3ccd3">Defender</span>
+</div>
+
+<div style="position: absolute; left: 720px; top: 400px; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 2px">
+<span style="font-size: 16px; font-weight: 700; color: #ff8a8a">Peligro</span>
+<span style="font-size: 11px; color: #9aa6ae">suelta para enviar</span>
+</div>
+<div class="sh" style="position: absolute; left: 50%; top: 600px; transform: translateX(-50%); display: flex; gap: 14px; font-size: 13px; color: #dbe4ea">
+<span>Mantén <span class="kbd">G</span> y mueve el ratón</span><span>Doble toque <span class="kbd">G</span> = Atacar al objetivo</span><span>Mando: joystick derecho</span>
+</div>
+
+<!-- Chat automático -->
+<div style="position: absolute; left: 20px; bottom: 30px; width: 460px; padding: 10px 12px; border-radius: 14px; background: rgba(9,13,16,0.84); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07); display: flex; flex-direction: column; gap: 4px; font-size: 14px">
+<span><span style="color: #6cb8ff; font-weight: 600">[Grupo] Toro:</span> Voy hacia ti.</span>
+<span><span style="color: #6cb8ff; font-weight: 600">[Grupo] Kael:</span> <span style="color: #ff8a8a; font-weight: 600">Peligro</span> — Guardián del Umbral (élite, 40 m) <span style="font-size: 12px; color: #7c8992">· visto por 4/5</span></span>
+<span style="font-size: 12px; color: #7c8992">Las señales se describen y se traducen solas al idioma de cada jugador.</span>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>HUD – Final v2 (pegado al borde inferior) · referencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Fuente local (OFL) – funciona sin internet */
+@font-face{font-family:'Barlow Semi Condensed';font-weight:400;src:url(fonts/barlow-semi-condensed-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Barlow Semi Condensed';font-weight:500;src:url(fonts/barlow-semi-condensed-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Barlow Semi Condensed';font-weight:600;src:url(fonts/barlow-semi-condensed-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Barlow Semi Condensed';font-weight:700;src:url(fonts/barlow-semi-condensed-latin-700-normal.woff2) format('woff2')}
+/* ============ TOKENS (equivalen al Theme de Godot) ============ */
+:root{
+  --accent:#46e3c1;          /* color de acento (cambia por universo) */
+  --panel:#0d1216;           /* fondo de la forma inferior */
+  --panel-edge:rgba(255,255,255,0.09);
+  --tile:#1c2a33;            /* habilidad lista */
+  --tile-locked:#11181d;     /* habilidad bloqueada */
+  --tile-neutral:#1a252c;    /* pasiva / retrato */
+  --slot:#0a0f13;            /* ranura vacía */
+  --well:#070a0c;            /* fondo de barras / oro */
+  --btn:#18242b;
+  --text:#eef2f4;
+  --text-dim:#9aa6ae;
+  --text-zero:#7c8992;
+  --key:#c3ccd3;
+  --hp:#3ccf73; --hp-regen:#a9f0c3;
+  --mana:#3f82f2; --cost:#8fbaff;
+  --gold:#f5c35b;
+  --ally:#6cb8ff;
+}
+body{margin:0;background:#000;display:flex;justify-content:center;align-items:center;min-height:100vh}
+.scene{position:relative;width:1360px;height:460px;overflow:hidden;
+  background:#26331f url(mapa-fondo.jpg) center/cover no-repeat;
+  font-family:'Barlow Semi Condensed',system-ui,sans-serif;color:var(--text)}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,.95)}
+.abs{position:absolute}
+.row{display:flex}.col{display:flex;flex-direction:column}
+
+/* Forma de fondo */
+.shape{position:absolute;left:0;top:0;filter:drop-shadow(0 -6px 22px rgba(0,0,0,.5))}
+.stats-tab{position:absolute;left:964px;top:189px;width:316px;height:271px;border-radius:18px 18px 0 0;background:var(--panel);
+  box-shadow:inset 0 1px 0 var(--panel-edge),inset 1px 0 0 rgba(255,255,255,.05),inset -1px 0 0 rgba(255,255,255,.05)}
+.accent-line{position:absolute;left:600px;width:160px;height:2px;border-radius:2px;background:var(--accent)}
+
+/* Registro */
+.feed{left:28px;bottom:200px;gap:4px;align-items:flex-start;font-size:16px;line-height:20px}
+.feed-line{display:flex;align-items:center;gap:8px;padding:4px 12px 4px 8px;border-radius:999px;background:rgba(8,11,14,.78)}
+.feed-time{font-size:13px;color:var(--text-dim)}
+.ally{color:var(--ally);font-weight:600}.dim{color:var(--text-dim)}.gold{color:var(--gold)}
+
+/* Efectos */
+.buffs{left:240px;top:262px;gap:6px}
+.buff{position:relative;width:28px;height:28px;border-radius:8px;box-shadow:0 0 0 2px var(--panel),inset 0 0 0 1px rgba(255,255,255,.14)}
+.buff span{position:absolute;right:2px;bottom:0;font-size:11px;font-weight:700}
+
+/* Fila principal */
+.main{left:76px;bottom:14px;align-items:flex-end;gap:14px}
+.opts{gap:6px;padding-bottom:6px}
+.opt{width:24px;height:24px;border-radius:50%;background:var(--btn);border:0;padding:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.portrait{position:relative;width:100px;height:110px;flex:none}
+.portrait .face{position:absolute;left:8px;top:8px;width:84px;height:84px;border-radius:50%;background:var(--tile-neutral);display:flex;align-items:center;justify-content:center}
+.level{position:absolute;left:32px;bottom:0;width:36px;height:22px;border-radius:999px;background:var(--accent);color:#071012;font-size:15px;font-weight:700;line-height:22px;text-align:center;box-shadow:0 0 0 3px var(--panel)}
+
+.abilities{align-items:flex-start;gap:10px}
+.ab{align-items:center;gap:7px}
+.tile{position:relative;width:62px;height:62px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-sizing:border-box}
+.tile.ready{background:var(--tile);box-shadow:0 0 0 2px var(--accent),inset 0 1px 0 rgba(255,255,255,.08)}
+.tile.locked{background:var(--tile-locked);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.tile.small{width:46px;height:46px;border-radius:12px}
+.key{position:absolute;left:5px;top:4px;font-size:11px;font-weight:700;line-height:1;color:var(--key)}
+.pips{display:flex;gap:3px;width:62px}.pip{flex:1;height:4px;border-radius:2px;background:#222d34}.pip.on{background:var(--accent)}
+.cost{display:flex;align-items:center;gap:4px;font-size:14px;font-weight:600;line-height:1;color:var(--cost)}
+.cost.locked{color:#6f7c85}
+.cd{position:absolute;inset:0;background:rgba(6,9,11,.74);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;border-radius:inherit}
+.vsep{width:1px;background:rgba(255,255,255,.08)}
+.caption{font-size:11px;color:var(--text-dim)}
+.caps{font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--text-dim)}
+
+/* Barras */
+.bars{gap:5px}
+.bar{position:relative;border-radius:10px;background:var(--well);overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.bar .fill{position:absolute;left:0;top:0;bottom:0}
+.bar .ticks{position:absolute;inset:0;display:grid}
+.bar .ticks span{border-right:1px solid rgba(7,10,12,.45)}
+.bar .ticks span:last-child{border-right:0}
+.bar .label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;text-shadow:0 1px 2px #000}
+.bar .regen{position:absolute;right:10px;top:0;bottom:0;display:flex;align-items:center;font-size:13px;font-weight:600;color:var(--hp-regen)}
+
+/* Inventario */
+.inv{gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,48px);gap:6px}
+.slot{position:relative;width:48px;height:48px;border-radius:12px;background:var(--slot);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.slot.item{background:#1b3352;display:flex;align-items:center;justify-content:center}
+.stack{position:absolute;right:5px;bottom:2px;font-size:13px;font-weight:700;text-shadow:0 1px 2px #000}
+.trinket{position:relative;width:44px;height:44px;border-radius:50%;background:#2b2a18;box-shadow:0 0 0 2px var(--accent);display:flex;align-items:center;justify-content:center}
+.badge{position:absolute;right:-4px;top:-4px;width:17px;height:17px;border-radius:50%;background:var(--accent);color:#071012;font-size:11px;font-weight:700;line-height:17px;text-align:center}
+.pill{width:44px;height:26px;border-radius:8px;background:var(--btn);border:0;padding:0;display:flex;align-items:center;justify-content:center;gap:4px;color:#dbe4ea;font-family:inherit;font-size:12px;font-weight:700;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.goldbox{display:flex;align-items:center;justify-content:space-between;height:34px;padding:0 10px 0 12px;border-radius:10px;background:var(--well);box-shadow:inset 0 0 0 1px rgba(245,195,91,.18)}
+
+/* Estadísticas */
+.stats{left:988px;bottom:14px;width:272px;gap:10px}
+.sgroup{gap:3px}
+.sgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px}
+.stat{display:flex;align-items:center;gap:7px;height:20px}
+.stat .dot{width:7px;height:7px;border-radius:50%;flex:none}
+.stat .lbl{font-size:13px;color:var(--text-dim);flex:1;white-space:nowrap}
+.stat .val{font-size:15px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="scene" id="hud">
+  <svg class="shape" width="1360" height="460" viewBox="0 0 1360 460" aria-hidden="true">
+    <path id="shapeFill" fill="#0d1216" fill-opacity=".97"></path>
+    <path id="shapeEdge" fill="none" stroke="rgba(255,255,255,.09)" stroke-width="1.5"></path>
+  </svg>
+  <div class="stats-tab" id="statsTab"></div>
+  <div class="accent-line" id="accentLine"></div>
+
+  <div class="abs col feed">
+    <div class="feed-line" style="opacity:.72"><span class="num feed-time">04:01</span><span class="ally">EST JimRising</span><span class="dim">[Campeón]</span><span>está en camino</span></div>
+    <div class="feed-line" style="opacity:.86"><span class="num feed-time">04:21</span><span class="ally">Ascendant</span><span class="dim">[Campeón]</span><span class="gold">Baliza de control</span></div>
+    <div class="feed-line"><span class="num feed-time">04:39</span><span class="ally">xdfaster500</span><span class="dim">[Campeón]</span><span class="gold">Baliza de control</span></div>
+  </div>
+
+  <div class="abs row buffs" id="buffs"></div>
+
+  <div class="abs row main">
+    <div class="col opts"><button class="opt" aria-label="Opción 1"></button><button class="opt" aria-label="Opción 2"></button><button class="opt" aria-label="Opción 3"></button></div>
+
+    <div class="portrait">
+      <svg width="100" height="100" viewBox="0 0 100 100" class="abs" style="left:0;top:0" role="img" aria-label="Experiencia">
+        <circle cx="50" cy="50" r="47" fill="none" stroke="#1d272e" stroke-width="4"/>
+        <circle id="xpArc" cx="50" cy="50" r="47" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+      </svg>
+      <div class="face"><svg width="44" height="44" viewBox="0 0 48 48" fill="none" stroke="#5d6d77" stroke-width="2"><circle cx="24" cy="18" r="8"/><path d="M8 42c2-9 9-13 16-13s14 4 16 13"/></svg></div>
+      <div class="level num" id="level">5</div>
+    </div>
+
+    <div class="col" style="gap:12px">
+      <div class="row abilities" id="abilities"></div>
+      <div class="col bars">
+        <div class="bar" style="height:20px">
+          <div class="fill" id="hpFill" style="background:var(--hp);border-radius:10px 0 0 10px"></div>
+          <div class="ticks" id="hpTicks"></div>
+          <div class="label num" id="hpLabel" style="font-size:15px"></div>
+          <div class="regen num" id="hpRegen"></div>
+        </div>
+        <div class="bar" style="height:13px;border-radius:7px">
+          <div class="fill" id="mpFill" style="background:var(--mana)"></div>
+          <div class="label num" id="mpLabel" style="font-size:12px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vsep" style="height:140px;background:rgba(255,255,255,.07)"></div>
+
+    <div class="col inv">
+      <div class="row" style="gap:10px">
+        <div class="grid3" id="items"></div>
+        <div class="col" style="align-items:center;gap:6px">
+          <div class="trinket">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f5d77a" stroke-width="2"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/></svg>
+            <span class="badge num">1</span>
+            <span class="num abs" style="left:-4px;bottom:-4px;font-size:11px;font-weight:700;color:var(--key)">4</span>
+          </div>
+          <button class="pill" aria-label="Regresar a base"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9cc8ff" stroke-width="2.6" stroke-linecap="round"><path d="M20 12a8 8 0 1 1-3-6.2"/><path d="M20 4v5h-5"/></svg>B</button>
+          <button class="pill" aria-label="Tienda"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f5c35b" stroke-width="2.6" stroke-linejoin="round"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg>P</button>
+        </div>
+      </div>
+      <div class="goldbox">
+        <div class="row" style="align-items:center;gap:8px">
+          <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#f5c35b"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"/></svg>
+          <span class="num" id="gold" style="font-size:23px;font-weight:700;color:var(--gold)"></span>
+        </div>
+        <svg width="22" height="22" viewBox="0 0 44 44" role="img" aria-label="Progreso"><circle cx="22" cy="22" r="17" fill="none" stroke="#1d272e" stroke-width="6"/><circle id="progArc" cx="22" cy="22" r="17" fill="none" stroke="var(--accent)" stroke-width="6" stroke-linecap="round" transform="rotate(-90 22 22)"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="abs col stats" id="stats"></div>
+</div>
+
+<script>
+/* ============ CONFIGURACIÓN ============ */
+const CONFIG = {
+  forma: 'Trapecio',          // 'Trapecio' | 'Escalonada' | 'Curva'
+  acento: '#46e3c1'           // verde menta (Nexo). Otras: #5aa9ff, #f5b546, #ff6fa8
+};
+
+/* ============ ESTADO DEL JUGADOR (datos de ejemplo de la captura) ============ */
+const STATE = {
+  level: 5, xp: 0.30,
+  hp: 612, hpMax: 1003, hpRegen: 3.9,
+  mp: 403, mpMax: 403,
+  gold: 1665, progress: 0.75,
+  buffs: [{c:'#1f4a3a',n:'0'},{c:'#4a2420',n:''},{c:'#4a3a1c',n:'600'},{c:'#1e2a4e',n:''},{c:'#18404a',n:''}],
+  abilities: [
+    {key:'Q', rank:3, max:5, cost:24,  locked:false, icon:'M5 19L19 5M9 20l11-11M4 15L15 4'},
+    {key:'W', rank:1, max:5, cost:50,  locked:false, icon:'M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z'},
+    {key:'E', rank:1, max:5, cost:60,  locked:false, icon:'M4 12h12M12 6l6 6-6 6M4 6v12'},
+    {key:'R', rank:0, max:3, cost:100, locked:true,  unlockLevel:6, icon:'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z'}
+  ],
+  spells: [
+    {key:'D', cd:87, bg:'#1d2f55', stroke:'#a9c8ff', icon:'M13 3L5 14h6l-1 7 8-11h-6z'},
+    {key:'F', cd:39, bg:'#4a2a1a', stroke:'#ffbf94', icon:'M12 3c3 4 6 6 6 10a6 6 0 0 1-12 0c0-3 2-4 3-7 1 2 2 3 3 3 0-2 0-4 0-6z'}
+  ],
+  items: [{stack:23}, null, null, null, null, null],
+  stats: [
+    {title:'OFENSIVA', items:[['Daño ataque','89','#ff9a4d'],['Poder hab.','0','#a58bff'],['Vel. ataque','0.72','#ffd36b'],['Crítico','0%','#ff5d5d'],['Pen. armad.','0 | 0%','#ff7a59'],['Pen. mágica','0 | 0%','#c58bff'],['Robo vida','0%','#ff5c86'],['Omnivamp.','0%','#e66bc4']]},
+    {title:'DEFENSA', items:[['Armadura','49','#ffcf6b'],['Res. mágica','38','#4fc8ff'],['Tenacidad','0%','#9a7bff'],['Cur./escudo','0%','#4fe39a']]},
+    {title:'UTILIDAD', items:[['Celeridad','10','#dfe6ea'],['Vel. mov.','348','#dfe6ea'],['Alcance','175','#b8c3ca'],['Regen.','19 | 55','#4fe39a']]}
+  ]
+};
+
+/* Polígonos de la forma (coordenadas en un lienzo de 1360×460) */
+const SHAPES = {
+  Trapecio:   'M18 461L66 276H1294L1342 461Z',
+  Escalonada: 'M18 461L66 276H936Q944 276 946 268L964 197Q966 189 974 189H1272Q1280 189 1282 197L1342 461Z',
+  Curva:      'M18 461L50 292Q680 248 1310 292L1342 461Z'
+};
+
+/* ============ RENDER ============ */
+const $ = id => document.getElementById(id);
+const svgIcon = (d, size, stroke) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
+const drop = c => `<svg width="9" height="12" viewBox="0 0 10 12"><path d="M5 0C3 3 1 5 1 7.5a4 4 0 0 0 8 0C9 5 7 3 5 0z" fill="${c}"/></svg>`;
+const isZero = v => /^0(\.0+)?%?$|^0 \| 0%$/.test(v);
+
+function render(){
+  document.documentElement.style.setProperty('--accent', CONFIG.acento);
+  const d = SHAPES[CONFIG.forma] || SHAPES.Trapecio;
+  $('shapeFill').setAttribute('d', d); $('shapeEdge').setAttribute('d', d);
+  $('statsTab').style.display = CONFIG.forma === 'Escalonada' ? 'none' : 'block';
+  $('accentLine').style.top = (CONFIG.forma === 'Curva' ? 269 : 275) + 'px';
+
+  $('buffs').innerHTML = STATE.buffs.map(b => `<div class="buff" style="background:${b.c}"><span class="num sh">${b.n}</span></div>`).join('');
+
+  const C = 2*Math.PI*47; $('xpArc').setAttribute('stroke-dasharray', `${C*STATE.xp} ${C}`);
+  $('level').textContent = STATE.level;
+
+  let h = `<div class="col ab" style="padding-top:8px"><div class="tile small" style="background:var(--tile-neutral);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dbe4ea" stroke-width="2"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/></svg></div><span class="caps">PASIVA</span></div>`;
+  for (const a of STATE.abilities){
+    const pips = Array.from({length:a.max},(_,i)=>`<span class="pip ${i<a.rank?'on':''}"></span>`).join('');
+    h += `<div class="col ab"><div class="tile ${a.locked?'locked':'ready'}">${svgIcon(a.icon,30,a.locked?'#56646d':'#f2f6f8')}
+      ${a.locked?`<span style="font-size:11px;font-weight:600;line-height:1;color:#aab4bb">Nv. ${a.unlockLevel}</span>`:''}<span class="key">${a.key}</span></div>
+      <div class="pips">${pips}</div><span class="cost num ${a.locked?'locked':''}">${drop(a.locked?'#6f7c85':'#8fbaff')}${a.cost}</span></div>`;
+  }
+  h += `<div class="vsep" style="height:62px;margin:0 4px"></div>`;
+  for (const s of STATE.spells){
+    h += `<div class="col ab" style="padding-top:8px"><div class="tile small" style="background:${s.bg};overflow:hidden">${svgIcon(s.icon,22,s.stroke)}
+      ${s.cd>0?`<div class="cd num">${s.cd}</div>`:''}<span class="key">${s.key}</span></div><span class="caption">${s.cd>0?'en espera':'listo'}</span></div>`;
+  }
+  $('abilities').innerHTML = h;
+
+  $('hpFill').style.width = (STATE.hp/STATE.hpMax*100)+'%';
+  const ticks = Math.ceil(STATE.hpMax/100);           // una marca cada 100 de vida
+  $('hpTicks').style.gridTemplateColumns = `repeat(${ticks},minmax(0,1fr))`;
+  $('hpTicks').innerHTML = '<span></span>'.repeat(ticks);
+  $('hpLabel').textContent = `${STATE.hp} / ${STATE.hpMax}`;
+  $('hpRegen').textContent = `+${STATE.hpRegen}`;
+  $('mpFill').style.width = (STATE.mp/STATE.mpMax*100)+'%';
+  $('mpLabel').textContent = `${STATE.mp} / ${STATE.mpMax}`;
+
+  $('items').innerHTML = STATE.items.map((it,i) => it
+    ? `<div class="slot item"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c4dcff" stroke-width="2" stroke-linejoin="round"><path d="M12 3l7 7-7 11-7-11z"/></svg><span class="stack num">${it.stack}</span><span class="key">${i+1}</span></div>`
+    : `<div class="slot"></div>`).join('');
+  $('gold').textContent = STATE.gold;
+  const P = 2*Math.PI*17; $('progArc').setAttribute('stroke-dasharray', `${P*STATE.progress} ${P}`);
+
+  $('stats').innerHTML = STATE.stats.map(g => `<div class="col sgroup"><span class="caps" style="letter-spacing:.14em">${g.title}</span><div class="sgrid">${
+    g.items.map(([l,v,c]) => `<div class="stat"><span class="dot" style="background:${c}"></span><span class="lbl">${l}</span><span class="val num" style="color:${isZero(v)?'var(--text-zero)':'var(--text)'}">${v}</span></div>`).join('')
+  }</div></div>`).join('');
+}
+render();
+</script>
+</body>
+</html>

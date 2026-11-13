@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMORPG · Resumen de mazmorra</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.78)"></div>
+<div style="position: absolute; left: 50px; top: 34px; display: flex; align-items: flex-end; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 4px"><span class="caps" style="color: #4fe39a">Completada</span><span style="font-size: 34px; font-weight: 700">Bóveda de Ferrum · Heroica</span></div>
+<span class="chip num" style="height: 30px; font-size: 14px">31:42</span>
+<span class="chip" style="height: 30px; font-size: 14px; color: #f5c35b; background: #2a2414">Récord del grupo</span>
+</div>
+
+<!-- Tu botín -->
+<div class="card" style="position: absolute; left: 50px; top: 130px; width: 420px; height: 600px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Tu botín</span>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 0 1.5px #46e3c1">
+<div style="display: flex; gap: 10px; align-items: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 2px #b47bff; flex: none"></span>
+<div style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700; color: #b47bff">Guja de Ferrum</span><span class="num" style="font-size: 12px; color: #4fe39a">▲ +8 nivel de objeto · +4,1 % daño</span></div>
+</div>
+
+<div style="display: flex; gap: 6px"><span class="chip" style="height: 28px; background: #46e3c1; color: #071012">Equipar</span><span class="chip" style="height: 28px">Comparar</span></div>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none">
+<div style="display: flex; gap: 10px; align-items: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 2px #5aa9ff; flex: none"></span>
+<div style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700; color: #5aa9ff">Hombreras del vado</span><span class="num" style="font-size: 12px; color: #9aa6ae">= mismo nivel que las tuyas</span></div>
+</div>
+<span style="font-size: 12px; color: #c3ccd3">Para Toro serían +12 de nivel de objeto.</span>
+<div style="display: flex; gap: 6px"><span class="chip" style="height: 28px; background: #18242b; color: #6cb8ff">Ofrecer a Toro</span><span class="chip" style="height: 28px">Desguazar</span></div>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: none">
+<div style="display: flex; gap: 10px; align-items: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 2px #46e3c1; flex: none"></span>
+<div style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700; color: #46e3c1">Esquirlas ×120</span><span class="num" style="font-size: 12px; color: #9aa6ae">al almacén del refugio</span></div>
+</div>
+
+<div style="display: flex; gap: 6px"><span class="chip" style="height: 28px; background: #18242b; color: #eef2f4">Enviar al refugio</span><span class="chip" style="height: 28px">Guardar</span></div>
+</div>
+
+</div>
+
+<!-- Momentos del grupo -->
+<div class="card" style="position: absolute; left: 490px; top: 130px; width: 460px; height: 600px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between"><span class="caps">Momentos del grupo</span><span style="font-size: 12px; color: #7c8992">sin tablas de daño, solo lo que sumó</span></div>
+
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: #121a20">
+<span style="width: 34px; height: 34px; border-radius: 50%; background: #5aa9ff; color: #071012; font-size: 13px; font-weight: 700; line-height: 34px; text-align: center; flex: none">T</span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">Toro</span><span style="font-size: 13px; color: #c3ccd3">Bloqueó 14 golpes de mecánica</span></div>
+<span class="chip" style="height: 28px; color: #eef2f4; background: #18242b">Elogiar</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: #121a20">
+<span style="width: 34px; height: 34px; border-radius: 50%; background: #4fe39a; color: #071012; font-size: 13px; font-weight: 700; line-height: 34px; text-align: center; flex: none">B</span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">Brisa</span><span style="font-size: 13px; color: #c3ccd3">Salvó al grupo 3 veces al límite</span></div>
+<span class="chip" style="height: 28px; color: #4fe39a; background: rgba(79,227,154,0.12)">Elogiado ✓</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: #121a20">
+<span style="width: 34px; height: 34px; border-radius: 50%; background: #ff9a4d; color: #071012; font-size: 13px; font-weight: 700; line-height: 34px; text-align: center; flex: none">K</span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">Kael (tú)</span><span style="font-size: 13px; color: #c3ccd3">11 interrupciones, ninguna perdida</span></div>
+<span class="chip" style="height: 28px; color: #000000; background: transparent"></span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: #121a20">
+<span style="width: 34px; height: 34px; border-radius: 50%; background: #b47bff; color: #071012; font-size: 13px; font-weight: 700; line-height: 34px; text-align: center; flex: none">N</span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">Nox</span><span style="font-size: 13px; color: #c3ccd3">Primera vez aquí · cero muertes</span></div>
+<span class="chip" style="height: 28px; color: #eef2f4; background: #18242b">Elogiar</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: #121a20">
+<span style="width: 34px; height: 34px; border-radius: 50%; background: #f5b546; color: #071012; font-size: 13px; font-weight: 700; line-height: 34px; text-align: center; flex: none">V</span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">Vela</span><span style="font-size: 13px; color: #c3ccd3">Encontró el cofre secreto</span></div>
+<span class="chip" style="height: 28px; color: #eef2f4; background: #18242b">Elogiar</span>
+</div>
+
+<span style="font-size: 12px; color: #7c8992">Puedes dar 1 elogio por mazmorra a cada compañero.</span>
+</div>
+
+<!-- Progreso -->
+<div class="card" style="position: absolute; left: 970px; top: 130px; width: 420px; height: 600px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Tu progreso</span>
+<div style="display: flex; flex-direction: column; gap: 5px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span>Nivel 32</span><span class="num" style="color: #c4b3ff">+18.400 XP</span></div><div style="position: relative; height: 8px; border-radius: 4px; background: #121a20"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 62%; border-radius: 4px; background: #5b4a9a"></div><div style="position: absolute; left: 62%; top: 0; bottom: 0; width: 16%; background: #9a7bff"></div></div></div>
+<span class="caps" style="margin-top: 4px">Afinidades que subieron</span>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 14px"><span style="width: 14px; height: 14px; border-radius: 50%; background: #b47bff"></span>Vacío<span class="num" style="margin-left: auto; font-weight: 700; color: #4fe39a">+2</span></div><div style="display: flex; align-items: center; gap: 8px; font-size: 14px"><span style="width: 14px; height: 14px; border-radius: 50%; background: #5aa9ff"></span>Pulso<span class="num" style="margin-left: auto; font-weight: 700; color: #4fe39a">+1</span></div><div style="display: flex; align-items: center; gap: 8px; font-size: 14px"><span style="width: 14px; height: 14px; border-radius: 50%; background: #ff7a45"></span>Calor<span class="num" style="margin-left: auto; font-weight: 700; color: #4fe39a">+1</span></div>
+<div class="sub" style="padding: 10px 12px; font-size: 13px; color: #c3ccd3; box-shadow: inset 0 0 0 1px rgba(245,195,91,0.4)">Usaste <span style="color: #eef2f4; font-weight: 700">Vacío + Pulso</span> 11 veces. Pista nueva en el Atlas.</div>
+<span class="caps" style="margin-top: 4px">También</span>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="color: #9aa6ae">Reputación Ferrum</span><span class="num" style="font-weight: 700">+350</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="color: #9aa6ae">Misión «Mensaje para Ferrum»</span><span style="font-weight: 700; color: #4fe39a">avanzó</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto">
+<button class="btn" style="height: 44px; background: #46e3c1; color: #071012; box-shadow: none">Repetir con el mismo grupo</button>
+<div style="display: flex; gap: 8px"><button class="btn" style="flex: 1">Volver al refugio</button><button class="btn" style="flex: 1">Salir al mundo</button></div>
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

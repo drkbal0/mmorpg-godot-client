@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Viajar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+<div class="card" style="position: absolute; left: 28px; top: 88px; width: 290px; height: 694px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 20px; font-weight: 700">Viajar</span><span style="font-size: 12px; color: #9aa6ae">No hay teletransporte: eliges cómo llegar.</span>
+<span class="caps" style="margin-top: 6px">Destinos</span>
+<sc-for list="{{dest}}" as="d" hint-placeholder-count="6"><div style="padding: 8px 10px; border-radius: 10px; background: {{d.bg}}; box-shadow: {{d.ring}}; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 14px; font-weight: 700">{{d.n}}</span><span class="num" style="font-size: 12px; color: #9aa6ae">{{d.d}}</span></div></sc-for>
+</div>
+<div class="card" style="position: absolute; left: 334px; top: 88px; width: 700px; height: 694px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; gap: 10px"><span style="font-size: 22px; font-weight: 700">Vado Roto → Bóveda de Ferrum</span><span class="num" style="font-size: 13px; color: #9aa6ae">3,2 km · cruza una brecha</span></div>
+<sc-for list="{{routes}}" as="r" hint-placeholder-count="4">
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: {{r.ring}}">
+<div style="display: flex; align-items: center; gap: 10px"><span style="font-size: 16px; font-weight: 700">{{r.n}}</span><span style="padding: 0 8px; height: 20px; border-radius: 10px; background: {{r.rb}}; color: {{r.rc}}; font-size: 11px; font-weight: 700; line-height: 20px">{{r.risk}}</span><span class="num" style="margin-left: auto; font-size: 20px; font-weight: 700">{{r.t}}</span><span class="num" style="width: 70px; text-align: right; font-size: 13px; color: #f5c35b">{{r.cost}}</span></div>
+<div style="display: flex; align-items: center; gap: 4px"><sc-for list="{{r.legs}}" as="l" hint-placeholder-count="3"><span style="flex: {{l.f}}; height: 6px; border-radius: 3px; background: {{l.c}}"></span></sc-for></div>
+<span style="font-size: 12px; color: #9aa6ae">{{r.d}}</span>
+</div>
+</sc-for>
+<div style="display: flex; gap: 8px; margin-top: auto"><button class="btn">Invitar al grupo al viaje</button><button class="btn" style="margin-left: auto; background: {{accent}}; color: #071012; box-shadow: none">Reservar caravana · sale en 6 min</button></div>
+</div>
+<div class="card" style="position: absolute; left: 1050px; top: 88px; width: 362px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Durante el viaje</span>
+<sc-for list="{{during}}" as="d" hint-placeholder-count="4"><div class="sub" style="padding: 10px 12px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{d.n}}</span><span style="font-size: 12px; line-height: 16px; color: #9aa6ae">{{d.d}}</span></div></sc-for>
+<span class="caps" style="margin-top: 6px">Rutas que conoces</span>
+<span style="font-size: 13px; line-height: 18px; color: #c3ccd3">Las postas y atajos se descubren caminando y entran a tu Códice. Un atajo secreto puede venderse como mapa.</span>
+<div class="sub" style="margin-top: auto; padding: 12px; font-size: 12px; line-height: 17px; color: #c3ccd3; box-shadow: inset 0 0 0 1px rgba(245,195,91,0.45)">Si te desconectas en una caravana, tu personaje llega a la posta y queda en zona segura.</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'Mapa' ? '#eef2f4' : '#9aa6ae', bar: label === 'Mapa' ? A : 'transparent' }));
+const leg = (f, c) => ({ f, c });
+const rt = (n, risk, lvl, t, cost, d, legs, sel) => ({ n, risk, t, cost, d, legs, rb: ['rgba(79,227,154,0.15)', 'rgba(245,195,91,0.15)', 'rgba(255,107,107,0.15)'][lvl], rc: ['#4fe39a', '#f5c35b', '#ff8a8a'][lvl], ring: sel ? 'inset 0 0 0 1.5px ' + A : 'none' });
+const extra = {
+dest: [['Bóveda de Ferrum', 'Mazmorra · tu grupo va ahí', 1], ['Puesto del Vado', 'Zona segura · 240 m'], ['Nexo', 'Ciudad · 2 postas'], ['El Nido', 'Tu depa · desde cualquier zona segura'], ['Coloso de Runavell', 'Evento 18:30 · 3 postas'], ['Atajo de la cueva', 'Secreto tuyo · solo tú lo ves']].map(([n, d, s]) => ({ n, d, bg: s ? '#1c2a33' : '#121a20', ring: s ? 'inset 0 0 0 1.5px ' + A : 'none' })),
+routes: [
+rt('Caravana', 'Segura', 0, '12 min', '40 oro', 'Sale cada 10 min del Puesto del Vado. Puedes abrir El Nido o el mercado mientras viajas.', [leg(1, '#9aa6ae'), leg(6, A), leg(1, '#9aa6ae')], true),
+rt('Montura', 'Riesgo medio', 1, '18 min', '', 'Por el camino real. Emboscadas posibles en el tramo de la brecha.', [leg(5, '#4fe39a'), leg(2, '#f5c35b'), leg(2, '#4fe39a')]),
+rt('A pie por tu atajo', 'Riesgo alto', 2, '26 min', '', 'Cruza la Cueva de ámbar (secreto tuyo). Recursos raros por el camino.', [leg(3, '#4fe39a'), leg(4, '#ff6b6b'), leg(2, '#4fe39a')]),
+rt('Dirigible de Ferrum', 'Segura', 0, '7 min', '120 oro', 'Sale a las horas en punto. Próxima: en 34 min.', [leg(1, '#9aa6ae'), leg(8, '#5aa9ff')])
+],
+during: [{ n: 'Ventana de El Nido', d: 'Gestiona tu depa mientras la caravana avanza.' }, { n: 'Charla de viaje', d: 'Chat con los pasajeros; buen sitio para armar grupo.' }, { n: 'Eventos de ruta', d: 'Una rueda rota o un asalto: decides si ayudas.' }, { n: 'Bajar antes', d: 'Puedes saltar en cualquier punto del camino.' }]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

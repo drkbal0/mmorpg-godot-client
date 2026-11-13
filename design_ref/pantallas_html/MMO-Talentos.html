@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMO-Talentos</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: #46e3c1; margin-right: 12px">MENÚ</span>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7"></path></svg>Equipo<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">C</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #eef2f4; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6"></path></svg>Poderes<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">N</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: #46e3c1"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5"></path></svg>Misiones<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">L</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"></path></svg>Mapa<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">M</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14"></path></svg>Códice<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">J</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5"></path></svg>Social<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">O</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6"></path></svg>Refugio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">H</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0"></path></svg>Comercio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">P</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- Subnavegación del refugio -->
+<div style="position: absolute; left: 28px; top: 80px; display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07)">
+<span style="padding: 0 14px; height: 32px; border-radius: 9px; background: #1c2a33; color: #eef2f4; font-size: 14px; font-weight: 600; line-height: 32px">Crisol</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Atlas</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Constelación</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Afinidades</span>
+</div>
+
+<!-- ============ IZQUIERDA: ENERGÍAS (n) ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 128px; width: 300px; height: 654px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 18px; font-weight: 700">Energías</span><span class="num" style="font-size: 12px; color: #9aa6ae">10 de 14 descubiertas</span></div>
+<div style="display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1); font-size: 13px; color: #7c8992"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>Buscar energía o efecto</div>
+<div style="display: flex; gap: 4px"><span class="chip" style="height: 24px; font-size: 12px; background: #1c2a33; color: #eef2f4">Afinidad</span><span class="chip" style="height: 24px; font-size: 12px">Uso reciente</span><span class="chip" style="height: 24px; font-size: 12px">A–Z</span></div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: #1c2a33; box-shadow: inset 0 0 0 1.5px #b47bff; opacity: 1">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: #b47bff; box-shadow: 0 0 10px #b47bff66; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Vacío</span><span class="num" style="color: #9aa6ae">nv 14</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: 60%; background: #b47bff"></div></div>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: #1c2a33; box-shadow: inset 0 0 0 1.5px #ff7a45; opacity: 1">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: #ff7a45; box-shadow: 0 0 10px #ff7a4566; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Calor</span><span class="num" style="color: #9aa6ae">nv 9</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: 30%; background: #ff7a45"></div></div>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: transparent; box-shadow: none; opacity: 1">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: #7fe0ff; box-shadow: 0 0 10px #7fe0ff66; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Eco</span><span class="num" style="color: #9aa6ae">nv 8</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: 75%; background: #7fe0ff"></div></div>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: transparent; box-shadow: none; opacity: 1">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: #5aa9ff; box-shadow: 0 0 10px #5aa9ff66; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Pulso</span><span class="num" style="color: #9aa6ae">nv 7</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: 20%; background: #5aa9ff"></div></div>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: transparent; box-shadow: none; opacity: 1">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: #f5b546; box-shadow: 0 0 10px #f5b54666; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Runa</span><span class="num" style="color: #9aa6ae">nv 5</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: 50%; background: #f5b546"></div></div>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: transparent; box-shadow: none; opacity: 1">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: #4fe39a; box-shadow: 0 0 10px #4fe39a66; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Savia</span><span class="num" style="color: #9aa6ae">nv 4</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: 10%; background: #4fe39a"></div></div>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: transparent; box-shadow: none; opacity: 1">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: #b8c3ca; box-shadow: 0 0 10px #b8c3ca66; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Hierro</span><span class="num" style="color: #9aa6ae">nv 3</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: 80%; background: #b8c3ca"></div></div>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: transparent; box-shadow: none; opacity: 1">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: #3f8fd6; box-shadow: 0 0 10px #3f8fd666; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Marea</span><span class="num" style="color: #9aa6ae">nv 2</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: 40%; background: #3f8fd6"></div></div>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: transparent; box-shadow: none; opacity: 1">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: #8a7aa8; box-shadow: 0 0 10px #8a7aa866; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Sombra</span><span class="num" style="color: #9aa6ae">nv 1</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: 15%; background: #8a7aa8"></div></div>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: transparent; box-shadow: none; opacity: 1">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: #fff1a8; box-shadow: 0 0 10px #fff1a866; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">Luz</span><span class="num" style="color: #9aa6ae">nv 1</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: 5%; background: #fff1a8"></div></div>
+</div>
+</div>
+
+<span style="font-size: 11px; color: #7c8992; margin-top: auto">La afinidad sube usando poderes de esa energía. Arrastra una energía al crisol.</span>
+</div>
+
+<!-- ============ CENTRO: CRISOL ============ -->
+<div class="card" style="position: absolute; left: 344px; top: 128px; width: 700px; height: 654px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 20px; font-weight: 700">Crisol de resonancia</span><span style="font-size: 13px; color: #9aa6ae">2 o 3 energías + forma + ritmo = un poder · <span style="color: #46e3c1">tu Constelación suma +12 % al Vacío</span></span></div>
+<div style="display: flex; gap: 22px">
+<div style="position: relative; width: 300px; height: 300px; flex: none">
+<svg width="300" height="300" viewBox="0 0 300 300" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+<circle cx="150" cy="150" r="128" fill="#0a0f13" stroke="#26333b" stroke-width="2"></circle>
+<circle cx="150" cy="150" r="128" fill="none" stroke="#46e3c1" stroke-width="2" stroke-dasharray="4 10" opacity="0.5"></circle>
+<path d="M150 88A62 62 0 0 0 150 212Z" fill="#b47bff" opacity="0.55"></path>
+<path d="M150 88A62 62 0 0 1 150 212Z" fill="#ff7a45" opacity="0.55"></path>
+<circle cx="150" cy="150" r="62" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="2"></circle>
+<path d="M150 112c18 10 22 26 10 38s-30 14-30 0 14-14 20-6" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.85"></path>
+</svg>
+
+<div style="position: absolute; left: 150px; top: 36px; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; margin-left: -32px; margin-top: -32px">
+<div style="width: 64px; height: 64px; border-radius: 50%; background: #b47bff; box-shadow: 0 0 18px #b47bff; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #9aa6ae"></div>
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; white-space: nowrap">Vacío</span>
+</div>
+
+<div style="position: absolute; left: 52px; top: 212px; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; margin-left: -32px; margin-top: -32px">
+<div style="width: 64px; height: 64px; border-radius: 50%; background: #ff7a45; box-shadow: 0 0 18px #ff7a45; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #9aa6ae"></div>
+<span style="font-size: 12px; font-weight: 700; color: #eef2f4; white-space: nowrap">Calor</span>
+</div>
+
+<div style="position: absolute; left: 248px; top: 212px; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; margin-left: -32px; margin-top: -32px">
+<div style="width: 64px; height: 64px; border-radius: 50%; background: #0d1216; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; font-size: 22px; color: #9aa6ae">+</div>
+<span style="font-size: 12px; font-weight: 700; color: #7c8992; white-space: nowrap">Opcional</span>
+</div>
+
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Forma</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span class="chip" style="height: 28px; background: #18242b; color: #c3ccd3; box-shadow: none">Proyectil</span><span class="chip" style="height: 28px; background: rgba(70,227,193,0.14); color: #eef2f4; box-shadow: inset 0 0 0 1.5px #46e3c1">Área</span><span class="chip" style="height: 28px; background: #18242b; color: #c3ccd3; box-shadow: none">Cono</span><span class="chip" style="height: 28px; background: #18242b; color: #c3ccd3; box-shadow: none">Aura</span><span class="chip" style="height: 28px; background: #18242b; color: #c3ccd3; box-shadow: none">Trampa</span></div>
+<span class="caps">Ritmo</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><span class="chip" style="height: 28px; background: #18242b; color: #c3ccd3; box-shadow: none">Instantáneo</span><span class="chip" style="height: 28px; background: rgba(70,227,193,0.14); color: #eef2f4; box-shadow: inset 0 0 0 1.5px #46e3c1">Canalizado</span><span class="chip" style="height: 28px; background: #18242b; color: #c3ccd3; box-shadow: none">Retardado</span></div>
+<div class="sub" style="padding: 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: inset 0 0 0 1.5px #f5c35b; margin-top: 4px">
+<div style="display: flex; align-items: center; gap: 8px"><span style="font-size: 20px; font-weight: 700">Grieta ígnea</span><span style="padding: 0 7px; height: 20px; border-radius: 10px; background: #f5c35b; color: #1a1205; font-size: 11px; font-weight: 700; line-height: 20px">¡NUEVA!</span></div>
+<span style="font-size: 13px; line-height: 18px; color: #c3ccd3">Canalizas una grieta que arde mientras la mantienes: 120 de daño por segundo en área y quema el escudo enemigo.</span>
+<span class="num" style="font-size: 12px; color: #9aa6ae">Potencia 78 = Vacío 14 + Calor 9 (tus afinidades)</span>
+</div>
+</div>
+</div>
+<div class="sub" style="padding: 10px 14px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: #c3ccd3">
+<span style="width: 8px; height: 8px; transform: rotate(45deg); background: #46e3c1; flex: none"></span>
+Pista: un herrero del Nexo dice que «el Pulso canta cuando le hablas con Eco».
+<span style="margin-left: auto; font-size: 12px; color: #7c8992">3 pistas sin probar</span>
+</div>
+<div style="display: flex; gap: 8px; margin-top: auto">
+<button class="btn">Probar en el maniquí</button>
+<button class="btn">Vaciar crisol</button>
+<button class="btn" style="margin-left: auto; background: #46e3c1; color: #071012; box-shadow: none">Equipar en la ranura 3</button>
+</div>
+</div>
+
+<!-- ============ DERECHA: CONJUNTO DE PODERES ============ -->
+<div class="card" style="position: absolute; left: 1060px; top: 128px; width: 352px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span class="caps">Conjunto «Daño»</span><span class="kbd">F1</span></div>
+<div class="sub" style="padding: 10px 12px; display: flex; align-items: center; gap: 10px; box-shadow: inset 0 0 0 1.5px #f5c35b">
+<span style="width: 42px; height: 42px; border-radius: 12px; background: #2a1d3a; flex: none"></span>
+<div style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 14px; font-weight: 700">Colapso dimensional</span><div style="display: flex; gap: 3px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #b47bff"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #b47bff"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #7fe0ff"></span></div></div>
+<span style="margin-left: auto; font-size: 11px; color: #f5c35b">NÚCLEO · R</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; box-shadow: none">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 13px; font-weight: 700; color: #eef2f4">Haz de grieta</span><span class="num" style="font-size: 11px; color: #7c8992">1</span></div>
+<div style="display: flex; gap: 3px"><span style="width: 11px; height: 11px; border-radius: 50%; background: #b47bff"></span></div>
+</div>
+
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; box-shadow: none">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 13px; font-weight: 700; color: #eef2f4">Paso del eco</span><span class="num" style="font-size: 11px; color: #7c8992">2</span></div>
+<div style="display: flex; gap: 3px"><span style="width: 11px; height: 11px; border-radius: 50%; background: #7fe0ff"></span><span style="width: 11px; height: 11px; border-radius: 50%; background: #b47bff"></span></div>
+</div>
+
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; box-shadow: inset 0 0 0 1.5px #46e3c1">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 13px; font-weight: 700; color: #46e3c1">Grieta ígnea</span><span class="num" style="font-size: 11px; color: #7c8992">3</span></div>
+<div style="display: flex; gap: 3px"><span style="width: 11px; height: 11px; border-radius: 50%; background: #b47bff"></span><span style="width: 11px; height: 11px; border-radius: 50%; background: #ff7a45"></span></div>
+</div>
+
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; box-shadow: none">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 13px; font-weight: 700; color: #eef2f4">Corte de fase</span><span class="num" style="font-size: 11px; color: #7c8992">4</span></div>
+<div style="display: flex; gap: 3px"><span style="width: 11px; height: 11px; border-radius: 50%; background: #b47bff"></span><span style="width: 11px; height: 11px; border-radius: 50%; background: #5aa9ff"></span></div>
+</div>
+
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; box-shadow: none">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 13px; font-weight: 700; color: #eef2f4">Muro de ceniza</span><span class="num" style="font-size: 11px; color: #7c8992">5</span></div>
+<div style="display: flex; gap: 3px"><span style="width: 11px; height: 11px; border-radius: 50%; background: #ff7a45"></span><span style="width: 11px; height: 11px; border-radius: 50%; background: #b8c3ca"></span></div>
+</div>
+
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; box-shadow: none">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 13px; font-weight: 700; color: #eef2f4">Chispa errante</span><span class="num" style="font-size: 11px; color: #7c8992">6</span></div>
+<div style="display: flex; gap: 3px"><span style="width: 11px; height: 11px; border-radius: 50%; background: #5aa9ff"></span><span style="width: 11px; height: 11px; border-radius: 50%; background: #ff7a45"></span></div>
+</div>
+
+</div>
+<span class="caps" style="margin-top: 6px">Ecos pasivos</span>
+<div style="display: flex; gap: 8px"><span class="chip" style="flex: 1">Armonía del vacío</span><span class="chip" style="flex: 1; color: #7c8992">+ vacío</span></div>
+<span class="caps" style="margin-top: 6px">Resonancia del conjunto</span>
+<div style="display: flex; height: 12px; border-radius: 6px; overflow: hidden"><span style="width: 42%; background: #b47bff"></span><span style="width: 25%; background: #ff7a45"></span><span style="width: 17%; background: #7fe0ff"></span><span style="width: 16%; background: #5aa9ff"></span></div>
+<span style="font-size: 13px; line-height: 18px; color: #c3ccd3">Vacío aparece en 4 poderes: <span style="color: #4fe39a; font-weight: 700">+8 % de potencia</span>. Un 5.º activaría «Eco del abismo».</span>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

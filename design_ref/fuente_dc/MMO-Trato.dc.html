@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Trato entre jugadores</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.66)"></div>
+<div class="card" style="position: absolute; left: 270px; top: 90px; width: 900px; height: 630px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: baseline; gap: 10px"><span style="font-size: 22px; font-weight: 700">Trato con Sasha</span><span style="font-size: 13px; color: #9aa6ae">Cara a cara · a 3 m · reputación: Confiable</span></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; flex: 1">
+<sc-for list="{{sides}}" as="s" hint-placeholder-count="2">
+<div class="sub" style="padding: 16px; display: flex; flex-direction: column; gap: 8px; box-shadow: {{s.ring}}">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 15px; font-weight: 700">{{s.n}}</span><span style="font-size: 12px; font-weight: 700; color: {{s.sc}}">{{s.st}}</span></div>
+<sc-for list="{{s.items}}" as="i" hint-placeholder-count="3"><div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: #0a0f13"><span style="width: 36px; height: 36px; border-radius: 9px; background: #070a0c; border: 1.5px solid {{i.c}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #56646d">{{i.q}}</span><div style="display: flex; flex-direction: column; flex: 1"><span style="font-size: 14px; font-weight: 700; color: {{i.tc}}">{{i.n}}</span><span style="font-size: 12px; color: {{i.dc}}">{{i.d}}</span></div></div></sc-for>
+<div style="display: flex; justify-content: space-between; font-size: 13px; margin-top: auto"><span style="color: #9aa6ae">Valor de mercado</span><span class="num" style="font-weight: 700; color: #f5c35b">{{s.val}}</span></div>
+</div>
+</sc-for>
+</div>
+<div class="sub" style="padding: 10px 14px; font-size: 13px; color: #c3ccd3; box-shadow: inset 0 0 0 1px rgba(245,195,91,0.45)">Te ofrecen algo que no conoces («???»). Verás su nombre solo si aceptas, o si Sasha te lo enseña antes. El trato está 1.090 oro a tu favor según el mercado.</div>
+<div style="display: flex; align-items: center; gap: 10px"><span style="font-size: 12px; color: #9aa6ae">Si alguien cambia algo, las dos confirmaciones se borran y hay 3 s de espera.</span><button class="btn" style="margin-left: auto">Cancelar</button><button class="btn">Pedir que lo enseñe</button><button class="btn" style="background: {{accent}}; color: #071012; box-shadow: none">Confirmar</button></div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'WORLD' ? '#eef2f4' : '#9aa6ae', bar: label === 'WORLD' ? A : 'transparent' }));
+const it = (n, d, c, unk, dc) => ({ n: unk ? '???' : n, d, c, q: unk ? '?' : '', tc: unk ? '#c39bff' : '#eef2f4', dc: dc || '#9aa6ae' });
+const extra = { sides: [
+{ n: 'Tú das', st: 'Sin confirmar', sc: '#9aa6ae', val: '1.410 oro', ring: 'none', items: [it('Mapa del hallazgo: Cueva de ámbar', 'Tu secreto · Sasha verá la ubicación', '#c39bff'), it('Lingote de ferrum ★★ ×6', 'De tu taller', '#4fe39a'), it('150 oro', '', '#f5c35b')] },
+{ n: 'Sasha da', st: 'Confirmado ✓', sc: '#4fe39a', val: '2.500 oro', ring: 'inset 0 0 0 1.5px #4fe39a', items: [it('', 'Objeto que no has descubierto · épico', '#b47bff', true), it('Seda ×5', 'La necesitas para el Nido de Pispa', '#b8c3ca', false, '#4fe39a'), it('Tónico triple ×3', '', '#4fe39a')] }
+] };
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

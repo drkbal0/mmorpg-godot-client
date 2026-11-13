@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Códice · Inversiones</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- Subnavegación del refugio -->
+<div style="position: absolute; left: 28px; top: 80px; display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07)">
+<sc-for list="{{sub}}" as="s" hint-placeholder-count="5"><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: {{s.bg}}; color: {{s.c}}; font-size: 14px; font-weight: 600; line-height: 32px">{{s.n}}</span></sc-for>
+</div>
+
+<div class="card" style="position: absolute; left: 28px; top: 128px; width: 996px; height: 654px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; gap: 12px">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+<div class="sub" style="flex: 1; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; color: #9aa6ae">{{k.l}}</span><span class="num" style="font-size: 24px; font-weight: 700; color: {{k.c}}">{{k.v}}</span><span class="num" style="font-size: 12px; color: {{k.dc}}">{{k.d}}</span></div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between"><span class="caps">Ganancias de los últimos 14 días</span><span style="font-size: 12px; color: #9aa6ae">oro por día</span></div>
+<svg width="952" height="104" viewBox="0 0 952 140" preserveAspectRatio="none" role="img" aria-label="Ganancias diarias en aumento">
+<line x1="0" y1="40" x2="952" y2="40" stroke="#26333b" stroke-dasharray="3 5"></line><line x1="0" y1="90" x2="952" y2="90" stroke="#26333b" stroke-dasharray="3 5"></line><line x1="0" y1="138" x2="952" y2="138" stroke="#26333b"></line>
+<polyline points="0,120 73,118 146,112 219,115 292,100 365,96 438,90 511,84 584,88 657,70 730,62 803,58 876,44 952,36" fill="none" stroke="#f5c35b" stroke-width="2.5" stroke-linejoin="round"></polyline>
+<circle cx="952" cy="36" r="4" fill="#f5c35b"></circle>
+</svg>
+</div>
+<div style="display: grid; grid-template-columns: 2fr 0.7fr 1fr 1fr 1fr; gap: 8px; padding: 0 12px; font-size: 12px; color: #9aa6ae"><span>Inversión</span><span>Parte</span><span>Tráfico</span><span style="text-align: right">Hoy</span><span style="text-align: right">Estado</span></div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+<div style="display: grid; grid-template-columns: 2fr 0.7fr 1fr 1fr 1fr; gap: 8px; align-items: center; height: 50px; padding: 0 12px; border-radius: 10px; background: #121a20">
+<div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">{{r.n}}</span><span style="font-size: 12px; color: #9aa6ae">{{r.w}}</span></div>
+<span class="num" style="font-size: 14px; font-weight: 700; color: #f5c35b">{{r.p}}</span>
+<div style="display: flex; gap: 2px"><sc-for list="{{r.t}}" as="b" hint-placeholder-count="5"><span style="width: 8px; height: {{b.h}}px; align-self: flex-end; border-radius: 2px; background: {{b.c}}"></span></sc-for></div>
+<span class="num" style="font-size: 15px; font-weight: 700; text-align: right">{{r.today}}</span>
+<span style="font-size: 12px; text-align: right; color: {{r.sc}}">{{r.s}}</span>
+</div>
+</sc-for>
+</div>
+
+<div class="card" style="position: absolute; left: 1040px; top: 128px; width: 372px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Por cobrar</span>
+<span class="num" style="font-size: 34px; font-weight: 700; color: #f5c35b">2.140 oro</span>
+<button class="btn" style="background: {{accent}}; color: #071012; box-shadow: none">Enviar al almacén del refugio</button>
+<span class="caps" style="margin-top: 8px">Ofertas pendientes</span>
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 4px; box-shadow: inset 0 0 0 1px rgba(245,195,91,0.45)"><span style="font-size: 14px; font-weight: 700">Taberna del Nexo</span><span style="font-size: 12px; color: #9aa6ae">1,5 % · misión: 2 pasos · expira en 5 días</span></div>
+<span class="caps" style="margin-top: 8px">Avisos</span>
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 4px; box-shadow: inset 0 0 0 1px rgba(255,138,138,0.45)"><span style="font-size: 14px; font-weight: 700; color: #ff8a8a">Tu secreto ya no es exclusivo</span><span style="font-size: 12px; line-height: 16px; color: #c3ccd3">Otro jugador encontró la «Cueva de ámbar». Tu mapa del hallazgo bajó de precio.</span></div>
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; font-weight: 700">Mapas del hallazgo en venta</span><span class="num" style="font-size: 12px; color: #9aa6ae">3 publicados · 7 vendidos · +1.260 oro</span></div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'Códice' ? '#eef2f4' : '#9aa6ae', bar: label === 'Códice' ? A : 'transparent' }));
+const sub = ['Entradas', 'Por decidir · 3', 'Mis secretos', 'Publicados', 'Inversiones', 'Propuestas a la wiki'].map((n) => n === 'Inversiones' ? { n, bg: '#1c2a33', c: '#eef2f4' } : { n, bg: 'transparent', c: '#9aa6ae' });
+const bars = (arr) => arr.map((h) => ({ h, c: h > 18 ? '#4fe39a' : (h > 10 ? '#f5c35b' : '#56646d') }));
+const extra = {
+sub,
+kpis: [
+{ l: 'Hoy', v: '+1.084', c: '#f5c35b', d: '▲ 18 % vs. ayer', dc: '#4fe39a' },
+{ l: 'Esta semana', v: '+6.920', c: '#eef2f4', d: '4 puestos activos', dc: '#9aa6ae' },
+{ l: 'Valor de tus participaciones', v: '41.000', c: '#eef2f4', d: 'precio de mercado', dc: '#9aa6ae' },
+{ l: 'Conocimiento publicado', v: '23', c: '#4fe39a', d: '+1 % en ventas de 4 objetos', dc: '#9aa6ae' }
+],
+rows: [
+{ n: 'Puesto de Orla', w: 'Vado Roto · Verdalia', p: '2 %', t: bars([10, 14, 18, 22, 24]), today: '+412', s: 'Activo', sc: '#4fe39a' },
+{ n: 'Forja de Bram', w: 'Ferrum', p: '1,5 %', t: bars([20, 22, 21, 24, 23]), today: '+380', s: 'Activo', sc: '#4fe39a' },
+{ n: 'Herbolaria de Ysel', w: 'Bosque fósil', p: '2 %', t: bars([12, 10, 9, 8, 7]), today: '+96', s: 'Poco tráfico', sc: '#f5c35b' },
+{ n: 'Cartógrafo nómada', w: 'Se mueve cada día', p: '3 %', t: bars([6, 18, 4, 22, 14]), today: '+196', s: 'Activo', sc: '#4fe39a' },
+{ n: 'Taller rúnico', w: 'Runavell', p: '—', t: bars([2, 2, 2, 2, 2]), today: '—', s: 'Misión 2/3', sc: '#9aa6ae' }
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

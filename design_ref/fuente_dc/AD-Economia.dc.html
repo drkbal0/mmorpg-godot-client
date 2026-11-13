@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Consola · Economía</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+
+<div style="position: absolute; inset: 0; background: #0b0f13"></div>
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 56px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: #0d1216; box-shadow: inset 0 -1px 0 rgba(255,255,255,0.08), inset 0 3px 0 #ff9a4d">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: #ff9a4d; margin-right: 14px">CONSOLA</span>
+<sc-for list="{{atabs}}" as="t" hint-placeholder-count="6"><span style="padding: 0 12px; height: 34px; border-radius: 9px; background: {{t.bg}}; color: {{t.c}}; font-size: 14px; font-weight: 600; line-height: 34px">{{t.n}}</span></sc-for>
+<span class="chip" style="margin-left: auto; color: #ff9a4d">{{role}}</span>
+<span style="font-size: 12px; color: #9aa6ae; margin-left: 8px">Todo queda en el registro de auditoría</span>
+</div>
+<div style="position: absolute; left: 24px; right: 24px; top: 72px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px"><sc-for list="{{kpis}}" as="k" hint-placeholder-count="4"><div class="card" style="padding: 14px 16px; border-radius: 14px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 12px; color: #9aa6ae">{{k.l}}</span><span class="num" style="font-size: 26px; font-weight: 700">{{k.v}}</span><span class="num" style="font-size: 12px; color: {{k.dc}}">{{k.d}}</span></div></sc-for></div>
+<div class="card" style="position: absolute; left: 24px; top: 178px; width: 680px; bottom: 24px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 9px">
+<span class="caps">De dónde sale y a dónde va el oro · hoy</span>
+<sc-for list="{{flows}}" as="f" hint-placeholder-count="9"><div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span style="width: 190px; color: #c3ccd3">{{f.n}}</span><div style="flex: 1; height: 12px; border-radius: 4px; background: #121a20"><div style="height: 12px; border-radius: 4px; width: {{f.p}}%; background: {{f.c}}"></div></div><span class="num" style="width: 70px; text-align: right; font-weight: 700">{{f.v}}</span></div></sc-for>
+<span style="font-size: 12px; color: #7c8992; margin-top: auto">Verde: oro que entra al mundo. Naranja: oro que sale. La parte de los socios de PNJ no crea oro: sale de la comisión de la tienda.</span>
+</div>
+<div class="card" style="position: absolute; left: 720px; top: 178px; right: 24px; height: 300px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px">
+<span class="caps">Socios de PNJ con más ingresos</span>
+<sc-for list="{{inv}}" as="i" hint-placeholder-count="4"><div style="display: grid; grid-template-columns: 1.4fr 1.4fr 0.6fr 0.8fr 1fr; gap: 8px; align-items: center; height: 42px; padding: 0 12px; border-radius: 10px; background: #121a20; font-size: 13px"><span style="font-weight: 700">{{i.p}}</span><span style="color: #c3ccd3">{{i.s}}</span><span class="num" style="color: #f5c35b">{{i.pc}}</span><span class="num" style="font-weight: 700">{{i.v}}</span><span style="color: {{i.fc}}; text-align: right">{{i.f}}</span></div></sc-for>
+</div>
+<div class="card" style="position: absolute; left: 720px; top: 494px; right: 24px; bottom: 24px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px">
+<span class="caps">Palancas · cada cambio pide motivo y 2.ª firma</span>
+<sc-for list="{{levers}}" as="l" hint-placeholder-count="4"><div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span style="flex: 1; color: #c3ccd3">{{l.n}}</span><span class="num" style="padding: 0 10px; height: 28px; border-radius: 8px; background: #070a0c; line-height: 28px; font-weight: 700">{{l.v}}</span></div></sc-for>
+<button class="btn" style="margin-top: auto; align-self: flex-start">Simular el cambio antes de aplicarlo</button>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'BARE' ? '#eef2f4' : '#9aa6ae', bar: label === 'BARE' ? A : 'transparent' }));
+const atab = (act) => ['Resumen', 'Moderación', 'Personajes especiales', 'Economía', 'Wiki', 'Registros'].map((n) => n === act ? { n, bg: '#1c2a33', c: '#eef2f4' } : { n, bg: 'transparent', c: '#9aa6ae' });
+const sw = (on) => ({ cls: on ? 'on' : 'off', bg: on ? '#ff9a4d' : '#2a363d' });
+const fl = (n, v, p, out) => ({ n, v, p, c: out ? '#ff9a4d' : '#4fe39a' });
+const extra = { atabs: atab('Economía'), role: 'Administradora · Mira',
+kpis: [{ l: 'Oro en circulación', v: '412 M', d: '▲ 0,8 % esta semana', dc: '#4fe39a' }, { l: 'Creado / destruido hoy', v: '1,04', d: 'sano entre 0,9 y 1,1', dc: '#4fe39a' }, { l: 'Pagado a socios de PNJ', v: '1,2 M', d: '318 socios activos', dc: '#9aa6ae' }, { l: 'Mapas del hallazgo vendidos', v: '2.140', d: 'precio medio 180 oro', dc: '#9aa6ae' }],
+flows: [fl('Misiones y botín', '18,2 M', 90), fl('Venta a PNJ', '6,4 M', 34), fl('Bonus por publicar en la wiki', '0,9 M', 6), fl('Expediciones de El Nido', '2,1 M', 12), fl('Reparaciones', '7,8 M', 40, 1), fl('Caravanas y dirigibles', '5,2 M', 27, 1), fl('Comisión del mercado', '6,9 M', 36, 1), fl('Mejoras de El Nido', '4,4 M', 23, 1), fl('Cuotas de socio', '2,2 M', 12, 1)],
+inv: [{ p: 'unu', s: 'Puesto de Orla', pc: '2 %', v: '41.200', f: 'revisar: pico 40×', fc: '#f5c35b' }, { p: 'Sasha', s: 'Dirigible de Ferrum', pc: '1 %', v: '38.900', f: 'normal', fc: '#9aa6ae' }, { p: 'Kael', s: 'Forja de Bram', pc: '1,5 %', v: '12.400', f: 'normal', fc: '#9aa6ae' }, { p: 'Joao', s: 'Cartógrafo nómada', pc: '3 %', v: '9.800', f: 'normal', fc: '#9aa6ae' }],
+levers: [{ n: 'Comisión del mercado', v: '5 %' }, { n: 'Tope de parte para socios', v: '3 %' }, { n: 'Bonus por publicar', v: '500 oro' }, { n: 'Precio de la caravana', v: '40 oro' }] };
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

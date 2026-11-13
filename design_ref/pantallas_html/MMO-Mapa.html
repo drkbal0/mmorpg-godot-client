@@ -1,0 +1,259 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMO-Mapa</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: #46e3c1; margin-right: 12px">MENÚ</span>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7"></path></svg>Equipo<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">C</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6"></path></svg>Poderes<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">N</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5"></path></svg>Misiones<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">L</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #eef2f4; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"></path></svg>Mapa<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">M</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: #46e3c1"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14"></path></svg>Códice<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">J</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5"></path></svg>Social<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">O</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6"></path></svg>Refugio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">H</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0"></path></svg>Comercio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">P</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- ============ IZQUIERDA: UNIVERSOS + CAPAS ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 88px; width: 300px; height: 694px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Universos</span>
+
+<div class="sub" style="padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 0 0 1.5px #46e3c1">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #9fe36a; flex: none"></span>
+<span style="font-size: 16px; font-weight: 700">Verdalia</span>
+<span style="font-size: 12px; color: #9aa6ae">aventura</span>
+<span style="margin-left: auto; font-size: 12px; font-weight: 600; color: #46e3c1">Estás aquí</span>
+</div>
+<span style="font-size: 13px; color: #c3ccd3">Bosques vivos. Noche en 20 min.</span>
+<div style="display: flex; align-items: center; gap: 8px"><div style="flex: 1; height: 4px; border-radius: 2px; background: #070a0c"><div style="height: 4px; border-radius: 2px; width: 64%; background: #9fe36a"></div></div><span class="num" style="font-size: 11px; color: #9aa6ae">64 % explorado</span></div>
+</div>
+
+<div class="sub" style="padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #5aa9ff; flex: none"></span>
+<span style="font-size: 16px; font-weight: 700">Ferrum</span>
+<span style="font-size: 12px; color: #9aa6ae">tecnológico</span>
+<span style="margin-left: auto; font-size: 12px; font-weight: 600; color: #b47bff">Brecha 12 min</span>
+</div>
+<span style="font-size: 13px; color: #c3ccd3">La brecha conecta con tu zona.</span>
+<div style="display: flex; align-items: center; gap: 8px"><div style="flex: 1; height: 4px; border-radius: 2px; background: #070a0c"><div style="height: 4px; border-radius: 2px; width: 31%; background: #5aa9ff"></div></div><span class="num" style="font-size: 11px; color: #9aa6ae">31 % explorado</span></div>
+</div>
+
+<div class="sub" style="padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #f5b546; flex: none"></span>
+<span style="font-size: 16px; font-weight: 700">Runavell</span>
+<span style="font-size: 12px; color: #9aa6ae">rúnico</span>
+<span style="margin-left: auto; font-size: 12px; font-weight: 600; color: #ff9a4d">Inestable</span>
+</div>
+<span style="font-size: 13px; color: #c3ccd3">Eventos de botín doble hoy.</span>
+<div style="display: flex; align-items: center; gap: 8px"><div style="flex: 1; height: 4px; border-radius: 2px; background: #070a0c"><div style="height: 4px; border-radius: 2px; width: 12%; background: #f5b546"></div></div><span class="num" style="font-size: 11px; color: #9aa6ae">12 % explorado</span></div>
+</div>
+
+<div class="sub" style="padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="width: 10px; height: 10px; border-radius: 50%; background: #46e3c1; flex: none"></span>
+<span style="font-size: 16px; font-weight: 700">Nexo</span>
+<span style="font-size: 12px; color: #9aa6ae">ciudad central</span>
+<span style="margin-left: auto; font-size: 12px; font-weight: 600; color: #9aa6ae"></span>
+</div>
+<span style="font-size: 13px; color: #c3ccd3">Mercado nómada a las 19:00.</span>
+<div style="display: flex; align-items: center; gap: 8px"><div style="flex: 1; height: 4px; border-radius: 2px; background: #070a0c"><div style="height: 4px; border-radius: 2px; width: 88%; background: #46e3c1"></div></div><span class="num" style="font-size: 11px; color: #9aa6ae">88 % explorado</span></div>
+</div>
+
+<span class="caps" style="margin-top: 6px">Capas</span>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+<span style="width: 8px; height: 8px; border-radius: 2px; background: #f5c35b"></span>Misiones<span class="sw on" style="margin-left: auto; background: #46e3c1"></span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+<span style="width: 8px; height: 8px; border-radius: 2px; background: #6cb8ff"></span>Grupo y gremio<span class="sw on" style="margin-left: auto; background: #46e3c1"></span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+<span style="width: 8px; height: 8px; border-radius: 2px; background: #ff6b6b"></span>Eventos<span class="sw on" style="margin-left: auto; background: #46e3c1"></span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+<span style="width: 8px; height: 8px; border-radius: 2px; background: #4fe39a"></span>Recursos<span class="sw off" style="margin-left: auto; background: #2a363d"></span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+<span style="width: 8px; height: 8px; border-radius: 2px; background: #b47bff"></span>Mazmorras<span class="sw off" style="margin-left: auto; background: #2a363d"></span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px">
+<span style="width: 8px; height: 8px; border-radius: 2px; background: #dfe6ea"></span>Comercio<span class="sw off" style="margin-left: auto; background: #2a363d"></span>
+</div>
+
+</div>
+
+<!-- ============ CENTRO: MAPA ============ -->
+<div class="card" style="position: absolute; left: 344px; top: 88px; width: 760px; height: 694px; overflow: hidden">
+<div class="scene" style="position: absolute; inset: 0; background-size: 1500px auto; background-position: 30% 40%; filter: saturate(0.8)"></div>
+<svg width="760" height="694" viewBox="0 0 760 694" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+<path d="M0 0H760V160C620 210 560 120 430 150S250 90 160 120 40 80 0 110Z" fill="rgba(4,6,8,0.78)"></path>
+<path d="M520 694C560 600 650 590 760 560V694Z" fill="rgba(4,6,8,0.78)"></path>
+<polyline points="300,420 230,360 250,280 380,250 470,300 590,250" fill="none" stroke="#46e3c1" stroke-width="3" stroke-dasharray="8 7" stroke-linecap="round"></polyline>
+<circle cx="560" cy="430" r="46" fill="rgba(255,107,107,0.16)" stroke="#ff6b6b" stroke-width="2"></circle>
+<circle cx="590" cy="250" r="22" fill="rgba(180,123,255,0.25)" stroke="#b47bff" stroke-width="2"></circle>
+</svg>
+<span class="sh" style="position: absolute; left: 20px; top: 16px; font-size: 14px; color: #c3ccd3">Verdalia › <span style="color: #eef2f4; font-weight: 600">Bosque de la brecha</span></span>
+<span class="sh" style="position: absolute; left: 330px; top: 70px; font-size: 13px; font-style: italic; color: #9aa6ae">Zona sin explorar</span>
+<span class="sh caps" style="position: absolute; left: 90px; top: 520px; color: #dbe4ea; font-size: 13px">Claro de los Ecos</span>
+<span class="sh caps" style="position: absolute; left: 420px; top: 360px; color: #dbe4ea; font-size: 13px">Vado Roto</span>
+<svg width="26" height="26" viewBox="0 0 24 24" style="position: absolute; left: 287px; top: 407px" aria-hidden="true"><path d="M12 2l7 19-7-4-7 4z" fill="#ffffff" stroke="#0d1216" stroke-width="1.5"></path></svg>
+
+<div class="num" style="position: absolute; left: 217px; top: 347px; width: 26px; height: 26px; border-radius: 50%; background: #f5c35b; color: #1a1205; font-size: 13px; font-weight: 700; line-height: 26px; text-align: center; box-shadow: 0 0 0 3px #0d1216">1</div>
+
+<div class="num" style="position: absolute; left: 367px; top: 237px; width: 26px; height: 26px; border-radius: 50%; background: #f5c35b; color: #1a1205; font-size: 13px; font-weight: 700; line-height: 26px; text-align: center; box-shadow: 0 0 0 3px #0d1216">2</div>
+
+<div class="num" style="position: absolute; left: 577px; top: 237px; width: 26px; height: 26px; border-radius: 50%; background: #f5c35b; color: #1a1205; font-size: 13px; font-weight: 700; line-height: 26px; text-align: center; box-shadow: 0 0 0 3px #0d1216">3</div>
+
+<div style="position: absolute; left: 340px; top: 470px; width: 10px; height: 10px; border-radius: 50%; background: #6cb8ff; box-shadow: 0 0 0 2px #0d1216"></div>
+<div style="position: absolute; left: 356px; top: 488px; width: 10px; height: 10px; border-radius: 50%; background: #6cb8ff; box-shadow: 0 0 0 2px #0d1216"></div>
+<div class="sh" style="position: absolute; left: 512px; top: 482px; display: flex; flex-direction: column; align-items: center; font-size: 13px"><span style="font-weight: 700; color: #ffb3b3">Invasión</span><span class="num" style="color: #dbe4ea">en 14 min</span></div>
+<div class="sh" style="position: absolute; left: 612px; top: 236px; display: flex; flex-direction: column; font-size: 13px"><span style="font-weight: 700; color: #dcc3ff">Portal a Ferrum</span><span style="color: #dbe4ea">brecha abierta</span></div>
+<div style="position: absolute; left: 16px; bottom: 16px; display: flex; gap: 12px; padding: 8px 12px; border-radius: 10px; background: rgba(9,13,16,0.86); font-size: 12px; color: #c3ccd3">
+<span style="display: flex; align-items: center; gap: 5px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #f5c35b"></span>Ruta</span>
+<span style="display: flex; align-items: center; gap: 5px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #6cb8ff"></span>Grupo</span>
+<span style="display: flex; align-items: center; gap: 5px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #ff6b6b"></span>Evento</span>
+<span style="display: flex; align-items: center; gap: 5px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #b47bff"></span>Portal</span>
+</div>
+<div style="position: absolute; right: 16px; bottom: 16px; display: flex; flex-direction: column; gap: 6px">
+<button class="btn" style="width: 36px; padding: 0; font-size: 18px" aria-label="Acercar">+</button>
+<button class="btn" style="width: 36px; padding: 0; font-size: 18px" aria-label="Alejar">−</button>
+</div>
+<div style="position: absolute; right: 16px; top: 14px; display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 10px; background: rgba(9,13,16,0.86); font-size: 13px; color: #c3ccd3">Clic derecho: fijar destino <span class="kbd">Shift</span> + clic: añadir a la ruta</div>
+</div>
+
+<!-- ============ DERECHA: RUTA + EVENTOS ============ -->
+<div class="card" style="position: absolute; left: 1120px; top: 88px; width: 292px; height: 694px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Ruta planificada</span>
+
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="num" style="width: 22px; height: 22px; border-radius: 50%; background: #f5c35b; color: #1a1205; font-size: 12px; font-weight: 700; line-height: 22px; text-align: center; flex: none">1</span>
+<div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Hierbas de la brecha</span><span class="num" style="font-size: 12px; color: #9aa6ae">120 m · 4/8 recogidas</span></div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="num" style="width: 22px; height: 22px; border-radius: 50%; background: #f5c35b; color: #1a1205; font-size: 12px; font-weight: 700; line-height: 22px; text-align: center; flex: none">2</span>
+<div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Sellar la grieta menor</span><span class="num" style="font-size: 12px; color: #9aa6ae">+210 m · jefe élite</span></div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px">
+<span class="num" style="width: 22px; height: 22px; border-radius: 50%; background: #f5c35b; color: #1a1205; font-size: 12px; font-weight: 700; line-height: 22px; text-align: center; flex: none">3</span>
+<div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Portal a Ferrum</span><span class="num" style="font-size: 12px; color: #9aa6ae">+260 m · entrega</span></div>
+</div>
+
+<div class="sub" style="display: flex; justify-content: space-between; padding: 10px 12px; font-size: 13px">
+<div style="display: flex; flex-direction: column"><span style="color: #9aa6ae">A pie</span><span class="num" style="font-size: 18px; font-weight: 700">6 min</span></div>
+<div style="display: flex; flex-direction: column"><span style="color: #9aa6ae">Montura</span><span class="num" style="font-size: 18px; font-weight: 700; color: #46e3c1">2 min</span></div>
+<div style="display: flex; flex-direction: column"><span style="color: #9aa6ae">Orden</span><span style="font-size: 18px; font-weight: 700">óptimo</span></div>
+</div>
+<button class="btn" style="background: #46e3c1; color: #071012; box-shadow: none">Seguir ruta en el mundo</button>
+<span class="caps" style="margin-top: 8px">Eventos próximos</span>
+
+<div style="display: flex; gap: 10px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px"><span class="num" style="font-size: 13px; font-weight: 700">18:30</span><span style="width: 2px; flex: 1; background: #26333b"></span></div>
+<div style="display: flex; flex-direction: column; gap: 3px; padding-bottom: 8px; flex: 1">
+<span style="font-size: 14px; font-weight: 600; color: #f5b546">Coloso de Runavell</span>
+<span style="font-size: 12px; color: #9aa6ae">Jefe del mundo · otro universo</span>
+<span class="chip" style="height: 22px; font-size: 12px; align-self: flex-start">Avisarme 5 min antes</span>
+</div>
+</div>
+
+<div style="display: flex; gap: 10px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px"><span class="num" style="font-size: 13px; font-weight: 700">18:45</span><span style="width: 2px; flex: 1; background: #26333b"></span></div>
+<div style="display: flex; flex-direction: column; gap: 3px; padding-bottom: 8px; flex: 1">
+<span style="font-size: 14px; font-weight: 600; color: #ff8a8a">Invasión del Vado Roto</span>
+<span style="font-size: 12px; color: #9aa6ae">Aquí · 6 grupos interesados</span>
+<span class="chip" style="height: 22px; font-size: 12px; align-self: flex-start">Unirme a la cola</span>
+</div>
+</div>
+
+<div style="display: flex; gap: 10px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px"><span class="num" style="font-size: 13px; font-weight: 700">19:00</span><span style="width: 2px; flex: 1; background: #26333b"></span></div>
+<div style="display: flex; flex-direction: column; gap: 3px; padding-bottom: 8px; flex: 1">
+<span style="font-size: 14px; font-weight: 600; color: #46e3c1">Mercado nómada</span>
+<span style="font-size: 12px; color: #9aa6ae">Nexo · 1 hora</span>
+<span class="chip" style="height: 22px; font-size: 12px; align-self: flex-start">Ver catálogo</span>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMORPG · HUD de raid (sanador)</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.25)"></div>
+
+<!-- Jefe -->
+<div style="position: absolute; left: 470px; top: 20px; width: 500px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: baseline; gap: 10px" class="sh"><span style="font-size: 17px; font-weight: 700">Coloso de Runavell</span><span style="font-size: 13px; color: #f5c35b">Fase 2</span><span class="num" style="margin-left: auto; font-size: 13px">04:12</span></div>
+<div style="position: relative; height: 14px; border-radius: 7px; background: rgba(7,10,12,0.9); overflow: hidden"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 43%; background: #e25555"></div><div class="num" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; text-shadow: 0 1px 2px #000000">43 %</div></div>
+</div>
+
+<!-- Alerta central -->
+<div style="position: absolute; left: 50%; top: 170px; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; padding: 14px 26px; border-radius: 16px; background: rgba(58,29,34,0.92); box-shadow: inset 0 0 0 2px #ff6b6b, 0 10px 40px rgba(0,0,0,0.5)">
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ffb3b3" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 26px; font-weight: 700">Todos a la izquierda</span><span style="font-size: 14px; color: #ffc9c9">Terremoto rúnico · también suena desde la derecha</span></div>
+<span class="num" style="font-size: 44px; font-weight: 700; color: #ff8a8a; margin-left: 8px">3</span>
+</div>
+
+<!-- Marcos de raid -->
+<div style="position: absolute; left: 40px; top: 290px; display: flex; flex-direction: column; gap: 10px">
+<div class="sh" style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span class="caps" style="color: #c3ccd3">Raid · 20</span><span style="color: #9aa6ae">Clic: Sanar · Clic der.: Escudo · Shift+clic: Purificar</span></div>
+<div style="display: grid; grid-template-columns: repeat(4, 128px); gap: 10px">
+
+<div style="display: flex; flex-direction: column; gap: 3px">
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 2px #ff6b6b; opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 58%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 58%; width: 12%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 28%; width: 30%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Toro</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">58 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #5aa9ff"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 92%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 92%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 92%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Brisa</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">92 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #4fe39a"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 61%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 61%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 41%; width: 20%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Kael</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">61 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 2px #46e3c1; opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 40%; background: #7a5bd0"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 40%; width: 18%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 40%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Nox</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">40 %</span>
+<span style="position: absolute; right: 7px; top: 7px; width: 11px; height: 11px; transform: rotate(45deg); background: #b47bff; box-shadow: 0 0 0 2px #070a0c"></span>
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 0.4">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 100%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 100%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Vela</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">42 m</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 3px">
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 88%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 88%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 88%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Ulric</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">88 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #5aa9ff"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 74%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 74%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 74%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Sasha</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">74 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #4fe39a"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 30%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 30%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 8%; width: 22%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Dren</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">30 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 0.6">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 0%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 0%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 0%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Ivo</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">Muerto · resucitar</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 95%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 95%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 95%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Lune</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">95 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 3px">
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 100%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 100%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Mira</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">100 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #4fe39a"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 66%; background: #7a5bd0"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 66%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 66%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Joao</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">66 %</span>
+<span style="position: absolute; right: 7px; top: 7px; width: 11px; height: 11px; transform: rotate(45deg); background: #b47bff; box-shadow: 0 0 0 2px #070a0c"></span>
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 81%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 81%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 81%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Aren</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">81 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 52%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 52%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 27%; width: 25%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Pim</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">52 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 90%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 90%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 90%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Kora</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">90 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 3px">
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 77%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 77%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 77%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Tess</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">77 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #4fe39a"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 45%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 45%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 15%; width: 30%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Bram</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">45 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 100%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 100%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 100%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Oda</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">100 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 63%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 63%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 63%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Rhea</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">63 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+<div style="position: relative; height: 42px; border-radius: 8px; background: rgba(7,10,12,0.9); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); opacity: 1">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 88%; background: #3ccf73"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 88%; width: 0%; background: rgba(60,207,115,0.35)"></div>
+<div style="position: absolute; top: 0; bottom: 0; left: 88%; width: 0%; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.75) 0 4px, rgba(245,195,91,0.2) 4px 8px)"></div>
+<span style="position: absolute; left: 8px; top: 5px; font-size: 13px; font-weight: 700; text-shadow: 0 1px 2px #000000">Finn</span>
+<span class="num" style="position: absolute; left: 8px; bottom: 4px; font-size: 11px; color: #dbe4ea; text-shadow: 0 1px 2px #000000">88 %</span>
+
+<span style="position: absolute; right: 6px; bottom: 5px; width: 8px; height: 8px; border-radius: 2px; background: #ff9a4d"></span>
+</div>
+
+</div>
+
+</div>
+<div class="sh" style="display: flex; gap: 14px; font-size: 12px; color: #c3ccd3">
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 8px; background: repeating-linear-gradient(135deg, rgba(245,195,91,0.85) 0 3px, rgba(245,195,91,0.2) 3px 6px)"></span>Daño previsto (3 s)</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 14px; height: 8px; background: rgba(60,207,115,0.45)"></span>Curación entrante</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 9px; height: 9px; transform: rotate(45deg); background: #b47bff"></span>Purificable</span>
+</div>
+</div>
+
+<!-- Forma inferior compacta del sanador -->
+<svg width="1440" height="810" viewBox="0 0 1440 810" style="position: absolute; left: 0; top: 0; filter: drop-shadow(0 -6px 22px rgba(0,0,0,0.5))" aria-hidden="true">
+<path d="M380 811L420 690H1020L1060 811Z" fill="#0d1216" fill-opacity="0.97"></path>
+<path d="M380 811L420 690H1020L1060 811Z" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="1.5"></path>
+</svg>
+<div style="position: absolute; left: 453px; bottom: 16px; width: 534px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; gap: 4px">
+<div style="position: relative; flex: 1; height: 14px; border-radius: 7px; background: #070a0c; overflow: hidden"><div style="position: absolute; inset: 0; width: 88%; background: #3ccf73"></div></div>
+<div style="position: relative; flex: 1; height: 14px; border-radius: 7px; background: #070a0c; overflow: hidden"><div style="position: absolute; inset: 0; width: 52%; background: #3f82f2"></div><div class="num" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; text-shadow: 0 1px 2px #000000">Maná 52 % · dura ~1:40 a este ritmo</div></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px">
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1a2e22; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">1</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1a2e22; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">2</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1d2f55; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">3</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #2a1d3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+<div class="num" style="position: absolute; inset: 0; background: rgba(6,9,11,0.72); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">6</div>
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">4</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1a2e22; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">5</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1c3a3a; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+<div class="num" style="position: absolute; inset: 0; background: rgba(6,9,11,0.72); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">22</div>
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">6</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1d2f55; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">7</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #4a3a1c; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+<div class="num" style="position: absolute; inset: 0; background: rgba(6,9,11,0.72); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700">1:40</div>
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">8</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #1a2e22; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">9</span>
+</div>
+
+<div style="position: relative; width: 48px; height: 48px; border-radius: 11px; background: #4a1d22; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); overflow: hidden">
+
+<span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700; color: #dbe4ea">0</span>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

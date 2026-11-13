@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>Modo narrador</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.2)"></div>
+<div style="position: absolute; left: 50%; top: 18px; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 16px; border-radius: 20px; background: rgba(13,18,22,0.94); box-shadow: inset 0 0 0 1.5px #f5c35b">
+<span style="font-size: 14px; font-weight: 700; color: #f5c35b">Modo narrador</span><span style="font-size: 13px; color: #c3ccd3">No recibes daño · no generas amenaza · visible · volando</span><span class="num" style="font-size: 12px; color: #9aa6ae">quedan 27 días</span>
+</div>
+
+<!-- Cómo te ven los demás -->
+<div class="sh" style="position: absolute; left: 640px; top: 250px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<span style="font-size: 14px; font-weight: 700">Aurel</span>
+<div style="display: flex; align-items: center; gap: 4px"><span style="width: 26px; height: 26px; border-radius: 50%; background: #3a2a14; border: 2px solid #ffd76b; box-sizing: border-box; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffd76b" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 19L19 5c0 8-4 12-10 12zM5 19l5-5"></path></svg></span><div style="width: 150px; height: 16px; border-radius: 5px; background: #f5c35b; border: 2px solid #ffd76b; box-sizing: border-box; box-shadow: 0 0 10px rgba(255,215,107,0.7)"></div></div>
+<svg width="60" height="76" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="11" ry="3" fill="rgba(245,195,91,0.6)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#8a6a2b"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#fff1a8"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 12px; color: #dbe4ea">Así te ven: vida de borde dorado, sin etiquetas</span>
+</div>
+
+<!-- Escena -->
+<div class="card" style="position: absolute; left: 20px; top: 80px; width: 300px; padding: 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px">
+<span class="caps">Escena en curso</span>
+<span style="font-size: 18px; font-weight: 700">La caravana perdida</span>
+<span class="num" style="font-size: 13px; color: #9aa6ae">14 participantes · 6 mirando · 00:18:40</span>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span class="num" style="width: 20px; height: 20px; border-radius: 50%; background: #4fe39a; color: #071012; font-size: 11px; font-weight: 700; line-height: 20px; text-align: center">✓</span><span style="color: #9aa6ae">Reunir a la caravana en el patio</span></div><div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span class="num" style="width: 20px; height: 20px; border-radius: 50%; background: #f5c35b; color: #071012; font-size: 11px; font-weight: 700; line-height: 20px; text-align: center">2</span><span style="color: #eef2f4">Emboscada en el Vado (invocar)</span></div><div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span class="num" style="width: 20px; height: 20px; border-radius: 50%; background: #26333b; color: #071012; font-size: 11px; font-weight: 700; line-height: 20px; text-align: center">3</span><span style="color: #9aa6ae">Decisión del grupo: ¿pagar o pelear?</span></div><div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span class="num" style="width: 20px; height: 20px; border-radius: 50%; background: #26333b; color: #071012; font-size: 11px; font-weight: 700; line-height: 20px; text-align: center">4</span><span style="color: #9aa6ae">Reparto de recompensas</span></div>
+<div class="sub" style="padding: 10px 12px; display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 13px"><span>Presupuesto de recompensas</span><span class="num" style="font-weight: 700; color: #f5c35b">1.400 / 2.000</span></div><div style="height: 5px; border-radius: 3px; background: #070a0c"><div style="height: 5px; border-radius: 3px; width: 70%; background: #f5c35b"></div></div><span style="font-size: 11px; color: #9aa6ae">Tope puesto por el equipo. Al terminar recibes tu propia recompensa de narrador.</span></div>
+</div>
+
+<!-- Transmisión -->
+<div class="card" style="position: absolute; right: 20px; top: 80px; width: 290px; padding: 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: 9px">
+<span class="caps">Transmisión</span>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><div style="display: flex; flex-direction: column; flex: 1"><span style="font-weight: 600">Ocultar nombres de jugadores</span><span style="font-size: 11px; color: #9aa6ae">Se ven como «Aventurero 1, 2…»</span></div><span class="sw on" style="background: #ff9a4d"></span></div><div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><div style="display: flex; flex-direction: column; flex: 1"><span style="font-weight: 600">Retardo del chat · 30 s</span><span style="font-size: 11px; color: #9aa6ae">Evita que te sigan en directo</span></div><span class="sw on" style="background: #ff9a4d"></span></div><div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><div style="display: flex; flex-direction: column; flex: 1"><span style="font-weight: 600">Ocultar tu ubicación en el mapa</span><span style="font-size: 11px; color: #9aa6ae"></span></div><span class="sw on" style="background: #ff9a4d"></span></div><div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><div style="display: flex; flex-direction: column; flex: 1"><span style="font-weight: 600">Interfaz limpia para cámara</span><span style="font-size: 11px; color: #9aa6ae">Tecla F9</span></div><span class="sw off" style="background: #2a363d"></span></div>
+<span style="font-size: 11px; line-height: 15px; color: #7c8992">Los jugadores pueden salir de la escena o pedir no aparecer en cámara desde su menú de señales.</span>
+</div>
+
+<!-- Herramientas -->
+<svg width="1440" height="810" viewBox="0 0 1440 810" style="position: absolute; left: 0; top: 0; filter: drop-shadow(0 -6px 22px rgba(0,0,0,0.5))" aria-hidden="true"><path d="M250 811L298 680H1142L1190 811Z" fill="#0d1216" fill-opacity="0.97"></path><path d="M250 811L298 680H1142L1190 811Z" fill="none" stroke="rgba(245,195,91,0.5)" stroke-width="1.5"></path></svg>
+<div style="position: absolute; left: 330px; bottom: 18px; width: 780px; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px">
+<div style="position: relative; height: 84px; border-radius: 12px; background: #1c2a33; box-shadow: 0 0 0 2px #f5c35b; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff8a8a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 7-7 11-7-11z"></path></svg><span style="font-size: 12px; font-weight: 600">Invocar</span><span class="num" style="position: absolute; left: 6px; top: 4px; font-size: 11px; font-weight: 700; color: #c3ccd3">1</span></div><div style="position: relative; height: 84px; border-radius: 12px; background: #1c2a33; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f5c35b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg><span style="font-size: 12px; font-weight: 600">Anunciar</span><span class="num" style="position: absolute; left: 6px; top: 4px; font-size: 11px; font-weight: 700; color: #c3ccd3">2</span></div><div style="position: relative; height: 84px; border-radius: 12px; background: #1c2a33; box-shadow: 0 0 0 2px #f5c35b; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7fe0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h12v10H4zM16 10l4-2v8l-4-2"></path></svg><span style="font-size: 12px; font-weight: 600">Volar</span><span class="num" style="position: absolute; left: 6px; top: 4px; font-size: 11px; font-weight: 700; color: #c3ccd3">3</span></div><div style="position: relative; height: 84px; border-radius: 12px; background: #1c2a33; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c39bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M4 7l16 10M20 7L4 17"></path></svg><span style="font-size: 12px; font-weight: 600">Invisible</span><span class="num" style="position: absolute; left: 6px; top: 4px; font-size: 11px; font-weight: 700; color: #c3ccd3">4</span></div><div style="position: relative; height: 84px; border-radius: 12px; background: #1c2a33; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6cb8ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12z"></path></svg><span style="font-size: 12px; font-weight: 600">Aparecer en…</span><span class="num" style="position: absolute; left: 6px; top: 4px; font-size: 11px; font-weight: 700; color: #c3ccd3">5</span></div><div style="position: relative; height: 84px; border-radius: 12px; background: #1c2a33; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4fe39a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h16v10H4zM12 10v10M4 10l8-5 8 5"></path></svg><span style="font-size: 12px; font-weight: 600">Don +5 vida</span><span class="num" style="position: absolute; left: 6px; top: 4px; font-size: 11px; font-weight: 700; color: #c3ccd3">6</span></div><div style="position: relative; height: 84px; border-radius: 12px; background: #1c2a33; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c39bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z"></path></svg><span style="font-size: 12px; font-weight: 600">Marcar</span><span class="num" style="position: absolute; left: 6px; top: 4px; font-size: 11px; font-weight: 700; color: #c3ccd3">7</span></div><div style="position: relative; height: 84px; border-radius: 12px; background: #1c2a33; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg><span style="font-size: 12px; font-weight: 600">Terminar</span><span class="num" style="position: absolute; left: 6px; top: 4px; font-size: 11px; font-weight: 700; color: #c3ccd3">8</span></div>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

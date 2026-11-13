@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Barras de vida y marcos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div style="position: absolute; inset: 0; background: #0b0f13"></div>
+<div style="position: absolute; left: 40px; top: 30px; display: flex; flex-direction: column; gap: 4px"><span class="caps" style="color: {{accent}}">Sistema de diseño</span><span style="font-size: 30px; font-weight: 700">Barras de vida y marcos</span><span style="font-size: 14px; color: #9aa6ae">Color = quién es · lado de la insignia = amigo o amenaza · borde = qué le pasa · marco = rango</span></div>
+<div style="position: absolute; left: 40px; right: 40px; top: 130px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 11px; height: 650px; box-sizing: border-box">
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 17px; font-weight: 700">{{g.t}}</span><span style="font-size: 12px; color: #9aa6ae">{{g.d}}</span></div>
+<sc-for list="{{g.items}}" as="p" hint-placeholder-count="7">
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 250px; display: flex; flex-direction: column; gap: 3px; flex: none">
+<span style="font-size: 12px; font-weight: 700; color: {{p.nc}}; text-align: {{p.al}}; padding: 0 30px">{{p.name}}</span>
+<div style="display: flex; align-items: center; gap: 4px">
+<span style="order: {{p.ord}}; width: 26px; height: 26px; border-radius: {{p.br}}; background: {{p.bb}}; border: {{p.bbd}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: {{p.bc}}; flex: none"><svg width="{{p.is}}" height="{{p.is}}" viewBox="0 0 24 24" fill="none" stroke="{{p.bc}}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{p.icon}}"></path></svg>{{p.lv}}</span>
+<div style="order: 1; flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; border: {{p.bd}}; box-shadow: {{p.glow}}; overflow: hidden; box-sizing: border-box"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: {{p.pct}}%; background: {{p.fill}}"></div><div style="position: absolute; left: {{p.pct}}%; top: 0; bottom: 0; width: {{p.sh}}%; background: #e8edf0"></div><div style="position: absolute; inset: 0; background-image: repeating-linear-gradient(90deg, transparent 0 19px, rgba(0,0,0,0.55) 19px 20px)"></div></div>
+</div>
+</div>
+<span style="font-size: 12px; line-height: 16px; color: #c3ccd3">{{p.note}}</span>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'BARE' ? '#eef2f4' : '#9aa6ae', bar: label === 'BARE' ? A : 'transparent' }));
+const IC = { npc: 'M4 5h16v11H9l-5 4z', elite: 'M12 3l7 9-7 9-7-9z', boss: 'M4 18h16M4 18l-1-10 5 4 4-7 4 7 5-4-1 10', pk: 'M12 3a7 7 0 0 0-4 12.5V19h8v-3.5A7 7 0 0 0 12 3zM9.5 11h.01M14.5 11h.01', angel: 'M12 6v12M12 9C9 5 5 5 3 7c1 4 5 5 9 5M12 9c3-4 7-4 9-2-1 4-5 5-9 5', knight: 'M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6zM12 8v8M9 12h6', quill: 'M5 19L19 5c0 8-4 12-10 12zM5 19l5-5', cam: 'M4 7h12v10H4zM16 10l4-2v8l-4-2', zz: 'M6 6h6l-6 7h6M14 13h4l-4 5h4' };
+const pl = (name, note, o) => Object.assign({ name, note, nc: '#eef2f4', al: 'left', ord: 0, br: '50%', bb: '#18242b', bbd: '1.5px solid #3a4a54', bc: '#eef2f4', lv: '', icon: '', is: 0, bd: '1px solid rgba(255,255,255,0.14)', glow: 'none', pct: 72, sh: 0, fill: '#3ccf73' }, o);
+const R = { ord: 2, al: 'right' };
+const ico = (k) => ({ icon: IC[k], is: 15, lv: '' });
+const extra = { groups: [
+{ t: '1 · Quién es', d: 'Verde tú, amarillo jugadores y neutrales, rojo amenaza. Amigos a la izquierda, amenazas a la derecha.', items: [
+pl('Kael (tú)', 'Verde. Nivel a la izquierda.', { lv: '32', bbd: '1.5px solid #3ccf73' }),
+pl('Brisa', 'Otro jugador: amarillo, nivel a la izquierda.', { lv: '28', fill: '#f5c35b', pct: 90 }),
+pl('Toro · tu grupo', 'Propuesta: tu grupo en turquesa para encontrarlo rápido.', { lv: '34', fill: '#46e3c1', pct: 58 }),
+pl('Orla, mercader', 'PNJ neutral: amarillo, icono a la izquierda.', Object.assign({ fill: '#e0c060', pct: 100, br: '8px' }, ico('npc'))),
+pl('Lobo de ceniza', 'Enemigo: rojo, nivel a la derecha.', Object.assign({ lv: '30', fill: '#e25555', nc: '#ffb3b3', bbd: '1.5px solid #e25555' }, R)),
+pl('Centinela élite', 'Élite: rombo dorado a la derecha.', Object.assign({ fill: '#e25555', nc: '#ffb3b3', br: '6px', bb: '#3a2a14', bbd: '1.5px solid #f5c35b', bc: '#f5c35b' }, R, ico('elite'))),
+pl('Guardián del Umbral', 'Jefe: corona, barra con más segmentos.', Object.assign({ fill: '#e25555', nc: '#ffb3b3', br: '6px', bb: '#3a1d22', bbd: '2px solid #ff6b6b', bc: '#ff8a8a', pct: 68 }, R, ico('boss'))),
+pl('Grukk_99 · Matahumanos', 'Jugador con PK alto: rojo oscuro y calavera a la derecha.', Object.assign({ fill: '#a8323a', nc: '#ff8a8a', br: '6px', bb: '#2a1014', bbd: '2px solid #ff3b4a', bc: '#ff6b6b', bd: '1.5px solid #ff3b4a' }, R, ico('pk')))
+] },
+{ t: '2 · Qué le pasa (borde)', d: 'El borde y el brillo cuentan el estado sin leer iconos.', items: [
+pl('Inmune', 'Borde dorado: no recibe daño (narradores, fases de jefe, zona segura).', { lv: '★', fill: '#f5c35b', pct: 100, bd: '2px solid #ffd76b', glow: '0 0 10px rgba(255,215,107,0.7)', bbd: '1.5px solid #ffd76b', bc: '#ffd76b' }),
+pl('Curándose', 'Brillo verde alrededor.', { lv: '32', pct: 55, glow: '0 0 0 1.5px #4fe39a, 0 0 12px rgba(79,227,154,0.8)' }),
+pl('Con escudo', 'Tramo blanco al final de la vida.', { lv: '32', pct: 60, sh: 14 }),
+pl('Desangrándose', 'Borde rojo discontinuo; la vida baja sola.', { lv: '32', pct: 38, bd: '1.5px dashed #ff5d5d', glow: '0 0 10px rgba(255,93,93,0.6)' }),
+pl('PK activo', 'Doble borde rojo: acaba de atacar a un jugador.', { lv: '41', fill: '#f5c35b', pct: 80, bd: '2px solid #ff3b4a', glow: '0 0 0 2px #070a0c, 0 0 0 4px #ff3b4a' }),
+pl('Dormido (desconectado)', 'Gris: su jugador no está, pero el personaje sigue aquí.', Object.assign({ fill: '#56646d', pct: 61, nc: '#9aa6ae', bd: '1px dashed rgba(255,255,255,0.25)' }, ico('zz'))),
+pl('En zona segura', 'Borde turquesa fino: no se le puede atacar.', { lv: '28', fill: '#f5c35b', pct: 100, bd: '1.5px solid #7fe0ff' })
+] },
+{ t: '3 · Rango (marco de la insignia)', d: 'Al inicio es el nivel. Más adelante, el marco cambia con el rango.', items: [
+pl('Nivel 1–29', 'Marco simple con número.', { lv: '12', fill: '#f5c35b' }),
+pl('Veterano', 'Marco de plata.', { lv: '45', fill: '#f5c35b', bbd: '2px solid #c3ccd3', bb: '#26333b' }),
+pl('Maestro', 'Marco dorado hexagonal.', { lv: '80', fill: '#f5c35b', br: '8px', bbd: '2px solid #f5c35b', bb: '#3a2a14', bc: '#f5c35b' }),
+pl('Mira · Administradora', 'Ángel: alas blancas.', Object.assign({ fill: '#f5c35b', pct: 100, bb: '#eef2f4', bbd: '2px solid #ffffff', bc: '#0d1216' }, ico('angel'))),
+pl('Dren · Moderador', 'Caballero: escudo azul.', Object.assign({ fill: '#f5c35b', pct: 100, br: '8px', bb: '#1d2f55', bbd: '2px solid #6cb8ff', bc: '#cfe2ff' }, ico('knight'))),
+pl('Aurel · Narrador', 'Pluma + vida de borde dorado (inmune).', Object.assign({ fill: '#f5c35b', pct: 100, bb: '#3a2a14', bbd: '2px solid #ffd76b', bc: '#ffd76b', bd: '2px solid #ffd76b', glow: '0 0 10px rgba(255,215,107,0.7)' }, ico('quill'))),
+pl('LaStream · Creadora', 'Cámara violeta.', Object.assign({ fill: '#f5c35b', bb: '#2a1d3a', bbd: '2px solid #c39bff', bc: '#dcc8ff' }, ico('cam')))
+] }
+] };
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

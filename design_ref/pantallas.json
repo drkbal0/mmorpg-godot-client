@@ -1,0 +1,912 @@
+{
+  "pantallas": [
+    {
+      "id": "Antes",
+      "pagina": "HUD de combate (exploración)",
+      "titulo": "Antes (captura original, 2×)",
+      "tamano": [
+        705,
+        120
+      ],
+      "png": "pantallas_png/Antes.png",
+      "html": "pantallas_html/Antes.html",
+      "fuente": "fuente_dc/Antes.dc.html",
+      "notas": []
+    },
+    {
+      "id": "Main",
+      "pagina": "HUD de combate (exploración)",
+      "titulo": "Propuesta",
+      "tamano": [
+        1320,
+        440
+      ],
+      "png": "pantallas_png/Main.png",
+      "html": "pantallas_html/Main.html",
+      "fuente": "fuente_dc/Main.dc.html",
+      "notas": []
+    },
+    {
+      "id": "Final",
+      "pagina": "HUD de combate (exploración)",
+      "titulo": "Propuesta final (estilo propio)",
+      "tamano": [
+        1360,
+        460
+      ],
+      "png": "pantallas_png/Final.png",
+      "html": "pantallas_html/Final.html",
+      "fuente": "fuente_dc/Final.dc.html",
+      "notas": []
+    },
+    {
+      "id": "Final2",
+      "pagina": "HUD de combate (exploración)",
+      "titulo": "Final v2 · pegada al borde inferior",
+      "tamano": [
+        1360,
+        460
+      ],
+      "png": "pantallas_png/Final2.png",
+      "html": "pantallas_html/Final2.html",
+      "fuente": "fuente_dc/Final2.dc.html",
+      "notas": []
+    },
+    {
+      "id": "Estilo",
+      "pagina": "HUD de combate (exploración)",
+      "titulo": "Estilo propio: Prisma (multiverso)",
+      "tamano": [
+        1320,
+        460
+      ],
+      "png": "pantallas_png/Estilo.png",
+      "html": "pantallas_html/Estilo.html",
+      "fuente": "fuente_dc/Estilo.dc.html",
+      "notas": []
+    },
+    {
+      "id": "V4-Barra",
+      "pagina": "HUD de combate (exploración)",
+      "titulo": "Variante 4 · Barra completa en contorno",
+      "tamano": [
+        1360,
+        460
+      ],
+      "png": "pantallas_png/V4-Barra.png",
+      "html": "pantallas_html/V4-Barra.html",
+      "fuente": "fuente_dc/V4-Barra.dc.html",
+      "notas": []
+    },
+    {
+      "id": "V1-Integrado",
+      "pagina": "HUD de combate (exploración)",
+      "titulo": "Variante 1 · Integrada al fondo",
+      "tamano": [
+        1360,
+        460
+      ],
+      "png": "pantallas_png/V1-Integrado.png",
+      "html": "pantallas_html/V1-Integrado.html",
+      "fuente": "fuente_dc/V1-Integrado.dc.html",
+      "notas": []
+    },
+    {
+      "id": "V3-Compacto",
+      "pagina": "HUD de combate (exploración)",
+      "titulo": "Variante 3 · Compacta (interactiva: botón Más)",
+      "tamano": [
+        1360,
+        460
+      ],
+      "png": "pantallas_png/V3-Compacto.png",
+      "html": "pantallas_html/V3-Compacto.html",
+      "fuente": "fuente_dc/V3-Compacto.dc.html",
+      "notas": []
+    },
+    {
+      "id": "V2-Cristal",
+      "pagina": "HUD de combate (exploración)",
+      "titulo": "Variante 2 · Cristal",
+      "tamano": [
+        1360,
+        460
+      ],
+      "png": "pantallas_png/V2-Cristal.png",
+      "html": "pantallas_html/V2-Cristal.html",
+      "fuente": "fuente_dc/V2-Cristal.dc.html",
+      "notas": []
+    },
+    {
+      "id": "MMO-HUD",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "1 · HUD en el mundo (ajuste «modo»: Combate / Exploración)",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-HUD.png",
+      "html": "pantallas_html/MMO-HUD.html",
+      "fuente": "fuente_dc/MMO-HUD.dc.html",
+      "notas": [
+        "1 · HUD en el mundo\n• La misma forma de la Final v2, ahora con barra de 2 × 10.\n• Ajuste «modo»: en combate se ocultan misiones extra y el chat baja al 60 %; fuera de combate aparecen los accesos.\n• El objetivo dice qué habilidad tuya lo interrumpe y esa tecla brilla.\n• Línea de tiempo del jefe con las próximas mecánicas.\n• Grupo con amenaza y alcance.\n• Chat con traducción automática."
+      ]
+    },
+    {
+      "id": "MMO-Equipo",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "2 · Equipo: personaje + inventario",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Equipo.png",
+      "html": "pantallas_html/MMO-Equipo.html",
+      "fuente": "fuente_dc/MMO-Equipo.dc.html",
+      "notas": [
+        "2 · Equipo\n• Personaje e inventario en una sola ventana del Códice.\n• Conjuntos de equipo con F1–F3.\n• Búsqueda en lenguaje natural: resalta lo que coincide y atenúa el resto.\n• Siempre compara contra lo equipado y estima el impacto en cada conjunto con tu rotación real.\n• Rareza «Dimensional» con el color del acento."
+      ]
+    },
+    {
+      "id": "MMO-Mapa",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "3 · Mapa del multiverso",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Mapa.png",
+      "html": "pantallas_html/MMO-Mapa.html",
+      "fuente": "fuente_dc/MMO-Mapa.dc.html",
+      "notas": [
+        "3 · Mapa\n• Los 4 universos con su estado: brechas, inestabilidad, exploración.\n• Planificador: Shift + clic añade paradas, ordena la ruta y estima el tiempo a pie y en montura.\n• Eventos próximos con «avísame».\n• Capas activables y niebla en lo no explorado."
+      ]
+    },
+    {
+      "id": "MMO-Talentos",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "4 · Poderes: Crisol de resonancia",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Talentos.png",
+      "html": "pantallas_html/MMO-Talentos.html",
+      "fuente": "fuente_dc/MMO-Talentos.dc.html",
+      "notas": [
+        "4 · Poderes · Crisol\n• Cada poder = 2 o 3 energías + una forma + un ritmo.\n• Las energías son una lista con buscador: funciona igual con 8 que con 40.\n• La potencia sale de tu afinidad con cada energía, y la afinidad sube usándolas.\n• Descubrir es parte del juego: pistas de PNJ, botón «Probar en el maniquí».\n• Resonancia del conjunto: repetir una energía da bonos (Armonía)."
+      ]
+    },
+    {
+      "id": "MMO-Misiones",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "5 · Diario de misiones + planificador",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Misiones.png",
+      "html": "pantallas_html/MMO-Misiones.html",
+      "fuente": "fuente_dc/MMO-Misiones.dc.html",
+      "notas": [
+        "5 · Misiones\n• «Recomendadas ahora» según distancia y nivel.\n• «Lo que pasó hasta ahora»: resumen para quien vuelve tras días.\n• Recompensas marcadas según tu clase (▲ mejora / no es para ti).\n• Planificador: junta misiones en una ruta con XP por hora y detecta si tu grupo comparte misiones."
+      ]
+    },
+    {
+      "id": "MMO-Social",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "6 · Social y buscador de grupo",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Social.png",
+      "html": "pantallas_html/MMO-Social.html",
+      "fuente": "fuente_dc/MMO-Social.dc.html",
+      "notas": [
+        "6 · Social\n• Buscador de grupo ordenado por compatibilidad: rol, nivel, idioma y estilo.\n• Etiquetas de ambiente: «Primera vez bienvenida», «Explicamos mecánicas».\n• Espera estimada por rol antes de apuntarte.\n• Reputación solo con elogios: premia el buen trato sin exponer a nadie."
+      ]
+    },
+    {
+      "id": "MMO-Interfaz",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "7 · Editor de interfaz y accesibilidad",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Interfaz.png",
+      "html": "pantallas_html/MMO-Interfaz.html",
+      "fuente": "fuente_dc/MMO-Interfaz.dc.html",
+      "notas": [
+        "7 · Editor de interfaz\n• Arrastrar módulos con guías de alineación y cuadrícula.\n• Diseños por rol que cambian solos según el contenido.\n• Código de diseño para compartir.\n• Accesibilidad de serie: modos de daltonismo, formas además de colores, reducir movimiento, narrador y audio direccional."
+      ]
+    },
+    {
+      "id": "MMO-Mercado",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "8 · Comercio › Mercado",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Mercado.png",
+      "html": "pantallas_html/MMO-Mercado.html",
+      "fuente": "fuente_dc/MMO-Mercado.dc.html",
+      "notas": [
+        "8 · Mercado\n• Un solo mercado para los 4 universos.\n• Filtro «Solo mejoras para mí».\n• Tendencia de 7 días en cada fila y gráfico de 30 días.\n• Dice si el precio es bueno respecto a la media.\n• Órdenes de compra con aviso."
+      ]
+    },
+    {
+      "id": "MMO-Fabricacion",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "9 · Fabricación",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Fabricacion.png",
+      "html": "pantallas_html/MMO-Fabricacion.html",
+      "fuente": "fuente_dc/MMO-Fabricacion.dc.html",
+      "notas": [
+        "9 · Fabricación\n• Ahora vive en la Forja del refugio (pestaña Refugio) y trabaja aunque no estés.\n• Probabilidad de calidad visible antes de fabricar, y qué material la mejora.\n• Comprar lo que falta en un clic.\n• Encargos de otros jugadores con propina."
+      ]
+    },
+    {
+      "id": "MMO-Dialogo",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "10 · Diálogo con personaje",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Dialogo.png",
+      "html": "pantallas_html/MMO-Dialogo.html",
+      "fuente": "fuente_dc/MMO-Dialogo.dc.html",
+      "notas": [
+        "10 · Diálogo\n• Modo conversación: oculta el HUD y encuadra la escena.\n• Opciones con teclas 1–4 y etiqueta de consecuencia (misión, rama, ya preguntado).\n• Relación visible con el personaje.\n• Historial (H) y subtítulos configurables."
+      ]
+    },
+    {
+      "id": "MMO-Raid",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "11 · HUD de raid (sanador)",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Raid.png",
+      "html": "pantallas_html/MMO-Raid.html",
+      "fuente": "fuente_dc/MMO-Raid.dc.html",
+      "notas": [
+        "11 · Raid (sanador)\n• 20 marcos con el daño previsto en los próximos 3 s (rayado), tomado de la línea de tiempo del jefe.\n• Curación entrante, purificables con forma de rombo y aggro en rojo.\n• Alerta grande con flecha y cuenta atrás, también por audio direccional.\n• Cuánto te dura el maná a este ritmo."
+      ]
+    },
+    {
+      "id": "MMO-Muerte",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "12 · Muerte y reaparición",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Muerte.png",
+      "html": "pantallas_html/MMO-Muerte.html",
+      "fuente": "fuente_dc/MMO-Muerte.dc.html",
+      "notas": [
+        "12 · Muerte\n• Resumen de los últimos 5 s: qué te mató y qué era evitable.\n• Consejo concreto con tus propias habilidades.\n• Resurrección del grupo con aceptación automática.\n• Repetición de 10 s.\n• Sin penalización de equipo."
+      ]
+    },
+    {
+      "id": "MMO-Senales",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "13 · Menú radial de señales",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Senales.png",
+      "html": "pantallas_html/MMO-Senales.html",
+      "fuente": "fuente_dc/MMO-Senales.dc.html",
+      "notas": [
+        "13 · Señales\n• Menú radial con G o con el joystick.\n• Las señales se describen solas (qué, quién, distancia) y se traducen.\n• Muestran cuántos del grupo las vieron.\n• La de recurso avisa si alguien del grupo lo necesita."
+      ]
+    },
+    {
+      "id": "MMO-Colecciones",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "14 · Colecciones",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Colecciones.png",
+      "html": "pantallas_html/MMO-Colecciones.html",
+      "fuente": "fuente_dc/MMO-Colecciones.dc.html",
+      "notas": [
+        "14 · Colecciones\n• Progreso por universo como diario del multiverso.\n• Siluetas para lo que te falta y «Por descubrir» para los secretos.\n• «Cerca de conseguir» con el siguiente paso y un acceso directo (mapa, avisos)."
+      ]
+    },
+    {
+      "id": "MMO-Atlas",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "16 · Poderes: Atlas de combinaciones",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Atlas.png",
+      "html": "pantallas_html/MMO-Atlas.html",
+      "fuente": "fuente_dc/MMO-Atlas.dc.html",
+      "notas": [
+        "16 · Atlas\n• Tabla energía × energía: cada celda es una pareja.\n• Escala sola: una energía nueva = una fila y una columna más.\n• Estados claros: descubierta (con nº de fórmulas), pista, desconocida.\n• Las mezclas de 3 se ven al seleccionar una pareja, para no saturar.\n• «Llevar al Crisol» conecta descubrir con probar."
+      ]
+    },
+    {
+      "id": "MMO-Constelacion",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "16b · Poderes: Constelación de clase",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Constelacion.png",
+      "html": "pantallas_html/MMO-Constelacion.html",
+      "fuente": "fuente_dc/MMO-Constelacion.dc.html",
+      "notas": [
+        "16b · Constelación (se mantiene)\n• Poderes ahora tiene varias ventanas: Crisol · Atlas · Constelación · Afinidades.\n• La Constelación es de tu clase: sus ramas son energías (Vacío, Pulso, Eco).\n• Cada nodo potencia los poderes del Crisol que usan esa energía y muestra a cuáles afecta.\n• Botón «Abrir Crisol al lado»: las dos ventanas pueden estar abiertas a la vez."
+      ]
+    },
+    {
+      "id": "MMO-Antesala",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "17 · Antesala de mazmorra",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Antesala.png",
+      "html": "pantallas_html/MMO-Antesala.html",
+      "fuente": "fuente_dc/MMO-Antesala.dc.html",
+      "notas": [
+        "17 · Antesala\n• Estado de cada uno: listo, cambiando conjunto, no listo.\n• Chequeos automáticos: consumibles, reparación, conjunto correcto.\n• Afijos explicados en una línea.\n• Votación de ruta.\n• Modo aprendizaje solo para quien entra por primera vez.\n• Refugio de bolsillo: mini-ventana del refugio mientras esperas."
+      ]
+    },
+    {
+      "id": "MMO-Resumen",
+      "pagina": "Sistema UI MMORPG",
+      "titulo": "18 · Resumen de mazmorra",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Resumen.png",
+      "html": "pantallas_html/MMO-Resumen.html",
+      "fuente": "fuente_dc/MMO-Resumen.dc.html",
+      "notas": [
+        "18 · Resumen\n• Sin tablas de daño: «momentos» positivos de cada uno y elogios.\n• El botín sugiere ofrecerlo a quien más le sirve.\n• Afinidades ganadas y pistas nuevas del Atlas.\n• Salidas claras: repetir con el grupo, refugio o mundo."
+      ]
+    },
+    {
+      "id": "MMO-Launcher",
+      "pagina": "Entrada y Refugio",
+      "titulo": "A1 · Launcher",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Launcher.png",
+      "html": "pantallas_html/MMO-Launcher.html",
+      "fuente": "fuente_dc/MMO-Launcher.dc.html",
+      "notas": [
+        "A1 · Launcher\n• Instalación progresiva: juegas en cuanto están el núcleo y tu universo; el resto baja mientras juegas.\n• «Qué cambia para ti»: notas del parche filtradas por tus personajes y builds.\n• Estado de servidores y mantenimiento en tu hora.\n• Limita la descarga automáticamente al jugar."
+      ]
+    },
+    {
+      "id": "MMO-Login",
+      "pagina": "Entrada y Refugio",
+      "titulo": "A2 · Inicio de sesión",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Login.png",
+      "html": "pantallas_html/MMO-Login.html",
+      "fuente": "fuente_dc/MMO-Login.dc.html",
+      "notas": [
+        "A2 · Inicio de sesión\n• Llave de acceso o QR desde la app: sin escribir contraseñas.\n• Accesibilidad disponible ANTES de entrar (tamaño, contraste, narrador, daltonismo).\n• Reino, ping y cola visibles antes de pulsar nada."
+      ]
+    },
+    {
+      "id": "MMO-Seleccion",
+      "pagina": "Entrada y Refugio",
+      "titulo": "A3 · Selección de personaje",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Seleccion.png",
+      "html": "pantallas_html/MMO-Seleccion.html",
+      "fuente": "fuente_dc/MMO-Seleccion.dc.html",
+      "notas": [
+        "A3 · Selección\n• «Mientras no estabas»: refugio, fabricación, ventas.\n• Dos salidas claras: Ir al refugio (con contador de cosas listas) o Entrar al mundo.\n• «Continúa donde lo dejaste» con tu misión activa."
+      ]
+    },
+    {
+      "id": "MMO-Creacion",
+      "pagina": "Entrada y Refugio",
+      "titulo": "A4 · Creación de personaje",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Creacion.png",
+      "html": "pantallas_html/MMO-Creacion.html",
+      "fuente": "fuente_dc/MMO-Creacion.dc.html",
+      "notas": [
+        "A4 · Creación\n• Pasos visibles: Origen › Clase › Apariencia › Nombre.\n• Rol, estilo y dificultad de cada clase en barras simples.\n• Probar la clase 5 min en una arena antes de crearla.\n• Vista chibi: así vivirá en tu refugio."
+      ]
+    },
+    {
+      "id": "MMO-Carga",
+      "pagina": "Entrada y Refugio",
+      "titulo": "A5 · Pantalla de carga",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Carga.png",
+      "html": "pantallas_html/MMO-Carga.html",
+      "fuente": "fuente_dc/MMO-Carga.dc.html",
+      "notas": [
+        "A5 · Carga\n• Consejos según tu destino y tu objetivo real, no aleatorios.\n• Acciones útiles mientras carga: cambiar conjunto, revisar talentos.\n• Cuántos de tu grupo ya están dentro.\n• Tiempo restante en segundos, no solo porcentaje."
+      ]
+    },
+    {
+      "id": "MMO-Refugio",
+      "pagina": "Entrada y Refugio",
+      "titulo": "B1 · El Nido: tu depa en corte lateral (PC)",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Refugio.png",
+      "html": "pantallas_html/MMO-Refugio.html",
+      "fuente": "fuente_dc/MMO-Refugio.dc.html",
+      "notas": [
+        "B1 · Tu depa (El Nido)\n• Versión 1 del refugio: un depa acogedor en corte lateral, con todo dentro.\n• Azotea-huerto, balcón con macetas, cocina, taller, mesa de mapas, despensa y sótano.\n• Los muebles son las estaciones: colocas un telar y el cuarto se vuelve taller.\n• Confort: decorar hace que tus personajes descansen y produzcan mejor.\n• Se amplía tirando la pared del vecino o subiendo de nivel; hay una puerta «???».\n• Abajo, el patio de la vecindad (tecla G)."
+      ]
+    },
+    {
+      "id": "MMO-Expediciones",
+      "pagina": "Entrada y Refugio",
+      "titulo": "B2 · Expediciones",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Expediciones.png",
+      "html": "pantallas_html/MMO-Expediciones.html",
+      "fuente": "fuente_dc/MMO-Expediciones.dc.html",
+      "notas": [
+        "B2 · Expediciones\n• Mandas a tus personajes secundarios: suben de nivel aunque no los juegues.\n• Probabilidad de éxito explicada por factores.\n• Decisiones en ruta (también en el móvil); si no respondes, eligen lo seguro.\n• Fallar nunca castiga: vuelven con parte del botín."
+      ]
+    },
+    {
+      "id": "MMO-Pispa",
+      "pagina": "Entrada y Refugio",
+      "titulo": "B3 · Pispa, la recolectora",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Pispa.png",
+      "html": "pantallas_html/MMO-Pispa.html",
+      "fuente": "fuente_dc/MMO-Pispa.dc.html",
+      "notas": [
+        "B3 · Pispa\n• Mascota que sale sola a buscar recursos mientras juegas (como el gallo de Arc Raiders).\n• Eliges qué busca; la opción ligada a tu misión se marca ★.\n• Bolsa con límite: invita a volver, sin castigar.\n• Rasgos, cariño y un diario de hallazgos con misterios (llaves, rarezas).\n• Puede acompañarte en el mundo como mascota."
+      ]
+    },
+    {
+      "id": "MMO-Mejoras",
+      "pagina": "Entrada y Refugio",
+      "titulo": "B4 · Plan de mejoras",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Mejoras.png",
+      "html": "pantallas_html/MMO-Mejoras.html",
+      "fuente": "fuente_dc/MMO-Mejoras.dc.html",
+      "notas": [
+        "B4 · Plan de mejoras\n• Matriz salas × niveles: de un vistazo, qué está hecho y qué falta.\n• Ordenado según tus metas (fabricar un arma, subir a un personaje).\n• «Por qué este orden» explicado en una línea por paso.\n• 2 obras a la vez; las salas siguen produciendo mientras se mejoran."
+      ]
+    },
+    {
+      "id": "MMO-App",
+      "pagina": "Entrada y Refugio",
+      "titulo": "B5 · El Nido móvil",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-App.png",
+      "html": "pantallas_html/MMO-App.html",
+      "fuente": "fuente_dc/MMO-App.dc.html",
+      "notas": [
+        "B5 · Refugio móvil\n• Ya no es solo avisos: es el refugio jugable, en vertical, con el mismo corte lateral.\n• Zona del pulgar: «Recoger todo» grande abajo; nada importante arriba.\n• Ronda de 2 minutos: lista guiada de lo pendiente y un final claro («Todo al día»).\n• Avisos: máximo 3 al día, elegidos por el jugador, con horario de silencio.\n• Funciona sin señal (cola de acciones) y se sincroniza con el PC."
+      ]
+    },
+    {
+      "id": "MMO-Ajustes",
+      "pagina": "Entrada y Refugio",
+      "titulo": "B6 · Ajustes",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Ajustes.png",
+      "html": "pantallas_html/MMO-Ajustes.html",
+      "fuente": "fuente_dc/MMO-Ajustes.dc.html",
+      "notas": [
+        "B6 · Ajustes\n• Búsqueda que resalta el ajuste exacto.\n• Coste en fps de cada opción, medido en tus sesiones.\n• Rendimiento estimado por tipo de contenido.\n• Detecta atajos repetidos y propone arreglo.\n• Los cambios de pantalla se deshacen solos si no confirmas."
+      ]
+    },
+    {
+      "id": "MMO-Construir",
+      "pagina": "Entrada y Refugio",
+      "titulo": "B7 · El Nido: decorar y construir",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Construir.png",
+      "html": "pantallas_html/MMO-Construir.html",
+      "fuente": "fuente_dc/MMO-Construir.dc.html",
+      "notas": [
+        "B7 · Decorar y construir\n• Mismo corte lateral; cajón con Estaciones, Huerto, Muebles, Decoración y Mascotas.\n• El fantasma verde dice si cabe y el bonus por vecindad.\n• El panel muestra cuánto sube el confort.\n• Prismas solo para decorar o acelerar."
+      ]
+    },
+    {
+      "id": "MMO-Produccion",
+      "pagina": "Entrada y Refugio",
+      "titulo": "B8 · Refugio: cadenas de producción",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Produccion.png",
+      "html": "pantallas_html/MMO-Produccion.html",
+      "fuente": "fuente_dc/MMO-Produccion.dc.html",
+      "notas": [
+        "B8 · Cadenas de producción\n• Materias → talleres → productos → destino, por hora.\n• Los atascos se ven en rojo y dicen por qué y para qué hace falta.\n• Soluciones en un clic: mejorar, construir otro, desviar recursos.\n• Conecta el refugio con tus misiones, el mercado, las mejoras y Pispa."
+      ]
+    },
+    {
+      "id": "DS-Insignia",
+      "pagina": "Entrada y Refugio",
+      "titulo": "B9 · Insignia de El Nido",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/DS-Insignia.png",
+      "html": "pantallas_html/DS-Insignia.html",
+      "fuente": "fuente_dc/DS-Insignia.dc.html",
+      "notas": [
+        "B9 · Insignia\n• El Refugio tiene marca propia, como un juego dentro del juego.\n• La insignia es el propio corte lateral: isla, salas encendidas, cristal, árbol y alas de Pispa.\n• Versiones: principal, icono de app, una tinta y 48 px.\n• Sello de artesano en lo que fabricas.\n• Nombre propuesto: «El Nido» (alternativa: POKET)."
+      ]
+    },
+    {
+      "id": "MMO-Vecindad",
+      "pagina": "Entrada y Refugio",
+      "titulo": "B0 · La vecindad: patio y spawn compartido",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Vecindad.png",
+      "html": "pantallas_html/MMO-Vecindad.html",
+      "fuente": "fuente_dc/MMO-Vecindad.dc.html",
+      "notas": [
+        "B0 · La vecindad\n• Todos los jugadores aparecen en el patio: zona segura y social.\n• El edificio muestra los depas: luz encendida = en casa; amigos resaltados; «Se renta» invita a traer amigos.\n• Patio: fuente (aparición), tablón, buzones, mercadillo de vecinos, portal y escalera.\n• Proyecto vecinal: todos aportan y todos ganan.\n• Terrenos alrededor (próximamente): segunda casa, el depa nunca se pierde.\n• Mudanza gratis semanal para vivir con tus amigos."
+      ]
+    },
+    {
+      "id": "MMO-Codice",
+      "pagina": "Códice, economía y tienda",
+      "titulo": "C1 · Códice (J): libro de conocimiento",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Codice.png",
+      "html": "pantallas_html/MMO-Codice.html",
+      "fuente": "fuente_dc/MMO-Codice.dc.html",
+      "notas": [
+        "C1 · Códice\n• Categorías con contador; el total del mundo nunca se revela.\n• Estados: Secreto, Publicado, Pionero, Conocido, Visto de lejos («???»).\n• La decisión Guardar / Publicar se compara lado a lado con sus beneficios.\n• Aviso claro: publicar es permanente.\n• Propuesta por validar: +1 % de oro en ventas del objeto publicado.\n• Nueva bandeja «Por decidir»: lo descubierto se guarda como secreto y decides luego."
+      ]
+    },
+    {
+      "id": "MMO-Oferta",
+      "pagina": "Códice, economía y tienda",
+      "titulo": "C2 · Oferta de inversión del pionero",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Oferta.png",
+      "html": "pantallas_html/MMO-Oferta.html",
+      "fuente": "fuente_dc/MMO-Oferta.dc.html",
+      "notas": [
+        "C2 · Oferta de inversión\n• Solo la recibe el pionero de esa tienda o PNJ.\n• Misión especial con pasos y cuota de socio.\n• Parte (ej. 2 %) de cada compra/venta de cualquier jugador con ese PNJ.\n• Condiciones visibles: cobra sin conexión, participación vendible, pausa si la tienda cierra, un socio por puesto.\n• «Pensarlo» guarda la oferta 7 días en el Códice."
+      ]
+    },
+    {
+      "id": "MMO-Inversiones",
+      "pagina": "Códice, economía y tienda",
+      "titulo": "C3 · Códice › Inversiones",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Inversiones.png",
+      "html": "pantallas_html/MMO-Inversiones.html",
+      "fuente": "fuente_dc/MMO-Inversiones.dc.html",
+      "notas": [
+        "C3 · Inversiones\n• Ganancias de hoy, semana y valor de tus participaciones.\n• Gráfico de 14 días y tráfico por puesto.\n• Cobro al almacén del refugio.\n• Avisos: un secreto dejó de ser exclusivo, ofertas que expiran.\n• Ventas de Mapas del hallazgo."
+      ]
+    },
+    {
+      "id": "WEB-Wiki",
+      "pagina": "Códice, economía y tienda",
+      "titulo": "C4 · Wiki web: propuesta de entrada",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/WEB-Wiki.png",
+      "html": "pantallas_html/WEB-Wiki.html",
+      "fuente": "fuente_dc/WEB-Wiki.dc.html",
+      "notas": [
+        "C4 · Wiki web (propuesta)\n• Misma identidad visual que el juego.\n• Ficha lateral con estadísticas (icono + color), rareza y tipo.\n• Bloque de pionero con fechas de descubrimiento y publicación.\n• «Dónde aparece» por zona; coordenadas exactas solo en Mapas del hallazgo.\n• Propuestas de cambio con votos; el pionero decide las primeras 48 h.\n• Entrar con la cuenta del juego."
+      ]
+    },
+    {
+      "id": "MMO-Tienda",
+      "pagina": "Códice, economía y tienda",
+      "titulo": "C5 · Comercio › Tienda de Prismas (en construcción)",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Tienda.png",
+      "html": "pantallas_html/MMO-Tienda.html",
+      "fuente": "fuente_dc/MMO-Tienda.dc.html",
+      "notas": [
+        "C5 · Tienda (en construcción)\n• Pestaña Comercio (P) o el «+» de los Prismas.\n• Categorías: apariencias, monturas, mascotas, decoración del refugio, comodidades.\n• Por validar: nada que dé poder en combate; precio en Prismas y en dinero real."
+      ]
+    },
+    {
+      "id": "MMO-Pase",
+      "pagina": "Códice, economía y tienda",
+      "titulo": "C6 · Comercio › Pase de batalla (en construcción)",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Pase.png",
+      "html": "pantallas_html/MMO-Pase.html",
+      "fuente": "fuente_dc/MMO-Pase.dc.html",
+      "notas": [
+        "C6 · Pase de batalla (en construcción)\n• Vive en la pestaña Comercio (P) del Menú.\n• Pista gratis y pista de pase por nivel; desafíos semanales.\n• Por validar: da XP con cualquier actividad (también refugio y expediciones); lo ganado no caduca."
+      ]
+    },
+    {
+      "id": "DS-Estadisticas",
+      "pagina": "Sistema de diseño",
+      "titulo": "Iconos de estadísticas",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/DS-Estadisticas.png",
+      "html": "pantallas_html/DS-Estadisticas.html",
+      "fuente": "fuente_dc/DS-Estadisticas.dc.html",
+      "notas": []
+    },
+    {
+      "id": "DS-Barras",
+      "pagina": "Sistema de diseño",
+      "titulo": "Barras de vida y marcos",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/DS-Barras.png",
+      "html": "pantallas_html/DS-Barras.html",
+      "fuente": "fuente_dc/DS-Barras.dc.html",
+      "notas": []
+    },
+    {
+      "id": "AD-Resumen",
+      "pagina": "Administración y personajes especiales",
+      "titulo": "D1 · Consola: resumen",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/AD-Resumen.png",
+      "html": "pantallas_html/AD-Resumen.html",
+      "fuente": "fuente_dc/AD-Resumen.dc.html",
+      "notas": [
+        "D1 · Resumen\n• Franja naranja: siempre se sabe que es la consola del equipo.\n• Reinos, cola de reportes y alertas automáticas (bots, inversiones anómalas, carreras por publicar en la wiki, narradores fuera de zona).\n• Registro de auditoría que no se puede editar."
+      ]
+    },
+    {
+      "id": "AD-Moderacion",
+      "pagina": "Administración y personajes especiales",
+      "titulo": "D2 · Consola: moderación de un caso",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/AD-Moderacion.png",
+      "html": "pantallas_html/AD-Moderacion.html",
+      "fuente": "fuente_dc/AD-Moderacion.dc.html",
+      "notas": [
+        "D2 · Moderación\n• El caso junta reportes, historial y contexto del chat (±2 min).\n• Mensajes ofensivos ocultos por defecto: cuida también al moderador.\n• Sanción sugerida según historial; motivo obligatorio; vista previa de lo que leerá el jugador.\n• Segunda firma para suspensiones largas; apelaciones en la cola."
+      ]
+    },
+    {
+      "id": "AD-Especiales",
+      "pagina": "Administración y personajes especiales",
+      "titulo": "D3 · Consola: personajes especiales",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/AD-Especiales.png",
+      "html": "pantallas_html/AD-Especiales.html",
+      "fuente": "fuente_dc/AD-Especiales.dc.html",
+      "notas": []
+    },
+    {
+      "id": "MMO-Narrador",
+      "pagina": "Administración y personajes especiales",
+      "titulo": "D4 · En el juego: modo narrador",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Narrador.png",
+      "html": "pantallas_html/MMO-Narrador.html",
+      "fuente": "fuente_dc/MMO-Narrador.dc.html",
+      "notas": [
+        "D4 · Modo narrador (actualizado)\n• Así te ven: barra de vida con borde dorado y marco de pluma.\n• Herramientas: invocar, anunciar, volar, invisible, aparecer en…, don +5 vida, marcar, terminar.\n• Guion por pasos, presupuesto con tope y recompensa propia al final.\n• Transmisión: ocultar nombres, retardo de chat, ocultar ubicación."
+      ]
+    },
+    {
+      "id": "AD-Economia",
+      "pagina": "Administración y personajes especiales",
+      "titulo": "D5 · Consola: economía",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/AD-Economia.png",
+      "html": "pantallas_html/AD-Economia.html",
+      "fuente": "fuente_dc/AD-Economia.dc.html",
+      "notas": [
+        "D5 · Economía\n• Entradas y salidas de oro del día.\n• Socios de PNJ con más ingresos y avisos de picos.\n• Palancas con simulación previa y segunda firma."
+      ]
+    },
+    {
+      "id": "MMO-Salir",
+      "pagina": "Mundo persistente y creadores",
+      "titulo": "E1 · Salir del juego: extraer, acampar o arriesgar",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Salir.png",
+      "html": "pantallas_html/MMO-Salir.html",
+      "fuente": "fuente_dc/MMO-Salir.dc.html",
+      "notas": [
+        "E1 · Salir\n• Tres opciones con su riesgo a la vista: extraer, acampar, salir ya.\n• Dice qué está en riesgo y qué va en la bolsa segura.\n• Salir en zona peligrosa pide mantener pulsado.\n• Tu grupo puede vigilar tu campamento."
+      ]
+    },
+    {
+      "id": "MMO-Ausencia",
+      "pagina": "Mundo persistente y creadores",
+      "titulo": "E2 · Mientras dormías",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Ausencia.png",
+      "html": "pantallas_html/MMO-Ausencia.html",
+      "fuente": "fuente_dc/MMO-Ausencia.dc.html",
+      "notas": [
+        "E2 · Mientras dormías\n• Línea de tiempo de lo que le pasó a tu personaje.\n• Quién te defendió, con elogio en un clic.\n• Repetición del ataque.\n• Explica qué habría pasado al morir (fardo recuperable 30 min)."
+      ]
+    },
+    {
+      "id": "MMO-Viajes",
+      "pagina": "Mundo persistente y creadores",
+      "titulo": "E3 · Viajar sin teletransporte",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Viajes.png",
+      "html": "pantallas_html/MMO-Viajes.html",
+      "fuente": "fuente_dc/MMO-Viajes.dc.html",
+      "notas": [
+        "E3 · Viajar\n• Cada ruta con tiempo, coste y riesgo por tramos.\n• En caravana puedes gestionar El Nido o armar grupo.\n• Los atajos se descubren y son secretos vendibles.\n• Desconectarse en caravana te deja en zona segura."
+      ]
+    },
+    {
+      "id": "MMO-Incursiones",
+      "pagina": "Mundo persistente y creadores",
+      "titulo": "E4 · Incursiones: rápida, media y larga",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Incursiones.png",
+      "html": "pantallas_html/MMO-Incursiones.html",
+      "fuente": "fuente_dc/MMO-Incursiones.dc.html",
+      "notas": [
+        "E4 · Incursiones\n• Tres duraciones con etapas y puntos de extracción visibles.\n• Las largas tienen campamentos que guardan el progreso entre días.\n• Bolsa segura vs. en riesgo antes de entrar.\n• Bengala de extracción como salida de emergencia."
+      ]
+    },
+    {
+      "id": "MMO-Trato",
+      "pagina": "Mundo persistente y creadores",
+      "titulo": "E5 · Trato entre jugadores",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Trato.png",
+      "html": "pantallas_html/MMO-Trato.html",
+      "fuente": "fuente_dc/MMO-Trato.dc.html",
+      "notas": [
+        "E5 · Trato\n• Cara a cara, con valor de mercado de cada lado.\n• Los objetos que no conoces se ofrecen como «???».\n• Doble confirmación; cualquier cambio la borra.\n• Se pueden vender Mapas del hallazgo."
+      ]
+    },
+    {
+      "id": "MMO-Estudio",
+      "pagina": "Mundo persistente y creadores",
+      "titulo": "E6 · Estudio de repeticiones 3D (creadores)",
+      "tamano": [
+        1440,
+        810
+      ],
+      "png": "pantallas_png/MMO-Estudio.png",
+      "html": "pantallas_html/MMO-Estudio.html",
+      "fuente": "fuente_dc/MMO-Estudio.dc.html",
+      "notas": [
+        "E6 · Estudio de repeticiones\n• Repetición 3D de raids, mazmorras, arenas o una sala concreta.\n• Cámaras: libre, seguir, órbita, cenital, ruta guardada.\n• Línea de tiempo con mecánicas, muertes y momentos.\n• Capas activables y encuadre vertical 9:16.\n• Privacidad: quien no quiere salir aparece como «Aventurero».\n• Se comparte por código."
+      ]
+    }
+  ],
+  "notas_generales_por_pagina": {
+    "Sistema UI MMORPG": [
+      "Principios del sistema\n1. Una sola familia visual, la de la Final v2: grafito, un solo acento y Barlow Semi Condensed.\n2. El MENÚ es la barra común de todas las ventanas: Equipo C · Poderes N · Misiones L · Mapa M · Códice J · Social O · Refugio H · Comercio P (Mercado, Tienda, Pase), búsqueda global Ctrl K, Ajustes F10.\n3. El CÓDICE (J) es solo el libro de conocimiento del jugador, conectado con la wiki web.\n4. Dos monedas siempre visibles: oro (se gana jugando) y Prismas (dinero real). Pase de batalla junto a ellas.\n5. Estadísticas: siempre icono + color propio + texto (ver página «Sistema de diseño»).\n6. Información progresiva, comparar contra lo que tienes, atajos visibles, acento por universo, accesible por defecto."
+    ],
+    "Entrada y Refugio": [
+      "Cómo encaja todo\nFlujo: Launcher → Inicio de sesión → Selección → (Creación) → Refugio o Carga → Mundo.\n\nEl Refugio es el corazón entre sesiones: tus personajes secundarios trabajan, Pispa recolecta y las estaciones fabrican. Al volver, todo te dice qué hacer primero.\n\nReglas del refugio:\n1. Nunca castiga por no entrar: producción limitada a 12 h y nada se pierde.\n2. Cada sugerencia apunta a una meta real (misión, receta, personaje).\n3. Todo lo de la isla también existe en Vista Lista y en la app.\nVista general · Construir (B) · Producción · Expediciones · Pispa · Mejoras · Fabricación.\nLeyenda: morado = refugio · verde azulado = entrada.",
+      "Repaso de UX · PC + móvil\n\nCAMBIOS a lo que ya existía\n1. Refugio: de isla vista desde arriba / isométrica a corte lateral por pisos (B1, B7).\n2. Menú: nueva pestaña Comercio (P) con Mercado, Tienda y Pase; el Pase sale de la barra y esas 3 ventanas ya tienen pestaña activa.\n3. App compañera → Refugio móvil jugable (B5).\n4. Refugio: de 7 sub-pestañas a 5; Construir es un modo (B) y Fabricación se abre desde la Forja.\n5. Códice: bandeja «Por decidir»; descubrir ya no interrumpe el combate.\n6. HUD en el mundo: aviso de descubrimiento («???» → nombre, «eres el 1.º»).\n\nINNOVACIONES nuevas\n1. Marca e insignia propias del Refugio + sello de artesano (B9).\n2. Un diseño, dos dispositivos: mismo corte lateral en PC (ancho) y móvil (vertical), sincronizado, con «Seguir en el móvil / en el PC».\n3. Ronda de 2 minutos en móvil, con final claro.\n4. Avisos con presupuesto: máx. 3 al día, horario de silencio, sin rachas ni castigos.\n5. Refugio de bolsillo: mini-ventana en colas y antesalas (ver pantalla 17).\n6. Habitante ideal y salas que se fusionan: decisiones de colocación con sentido.\n7. Invitados: prestar un personaje al refugio de un amigo.\n8. El refugio también se descubre: roca por excavar y salas «???» que entran al Códice.\n\nACTUALIZACIÓN\n• El refugio v1 es un depa en una vecindad con patio compartido (B0, B1, B7); nombre: El Nido.\n• Nueva página «Administración y personajes especiales»."
+    ],
+    "Códice, economía y tienda": [
+      "Reglas del conocimiento (no perder)\n1. Todo en el juego es descubrible: objetos, criaturas, PNJ, lugares, poderes, recetas, mecánicas.\n2. Lo que no conoces se ve como «???» (nombre, icono y datos ocultos).\n3. Al descubrir algo eliges: GUARDAR EL SECRETO (beneficio pequeño: ves nombre y ubicación, puedes vender «Mapas del hallazgo») o PUBLICARLO en la wiki web (reconocimiento de pionero/Hall of Fame + oro).\n4. Publicar es permanente. Si otro publica antes, pierdes el título de pionero de la wiki.\n5. Pionero de una tienda o PNJ: recibe una oferta de inversión → misión especial → socio con un % de todas las transacciones de todos los jugadores con ese PNJ.\n6. Desde el juego se pueden proponer cambios a la wiki; la comunidad vota."
+    ],
+    "Sistema de diseño": [],
+    "Administración y personajes especiales": [],
+    "Mundo persistente y creadores": [
+      "Reglas del mundo (no perder)\n1. Al desconectarte, tu personaje se queda en el mundo.\n2. Zonas seguras intermedias: ahí sales y vuelves sin riesgo. Reconexión rápida de 3 min si se cae la conexión.\n3. Si no extraes hay consecuencias: tu personaje puede ser atacado o morir.\n4. No hay teletransporte: se camina o se usan viajes rápidos (caravana, montura, dirigible).\n5. Incursiones rápidas, medias y largas; solo te llevas el botín si extraes.\n6. El Nido se camina cuando tu personaje está extraído; si está en el mundo, se gestiona a distancia (ventana o móvil). Por validar."
+    ]
+  }
+}

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMO-Talentos</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- Subnavegación del refugio -->
+<div style="position: absolute; left: 28px; top: 80px; display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07)">
+<sc-for list="{{sub}}" as="s" hint-placeholder-count="5"><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: {{s.bg}}; color: {{s.c}}; font-size: 14px; font-weight: 600; line-height: 32px">{{s.n}}</span></sc-for>
+</div>
+
+<!-- ============ IZQUIERDA: ENERGÍAS (n) ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 128px; width: 300px; height: 654px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 18px; font-weight: 700">Energías</span><span class="num" style="font-size: 12px; color: #9aa6ae">10 de 14 descubiertas</span></div>
+<div style="display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1); font-size: 13px; color: #7c8992"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>Buscar energía o efecto</div>
+<div style="display: flex; gap: 4px"><span class="chip" style="height: 24px; font-size: 12px; background: #1c2a33; color: #eef2f4">Afinidad</span><span class="chip" style="height: 24px; font-size: 12px">Uso reciente</span><span class="chip" style="height: 24px; font-size: 12px">A–Z</span></div>
+<sc-for list="{{energies}}" as="e" hint-placeholder-count="10">
+<div style="display: flex; align-items: center; gap: 10px; padding: 5px 8px; border-radius: 10px; background: {{e.bg}}; box-shadow: {{e.ring}}; opacity: {{e.op}}">
+<span style="width: 22px; height: 22px; border-radius: 50%; background: {{e.c}}; box-shadow: 0 0 10px {{e.glow}}; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 3px">
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 600">{{e.n}}</span><span class="num" style="color: #9aa6ae">{{e.lv}}</span></div>
+<div style="height: 3px; border-radius: 2px; background: #070a0c"><div style="height: 3px; border-radius: 2px; width: {{e.p}}%; background: {{e.c}}"></div></div>
+</div>
+</div>
+</sc-for>
+<span style="font-size: 11px; color: #7c8992; margin-top: auto">La afinidad sube usando poderes de esa energía. Arrastra una energía al crisol.</span>
+</div>
+
+<!-- ============ CENTRO: CRISOL ============ -->
+<div class="card" style="position: absolute; left: 344px; top: 128px; width: 700px; height: 654px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 20px; font-weight: 700">Crisol de resonancia</span><span style="font-size: 13px; color: #9aa6ae">2 o 3 energías + forma + ritmo = un poder · <span style="color: {{accent}}">tu Constelación suma +12 % al Vacío</span></span></div>
+<div style="display: flex; gap: 22px">
+<div style="position: relative; width: 300px; height: 300px; flex: none">
+<svg width="300" height="300" viewBox="0 0 300 300" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+<circle cx="150" cy="150" r="128" fill="#0a0f13" stroke="#26333b" stroke-width="2"></circle>
+<circle cx="150" cy="150" r="128" fill="none" stroke="{{accent}}" stroke-width="2" stroke-dasharray="4 10" opacity="0.5"></circle>
+<path d="M150 88A62 62 0 0 0 150 212Z" fill="#b47bff" opacity="0.55"></path>
+<path d="M150 88A62 62 0 0 1 150 212Z" fill="#ff7a45" opacity="0.55"></path>
+<circle cx="150" cy="150" r="62" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="2"></circle>
+<path d="M150 112c18 10 22 26 10 38s-30 14-30 0 14-14 20-6" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.85"></path>
+</svg>
+<sc-for list="{{sockets}}" as="s" hint-placeholder-count="3">
+<div style="position: absolute; left: {{s.x}}px; top: {{s.y}}px; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px; margin-left: -32px; margin-top: -32px">
+<div style="width: 64px; height: 64px; border-radius: 50%; background: {{s.bg}}; box-shadow: {{s.ring}}; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #9aa6ae">{{s.plus}}</div>
+<span style="font-size: 12px; font-weight: 700; color: {{s.tc}}; white-space: nowrap">{{s.n}}</span>
+</div>
+</sc-for>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Forma</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{forms}}" as="f" hint-placeholder-count="5"><span class="chip" style="height: 28px; background: {{f.bg}}; color: {{f.c}}; box-shadow: {{f.ring}}">{{f.n}}</span></sc-for></div>
+<span class="caps">Ritmo</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{tempo}}" as="f" hint-placeholder-count="3"><span class="chip" style="height: 28px; background: {{f.bg}}; color: {{f.c}}; box-shadow: {{f.ring}}">{{f.n}}</span></sc-for></div>
+<div class="sub" style="padding: 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: inset 0 0 0 1.5px #f5c35b; margin-top: 4px">
+<div style="display: flex; align-items: center; gap: 8px"><span style="font-size: 20px; font-weight: 700">Grieta ígnea</span><span style="padding: 0 7px; height: 20px; border-radius: 10px; background: #f5c35b; color: #1a1205; font-size: 11px; font-weight: 700; line-height: 20px">¡NUEVA!</span></div>
+<span style="font-size: 13px; line-height: 18px; color: #c3ccd3">Canalizas una grieta que arde mientras la mantienes: 120 de daño por segundo en área y quema el escudo enemigo.</span>
+<span class="num" style="font-size: 12px; color: #9aa6ae">Potencia 78 = Vacío 14 + Calor 9 (tus afinidades)</span>
+</div>
+</div>
+</div>
+<div class="sub" style="padding: 10px 14px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: #c3ccd3">
+<span style="width: 8px; height: 8px; transform: rotate(45deg); background: {{accent}}; flex: none"></span>
+Pista: un herrero del Nexo dice que «el Pulso canta cuando le hablas con Eco».
+<span style="margin-left: auto; font-size: 12px; color: #7c8992">3 pistas sin probar</span>
+</div>
+<div style="display: flex; gap: 8px; margin-top: auto">
+<button class="btn">Probar en el maniquí</button>
+<button class="btn">Vaciar crisol</button>
+<button class="btn" style="margin-left: auto; background: {{accent}}; color: #071012; box-shadow: none">Equipar en la ranura 3</button>
+</div>
+</div>
+
+<!-- ============ DERECHA: CONJUNTO DE PODERES ============ -->
+<div class="card" style="position: absolute; left: 1060px; top: 128px; width: 352px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span class="caps">Conjunto «Daño»</span><span class="kbd">F1</span></div>
+<div class="sub" style="padding: 10px 12px; display: flex; align-items: center; gap: 10px; box-shadow: inset 0 0 0 1.5px #f5c35b">
+<span style="width: 42px; height: 42px; border-radius: 12px; background: #2a1d3a; flex: none"></span>
+<div style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 14px; font-weight: 700">Colapso dimensional</span><div style="display: flex; gap: 3px"><span style="width: 12px; height: 12px; border-radius: 50%; background: #b47bff"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #b47bff"></span><span style="width: 12px; height: 12px; border-radius: 50%; background: #7fe0ff"></span></div></div>
+<span style="margin-left: auto; font-size: 11px; color: #f5c35b">NÚCLEO · R</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{slots}}" as="s" hint-placeholder-count="6">
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; box-shadow: {{s.ring}}">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 13px; font-weight: 700; color: {{s.tc}}">{{s.n}}</span><span class="num" style="font-size: 11px; color: #7c8992">{{s.k}}</span></div>
+<div style="display: flex; gap: 3px"><sc-for list="{{s.e}}" as="e" hint-placeholder-count="2"><span style="width: 11px; height: 11px; border-radius: 50%; background: {{e.c}}"></span></sc-for></div>
+</div>
+</sc-for>
+</div>
+<span class="caps" style="margin-top: 6px">Ecos pasivos</span>
+<div style="display: flex; gap: 8px"><span class="chip" style="flex: 1">Armonía del vacío</span><span class="chip" style="flex: 1; color: #7c8992">+ vacío</span></div>
+<span class="caps" style="margin-top: 6px">Resonancia del conjunto</span>
+<div style="display: flex; height: 12px; border-radius: 6px; overflow: hidden"><span style="width: 42%; background: #b47bff"></span><span style="width: 25%; background: #ff7a45"></span><span style="width: 17%; background: #7fe0ff"></span><span style="width: 16%; background: #5aa9ff"></span></div>
+<span style="font-size: 13px; line-height: 18px; color: #c3ccd3">Vacío aparece en 4 poderes: <span style="color: #4fe39a; font-weight: 700">+8 % de potencia</span>. Un 5.º activaría «Eco del abismo».</span>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'Poderes' ? '#eef2f4' : '#9aa6ae', bar: label === 'Poderes' ? A : 'transparent' }));
+const sub = ['Crisol', 'Atlas', 'Constelación', 'Afinidades'].map((n) => n === 'Crisol' ? { n, bg: '#1c2a33', c: '#eef2f4' } : { n, bg: 'transparent', c: '#9aa6ae' });
+const E = { vacio: '#b47bff', calor: '#ff7a45', pulso: '#5aa9ff', runa: '#f5b546', savia: '#4fe39a', eco: '#7fe0ff', hierro: '#b8c3ca', marea: '#3f8fd6', sombra: '#8a7aa8', luz: '#fff1a8' };
+const en = (n, k, lv, p, sel) => ({ n, c: E[k], glow: E[k] + '66', lv: 'nv ' + lv, p, bg: sel ? '#1c2a33' : 'transparent', ring: sel ? 'inset 0 0 0 1.5px ' + E[k] : 'none', op: 1 });
+const ch = (list, sel) => list.map((n) => n === sel ? { n, bg: 'rgba(70,227,193,0.14)', c: '#eef2f4', ring: 'inset 0 0 0 1.5px ' + A } : { n, bg: '#18242b', c: '#c3ccd3', ring: 'none' });
+const sl = (n, k, es, sel) => ({ n, k, e: es.map((x) => ({ c: E[x] })), tc: sel ? A : '#eef2f4', ring: sel ? 'inset 0 0 0 1.5px ' + A : 'none' });
+const extra = {
+sub,
+energies: [
+en('Vacío', 'vacio', 14, 60, true), en('Calor', 'calor', 9, 30, true), en('Eco', 'eco', 8, 75), en('Pulso', 'pulso', 7, 20), en('Runa', 'runa', 5, 50),
+en('Savia', 'savia', 4, 10), en('Hierro', 'hierro', 3, 80), en('Marea', 'marea', 2, 40), en('Sombra', 'sombra', 1, 15), en('Luz', 'luz', 1, 5)
+],
+sockets: [
+{ x: 150, y: 36, n: 'Vacío', bg: E.vacio, ring: '0 0 18px ' + E.vacio, tc: '#eef2f4', plus: '' },
+{ x: 52, y: 212, n: 'Calor', bg: E.calor, ring: '0 0 18px ' + E.calor, tc: '#eef2f4', plus: '' },
+{ x: 248, y: 212, n: 'Opcional', bg: '#0d1216', ring: 'inset 0 0 0 2px rgba(255,255,255,0.18)', tc: '#7c8992', plus: '+' }
+],
+forms: ch(['Proyectil', 'Área', 'Cono', 'Aura', 'Trampa'], 'Área'),
+tempo: ch(['Instantáneo', 'Canalizado', 'Retardado'], 'Canalizado'),
+slots: [
+sl('Haz de grieta', '1', ['vacio']), sl('Paso del eco', '2', ['eco', 'vacio']), sl('Grieta ígnea', '3', ['vacio', 'calor'], true),
+sl('Corte de fase', '4', ['vacio', 'pulso']), sl('Muro de ceniza', '5', ['calor', 'hierro']), sl('Chispa errante', '6', ['pulso', 'calor'])
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Estudio de repeticiones</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div style="position: absolute; inset: 0; background: #0b0f13"></div>
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 56px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 10px; background: #0d1216; box-shadow: inset 0 -1px 0 rgba(255,255,255,0.08), inset 0 3px 0 #c39bff">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: #c39bff">ESTUDIO</span><span style="font-size: 15px; font-weight: 600">Coloso de Runavell · raid del gremio · ayer 21:00</span><span class="chip">20 jugadores · 06:42</span>
+<span class="chip" style="margin-left: auto; color: #c39bff">Código: REP-9K2-Q7</span><button class="btn" style="height: 34px">Compartir repetición</button><button class="btn" style="height: 34px; background: #c39bff; color: #120a22; box-shadow: none">Exportar clip</button>
+</div>
+<div class="card" style="position: absolute; left: 20px; top: 72px; width: 250px; bottom: 20px; padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 7px">
+<span class="caps">Repeticiones 3D</span>
+<sc-for list="{{reps}}" as="r" hint-placeholder-count="6"><div style="padding: 8px 10px; border-radius: 10px; background: {{r.bg}}; box-shadow: {{r.ring}}; display: flex; flex-direction: column; gap: 1px"><span style="font-size: 13px; font-weight: 700">{{r.n}}</span><span class="num" style="font-size: 11px; color: #9aa6ae">{{r.d}}</span></div></sc-for>
+<span style="font-size: 11px; line-height: 15px; color: #7c8992; margin-top: auto">Se guardan raids, mazmorras, arenas y salas concretas. Cada jugador decide si aparece con su nombre.</span>
+</div>
+<div class="scene" style="position: absolute; left: 286px; top: 72px; width: 868px; height: 500px; border-radius: 14px; overflow: hidden">
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.45)"></div>
+<svg width="868" height="500" viewBox="0 0 868 500" style="position: absolute; left: 0; top: 0" aria-hidden="true">
+<ellipse cx="434" cy="270" rx="300" ry="150" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2" stroke-dasharray="6 8"></ellipse>
+<path d="M434 270L250 190A200 100 0 0 1 434 170Z" fill="rgba(255,107,107,0.22)" stroke="#ff6b6b" stroke-width="2"></path>
+<path d="{{trails}}" fill="none" stroke="#c39bff" stroke-width="2" stroke-opacity="0.7"></path>
+<circle cx="434" cy="250" r="26" fill="#3a1d22" stroke="#ff6b6b" stroke-width="3"></circle>
+</svg>
+<sc-for list="{{dots}}" as="d" hint-placeholder-count="12"><div style="position: absolute; left: {{d.x}}px; top: {{d.y}}px; width: 12px; height: 12px; border-radius: 50%; background: {{d.c}}; box-shadow: 0 0 0 2px #0d1216"></div></sc-for>
+<span class="sh" style="position: absolute; left: 16px; top: 12px; font-size: 13px; color: #dbe4ea">Cámara libre · arrastra para orbitar · rueda para acercar</span>
+<span class="sh" style="position: absolute; right: 16px; top: 12px; padding: 2px 10px; border-radius: 10px; background: #ff6b6b; color: #1a0707; font-size: 12px; font-weight: 700">Terremoto rúnico · 03:12</span>
+<div style="position: absolute; right: 16px; bottom: 16px; width: 150px; height: 266px; border-radius: 12px; border: 1.5px dashed #c39bff; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; box-sizing: border-box; font-size: 11px; color: #dcc8ff">Encuadre vertical 9:16</div>
+</div>
+<div class="card" style="position: absolute; left: 286px; top: 584px; width: 868px; bottom: 20px; padding: 12px 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: 7px">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 13px"><span class="kbd">Espacio</span> reproducir<span class="chip" style="height: 24px">0,25×</span><span class="chip" style="height: 24px; background: #1c2a33; color: #eef2f4">1×</span><span class="chip" style="height: 24px">2×</span><span class="num" style="margin-left: auto; color: #9aa6ae">03:12 / 06:42</span></div>
+<sc-for list="{{tracks}}" as="t" hint-placeholder-count="4"><div style="display: flex; align-items: center; gap: 10px"><span style="width: 96px; font-size: 12px; color: #9aa6ae">{{t.n}}</span><div style="position: relative; flex: 1; height: 16px; border-radius: 4px; background: #121a20"><sc-for list="{{t.m}}" as="m" hint-placeholder-count="4"><span style="position: absolute; left: {{m.x}}%; top: 2px; width: {{m.w}}%; height: 12px; border-radius: 3px; background: {{t.c}}"></span></sc-for><span style="position: absolute; left: 48%; top: -3px; width: 2px; height: 22px; background: #ffffff"></span></div></div></sc-for>
+</div>
+<div class="card" style="position: absolute; right: 20px; top: 72px; width: 250px; bottom: 20px; padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px">
+<span class="caps">Cámara</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px"><sc-for list="{{cams}}" as="c" hint-placeholder-count="6"><span class="chip" style="justify-content: center; background: {{c.bg}}; color: {{c.c}}">{{c.n}}</span></sc-for></div>
+<span class="caps" style="margin-top: 4px">Capas</span>
+<sc-for list="{{layers}}" as="l" hint-placeholder-count="6"><div style="display: flex; align-items: center; font-size: 13px">{{l.n}}<span class="sw {{l.cls}}" style="margin-left: auto; background: {{l.bg}}"></span></div></sc-for>
+<span class="caps" style="margin-top: 4px">Exportar</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><span class="chip" style="height: 26px">Clip 30 s</span><span class="chip" style="height: 26px">16:9</span><span class="chip" style="height: 26px; color: #c39bff">9:16</span><span class="chip" style="height: 26px">4K</span></div>
+<span style="font-size: 11px; line-height: 15px; color: #7c8992; margin-top: auto">Quien pidió no salir en cámara aparece como «Aventurero» y sin apariencia propia.</span>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'BARE' ? '#eef2f4' : '#9aa6ae', bar: label === 'BARE' ? A : 'transparent' }));
+const sw = (on) => ({ cls: on ? 'on' : 'off', bg: on ? '#c39bff' : '#2a363d' });
+const pos = [[250, 300, '#5aa9ff'], [300, 340, '#ff9a4d'], [330, 360, '#ff9a4d'], [380, 380, '#4fe39a'], [470, 390, '#ff9a4d'], [540, 370, '#ff9a4d'], [600, 330, '#4fe39a'], [640, 290, '#ff9a4d'], [300, 230, '#56646d'], [560, 200, '#ff9a4d'], [610, 240, '#5aa9ff'], [420, 400, '#ff9a4d']];
+const extra = {
+reps: [['Coloso de Runavell', 'Raid · ayer · 06:42 · victoria', 1], ['Bóveda de Ferrum', 'Mazmorra · hoy · 31:42'], ['Sala: Puente de cadenas', 'Solo esta sala · 02:10'], ['Arena 3c3 · final', 'JcJ · sábado · 04:55'], ['Escena: La caravana perdida', 'Evento de narrador · 18:40'], ['Guardián del Umbral', 'Jefe de mundo · 03:20']].map(([n, d, s]) => ({ n, d, bg: s ? '#1c2a33' : '#121a20', ring: s ? 'inset 0 0 0 1.5px #c39bff' : 'none' })),
+dots: pos.map(([x, y, c]) => ({ x, y, c })),
+trails: pos.slice(0, 8).map(([x, y]) => 'M' + (x + 46) + ' ' + (y - 30) + 'Q' + (x + 30) + ' ' + (y - 4) + ' ' + (x + 6) + ' ' + (y + 6)).join(''),
+tracks: [
+{ n: 'Mecánicas', c: '#ff6b6b', m: [{ x: 8, w: 4 }, { x: 30, w: 3 }, { x: 46, w: 5 }, { x: 78, w: 4 }] }, { n: 'Muertes', c: '#9aa6ae', m: [{ x: 33, w: 1 }, { x: 50, w: 1 }, { x: 51.5, w: 1 }] },
+{ n: 'Momentos', c: '#f5c35b', m: [{ x: 20, w: 2 }, { x: 62, w: 2 }, { x: 96, w: 2 }] }, { n: 'Tus marcas', c: '#c39bff', m: [{ x: 44, w: 10 }] }
+],
+cams: ['Libre', 'Seguir jugador', 'Órbita al jefe', 'Cenital', 'Primera persona', 'Ruta guardada'].map((n, i) => ({ n, bg: i === 0 ? '#1c2a33' : '#18242b', c: i === 0 ? '#eef2f4' : '#c3ccd3' })),
+layers: [['Áreas de daño', 1], ['Rutas de movimiento', 1], ['Números de daño', 0], ['Barras de vida', 1], ['Nombres de jugadores', 0], ['Interfaz del juego', 0]].map(([n, on]) => Object.assign({ n }, sw(on)))
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>HUD variante cristal</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#9db8ff}a:hover{color:#cddbff}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.glass{background:rgba(14,20,34,0.52);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14),0 18px 40px rgba(0,0,0,0.35)}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 2px rgba(0,0,0,0.8)}
+.slot{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,0.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.12);box-sizing:border-box}
+.kbd{position:absolute;right:-3px;bottom:-3px;width:19px;height:19px;border-radius:50%;background:#101626;font-size:11px;font-weight:700;line-height:17px;text-align:center;color:#eef2ff;box-sizing:border-box;border:1px solid rgba(255,255,255,0.3)}
+</style>
+</helmet>
+<div class="scene" style="width: 1360px; height: 460px; box-sizing: border-box; padding: 24px; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2ff; display: flex; flex-direction: column; justify-content: flex-end; gap: 12px">
+
+<div class="glass" style="align-self: flex-start; display: flex; flex-direction: column; gap: 4px; padding: 10px 16px; border-radius: 18px; font-size: 16px; line-height: 20px">
+<div style="display: flex; gap: 8px; opacity: 0.7"><span class="num" style="font-size: 13px; color: #b6c0d8">04:01</span><span style="color: #8fc4ff; font-weight: 600">EST JimRising</span><span>está en camino</span></div>
+<div style="display: flex; gap: 8px; opacity: 0.85"><span class="num" style="font-size: 13px; color: #b6c0d8">04:21</span><span style="color: #8fc4ff; font-weight: 600">Ascendant</span><span style="color: #b6c0d8">compró</span><span style="color: #ffd27a">Baliza de control</span></div>
+<div style="display: flex; gap: 8px"><span class="num" style="font-size: 13px; color: #b6c0d8">04:39</span><span style="color: #8fc4ff; font-weight: 600">xdfaster500</span><span style="color: #b6c0d8">compró</span><span style="color: #ffd27a">Baliza de control</span></div>
+</div>
+
+<div style="display: flex; gap: 6px">
+<sc-for list="{{buffs}}" as="b" hint-placeholder-count="5">
+<div style="position: relative; width: 30px; height: 30px; border-radius: 50%; background: {{b.c}}; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25)"><span class="num sh" style="position: absolute; right: -2px; bottom: -3px; font-size: 11px; font-weight: 700">{{b.n}}</span></div>
+</sc-for>
+</div>
+
+<div style="display: flex; align-items: flex-end; gap: 14px">
+
+<div class="glass" style="display: flex; align-items: center; gap: 20px; padding: 18px 22px; border-radius: 28px">
+
+<div style="position: relative; width: 100px; height: 100px; flex: none">
+<svg width="100" height="100" viewBox="0 0 100 100" style="position: absolute; left: 0; top: 0" role="img" aria-label="Experiencia hacia el nivel 6">
+<circle cx="50" cy="50" r="47" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="4"></circle>
+<circle cx="50" cy="50" r="47" fill="none" stroke="{{accent}}" stroke-width="4" stroke-linecap="round" stroke-dasharray="89 296" transform="rotate(-90 50 50)"></circle>
+</svg>
+<div style="position: absolute; left: 8px; top: 8px; width: 84px; height: 84px; border-radius: 50%; background: rgba(40,52,80,0.85); display: flex; align-items: center; justify-content: center">
+<svg width="42" height="42" viewBox="0 0 48 48" fill="none" stroke="#8a97b8" stroke-width="2" aria-hidden="true"><circle cx="24" cy="18" r="8"></circle><path d="M8 42c2-9 9-13 16-13s14 4 16 13"></path></svg>
+</div>
+<div class="num" style="position: absolute; right: -2px; top: -2px; width: 30px; height: 30px; border-radius: 50%; background: {{accent}}; color: #0a1020; font-size: 15px; font-weight: 700; line-height: 30px; text-align: center">5</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: flex-start; gap: 12px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding-top: 8px">
+<div style="width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e4eaff" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2.5"></circle></svg>
+</div>
+</div>
+<sc-for list="{{abilities}}" as="a" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 7px">
+<div style="position: relative; width: 60px; height: 60px; border-radius: 50%; background: {{a.bg}}; box-shadow: {{a.ring}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="{{a.stroke}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{a.icon}}"></path></svg>
+<sc-if value="{{a.locked}}" hint-placeholder-val="{{ false }}"><span style="font-size: 11px; font-weight: 600; line-height: 1; color: #b6c0d8">Nv. 6</span></sc-if>
+<span class="kbd">{{a.key}}</span>
+</div>
+<div style="display: flex; gap: 4px">
+<sc-for list="{{a.pips}}" as="p" hint-placeholder-count="5"><span style="width: 6px; height: 6px; border-radius: 50%; background: {{p.c}}"></span></sc-for>
+</div>
+<span class="num" style="display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; line-height: 1; color: {{a.costColor}}"><svg width="9" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M5 0C3 3 1 5 1 7.5a4 4 0 0 0 8 0C9 5 7 3 5 0z" fill="{{a.costColor}}"></path></svg>{{a.cost}}</span>
+</div>
+</sc-for>
+<sc-for list="{{spells}}" as="s" hint-placeholder-count="2">
+<div style="padding-top: 8px">
+<div style="position: relative; width: 44px; height: 44px; border-radius: 50%; background: {{s.bg}}; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{s.stroke}}" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="{{s.icon}}"></path></svg>
+<div class="num" style="position: absolute; inset: 0; border-radius: 50%; background: rgba(8,12,22,0.7); display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 700">{{s.cd}}</div>
+<span class="kbd">{{s.key}}</span>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 5px">
+<div style="position: relative; height: 18px; border-radius: 9px; background: rgba(0,0,0,0.4); overflow: hidden">
+<div style="position: absolute; left: 0; top: 0; bottom: 0; width: 61%; border-radius: 9px; background: #52d68a"></div>
+<div class="num sh" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700">612 / 1003</div>
+<div class="num sh" style="position: absolute; right: 10px; top: 0; bottom: 0; display: flex; align-items: center; font-size: 12px; font-weight: 600; color: #b8f5cf">+3.9</div>
+</div>
+<div style="position: relative; height: 10px; border-radius: 5px; background: rgba(0,0,0,0.4); overflow: hidden">
+<div style="position: absolute; inset: 0; border-radius: 5px; background: #5b8fff"></div>
+</div>
+<div class="num" style="align-self: flex-end; font-size: 12px; font-weight: 600; color: #b6c8ff; line-height: 1">403 / 403</div>
+</div>
+</div>
+
+<div style="width: 1px; align-self: stretch; background: rgba(255,255,255,0.14)"></div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; gap: 10px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+<div class="slot" style="position: relative; background: rgba(60,100,170,0.6); display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#dce8ff" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 7-7 11-7-11z"></path></svg>
+<span class="num sh" style="position: absolute; right: 0; bottom: -2px; font-size: 12px; font-weight: 700">23</span>
+</div>
+<div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 44px; height: 44px; border-radius: 50%; background: rgba(120,100,40,0.55); box-shadow: 0 0 0 2px {{accent}}; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffe08a" stroke-width="2" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>
+<span class="num" style="position: absolute; right: -4px; top: -4px; width: 17px; height: 17px; border-radius: 50%; background: {{accent}}; color: #0a1020; font-size: 11px; font-weight: 700; line-height: 17px; text-align: center">1</span>
+<span class="kbd" style="left: -3px; right: auto">4</span>
+</div>
+<button aria-label="Regresar a base" style="width: 44px; height: 24px; border-radius: 12px; background: rgba(255,255,255,0.1); border: 0; padding: 0; color: #eef2ff; font-family: inherit; font-size: 12px; font-weight: 700">B</button>
+<button aria-label="Tienda" style="width: 44px; height: 24px; border-radius: 12px; background: rgba(255,255,255,0.1); border: 0; padding: 0; color: #eef2ff; font-family: inherit; font-size: 12px; font-weight: 700">P</button>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border-radius: 16px; background: rgba(0,0,0,0.3)">
+<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#ffd27a"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg>
+<span class="num" style="font-size: 22px; font-weight: 700; color: #ffd27a">1665</span>
+<svg width="18" height="18" viewBox="0 0 44 44" style="margin-left: auto" role="img" aria-label="Progreso"><circle cx="22" cy="22" r="17" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="7"></circle><circle cx="22" cy="22" r="17" fill="none" stroke="{{accent}}" stroke-width="7" stroke-dasharray="80 107" transform="rotate(-90 22 22)"></circle></svg>
+</div>
+</div>
+</div>
+
+<div class="glass" style="width: 278px; box-sizing: border-box; padding: 16px 18px; border-radius: 24px; display: flex; flex-direction: column; gap: 10px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; color: #b6c0d8">{{g.title}}</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px">
+<sc-for list="{{g.items}}" as="s" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 6px; height: 20px">
+<span style="width: 6px; height: 6px; border-radius: 50%; flex: none; background: {{s.color}}"></span>
+<span style="font-size: 13px; color: #c3cbe0; flex: 1; white-space: nowrap">{{s.label}}</span>
+<span class="num" style="font-size: 14px; font-weight: 700; color: {{s.valColor}}">{{s.value}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#9db8ff","options":["#9db8ff","#c39bff","#7ff0d8","#ffb3c7"]},"$preview":{"width":1360,"height":460}}'>
+class Component extends DCLogic {
+renderVals() {
+const accent = this.props.acento ?? '#9db8ff';
+const pips = (n, t) => Array.from({ length: t }, (_, i) => ({ c: i < n ? accent : 'rgba(255,255,255,0.2)' }));
+const ab = (key, icon, rank, total, cost, locked) => ({
+key, icon, cost, locked, pips: pips(rank, total),
+bg: locked ? 'rgba(255,255,255,0.05)' : 'rgba(70,90,140,0.55)',
+ring: locked ? 'inset 0 0 0 1px rgba(255,255,255,0.16)' : '0 0 0 2px ' + accent + ', inset 0 1px 0 rgba(255,255,255,0.25)',
+stroke: locked ? '#7d88a6' : '#ffffff',
+costColor: locked ? '#8a94ad' : '#b6c8ff'
+});
+const mk = (label, value, color, zero) => ({ label, value, color, valColor: zero ? '#8f99b3' : '#ffffff' });
+return {
+accent,
+buffs: [{ c: '#2f6a52', n: '0' }, { c: '#6a3430', n: '' }, { c: '#6a5426', n: '600' }, { c: '#2e3e72', n: '' }, { c: '#245a66', n: '' }],
+abilities: [
+ab('Q', 'M5 19L19 5M9 20l11-11M4 15L15 4', 3, 5, '24', false),
+ab('W', 'M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z', 1, 5, '50', false),
+ab('E', 'M4 12h12M12 6l6 6-6 6M4 6v12', 1, 5, '60', false),
+ab('R', 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z', 0, 3, '100', true)
+],
+spells: [
+{ key: 'D', cd: '87', bg: '#2b4480', stroke: '#c4d8ff', icon: 'M13 3L5 14h6l-1 7 8-11h-6z' },
+{ key: 'F', cd: '39', bg: '#7a4426', stroke: '#ffd0b0', icon: 'M12 3c3 4 6 6 6 10a6 6 0 0 1-12 0c0-3 2-4 3-7 1 2 2 3 3 3 0-2 0-4 0-6z' }
+],
+groups: [
+{ title: 'OFENSIVA', items: [mk('Daño ataque', '89', '#ff9a4d', false), mk('Poder hab.', '0', '#a58bff', true), mk('Vel. ataque', '0.72', '#ffd36b', false), mk('Crítico', '0%', '#ff5d5d', true), mk('Pen. armad.', '0 | 0%', '#ff7a59', true), mk('Pen. mágica', '0 | 0%', '#c58bff', true), mk('Robo vida', '0%', '#ff5c86', true), mk('Omnivamp.', '0%', '#e66bc4', true)] },
+{ title: 'DEFENSA', items: [mk('Armadura', '49', '#ffcf6b', false), mk('Res. mágica', '38', '#4fc8ff', false), mk('Tenacidad', '0%', '#9a7bff', true), mk('Cur./escudo', '0%', '#4fe39a', true)] },
+{ title: 'UTILIDAD', items: [mk('Celeridad', '10', '#dfe6ea', false), mk('Vel. mov.', '348', '#dfe6ea', false), mk('Alcance', '175', '#b8c3ca', false), mk('Regen.', '19 | 55', '#4fe39a', false)] }
+]
+};
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>HUD variante barra completa</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#ff5fa2}a:hover{color:#ff9cc6}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.slot{width:40px;height:40px;border-radius:6px;border:1px solid rgba(255,255,255,0.16);box-sizing:border-box}
+.chip{position:absolute;left:4px;top:3px;font-size:11px;font-weight:700;line-height:1;color:#c9c9d1}
+</style>
+</helmet>
+<div class="scene" style="position: relative; width: 1360px; height: 460px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #f4f4f6">
+
+<div class="sh" style="position: absolute; left: 24px; bottom: 196px; display: flex; flex-direction: column; gap: 3px; font-size: 16px; line-height: 20px">
+<div style="display: flex; gap: 8px; opacity: 0.7"><span class="num" style="font-size: 13px; color: #c9c9d1">04:01</span><span style="color: #7cc2ff; font-weight: 600">EST JimRising</span><span>está en camino</span></div>
+<div style="display: flex; gap: 8px; opacity: 0.85"><span class="num" style="font-size: 13px; color: #c9c9d1">04:21</span><span style="color: #7cc2ff; font-weight: 600">Ascendant</span><span style="color: #c9c9d1">compró</span><span style="color: #ffd27a">Baliza de control</span></div>
+<div style="display: flex; gap: 8px"><span class="num" style="font-size: 13px; color: #c9c9d1">04:39</span><span style="color: #7cc2ff; font-weight: 600">xdfaster500</span><span style="color: #c9c9d1">compró</span><span style="color: #ffd27a">Baliza de control</span></div>
+</div>
+
+<div style="position: absolute; left: 50%; bottom: 168px; transform: translateX(-50%); display: flex; gap: 5px">
+<sc-for list="{{buffs}}" as="b" hint-placeholder-count="5">
+<div style="position: relative; width: 28px; height: 28px; border-radius: 5px; background: {{b.c}}; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.2)"><span class="num sh" style="position: absolute; right: 2px; bottom: 0; font-size: 11px; font-weight: 700">{{b.n}}</span></div>
+</sc-for>
+</div>
+
+<!-- Barra de ancho completo -->
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 152px; box-sizing: border-box; padding: 18px 24px 16px; background: rgba(9,9,12,0.9); border-top: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-between">
+<div style="position: absolute; left: 50%; top: -1px; width: 120px; height: 2px; margin-left: -60px; background: {{accent}}"></div>
+
+<!-- Retrato + barras -->
+<div style="display: flex; align-items: center; gap: 14px">
+<div style="position: relative; width: 84px; height: 84px; flex: none">
+<svg width="84" height="84" viewBox="0 0 84 84" style="position: absolute; left: 0; top: 0" role="img" aria-label="Experiencia hacia el nivel 6">
+<circle cx="42" cy="42" r="40" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2"></circle>
+<circle cx="42" cy="42" r="40" fill="none" stroke="{{accent}}" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="75 251" transform="rotate(-90 42 42)"></circle>
+</svg>
+<div style="position: absolute; left: 7px; top: 7px; width: 70px; height: 70px; border-radius: 50%; background: #1b1b22; display: flex; align-items: center; justify-content: center">
+<svg width="34" height="34" viewBox="0 0 48 48" fill="none" stroke="#6b6b78" stroke-width="2" aria-hidden="true"><circle cx="24" cy="18" r="8"></circle><path d="M8 42c2-9 9-13 16-13s14 4 16 13"></path></svg>
+</div>
+</div>
+<div style="width: 214px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: baseline; gap: 8px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.14em; color: #a3a3ae">NIVEL</span>
+<span class="num" style="font-size: 22px; font-weight: 700; line-height: 1; color: {{accent}}">5</span>
+<span style="display: flex; gap: 4px; margin-left: auto">
+<button aria-label="Opción 1" style="width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); background: transparent; padding: 0"></button>
+<button aria-label="Opción 2" style="width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); background: transparent; padding: 0"></button>
+<button aria-label="Opción 3" style="width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3); background: transparent; padding: 0"></button>
+</span>
+</div>
+<div style="display: flex; justify-content: space-between; font-size: 13px; line-height: 1"><span class="num" style="font-weight: 700">612 / 1003</span><span class="num" style="color: #a9f0c3; font-weight: 600">+3.9</span></div>
+<div style="position: relative; height: 10px; border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18); overflow: hidden"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 61%; background: #3ccf73"></div></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px; line-height: 1"><span class="num" style="font-weight: 700">403 / 403</span><span style="color: #a3a3ae">maná</span></div>
+<div style="position: relative; height: 6px; border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18); overflow: hidden"><div style="position: absolute; inset: 0; background: #3f82f2"></div></div>
+</div>
+</div>
+
+<!-- Habilidades -->
+<div style="display: flex; align-items: flex-start; gap: 10px">
+<div style="width: 40px; height: 40px; margin-top: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e6e6ec" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="7"></circle><circle cx="12" cy="12" r="2.5"></circle></svg>
+</div>
+<sc-for list="{{abilities}}" as="a" hint-placeholder-count="4">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 6px">
+<div style="position: relative; width: 56px; height: 56px; border-radius: 8px; border: {{a.border}}; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="{{a.stroke}}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{a.icon}}"></path></svg>
+<sc-if value="{{a.locked}}" hint-placeholder-val="{{ false }}"><span style="font-size: 10px; font-weight: 600; line-height: 1; color: #a3a3ae">Nv. 6</span></sc-if>
+<span class="chip">{{a.key}}</span>
+</div>
+<div style="display: flex; gap: 3px; width: 56px"><sc-for list="{{a.pips}}" as="p" hint-placeholder-count="5"><span style="flex: 1; height: 2px; background: {{p.c}}"></span></sc-for></div>
+<span class="num" style="font-size: 13px; font-weight: 600; line-height: 1; color: {{a.costColor}}">{{a.cost}}</span>
+</div>
+</sc-for>
+<sc-for list="{{spells}}" as="s" hint-placeholder-count="2">
+<div style="position: relative; width: 40px; height: 40px; margin-top: 8px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.3); box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+<span class="num" style="font-size: 18px; font-weight: 700">{{s.cd}}</span>
+<span class="chip" style="left: 3px; top: 2px; font-size: 10px; color: #a3a3ae">{{s.key}}</span>
+</div>
+</sc-for>
+</div>
+
+<!-- Inventario -->
+<div style="display: flex; gap: 8px; align-items: flex-start">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px">
+<div class="slot" style="position: relative; border-color: rgba(156,195,255,0.6); display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c4dcff" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 7-7 11-7-11z"></path></svg>
+<span class="num" style="position: absolute; right: 3px; bottom: 1px; font-size: 11px; font-weight: 700">23</span>
+</div>
+<div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+</div>
+<div style="display: flex; align-items: center; gap: 6px">
+<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="#ffd27a" stroke-width="2.4"></circle></svg>
+<span class="num" style="font-size: 20px; font-weight: 700; color: #ffd27a; line-height: 1">1665</span>
+<svg width="14" height="14" viewBox="0 0 44 44" style="margin-left: auto" role="img" aria-label="Progreso"><circle cx="22" cy="22" r="17" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="6"></circle><circle cx="22" cy="22" r="17" fill="none" stroke="{{accent}}" stroke-width="6" stroke-dasharray="80 107" transform="rotate(-90 22 22)"></circle></svg>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 5px">
+<div style="position: relative; width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid {{accent}}; box-sizing: border-box; display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f4f4f6" stroke-width="1.8" aria-hidden="true"><path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"></path><circle cx="12" cy="12" r="2.5"></circle></svg>
+<span class="num" style="position: absolute; right: -5px; top: -5px; width: 16px; height: 16px; border-radius: 50%; background: {{accent}}; color: #0b0b0e; font-size: 11px; font-weight: 700; line-height: 16px; text-align: center">1</span>
+</div>
+<button aria-label="Regresar a base" style="width: 40px; height: 22px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: transparent; padding: 0; color: #f4f4f6; font-family: inherit; font-size: 12px; font-weight: 700">B</button>
+<button aria-label="Tienda" style="width: 40px; height: 22px; border-radius: 5px; border: 1px solid rgba(255,255,255,0.3); background: transparent; padding: 0; color: #f4f4f6; font-family: inherit; font-size: 12px; font-weight: 700">P</button>
+</div>
+</div>
+
+<!-- Estadísticas -->
+<div style="width: 318px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 10px; row-gap: 6px; padding-left: 16px; border-left: 1px solid rgba(255,255,255,0.1)">
+<sc-for list="{{stats}}" as="s" hint-placeholder-count="16">
+<div style="display: flex; flex-direction: column; gap: 0">
+<span style="font-size: 10px; letter-spacing: 0.04em; color: #a3a3ae; white-space: nowrap">{{s.label}}</span>
+<span class="num" style="font-size: 14px; font-weight: 700; line-height: 1.1; color: {{s.valColor}}">{{s.value}}</span>
+</div>
+</sc-for>
+</div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#ff5fa2","options":["#ff5fa2","#f4f4f6","#5ce1ff","#ffd166"]},"$preview":{"width":1360,"height":460}}'>
+class Component extends DCLogic {
+renderVals() {
+const accent = this.props.acento ?? '#ff5fa2';
+const pips = (n, t) => Array.from({ length: t }, (_, i) => ({ c: i < n ? accent : 'rgba(255,255,255,0.16)' }));
+const ab = (key, icon, rank, total, cost, locked) => ({
+key, icon, cost, locked, pips: pips(rank, total),
+border: locked ? '1px dashed rgba(255,255,255,0.22)' : '1.5px solid ' + accent,
+stroke: locked ? '#6b6b78' : '#ffffff',
+costColor: locked ? '#7b7b88' : '#9cc3ff'
+});
+const s = (label, value, zero) => ({ label, value, valColor: zero ? '#7b7b88' : '#ffffff' });
+return {
+accent,
+buffs: [{ c: '#2a4f3e', n: '0' }, { c: '#552a26', n: '' }, { c: '#55441f', n: '600' }, { c: '#26325a', n: '' }, { c: '#1f4a54', n: '' }],
+abilities: [
+ab('Q', 'M5 19L19 5M9 20l11-11M4 15L15 4', 3, 5, '24', false),
+ab('W', 'M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z', 1, 5, '50', false),
+ab('E', 'M4 12h12M12 6l6 6-6 6M4 6v12', 1, 5, '60', false),
+ab('R', 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z', 0, 3, '100', true)
+],
+spells: [{ key: 'D', cd: '87' }, { key: 'F', cd: '39' }],
+stats: [
+s('Daño atq.', '89', false), s('Poder hab.', '0', true), s('Armadura', '49', false), s('Res. mág.', '38', false),
+s('Vel. atq.', '0.72', false), s('Celeridad', '10', false), s('Crítico', '0%', true), s('Vel. mov.', '348', false),
+s('Pen. armad.', '0 | 0%', true), s('Pen. mág.', '0 | 0%', true), s('Robo vida', '0%', true), s('Omnivamp.', '0%', true),
+s('Alcance', '175', false), s('Tenacidad', '0%', true), s('Cur./escudo', '0%', true), s('Regen.', '19 | 55', false)
+]
+};
+}
+}
+</script>
+</body>
+</html>

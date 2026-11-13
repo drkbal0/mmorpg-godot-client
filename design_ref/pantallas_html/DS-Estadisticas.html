@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>Sistema de diseño · Iconos de estadísticas</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+
+<div style="position: absolute; inset: 0; background: #0b0f13"></div>
+<div style="position: absolute; left: 40px; top: 34px; display: flex; flex-direction: column; gap: 6px">
+<span class="caps" style="color: #46e3c1">Sistema de diseño</span>
+<span style="font-size: 30px; font-weight: 700">Iconos de estadísticas</span>
+<span style="font-size: 15px; color: #9aa6ae">Cada estadística tiene un icono propio y un color propio. Nunca se usa solo el color.</span>
+</div>
+
+<div style="position: absolute; left: 40px; top: 140px; width: 900px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #ff9a4d22; box-shadow: inset 0 0 0 1.5px #ff9a4d; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff9a4d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6L10 20l-6-6zM4 14l6 6M3 21l2-2"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Daño de ataque</span><span class="num" style="font-size: 12px; color: #ff9a4d">DA · #ff9a4d</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #a58bff22; box-shadow: inset 0 0 0 1.5px #a58bff; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a58bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v5M12 16v5M3 12h5M16 12h5M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Poder de habilidad</span><span class="num" style="font-size: 12px; color: #a58bff">PH · #a58bff</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #e0b04a22; box-shadow: inset 0 0 0 1.5px #e0b04a; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e0b04a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Armadura</span><span class="num" style="font-size: 12px; color: #e0b04a">ARM · #e0b04a</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #4fc8ff22; box-shadow: inset 0 0 0 1.5px #4fc8ff; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4fc8ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 8l4 2.3v4.4L12 17l-4-2.3v-4.4z"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Resistencia mágica</span><span class="num" style="font-size: 12px; color: #4fc8ff">RM · #4fc8ff</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #ffd36b22; box-shadow: inset 0 0 0 1.5px #ffd36b; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffd36b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6l6 6-6 6M12 6l6 6-6 6"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Velocidad de ataque</span><span class="num" style="font-size: 12px; color: #ffd36b">VA · #ffd36b</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #b8f0ff22; box-shadow: inset 0 0 0 1.5px #b8f0ff; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#b8f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10M7 21h10M8 3c0 5 8 5 8 9s-8 4-8 9M16 3c0 5-8 5-8 9"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Celeridad</span><span class="num" style="font-size: 12px; color: #b8f0ff">CEL · #b8f0ff</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #ff5d5d22; box-shadow: inset 0 0 0 1.5px #ff5d5d; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff5d5d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v5M12 16v5M3 12h5M16 12h5M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Golpe crítico</span><span class="num" style="font-size: 12px; color: #ff5d5d">CRÍT · #ff5d5d</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #9fe36a22; box-shadow: inset 0 0 0 1.5px #9fe36a; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9fe36a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17c4 0 6-2 8-6s5-6 10-6c-1 6-4 12-11 12H3zM8 14l4-4"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Velocidad de movimiento</span><span class="num" style="font-size: 12px; color: #9fe36a">VM · #9fe36a</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #ff7a5922; box-shadow: inset 0 0 0 1.5px #ff7a59; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff7a59" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21L21 3M15 3h6v6M6 9l-2 2 9 9 2-2"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Penetración de armadura</span><span class="num" style="font-size: 12px; color: #ff7a59">PEN · #ff7a59</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #d08bff22; box-shadow: inset 0 0 0 1.5px #d08bff; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d08bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21L13 11M13 11a4 4 0 1 1 4 4M17 7h.01"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Penetración mágica</span><span class="num" style="font-size: 12px; color: #d08bff">PEN M · #d08bff</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #ff4d7a22; box-shadow: inset 0 0 0 1.5px #ff4d7a; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff4d7a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3C9 7 6 10 6 14a6 6 0 0 0 12 0c0-4-3-7-6-11zM10 13l2 3 2-3"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Robo de vida</span><span class="num" style="font-size: 12px; color: #ff4d7a">RV · #ff4d7a</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #e66bc422; box-shadow: inset 0 0 0 1.5px #e66bc4; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e66bc4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4C6 7 4 9 4 12a4 4 0 0 0 8 0c0-3-2-5-4-8zM16 8c-2 3-4 5-4 8a4 4 0 0 0 8 0c0-3-2-5-4-8z"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Omnivampirismo</span><span class="num" style="font-size: 12px; color: #e66bc4">OMNI · #e66bc4</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #c3ccd322; box-shadow: inset 0 0 0 1.5px #c3ccd3; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Alcance</span><span class="num" style="font-size: 12px; color: #c3ccd3">ALC · #c3ccd3</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #9a7bff22; box-shadow: inset 0 0 0 1.5px #9a7bff; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9a7bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7a2 2 0 1 0 0-4a2 2 0 1 0 0 4M12 7v14M5 14a7 7 0 0 0 14 0M8 11h8"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Tenacidad</span><span class="num" style="font-size: 12px; color: #9a7bff">TEN · #9a7bff</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #4fe39a22; box-shadow: inset 0 0 0 1.5px #4fe39a; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4fe39a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6zM12 9v6M9 12h6"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Curación y escudos</span><span class="num" style="font-size: 12px; color: #4fe39a">CUR · #4fe39a</span></div>
+</div>
+
+<div class="card" style="padding: 14px; display: flex; align-items: center; gap: 12px; border-radius: 14px">
+<span style="width: 44px; height: 44px; border-radius: 12px; background: #6fe0a022; box-shadow: inset 0 0 0 1.5px #6fe0a0; display: flex; align-items: center; justify-content: center; flex: none"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6fe0a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10zM12 10v5M9.5 12.5h5"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 700; line-height: 17px">Regeneración</span><span class="num" style="font-size: 12px; color: #6fe0a0">REG · #6fe0a0</span></div>
+</div>
+
+</div>
+
+<div style="position: absolute; left: 970px; top: 140px; width: 430px; display: flex; flex-direction: column; gap: 14px">
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">En el HUD de combate (16 px)</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; row-gap: 4px">
+
+<div style="display: flex; align-items: center; gap: 7px; height: 22px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff9a4d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6L10 20l-6-6zM4 14l6 6M3 21l2-2"></path></svg><span style="font-size: 13px; color: #9aa6ae; flex: 1">DA</span><span class="num" style="font-size: 15px; font-weight: 700; color: #eef2f4">89</span></div>
+
+<div style="display: flex; align-items: center; gap: 7px; height: 22px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a58bff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v5M12 16v5M3 12h5M16 12h5M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3"></path></svg><span style="font-size: 13px; color: #9aa6ae; flex: 1">PH</span><span class="num" style="font-size: 15px; font-weight: 700; color: #7c8992">0</span></div>
+
+<div style="display: flex; align-items: center; gap: 7px; height: 22px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e0b04a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"></path></svg><span style="font-size: 13px; color: #9aa6ae; flex: 1">ARM</span><span class="num" style="font-size: 15px; font-weight: 700; color: #eef2f4">49</span></div>
+
+<div style="display: flex; align-items: center; gap: 7px; height: 22px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4fc8ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 8l4 2.3v4.4L12 17l-4-2.3v-4.4z"></path></svg><span style="font-size: 13px; color: #9aa6ae; flex: 1">RM</span><span class="num" style="font-size: 15px; font-weight: 700; color: #eef2f4">38</span></div>
+
+<div style="display: flex; align-items: center; gap: 7px; height: 22px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffd36b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6l6 6-6 6M12 6l6 6-6 6"></path></svg><span style="font-size: 13px; color: #9aa6ae; flex: 1">VA</span><span class="num" style="font-size: 15px; font-weight: 700; color: #eef2f4">0.72</span></div>
+
+<div style="display: flex; align-items: center; gap: 7px; height: 22px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b8f0ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10M7 21h10M8 3c0 5 8 5 8 9s-8 4-8 9M16 3c0 5-8 5-8 9"></path></svg><span style="font-size: 13px; color: #9aa6ae; flex: 1">CEL</span><span class="num" style="font-size: 15px; font-weight: 700; color: #eef2f4">10</span></div>
+
+<div style="display: flex; align-items: center; gap: 7px; height: 22px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5d5d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v5M12 16v5M3 12h5M16 12h5M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6"></path></svg><span style="font-size: 13px; color: #9aa6ae; flex: 1">CRÍT</span><span class="num" style="font-size: 15px; font-weight: 700; color: #7c8992">0%</span></div>
+
+<div style="display: flex; align-items: center; gap: 7px; height: 22px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9fe36a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17c4 0 6-2 8-6s5-6 10-6c-1 6-4 12-11 12H3zM8 14l4-4"></path></svg><span style="font-size: 13px; color: #9aa6ae; flex: 1">VM</span><span class="num" style="font-size: 15px; font-weight: 700; color: #eef2f4">348</span></div>
+
+</div>
+</div>
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">En comparaciones (20 px)</span>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 15px"><span style="width: 28px; height: 28px; border-radius: 8px; background: #b8f0ff22; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b8f0ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h10M7 21h10M8 3c0 5 8 5 8 9s-8 4-8 9M16 3c0 5-8 5-8 9"></path></svg></span>Celeridad<span class="num" style="margin-left: auto; font-weight: 700; color: #4fe39a">▲ +3,1 %</span></div>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 15px"><span style="width: 28px; height: 28px; border-radius: 8px; background: #ff9a4d22; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff9a4d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6L10 20l-6-6zM4 14l6 6M3 21l2-2"></path></svg></span>Daño de ataque<span class="num" style="margin-left: auto; font-weight: 700; color: #4fe39a">▲ +40</span></div>
+
+<div style="display: flex; align-items: center; gap: 10px; font-size: 15px"><span style="width: 28px; height: 28px; border-radius: 8px; background: #e0b04a22; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e0b04a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"></path></svg></span>Armadura<span class="num" style="margin-left: auto; font-weight: 700; color: #ff7a7a">▼ −38</span></div>
+
+</div>
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 8px">
+<span class="caps">Reglas</span>
+<span style="font-size: 13px; line-height: 19px; color: #c3ccd3">1. Icono + color + texto (nombre o abreviatura) siempre juntos.<br>2. El color de la estadística nunca se reutiliza para otra cosa en la misma vista.<br>3. Mejoras y empeoramientos usan ▲▼ además de verde/rojo.<br>4. En los modos de daltonismo cambian los colores, nunca los iconos.</span>
+</div>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

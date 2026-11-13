@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMO-Expediciones</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: #46e3c1; margin-right: 12px">MENÚ</span>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7"></path></svg>Equipo<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">C</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6"></path></svg>Poderes<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">N</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5"></path></svg>Misiones<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">L</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"></path></svg>Mapa<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">M</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14"></path></svg>Códice<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">J</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5"></path></svg>Social<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">O</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #eef2f4; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6"></path></svg>Refugio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">H</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: #46e3c1"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0"></path></svg>Comercio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">P</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- Subnavegación del refugio -->
+<div style="position: absolute; left: 28px; top: 80px; display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07)">
+<span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Refugio</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Producción</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: #1c2a33; color: #eef2f4; font-size: 14px; font-weight: 600; line-height: 32px">Expediciones</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Pispa</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Mejoras</span>
+</div>
+
+<!-- ============ IZQUIERDA: DISPONIBLES ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 128px; width: 300px; height: 654px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between"><span class="caps">Disponibles hoy</span><span class="num" style="font-size: 12px; color: #7c8992">nuevas en 9 h</span></div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 0 0 1.5px #46e3c1">
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #5aa9ff"></span><span style="font-size: 15px; font-weight: 700">Ruinas de Ferrum</span><span class="chip" style="margin-left: auto; height: 20px; padding: 0 7px; font-size: 11px; color: #f5c35b">medio</span></div>
+<span class="num" style="font-size: 12px; color: #9aa6ae">2–8 h · metal, planos</span>
+<span style="font-size: 12px; color: #c3ccd3">Recomendado: Guardiana o Herrero</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #9fe36a"></span><span style="font-size: 15px; font-weight: 700">Bosque fósil</span><span class="chip" style="margin-left: auto; height: 20px; padding: 0 7px; font-size: 11px; color: #4fe39a">bajo</span></div>
+<span class="num" style="font-size: 12px; color: #9aa6ae">1–4 h · hierbas, resina</span>
+<span style="font-size: 12px; color: #c3ccd3">Cualquier personaje</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #46e3c1"></span><span style="font-size: 15px; font-weight: 700">Grieta profunda</span><span class="chip" style="margin-left: auto; height: 20px; padding: 0 7px; font-size: 11px; color: #ff8a8a">alto</span></div>
+<span class="num" style="font-size: 12px; color: #9aa6ae">8 h · esquirlas, objeto raro</span>
+<span style="font-size: 12px; color: #c3ccd3">Nivel 30+ · 2 personajes</span>
+</div>
+
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 6px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 9px; height: 9px; border-radius: 50%; background: #f5b546"></span><span style="font-size: 15px; font-weight: 700">Biblioteca rúnica</span><span class="chip" style="margin-left: auto; height: 20px; padding: 0 7px; font-size: 11px; color: #4fe39a">bajo</span></div>
+<span class="num" style="font-size: 12px; color: #9aa6ae">4 h · recetas de alquimia</span>
+<span style="font-size: 12px; color: #c3ccd3">Recomendado: Guardiana rúnica</span>
+</div>
+
+</div>
+
+<!-- ============ CENTRO: PLANIFICAR ============ -->
+<div class="card" style="position: absolute; left: 344px; top: 128px; width: 700px; height: 654px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: baseline; gap: 10px"><span style="font-size: 26px; font-weight: 700">Ruinas de Ferrum</span><span style="font-size: 14px; color: #5aa9ff">Ferrum · riesgo medio</span></div>
+<span style="font-size: 14px; color: #c3ccd3">Fábricas abandonadas al otro lado de la brecha. Buen metal; a veces, planos.</span>
+<span class="caps">Equipo</span>
+<div style="display: flex; gap: 10px">
+<div class="sub" style="flex: 1; padding: 10px; display: flex; align-items: center; gap: 10px; box-shadow: inset 0 0 0 1.5px #46e3c1">
+<svg width="34" height="42" viewBox="0 0 30 38" aria-hidden="true"><rect x="7" y="18" width="16" height="16" rx="7" fill="#8a6a2b"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#d9b46a"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">Ysolde</span><span style="font-size: 12px; color: #9aa6ae">Guardiana · nivel 18</span></div>
+</div>
+<div style="flex: 1; border-radius: 12px; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.16); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #9aa6ae">+ Añadir personaje</div>
+<div class="sub" style="flex: 1; padding: 10px; display: flex; flex-direction: column; gap: 2px; opacity: 0.75"><span style="font-size: 13px; font-weight: 700">+ Pispa (opcional)</span><span style="font-size: 11px; color: #9aa6ae">+10 % botín, pero no recolecta mientras tanto</span></div>
+</div>
+<div style="display: flex; gap: 16px">
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px">
+<span class="caps">Probabilidad de éxito</span>
+<div style="display: flex; align-items: baseline; gap: 8px"><span class="num" style="font-size: 40px; font-weight: 700; line-height: 1; color: #46e3c1">78 %</span><span style="font-size: 13px; color: #9aa6ae">con 2 personajes: 92 %</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #c3ccd3">Nivel adecuado</span><span class="num" style="font-weight: 700; color: #4fe39a">+30</span></div><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #c3ccd3">Clase recomendada</span><span class="num" style="font-weight: 700; color: #4fe39a">+15</span></div><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #c3ccd3">Mesa de expediciones nv 2</span><span class="num" style="font-weight: 700; color: #4fe39a">+8</span></div><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #c3ccd3">Riesgo medio</span><span class="num" style="font-weight: 700; color: #ff8a8a">−10</span></div>
+</div>
+<div style="flex: 1; display: flex; flex-direction: column; gap: 6px">
+<span class="caps">Recompensas probables</span>
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #c3ccd3">Metal</span><span class="num" style="font-weight: 700; color: #eef2f4">60–120</span></div><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #c3ccd3">Esquirlas</span><span class="num" style="font-weight: 700; color: #eef2f4">40–80</span></div><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #c3ccd3">Plano de forja nv 3</span><span class="num" style="font-weight: 700; color: #b47bff">8 %</span></div><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #c3ccd3">XP para Ysolde</span><span class="num" style="font-weight: 700; color: #c4b3ff">≈ 1 nivel</span></div>
+</div>
+</div>
+<span class="caps">Duración</span>
+<div style="display: flex; gap: 8px; align-items: center">
+<span class="chip">2 h</span><span class="chip" style="background: rgba(70,227,193,0.14); color: #eef2f4; box-shadow: inset 0 0 0 1.5px #46e3c1">4 h · más botín</span><span class="chip">8 h · noche</span>
+<span class="num" style="margin-left: auto; font-size: 13px; color: #9aa6ae">Vuelve a las 11:42</span>
+</div>
+<div class="sub" style="padding: 10px 12px; font-size: 13px; color: #c3ccd3">Recibirás 1 o 2 decisiones durante el viaje en el juego o en la app. Si no contestas, Ysolde elige el camino seguro.</div>
+<button class="btn" style="margin-top: auto; height: 42px; background: #46e3c1; color: #071012; box-shadow: none">Enviar expedición</button>
+</div>
+
+<!-- ============ DERECHA: EN CURSO ============ -->
+<div class="card" style="position: absolute; left: 1060px; top: 128px; width: 352px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">En curso</span>
+<div style="display: flex; flex-direction: column; gap: 5px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 700">Torq · Minas de bronce</span><span class="num" style="color: #9aa6ae">1:12 h</span></div><div style="height: 5px; border-radius: 3px; background: #121a20"><div style="height: 5px; border-radius: 3px; width: 64%; background: #5aa9ff"></div></div></div>
+<div class="sub" style="padding: 14px; display: flex; flex-direction: column; gap: 10px; box-shadow: inset 0 0 0 1.5px #f5c35b">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 15px; font-weight: 700; color: #f5c35b">Bifurcación</span><span class="num" style="font-size: 12px; color: #9aa6ae">expira en 20 min</span></div>
+<span style="font-size: 13px; line-height: 18px; color: #c3ccd3">Torq encontró dos caminos. El túnel inundado parece tener más vetas.</span>
+<button class="btn" style="justify-content: space-between; height: 44px">Túnel inundado <span style="font-size: 12px; color: #f5c35b">+50 % botín · −15 % éxito</span></button>
+<button class="btn" style="justify-content: space-between; height: 44px">Puente de cadenas <span style="font-size: 12px; color: #4fe39a">seguro</span></button>
+</div>
+<span class="caps" style="margin-top: 6px">Terminadas</span>
+
+<div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06)"><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 700">Ysolde · Bosque fósil</span><span style="color: #4fe39a">Éxito</span></div><span class="num" style="font-size: 12px; color: #9aa6ae">+80 hierbas · +1 nivel · ayer 22:10</span></div>
+
+<div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06)"><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 700">Torq · Grieta profunda</span><span style="color: #f5c35b">Éxito parcial</span></div><span class="num" style="font-size: 12px; color: #9aa6ae">+140 esquirlas · sin objeto raro</span></div>
+
+<div style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06)"><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 700">Ysolde · Ruinas de Ferrum</span><span style="color: #ff8a8a">Fallida</span></div><span class="num" style="font-size: 12px; color: #9aa6ae">Volvió con 20 % del botín · sin penalización</span></div>
+
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

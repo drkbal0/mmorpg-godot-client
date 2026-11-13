@@ -1,0 +1,5 @@
+@font-face{font-family:'Barlow Semi Condensed';font-weight:400;src:url(barlow-semi-condensed-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Barlow Semi Condensed';font-weight:500;src:url(barlow-semi-condensed-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Barlow Semi Condensed';font-weight:600;src:url(barlow-semi-condensed-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Barlow Semi Condensed';font-weight:700;src:url(barlow-semi-condensed-latin-700-normal.woff2) format('woff2')}
+body{margin:0;background:#000}

@@ -1,0 +1,302 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMO-Social</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: #46e3c1; margin-right: 12px">MENÚ</span>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7"></path></svg>Equipo<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">C</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6"></path></svg>Poderes<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">N</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5"></path></svg>Misiones<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">L</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"></path></svg>Mapa<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">M</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14"></path></svg>Códice<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">J</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #eef2f4; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5"></path></svg>Social<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">O</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: #46e3c1"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6"></path></svg>Refugio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">H</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0"></path></svg>Comercio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">P</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- ============ IZQUIERDA: AMIGOS / GREMIO ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 88px; width: 300px; height: 694px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; gap: 6px"><span class="chip" style="background: #1c2a33; color: #eef2f4">Gremio</span><span class="chip">Amigos 14</span><span class="chip">Recientes</span></div>
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 17px; font-weight: 700">Orden del Umbral</span>
+<span class="num" style="font-size: 13px; color: #9aa6ae">42 en línea · nivel de gremio 7</span>
+<span style="font-size: 13px; color: #46e3c1">Raid mañana 21:00 · 18/20 confirmados</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 2px">
+<div style="position: relative; width: 32px; height: 32px; border-radius: 50%; background: #1a252c; flex: none"><span style="position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: #4fe39a; box-shadow: 0 0 0 2px #0d1216"></span></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Mira</span><span style="font-size: 12px; color: #9aa6ae">Oficial · en el Nexo</span></div>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#46e3c1" stroke-width="2" stroke-linecap="round" role="img" aria-label="En canal de voz"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 2px">
+<div style="position: relative; width: 32px; height: 32px; border-radius: 50%; background: #1a252c; flex: none"><span style="position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: #4fe39a; box-shadow: 0 0 0 2px #0d1216"></span></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Toro</span><span style="font-size: 12px; color: #9aa6ae">En tu grupo</span></div>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#46e3c1" stroke-width="2" stroke-linecap="round" role="img" aria-label="En canal de voz"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 2px">
+<div style="position: relative; width: 32px; height: 32px; border-radius: 50%; background: #1a252c; flex: none"><span style="position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: #4fe39a; box-shadow: 0 0 0 2px #0d1216"></span></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Brisa</span><span style="font-size: 12px; color: #9aa6ae">En tu grupo</span></div>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#46e3c1" stroke-width="2" stroke-linecap="round" role="img" aria-label="En canal de voz"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3M5 11a7 7 0 0 0 14 0M12 18v3"></path></svg>
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 2px">
+<div style="position: relative; width: 32px; height: 32px; border-radius: 50%; background: #1a252c; flex: none"><span style="position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: #f5c35b; box-shadow: 0 0 0 2px #0d1216"></span></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Ulric</span><span style="font-size: 12px; color: #9aa6ae">Bóveda de Ferrum · 3/5</span></div>
+
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 2px">
+<div style="position: relative; width: 32px; height: 32px; border-radius: 50%; background: #1a252c; flex: none"><span style="position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: #4fe39a; box-shadow: 0 0 0 2px #0d1216"></span></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Sasha</span><span style="font-size: 12px; color: #9aa6ae">Fabricando · busca hierbas</span></div>
+
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 2px">
+<div style="position: relative; width: 32px; height: 32px; border-radius: 50%; background: #1a252c; flex: none"><span style="position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: #9aa6ae; box-shadow: 0 0 0 2px #0d1216"></span></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Dren</span><span style="font-size: 12px; color: #9aa6ae">Ausente 20 min</span></div>
+
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 2px">
+<div style="position: relative; width: 32px; height: 32px; border-radius: 50%; background: #1a252c; flex: none"><span style="position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: #3a4a54; box-shadow: 0 0 0 2px #0d1216"></span></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Ivo</span><span style="font-size: 12px; color: #9aa6ae">Desconectado · hace 2 h</span></div>
+
+</div>
+
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 2px">
+<div style="position: relative; width: 32px; height: 32px; border-radius: 50%; background: #1a252c; flex: none"><span style="position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: #3a4a54; box-shadow: 0 0 0 2px #0d1216"></span></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">Lune</span><span style="font-size: 12px; color: #9aa6ae">Desconectada · ayer</span></div>
+
+</div>
+
+</div>
+
+<!-- ============ CENTRO: BUSCADOR DE GRUPO ============ -->
+<div class="card" style="position: absolute; left: 344px; top: 88px; width: 720px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between"><span style="font-size: 20px; font-weight: 700">Buscador de grupo</span><span style="font-size: 13px; color: #9aa6ae">ordenado por compatibilidad contigo</span></div>
+<div style="display: flex; gap: 6px"><span class="chip" style="background: #1c2a33; color: #eef2f4">Mazmorras</span><span class="chip">Raids</span><span class="chip">Mundo</span><span class="chip">JcJ</span><span class="chip">Rol</span><span class="chip" style="margin-left: auto">Nivel 30–35</span><span class="chip">Español + traducción</span></div>
+
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 0 1.5px #46e3c1">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="font-size: 16px; font-weight: 700">Bóveda de Ferrum</span>
+<span class="chip" style="height: 22px; font-size: 12px; color: #f5b546">Heroica</span>
+<span class="num" style="margin-left: auto; font-size: 13px; color: #46e3c1; font-weight: 700">94 % compatible</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 13px; color: #c3ccd3">
+<span>Líder <span style="color: #eef2f4; font-weight: 600">Ulric</span></span>
+<span style="color: #4fe39a">Confiable · buen líder ×21</span>
+<span class="num">ilvl 405+ · ~35 min · voz</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px">
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #2b4a8a; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: transparent; box-shadow: inset 0 0 0 1.5px #46e3c1; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#46e3c1" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #8a3a2b; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #8a3a2b; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: transparent; box-shadow: inset 0 0 0 1.5px #3a4a54; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#56646d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 10px"></span>
+<span class="chip" style="height: 22px; font-size: 12px">Explicamos mecánicas</span><span class="chip" style="height: 22px; font-size: 12px">Sin prisa</span>
+<button class="btn" style="margin-left: auto; height: 30px; background: #46e3c1; color: #071012; box-shadow: none">Unirme como sanador</button>
+</div>
+</div>
+
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="font-size: 16px; font-weight: 700">Cripta Rúnica</span>
+<span class="chip" style="height: 22px; font-size: 12px; color: #9aa6ae">Normal</span>
+<span class="num" style="margin-left: auto; font-size: 13px; color: #c3ccd3; font-weight: 700">81 %</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 13px; color: #c3ccd3">
+<span>Líder <span style="color: #eef2f4; font-weight: 600">Joao</span></span>
+<span style="color: #4fe39a">Nuevo · 0 reportes</span>
+<span class="num">ilvl 380+ · ~25 min · PT → ES</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px">
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #2b4a8a; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #2a7a4a; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #8a3a2b; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: transparent; box-shadow: inset 0 0 0 1.5px #3a4a54; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#56646d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: transparent; box-shadow: inset 0 0 0 1.5px #3a4a54; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#56646d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 10px"></span>
+<span class="chip" style="height: 22px; font-size: 12px">Primera vez bienvenida</span><span class="chip" style="height: 22px; font-size: 12px">Traducción automática</span>
+<button class="btn" style="margin-left: auto; height: 30px; background: #18242b; color: #eef2f4; box-shadow: none">Solicitar</button>
+</div>
+</div>
+
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="font-size: 16px; font-weight: 700">Coloso de Runavell</span>
+<span class="chip" style="height: 22px; font-size: 12px; color: #ff9a4d">Jefe del mundo</span>
+<span class="num" style="margin-left: auto; font-size: 13px; color: #c3ccd3; font-weight: 700">76 %</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 13px; color: #c3ccd3">
+<span>Líder <span style="color: #eef2f4; font-weight: 600">Mira</span></span>
+<span style="color: #4fe39a">Oficial de tu gremio</span>
+<span class="num">18:30 · 14/40 · sin requisito</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px">
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #2b4a8a; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #2a7a4a; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #8a3a2b; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #8a3a2b; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #8a3a2b; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 10px"></span>
+<span class="chip" style="height: 22px; font-size: 12px">Gremio</span><span class="chip" style="height: 22px; font-size: 12px">Botín compartido</span>
+<button class="btn" style="margin-left: auto; height: 30px; background: #18242b; color: #eef2f4; box-shadow: none">Avisarme</button>
+</div>
+</div>
+
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="font-size: 16px; font-weight: 700">Arena 3c3</span>
+<span class="chip" style="height: 22px; font-size: 12px; color: #ff6b6b">Clasificatoria</span>
+<span class="num" style="margin-left: auto; font-size: 13px; color: #c3ccd3; font-weight: 700">62 %</span>
+</div>
+<div style="display: flex; align-items: center; gap: 12px; font-size: 13px; color: #c3ccd3">
+<span>Líder <span style="color: #eef2f4; font-weight: 600">Nox</span></span>
+<span style="color: #4fe39a">Confiable</span>
+<span class="num">Índice 1.640 · voz obligatoria</span>
+</div>
+<div style="display: flex; align-items: center; gap: 6px">
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #2a7a4a; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: #8a3a2b; box-shadow: none; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 26px; height: 26px; border-radius: 7px; background: transparent; box-shadow: inset 0 0 0 1.5px #3a4a54; display: flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#56646d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+
+<span style="width: 10px"></span>
+<span class="chip" style="height: 22px; font-size: 12px">Competitivo</span>
+<button class="btn" style="margin-left: auto; height: 30px; background: #18242b; color: #eef2f4; box-shadow: none">Solicitar</button>
+</div>
+</div>
+
+</div>
+
+<!-- ============ DERECHA: TU PERFIL ============ -->
+<div class="card" style="position: absolute; left: 1080px; top: 88px; width: 332px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Me apunto como</span>
+
+<div class="sub" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; box-shadow: none">
+<span style="width: 30px; height: 30px; border-radius: 8px; background: #2b4a8a; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"></path></svg></span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600">Tanque</span><span class="num" style="font-size: 12px; color: #4fe39a">Espera estimada ~1 min</span></div>
+<span class="sw off" style="background: #2a363d"></span>
+</div>
+
+<div class="sub" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; box-shadow: 0 0 0 1.5px #46e3c1">
+<span style="width: 30px; height: 30px; border-radius: 8px; background: #2a7a4a; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600">Sanador</span><span class="num" style="font-size: 12px; color: #4fe39a">Espera estimada ~2 min</span></div>
+<span class="sw on" style="background: #46e3c1"></span>
+</div>
+
+<div class="sub" style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; box-shadow: 0 0 0 1.5px #46e3c1">
+<span style="width: 30px; height: 30px; border-radius: 8px; background: #8a3a2b; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19L19 5M14 5h5v5M7 15l2 2"></path></svg></span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600">Daño</span><span class="num" style="font-size: 12px; color: #f5c35b">Espera estimada ~9 min</span></div>
+<span class="sw on" style="background: #46e3c1"></span>
+</div>
+
+<span class="caps" style="margin-top: 8px">Tu reputación</span>
+<div class="sub" style="padding: 14px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 10px"><span style="padding: 0 10px; height: 26px; border-radius: 13px; background: rgba(79,227,154,0.15); color: #4fe39a; font-size: 14px; font-weight: 700; line-height: 26px">Confiable</span><span class="num" style="font-size: 13px; color: #9aa6ae">96 % de grupos completados</span></div>
+<span style="font-size: 12px; color: #9aa6ae">Elogios recibidos (solo positivos, nunca públicos los negativos)</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span class="chip" style="height: 24px; font-size: 12px">Buen líder <span class="num" style="color: #46e3c1">14</span></span>
+<span class="chip" style="height: 24px; font-size: 12px">Paciente <span class="num" style="color: #46e3c1">9</span></span>
+<span class="chip" style="height: 24px; font-size: 12px">Explica mecánicas <span class="num" style="color: #46e3c1">7</span></span>
+<span class="chip" style="height: 24px; font-size: 12px">Salvó al grupo <span class="num" style="color: #46e3c1">3</span></span>
+</div>
+</div>
+<button class="btn" style="margin-top: auto; background: #46e3c1; color: #071012; box-shadow: none">Crear grupo</button>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

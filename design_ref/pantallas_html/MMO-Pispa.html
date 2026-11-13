@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>MMO-Pispa</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: #46e3c1; margin-right: 12px">MENÚ</span>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7"></path></svg>Equipo<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">C</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6"></path></svg>Poderes<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">N</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5"></path></svg>Misiones<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">L</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14"></path></svg>Mapa<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">M</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14"></path></svg>Códice<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">J</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5"></path></svg>Social<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">O</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #eef2f4; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#eef2f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6"></path></svg>Refugio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">H</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: #46e3c1"></div>
+</div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: #9aa6ae; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0"></path></svg>Comercio<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">P</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: transparent"></div>
+</div>
+
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- Subnavegación del refugio -->
+<div style="position: absolute; left: 28px; top: 80px; display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07)">
+<span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Refugio</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Producción</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Expediciones</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: #1c2a33; color: #eef2f4; font-size: 14px; font-weight: 600; line-height: 32px">Pispa</span><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: transparent; color: #9aa6ae; font-size: 14px; font-weight: 600; line-height: 32px">Mejoras</span>
+</div>
+
+<!-- ============ IZQUIERDA: PISPA ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 128px; width: 300px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<div style="height: 210px; border-radius: 14px; background: #121a20; display: flex; align-items: center; justify-content: center">
+<svg width="190" height="170" viewBox="0 0 190 170" aria-hidden="true">
+<ellipse cx="95" cy="160" rx="50" ry="6" fill="rgba(0,0,0,0.4)"></ellipse>
+<ellipse cx="52" cy="78" rx="44" ry="32" fill="#f5b546" opacity="0.9" transform="rotate(-25 52 78)"></ellipse>
+<ellipse cx="138" cy="78" rx="44" ry="32" fill="#f5b546" opacity="0.9" transform="rotate(25 138 78)"></ellipse>
+<ellipse cx="60" cy="118" rx="28" ry="18" fill="#e08a3a" transform="rotate(20 60 118)"></ellipse>
+<ellipse cx="130" cy="118" rx="28" ry="18" fill="#e08a3a" transform="rotate(-20 130 118)"></ellipse>
+<circle cx="52" cy="76" r="9" fill="#46e3c1" opacity="0.8"></circle><circle cx="138" cy="76" r="9" fill="#46e3c1" opacity="0.8"></circle>
+<ellipse cx="95" cy="100" rx="22" ry="40" fill="#f6e7c8"></ellipse>
+<circle cx="86" cy="80" r="5" fill="#1a1a1a"></circle><circle cx="104" cy="80" r="5" fill="#1a1a1a"></circle>
+<circle cx="88" cy="78" r="1.6" fill="#ffffff"></circle><circle cx="106" cy="78" r="1.6" fill="#ffffff"></circle>
+<path d="M88 60Q78 30 64 26M102 60Q112 30 126 26" stroke="#3a2b1a" stroke-width="3" fill="none" stroke-linecap="round"></path>
+<circle cx="64" cy="26" r="5" fill="#46e3c1"></circle><circle cx="126" cy="26" r="5" fill="#46e3c1"></circle>
+<rect x="76" y="118" width="38" height="24" rx="8" fill="#8a6a3a"></rect><path d="M80 124h30" stroke="#5a4426" stroke-width="2"></path>
+</svg>
+</div>
+<div style="display: flex; align-items: baseline; justify-content: space-between"><span style="font-size: 26px; font-weight: 700">Pispa</span><span class="num" style="font-size: 14px; color: #9aa6ae">nivel 3</span></div>
+<span style="font-size: 13px; color: #9aa6ae">Polilla de las grietas · te sigue desde el día 2</span>
+<div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 12px; color: #9aa6ae"><span>Hasta nivel 4</span><span class="num">340 / 500</span></div><div style="height: 5px; border-radius: 3px; background: #121a20"><div style="height: 5px; border-radius: 3px; width: 68%; background: #f5b546"></div></div></div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px"><span style="color: #9aa6ae">Cariño</span><span style="display: flex; gap: 3px"><span style="width: 22px; height: 6px; border-radius: 3px; background: #ff8fb3"></span><span style="width: 22px; height: 6px; border-radius: 3px; background: #ff8fb3"></span><span style="width: 22px; height: 6px; border-radius: 3px; background: #ff8fb3"></span><span style="width: 22px; height: 6px; border-radius: 3px; background: #ff8fb3"></span><span style="width: 22px; height: 6px; border-radius: 3px; background: #26333b"></span></span><span style="color: #ff8fb3">muy feliz</span></div>
+<span class="caps" style="margin-top: 4px">Rasgos</span>
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 700">Olfato de grieta</span><span style="font-size: 12px; color: #9aa6ae">+15 % de esquirlas en cada viaje</span></div>
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 13px; font-weight: 700">Curiosa</span><span style="font-size: 12px; color: #9aa6ae">A veces vuelve con algo que no buscaba</span></div>
+<div style="display: flex; align-items: center; font-size: 13px; margin-top: auto">Acompañarme en el mundo<span class="sw on" style="margin-left: auto; background: #46e3c1"></span></div>
+</div>
+
+<!-- ============ CENTRO: QUÉ BUSCA ============ -->
+<div class="card" style="position: absolute; left: 344px; top: 128px; width: 700px; height: 654px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-size: 20px; font-weight: 700">¿Qué busca en el próximo viaje?</span><span style="font-size: 13px; color: #9aa6ae">sale sola cada vez que vuelve</span></div>
+<div style="display: flex; gap: 10px">
+
+<div class="sub" style="flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; transform: rotate(45deg); background: #46e3c1"></span><span style="font-size: 16px; font-weight: 700">Esquirlas</span></div>
+<span class="num" style="font-size: 12px; color: #9aa6ae">viaje de 30 min · seguro</span>
+<span style="font-size: 12px; color: #9aa6ae">Lo de siempre</span>
+</div>
+
+<div class="sub" style="flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 0 0 1.5px #46e3c1">
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; transform: rotate(45deg); background: #4fe39a"></span><span style="font-size: 16px; font-weight: 700">Hierbas</span></div>
+<span class="num" style="font-size: 12px; color: #9aa6ae">viaje de 45 min</span>
+<span style="font-size: 12px; color: #46e3c1">★ Tu misión pide 4 más</span>
+</div>
+
+<div class="sub" style="flex: 1; padding: 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: none">
+<div style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; transform: rotate(45deg); background: #b47bff"></span><span style="font-size: 16px; font-weight: 700">Sorpresa</span></div>
+<span class="num" style="font-size: 12px; color: #9aa6ae">viaje de 2 h · 5 % objeto raro</span>
+<span style="font-size: 12px; color: #9aa6ae">Para cuando no juegas</span>
+</div>
+
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Viaje actual · Hierbas</span><span class="num" style="color: #9aa6ae">salió 18:12 · vuelve 18:54</span></div>
+<div style="height: 8px; border-radius: 4px; background: #121a20"><div style="height: 8px; border-radius: 4px; width: 72%; background: #f5b546"></div></div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: baseline"><span class="caps">Bolsa</span><span class="num" style="font-size: 13px; color: #f5c35b">14 / 20 · si se llena, deja de buscar</span></div>
+<div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 6px">
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #4fe39a"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">8</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #4fe39a"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">6</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #4fe39a"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">4</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #46e3c1"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">12</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #46e3c1"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">9</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #b8c3ca"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">3</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #4fe39a"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">2</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #5aa9ff"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">1</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #b8c3ca"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">5</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #4fe39a"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">7</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #c79a5b"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">4</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #46e3c1"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">6</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #4fe39a"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">3</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #121a20; box-shadow: inset 0 0 0 1px #b8c3ca"><span class="num" style="position: absolute; right: 4px; bottom: 2px; font-size: 11px; font-weight: 700">2</span></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #0a0f13; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06)"></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #0a0f13; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06)"></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #0a0f13; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06)"></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #0a0f13; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06)"></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #0a0f13; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06)"></div>
+
+<div style="position: relative; height: 54px; border-radius: 10px; background: #0a0f13; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06)"></div>
+
+</div>
+<div class="sub" style="padding: 12px 14px; display: flex; align-items: center; gap: 12px">
+<div style="display: flex; flex-direction: column; flex: 1"><span style="font-size: 14px; font-weight: 600">Darle un bocadillo</span><span style="font-size: 12px; color: #9aa6ae">El próximo viaje dura la mitad · tienes 3 panes de Verdalia</span></div>
+<button class="btn" style="height: 32px">Dar pan</button>
+</div>
+<div style="display: flex; gap: 8px; margin-top: auto">
+<button class="btn" style="background: #46e3c1; color: #071012; box-shadow: none">Vaciar bolsa al almacén</button>
+<button class="btn">Acariciar</button>
+</div>
+</div>
+
+<!-- ============ DERECHA: NIDO + DIARIO ============ -->
+<div class="card" style="position: absolute; left: 1060px; top: 128px; width: 352px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Nido · nivel 3 → 4</span>
+<div style="display: flex; gap: 8px; font-size: 13px"><span style="color: #4fe39a">+</span><span style="color: #c3ccd3">+6 espacios en la bolsa</span></div><div style="display: flex; gap: 8px; font-size: 13px"><span style="color: #4fe39a">+</span><span style="color: #c3ccd3">Nueva búsqueda: materiales de Ferrum</span></div><div style="display: flex; gap: 8px; font-size: 13px"><span style="color: #4fe39a">+</span><span style="color: #c3ccd3">Pispa puede traer 2 objetos raros por semana</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Necesitas</span><span class="num">Madera 200/200 · Seda 3/<span style="color: #ff8a8a">5</span></span></div>
+<span class="caps" style="margin-top: 8px">Diario de hallazgos</span>
+
+<div style="display: flex; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06)">
+<span style="width: 28px; height: 28px; border-radius: 8px; background: #121a20; box-shadow: inset 0 0 0 1.5px #5aa9ff; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 600; color: #5aa9ff">Pluma de grieta (rara)</span><span class="num" style="font-size: 11px; color: #7c8992">hoy 14:20 · búsqueda sorpresa</span></div>
+</div>
+
+<div style="display: flex; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06)">
+<span style="width: 28px; height: 28px; border-radius: 8px; background: #121a20; box-shadow: inset 0 0 0 1.5px #4fe39a; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 600; color: #4fe39a">Hierba de la brecha ×6</span><span class="num" style="font-size: 11px; color: #7c8992">hoy 12:05</span></div>
+</div>
+
+<div style="display: flex; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06)">
+<span style="width: 28px; height: 28px; border-radius: 8px; background: #121a20; box-shadow: inset 0 0 0 1.5px #46e3c1; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 600; color: #46e3c1">Esquirlas ×42</span><span class="num" style="font-size: 11px; color: #7c8992">hoy 10:40</span></div>
+</div>
+
+<div style="display: flex; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06)">
+<span style="width: 28px; height: 28px; border-radius: 8px; background: #121a20; box-shadow: inset 0 0 0 1.5px #b47bff; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 600; color: #b47bff">Llave oxidada (misterio)</span><span class="num" style="font-size: 11px; color: #7c8992">ayer · abre algo en Runavell</span></div>
+</div>
+
+<div style="display: flex; gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06)">
+<span style="width: 28px; height: 28px; border-radius: 8px; background: #121a20; box-shadow: inset 0 0 0 1.5px #4fe39a; flex: none"></span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 600; color: #4fe39a">Resina de Verdalia ×3</span><span class="num" style="font-size: 11px; color: #7c8992">ayer</span></div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>Antesala</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.74)"></div>
+<div style="position: absolute; left: 50px; top: 34px; display: flex; flex-direction: column; gap: 4px">
+<span class="caps" style="color: #46e3c1">Antesala</span>
+<span style="font-size: 34px; font-weight: 700">Bóveda de Ferrum · Heroica</span>
+<span style="font-size: 15px; color: #9aa6ae">Entrada automática en <span class="num" style="color: #eef2f4; font-weight: 700">0:24</span> cuando los 5 estén listos</span>
+</div>
+
+<!-- Grupo -->
+<div style="position: absolute; left: 50px; right: 50px; top: 150px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px">
+
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="40" height="50" viewBox="0 0 30 38" aria-hidden="true"><rect x="7" y="18" width="16" height="16" rx="7" fill="#2b4a8a"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#5a3a20"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 17px; font-weight: 700">Toro</span><span style="font-size: 12px; color: #5aa9ff">Tanque · 418</span></div>
+</div>
+<span style="height: 30px; border-radius: 8px; background: rgba(79,227,154,0.15); color: #4fe39a; font-size: 13px; font-weight: 700; line-height: 30px; text-align: center">Listo ✓</span>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Consumibles</span><span class="num" style="font-weight: 600; color: #4fe39a">✓</span></div>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Reparación</span><span class="num" style="font-weight: 600; color: #4fe39a">96 %</span></div>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Conjunto</span><span class="num" style="font-weight: 600; color: #c3ccd3">Tanque</span></div>
+
+</div>
+
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="40" height="50" viewBox="0 0 30 38" aria-hidden="true"><rect x="7" y="18" width="16" height="16" rx="7" fill="#2a7a4a"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#c97b4a"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 17px; font-weight: 700">Brisa</span><span style="font-size: 12px; color: #4fe39a">Sanadora · 414</span></div>
+</div>
+<span style="height: 30px; border-radius: 8px; background: rgba(245,195,91,0.15); color: #f5c35b; font-size: 13px; font-weight: 700; line-height: 30px; text-align: center">Cambiando conjunto…</span>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Consumibles</span><span class="num" style="font-weight: 600; color: #f5c35b">sin tónicos</span></div>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Reparación</span><span class="num" style="font-weight: 600; color: #4fe39a">88 %</span></div>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Conjunto</span><span class="num" style="font-weight: 600; color: #f5c35b">→ Sanación</span></div>
+
+</div>
+
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 0 0 1.5px #46e3c1, 0 20px 50px rgba(0,0,0,0.45)">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="40" height="50" viewBox="0 0 30 38" aria-hidden="true"><rect x="7" y="18" width="16" height="16" rx="7" fill="#8a3a2b"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#2b1d14"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 17px; font-weight: 700">Kael (tú)</span><span style="font-size: 12px; color: #ff9a4d">Daño · 412</span></div>
+</div>
+<span style="height: 30px; border-radius: 8px; background: rgba(79,227,154,0.15); color: #4fe39a; font-size: 13px; font-weight: 700; line-height: 30px; text-align: center">Listo ✓</span>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Consumibles</span><span class="num" style="font-weight: 600; color: #4fe39a">✓</span></div>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Reparación</span><span class="num" style="font-weight: 600; color: #4fe39a">82 %</span></div>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Conjunto</span><span class="num" style="font-weight: 600; color: #c3ccd3">Daño</span></div>
+
+</div>
+
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="40" height="50" viewBox="0 0 30 38" aria-hidden="true"><rect x="7" y="18" width="16" height="16" rx="7" fill="#5b3a8a"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#1a1a1a"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 17px; font-weight: 700">Nox</span><span style="font-size: 12px; color: #ff9a4d">Daño · 405</span></div>
+</div>
+<span style="height: 30px; border-radius: 8px; background: rgba(79,227,154,0.15); color: #4fe39a; font-size: 13px; font-weight: 700; line-height: 30px; text-align: center">Listo ✓</span>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Consumibles</span><span class="num" style="font-weight: 600; color: #4fe39a">✓</span></div>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Reparación</span><span class="num" style="font-weight: 600; color: #ff8a8a">41 %</span></div>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Conjunto</span><span class="num" style="font-weight: 600; color: #c3ccd3">Daño</span></div>
+
+</div>
+
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 0 0 1px rgba(255,255,255,0.07)">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg width="40" height="50" viewBox="0 0 30 38" aria-hidden="true"><rect x="7" y="18" width="16" height="16" rx="7" fill="#8a6a2b"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#d9b46a"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 17px; font-weight: 700">Vela</span><span style="font-size: 12px; color: #ff9a4d">Daño · 409</span></div>
+</div>
+<span style="height: 30px; border-radius: 8px; background: #18242b; color: #9aa6ae; font-size: 13px; font-weight: 700; line-height: 30px; text-align: center">Aún no</span>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Consumibles</span><span class="num" style="font-weight: 600; color: #4fe39a">✓</span></div>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Reparación</span><span class="num" style="font-weight: 600; color: #4fe39a">100 %</span></div>
+
+<div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Conjunto</span><span class="num" style="font-weight: 600; color: #c3ccd3">Daño</span></div>
+
+</div>
+
+</div>
+
+<!-- Preparación del grupo -->
+<div style="position: absolute; left: 50px; right: 50px; top: 384px; display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 14px">
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 8px">
+<span class="caps">Afijos de esta semana</span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700; color: #b47bff">Grietas inestables</span><span style="font-size: 12px; color: #9aa6ae">Las grietas enemigas duran el doble. Interrumpir es clave.</span></div><div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700; color: #b8c3ca">Hierro vivo</span><span style="font-size: 12px; color: #9aa6ae">Los élites ganan armadura con cada golpe recibido.</span></div>
+</div>
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 8px">
+<span class="caps">Votación de ruta</span>
+
+<div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Ruta rápida</span><span class="num" style="color: #9aa6ae">3 votos</span></div><div style="height: 6px; border-radius: 3px; background: #121a20"><div style="height: 6px; border-radius: 3px; width: 60%; background: #46e3c1"></div></div></div>
+
+<div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Ruta del botín (+1 cofre)</span><span class="num" style="color: #9aa6ae">2 votos</span></div><div style="height: 6px; border-radius: 3px; background: #121a20"><div style="height: 6px; border-radius: 3px; width: 40%; background: #f5c35b"></div></div></div>
+
+</div>
+<div class="card" style="padding: 16px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 0 1.5px #46e3c1">
+<span class="caps" style="color: #46e3c1">Primera vez para 2</span>
+<span style="font-size: 13px; line-height: 18px; color: #c3ccd3">Nox y Vela no conocen esta mazmorra. Activa avisos de mecánicas solo para ellos.</span>
+<div style="display: flex; align-items: center; font-size: 14px">Modo aprendizaje<span class="sw on" style="margin-left: auto; background: #46e3c1"></span></div>
+</div>
+</div>
+
+<div style="position: absolute; left: 50px; right: 50px; bottom: 34px; display: flex; align-items: center; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px; height: 48px; padding: 0 14px; border-radius: 12px; background: rgba(13,18,22,0.95); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1)"><svg width="26" height="26" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="none" stroke="#46e3c1" stroke-width="3"></circle><path d="M10 17h28l-5 10-6 4-3 9-3-9-6-4z" fill="#46e3c1"></path></svg><div style="display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">El Nido en mini-ventana · 5 cosas listas</span><span style="font-size: 12px; color: #9aa6ae">Ábrelo en una mini-ventana mientras esperas</span></div><span class="kbd">H</span></div>
+<button class="btn" style="margin-left: auto; height: 48px">Abandonar grupo</button>
+<button class="btn" style="height: 48px; padding: 0 34px; font-size: 18px; background: #46e3c1; color: #071012; box-shadow: none">Estoy listo <span class="kbd" style="background: rgba(0,0,0,0.2); color: #071012; box-shadow: none">R</span></button>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

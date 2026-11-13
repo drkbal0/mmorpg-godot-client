@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMORPG · Resumen de mazmorra</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.78)"></div>
+<div style="position: absolute; left: 50px; top: 34px; display: flex; align-items: flex-end; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 4px"><span class="caps" style="color: #4fe39a">Completada</span><span style="font-size: 34px; font-weight: 700">Bóveda de Ferrum · Heroica</span></div>
+<span class="chip num" style="height: 30px; font-size: 14px">31:42</span>
+<span class="chip" style="height: 30px; font-size: 14px; color: #f5c35b; background: #2a2414">Récord del grupo</span>
+</div>
+
+<!-- Tu botín -->
+<div class="card" style="position: absolute; left: 50px; top: 130px; width: 420px; height: 600px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Tu botín</span>
+<sc-for list="{{loot}}" as="l" hint-placeholder-count="3">
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 8px; box-shadow: {{l.ring}}">
+<div style="display: flex; gap: 10px; align-items: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 2px {{l.c}}; flex: none"></span>
+<div style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 700; color: {{l.c}}">{{l.n}}</span><span class="num" style="font-size: 12px; color: {{l.dc}}">{{l.d}}</span></div>
+</div>
+<sc-if value="{{l.tip}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12px; color: #c3ccd3">{{l.tip}}</span></sc-if>
+<div style="display: flex; gap: 6px"><span class="chip" style="height: 28px; background: {{l.b1bg}}; color: {{l.b1c}}">{{l.b1}}</span><span class="chip" style="height: 28px">{{l.b2}}</span></div>
+</div>
+</sc-for>
+</div>
+
+<!-- Momentos del grupo -->
+<div class="card" style="position: absolute; left: 490px; top: 130px; width: 460px; height: 600px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between"><span class="caps">Momentos del grupo</span><span style="font-size: 12px; color: #7c8992">sin tablas de daño, solo lo que sumó</span></div>
+<sc-for list="{{moments}}" as="m" hint-placeholder-count="5">
+<div style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: #121a20">
+<span style="width: 34px; height: 34px; border-radius: 50%; background: {{m.c}}; color: #071012; font-size: 13px; font-weight: 700; line-height: 34px; text-align: center; flex: none">{{m.i}}</span>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700">{{m.n}}</span><span style="font-size: 13px; color: #c3ccd3">{{m.t}}</span></div>
+<span class="chip" style="height: 28px; color: {{m.ec}}; background: {{m.ebg}}">{{m.e}}</span>
+</div>
+</sc-for>
+<span style="font-size: 12px; color: #7c8992">Puedes dar 1 elogio por mazmorra a cada compañero.</span>
+</div>
+
+<!-- Progreso -->
+<div class="card" style="position: absolute; left: 970px; top: 130px; width: 420px; height: 600px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Tu progreso</span>
+<div style="display: flex; flex-direction: column; gap: 5px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span>Nivel 32</span><span class="num" style="color: #c4b3ff">+18.400 XP</span></div><div style="position: relative; height: 8px; border-radius: 4px; background: #121a20"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 62%; border-radius: 4px; background: #5b4a9a"></div><div style="position: absolute; left: 62%; top: 0; bottom: 0; width: 16%; background: #9a7bff"></div></div></div>
+<span class="caps" style="margin-top: 4px">Afinidades que subieron</span>
+<sc-for list="{{aff}}" as="a" hint-placeholder-count="3"><div style="display: flex; align-items: center; gap: 8px; font-size: 14px"><span style="width: 14px; height: 14px; border-radius: 50%; background: {{a.c}}"></span>{{a.n}}<span class="num" style="margin-left: auto; font-weight: 700; color: #4fe39a">{{a.v}}</span></div></sc-for>
+<div class="sub" style="padding: 10px 12px; font-size: 13px; color: #c3ccd3; box-shadow: inset 0 0 0 1px rgba(245,195,91,0.4)">Usaste <span style="color: #eef2f4; font-weight: 700">Vacío + Pulso</span> 11 veces. Pista nueva en el Atlas.</div>
+<span class="caps" style="margin-top: 4px">También</span>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="color: #9aa6ae">Reputación Ferrum</span><span class="num" style="font-weight: 700">+350</span></div>
+<div style="display: flex; justify-content: space-between; font-size: 14px"><span style="color: #9aa6ae">Misión «Mensaje para Ferrum»</span><span style="font-weight: 700; color: #4fe39a">avanzó</span></div>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto">
+<button class="btn" style="height: 44px; background: {{accent}}; color: #071012; box-shadow: none">Repetir con el mismo grupo</button>
+<div style="display: flex; gap: 8px"><button class="btn" style="flex: 1">Volver al refugio</button><button class="btn" style="flex: 1">Salir al mundo</button></div>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.book], ['Mapa', 'M', TI.map], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Interfaz', 'F10', TI.layout]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'WORLD' ? '#eef2f4' : '#9aa6ae', bar: label === 'WORLD' ? A : 'transparent' }));
+const extra = {
+loot: [
+{ n: 'Guja de Ferrum', c: '#b47bff', d: '▲ +8 nivel de objeto · +4,1 % daño', dc: '#4fe39a', tip: '', b1: 'Equipar', b1bg: A, b1c: '#071012', b2: 'Comparar', ring: '0 0 0 1.5px ' + A },
+{ n: 'Hombreras del vado', c: '#5aa9ff', d: '= mismo nivel que las tuyas', dc: '#9aa6ae', tip: 'Para Toro serían +12 de nivel de objeto.', b1: 'Ofrecer a Toro', b1bg: '#18242b', b1c: '#6cb8ff', b2: 'Desguazar', ring: 'none' },
+{ n: 'Esquirlas ×120', c: A, d: 'al almacén del refugio', dc: '#9aa6ae', tip: '', b1: 'Enviar al refugio', b1bg: '#18242b', b1c: '#eef2f4', b2: 'Guardar', ring: 'none' }
+],
+moments: [
+{ i: 'T', c: '#5aa9ff', n: 'Toro', t: 'Bloqueó 14 golpes de mecánica', e: 'Elogiar', ec: '#eef2f4', ebg: '#18242b' },
+{ i: 'B', c: '#4fe39a', n: 'Brisa', t: 'Salvó al grupo 3 veces al límite', e: 'Elogiado ✓', ec: '#4fe39a', ebg: 'rgba(79,227,154,0.12)' },
+{ i: 'K', c: '#ff9a4d', n: 'Kael (tú)', t: '11 interrupciones, ninguna perdida', e: '', ec: '#000000', ebg: 'transparent' },
+{ i: 'N', c: '#b47bff', n: 'Nox', t: 'Primera vez aquí · cero muertes', e: 'Elogiar', ec: '#eef2f4', ebg: '#18242b' },
+{ i: 'V', c: '#f5b546', n: 'Vela', t: 'Encontró el cofre secreto', e: 'Elogiar', ec: '#eef2f4', ebg: '#18242b' }
+],
+aff: [{ n: 'Vacío', c: '#b47bff', v: '+2' }, { n: 'Pulso', c: '#5aa9ff', v: '+1' }, { n: 'Calor', c: '#ff7a45', v: '+1' }]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

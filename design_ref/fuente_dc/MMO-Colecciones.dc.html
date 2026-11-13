@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMO-Colecciones</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- ============ IZQUIERDA: PROGRESO POR UNIVERSO ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 88px; width: 300px; height: 694px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 20px; font-weight: 700">Colecciones</span>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<sc-for list="{{tabs2}}" as="t" hint-placeholder-count="5"><div style="display: flex; justify-content: space-between; height: 34px; align-items: center; padding: 0 12px; border-radius: 9px; background: {{t.bg}}; font-size: 14px; color: {{t.c}}"><span>{{t.n}}</span><span class="num" style="font-size: 12px; color: #7c8992">{{t.k}}</span></div></sc-for>
+</div>
+<span class="caps" style="margin-top: 8px">Diario del multiverso</span>
+<sc-for list="{{worlds}}" as="w" hint-placeholder-count="4">
+<div style="display: flex; align-items: center; gap: 12px">
+<svg width="44" height="44" viewBox="0 0 44 44" role="img" aria-label="{{w.n}} {{w.p}} por ciento"><circle cx="22" cy="22" r="18" fill="none" stroke="#1d272e" stroke-width="5"></circle><circle cx="22" cy="22" r="18" fill="none" stroke="{{w.c}}" stroke-width="5" stroke-linecap="round" stroke-dasharray="{{w.dash}}" transform="rotate(-90 22 22)"></circle></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 15px; font-weight: 600">{{w.n}}</span><span class="num" style="font-size: 12px; color: #9aa6ae">{{w.p}} % · {{w.d}}</span></div>
+</div>
+</sc-for>
+</div>
+
+<!-- ============ CENTRO: MONTURAS ============ -->
+<div class="card" style="position: absolute; left: 344px; top: 88px; width: 720px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 8px"><span style="font-size: 18px; font-weight: 700">Monturas</span><span class="num" style="font-size: 13px; color: #9aa6ae">23 de 96</span><span class="chip" style="margin-left: auto">Mostrar las que no tengo ✓</span><span class="chip">Ordenar: más cerca de conseguir</span></div>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px">
+<sc-for list="{{mounts}}" as="m" hint-placeholder-count="18">
+<div style="position: relative; height: 104px; border-radius: 12px; background: #121a20; box-shadow: {{m.ring}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; opacity: {{m.op}}">
+<svg width="44" height="34" viewBox="0 0 44 34" aria-hidden="true"><path d="M4 30l6-12 6 4 6-12 8 4 10-10-4 14 4 12z" fill="{{m.fill}}"></path></svg>
+<span style="font-size: 12px; text-align: center; padding: 0 4px; color: {{m.tc}}">{{m.n}}</span>
+<sc-if value="{{m.prog}}" hint-placeholder-val="{{ false }}"><div style="position: absolute; left: 10px; right: 10px; bottom: 8px; height: 3px; border-radius: 2px; background: #26333b"><div style="height: 3px; border-radius: 2px; width: {{m.prog}}%; background: {{accent}}"></div></div></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+
+<!-- ============ DERECHA: CERCA DE CONSEGUIR ============ -->
+<div class="card" style="position: absolute; left: 1080px; top: 88px; width: 332px; height: 694px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Cerca de conseguir</span>
+<sc-for list="{{near}}" as="n" hint-placeholder-count="4">
+<div class="sub" style="padding: 12px 14px; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; justify-content: space-between"><span style="font-size: 15px; font-weight: 600">{{n.n}}</span><span class="num" style="font-size: 13px; color: {{accent}}">{{n.p}} %</span></div>
+<span style="font-size: 12px; color: #9aa6ae">{{n.how}}</span>
+<div style="height: 4px; border-radius: 2px; background: #070a0c"><div style="height: 4px; border-radius: 2px; width: {{n.p}}%; background: {{accent}}"></div></div>
+<span class="chip" style="height: 22px; font-size: 12px; align-self: flex-start">{{n.cta}}</span>
+</div>
+</sc-for>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'Códice' ? '#eef2f4' : '#9aa6ae', bar: label === 'Códice' ? A : 'transparent' }));
+const C = 2 * Math.PI * 18;
+const w = (n, p, c, d) => ({ n, p, c, d, dash: (C * p / 100).toFixed(1) + ' ' + C.toFixed(1) });
+const names = ['Lobo de ceniza', 'Grifo del vado', 'Autómata de Ferrum', 'Raya de grieta', 'Ciervo rúnico', 'Corcel del Nexo', '???', 'Escarabajo de bronce', 'Draco joven', '???', 'Polilla lunar', 'Jabalí de guerra', '???', 'Mantis de cristal', '???', 'Tortuga errante', 'Sierpe de eco', '???'];
+const owned = [0, 1, 2, 5, 7, 11];
+const progress = { 3: 80, 8: 60, 13: 35 };
+const extra = {
+tabs2: [['Monturas', '23/96', true], ['Mascotas', '41/150'], ['Apariencias', '212/900'], ['Logros', '318/1.240'], ['Títulos', '12/80']]
+.map(([n, k, on]) => ({ n, k, bg: on ? '#1c2a33' : 'transparent', c: on ? '#eef2f4' : '#c3ccd3' })),
+worlds: [w('Verdalia', 64, '#9fe36a', '41 secretos'), w('Ferrum', 31, '#5aa9ff', '18 secretos'), w('Runavell', 12, '#f5b546', '6 secretos'), w('Nexo', 88, '#46e3c1', '22 secretos')],
+mounts: names.map((n, i) => {
+const has = owned.includes(i); const unknown = n === '???'; const pr = progress[i] || 0;
+return { n: unknown ? 'Por descubrir' : n, fill: has ? '#c3ccd3' : (unknown ? '#1d272e' : '#3a4a54'), tc: has ? '#eef2f4' : '#7c8992',
+op: has || pr ? 1 : 0.7, prog: pr, ring: pr ? 'inset 0 0 0 1.5px ' + A : (has ? 'inset 0 0 0 1px rgba(255,255,255,0.12)' : 'none') };
+}),
+near: [
+{ n: 'Raya de grieta', p: 80, how: 'Sella 8 de 10 grietas en Verdalia', cta: 'Ver grietas en el mapa' },
+{ n: 'Draco joven', p: 60, how: 'Reputación con Guardabosques: Honorable', cta: 'Misiones que dan reputación' },
+{ n: 'Mantis de cristal', p: 35, how: 'Botín raro del Coloso de Runavell (1 vez por semana)', cta: 'Avisarme del evento' },
+{ n: 'Logro: Turista del multiverso', p: 75, how: 'Visita los 4 universos en un día · falta Runavell', cta: 'Ruta al portal' }
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

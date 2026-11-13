@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMO-Mejoras</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- Subnavegación del refugio -->
+<div style="position: absolute; left: 28px; top: 80px; display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07)">
+<sc-for list="{{sub}}" as="s" hint-placeholder-count="5"><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: {{s.bg}}; color: {{s.c}}; font-size: 14px; font-weight: 600; line-height: 32px">{{s.n}}</span></sc-for>
+</div>
+
+<!-- ============ MATRIZ DE MEJORAS ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 128px; width: 1016px; height: 654px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: baseline; gap: 12px"><span style="font-size: 20px; font-weight: 700">Plan de mejoras</span><span style="font-size: 13px; color: #9aa6ae">ordenado según tus metas actuales</span>
+<span class="chip" style="margin-left: auto; color: {{accent}}; background: rgba(70,227,193,0.12)">Meta: fabricar Hoja de la grieta</span><span class="chip">Meta: subir a Ysolde</span><span class="chip">+ meta</span></div>
+<div style="display: grid; grid-template-columns: 210px repeat(5, minmax(0, 1fr)); gap: 6px; font-size: 12px; color: #9aa6ae; padding: 0 4px"><span>Sala</span><span>Nivel 1</span><span>Nivel 2</span><span>Nivel 3</span><span>Nivel 4</span><span>Nivel 5</span></div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
+<div style="display: grid; grid-template-columns: 210px repeat(5, minmax(0, 1fr)); gap: 6px; align-items: stretch">
+<div style="display: flex; align-items: center; gap: 8px; padding: 0 4px"><span style="width: 8px; height: 8px; border-radius: 2px; background: {{r.c}}"></span><span style="font-size: 14px; font-weight: 600">{{r.n}}</span></div>
+<sc-for list="{{r.cells}}" as="c" hint-placeholder-count="5">
+<div style="height: 50px; border-radius: 9px; padding: 6px 8px; box-sizing: border-box; background: {{c.bg}}; box-shadow: {{c.ring}}; display: flex; flex-direction: column; justify-content: center; gap: 1px">
+<span style="font-size: 12px; font-weight: 600; color: {{c.tc}}; white-space: nowrap">{{c.t}}</span>
+<span class="num" style="font-size: 11px; color: {{c.sc}}">{{c.s}}</span>
+</div>
+</sc-for>
+</div>
+</sc-for>
+<div style="display: flex; gap: 14px; font-size: 12px; color: #9aa6ae; margin-top: auto">
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #1c3a32"></span>Construido</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; box-shadow: inset 0 0 0 1.5px {{accent}}"></span>Siguiente recomendado</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #121a20"></span>Disponible</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #0a0f13; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06)"></span>Requiere nivel del refugio</span>
+</div>
+</div>
+
+<!-- ============ DERECHA: COLA DE OBRAS ============ -->
+<div class="card" style="position: absolute; left: 1060px; top: 128px; width: 352px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span class="caps">Obras en marcha · 1 de 2</span>
+<div style="display: flex; flex-direction: column; gap: 5px"><div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 700">Destilador · nivel 4</span><span class="num" style="color: #9aa6ae">2:40 h</span></div><div style="height: 6px; border-radius: 3px; background: #121a20"><div style="height: 6px; border-radius: 3px; width: 33%; background: {{accent}}"></div></div><span style="font-size: 12px; color: #7c8992">Sigue produciendo mientras se mejora.</span></div>
+<div style="height: 46px; border-radius: 12px; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.14); display: flex; align-items: center; justify-content: center; font-size: 13px; color: #9aa6ae">Hueco libre · arrastra una mejora aquí</div>
+<span class="caps" style="margin-top: 8px">Por qué este orden</span>
+<sc-for list="{{why}}" as="w" hint-placeholder-count="3">
+<div style="display: flex; gap: 10px">
+<span class="num" style="width: 22px; height: 22px; border-radius: 50%; background: {{accent}}; color: #071012; font-size: 12px; font-weight: 700; line-height: 22px; text-align: center; flex: none">{{w.n}}</span>
+<div style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{w.t}}</span><span style="font-size: 12px; line-height: 16px; color: #9aa6ae">{{w.d}}</span></div>
+</div>
+</sc-for>
+<span class="caps" style="margin-top: 8px">Nivel del refugio 4 → 5</span>
+<div style="display: flex; flex-direction: column; gap: 4px"><div style="display: flex; justify-content: space-between; font-size: 12px; color: #9aa6ae"><span>Mejoras hechas</span><span class="num">13 / 16</span></div><div style="height: 6px; border-radius: 3px; background: #121a20"><div style="height: 6px; border-radius: 3px; width: 81%; background: #f5c35b"></div></div><span style="font-size: 12px; color: #9aa6ae">Al nivel 5: una sala nueva y una cama más.</span></div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'Refugio' ? '#eef2f4' : '#9aa6ae', bar: label === 'Refugio' ? A : 'transparent' }));
+const subnav = (active) => ['Refugio', 'Producción', 'Expediciones', 'Pispa', 'Mejoras'].map((n) => n === active ? { n, bg: '#1c2a33', c: '#eef2f4' } : { n, bg: 'transparent', c: '#9aa6ae' });
+const cell = (kind, t, s) => {
+const k = {
+done: { bg: '#1c3a32', ring: 'none', tc: '#cfeee5', sc: '#7fbfae' },
+next: { bg: '#121a20', ring: 'inset 0 0 0 1.5px ' + A, tc: '#eef2f4', sc: A },
+avail: { bg: '#121a20', ring: 'none', tc: '#c3ccd3', sc: '#7c8992' },
+lock: { bg: '#0a0f13', ring: 'inset 0 0 0 1px rgba(255,255,255,0.06)', tc: '#56646d', sc: '#56646d' },
+work: { bg: '#121a20', ring: 'inset 0 0 0 1.5px #f5c35b', tc: '#eef2f4', sc: '#f5c35b' }
+}[kind];
+return Object.assign({ t, s }, k);
+};
+const row = (n, c, lv, labels, opts) => {
+const o = opts || {};
+return { n, c, cells: labels.map((t, i) => {
+const L = i + 1;
+if (L <= lv) return cell('done', t, 'hecho');
+if (o.work === L) return cell('work', t, 'en obra');
+if (o.next === L) return cell('next', t, o.nextS || 'recomendado');
+if (L > 4 && !o.open5) return cell('lock', t, 'refugio nv 5');
+return cell('avail', t, o.cost && L === lv + 1 ? o.cost : '');
+}) };
+};
+const extra = {
+sub: subnav('Mejoras'),
+rows: [
+row('Invernadero', '#4fe39a', 2, ['Huerto', 'Riego', 'Resina', 'Flor de grieta', 'Bosque mini'], { next: 3, nextS: '① desbloquea Resina' }),
+row('Forja', '#ff9a4d', 2, ['Yunque', 'Fuelle', 'Cola +1', 'Aleaciones', 'Maestría'], { next: 3, nextS: '② +5 % calidad' }),
+row('Mesa de expediciones', '#b47bff', 2, ['Mapa', 'Brújula', '2 personajes', 'Ferrum lejano', 'Grieta abisal'], { next: 3, nextS: '③ Ysolde sube antes' }),
+row('Destilador', A, 3, ['Alambique', 'Filtro', 'Doble paso', 'Flujo', 'Cristal puro'], { work: 4 }),
+row('Nido de Pispa', '#f5b546', 3, ['Ramitas', 'Musgo', 'Linterna', 'Bolsa +6', 'Rutas Ferrum'], { cost: 'seda 3/5' }),
+row('Dormitorio', '#6cb8ff', 1, ['Camas', 'Descanso +', 'Cama extra', 'Sueño lúcido', 'Torre'], { cost: '200 madera' }),
+row('Almacén', '#b8c3ca', 2, ['Estantes', 'Cofres', '+200', 'Clasificado', 'Bóveda'], { cost: '300 metal' }),
+row('Sala de entrenamiento', '#ff6b6b', 1, ['Maniquí', 'Grabación', 'Jefe sombra', 'Arena', 'Duelo'], { cost: '150 esquirlas' })
+],
+why: [
+{ n: '1', t: 'Invernadero 3', d: 'Sin Resina no puedes fabricar la Hoja de la grieta ni terminar «Hierbas de la brecha».' },
+{ n: '2', t: 'Forja 3', d: 'Con la resina lista, sube la calidad del arma que vas a fabricar.' },
+{ n: '3', t: 'Mesa de expediciones 3', d: 'Mandar a 2 personajes sube el éxito al 92 % y Ysolde gana niveles más rápido.' }
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

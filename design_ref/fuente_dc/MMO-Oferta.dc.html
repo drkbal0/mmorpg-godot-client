@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMORPG · Oferta de inversión del pionero</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 60px; background: #000000"></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 560px; background: linear-gradient(to top, rgba(4,7,9,0.97) 0%, rgba(4,7,9,0.9) 55%, rgba(4,7,9,0) 100%)"></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 36px; background: #000000"></div>
+
+<div style="position: absolute; left: 90px; bottom: 110px; width: 200px; height: 280px; border-radius: 100px 100px 18px 18px; background: #1a252c; box-shadow: 0 0 0 2px #f5c35b55; display: flex; align-items: center; justify-content: center">
+<svg width="110" height="150" viewBox="0 0 48 64" fill="none" stroke="#5d6d77" stroke-width="1.6" aria-hidden="true"><circle cx="24" cy="18" r="10"></circle><path d="M6 62c2-16 9-24 18-24s16 8 18 24"></path></svg>
+</div>
+
+<div style="position: absolute; left: 320px; bottom: 110px; width: 560px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; gap: 10px"><span style="font-size: 26px; font-weight: 700">Orla</span><span style="font-size: 15px; color: #9aa6ae">Mercader del Vado</span><span style="padding: 0 8px; height: 22px; border-radius: 11px; background: rgba(245,195,91,0.18); color: #f5c35b; font-size: 12px; font-weight: 700; line-height: 22px">Eres su pionero</span></div>
+<span style="font-size: 20px; line-height: 30px">Eres la primera persona que encuentra mi puesto. Si me ayudas a traer mercancía, te doy una parte de todo lo que venda… a quien sea.</span>
+<sc-for list="{{opts}}" as="o" hint-placeholder-count="3">
+<div style="display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 14px; border-radius: 12px; background: {{o.bg}}; box-shadow: {{o.ring}}">
+<span class="kbd" style="height: 22px; min-width: 22px">{{o.k}}</span><span style="font-size: 16px; font-weight: 600">{{o.t}}</span><span style="margin-left: auto; font-size: 12px; color: {{o.tc}}">{{o.tag}}</span>
+</div>
+</sc-for>
+</div>
+
+<!-- Contrato -->
+<div class="card" style="position: absolute; right: 60px; top: 100px; width: 430px; padding: 22px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 0 0 1.5px #f5c35b, 0 20px 50px rgba(0,0,0,0.5)">
+<span class="caps" style="color: #f5c35b">Oferta de inversión</span>
+<span style="font-size: 22px; font-weight: 700">Socio del puesto de Orla</span>
+<div class="sub" style="padding: 12px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; color: #9aa6ae">Misión especial · solo para ti</span>
+<span style="font-size: 15px; font-weight: 700">Ruta de suministro</span>
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="3"><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #c3ccd3">{{s.t}}</span><span class="num" style="color: #9aa6ae">{{s.p}}</span></div></sc-for>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<div class="sub" style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-size: 12px; color: #9aa6ae">Tu parte</span><span class="num" style="font-size: 24px; font-weight: 700; color: #f5c35b">2 %</span><span style="font-size: 11px; color: #9aa6ae">de cada compra o venta</span></div>
+<div class="sub" style="padding: 10px 12px; display: flex; flex-direction: column"><span style="font-size: 12px; color: #9aa6ae">Estimado hoy</span><span class="num" style="font-size: 24px; font-weight: 700">300–900</span><span style="font-size: 11px; color: #9aa6ae">oro al día según tráfico</span></div>
+</div>
+<span class="caps">Condiciones claras</span>
+<sc-for list="{{terms}}" as="t" hint-placeholder-count="4"><span style="font-size: 12px; line-height: 17px; color: #c3ccd3">• {{t.t}}</span></sc-for>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'WORLD' ? '#eef2f4' : '#9aa6ae', bar: label === 'WORLD' ? A : 'transparent' }));
+const extra = {
+opts: [
+{ k: '1', t: 'Trato hecho. ¿Qué necesitas?', tag: 'Acepta la misión especial', tc: '#f5c35b', bg: 'rgba(245,195,91,0.12)', ring: 'inset 0 0 0 1.5px #f5c35b' },
+{ k: '2', t: 'Déjame pensarlo.', tag: 'La oferta se guarda 7 días en tu Códice', tc: '#9aa6ae', bg: 'rgba(18,26,32,0.85)', ring: 'none' },
+{ k: '3', t: 'No me interesa.', tag: 'Pasa al siguiente que la descubra', tc: '#9aa6ae', bg: 'rgba(18,26,32,0.85)', ring: 'none' }
+],
+steps: [{ t: 'Trae 3 cargamentos de resina', p: '0/3' }, { t: 'Escolta la carreta por el Vado', p: '0/1' }, { t: 'Paga la cuota de socio', p: '2.000 oro' }],
+terms: [
+{ t: 'Cobras aunque no estés conectado; se acumula en el almacén de tu refugio.' },
+{ t: 'Puedes vender tu participación a otro jugador en el mercado.' },
+{ t: 'Si el puesto cierra por un evento, el contrato se pausa, no se pierde.' },
+{ t: 'Solo hay un socio por puesto: el pionero que lo acepta primero.' }
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

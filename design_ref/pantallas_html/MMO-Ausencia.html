@@ -1,0 +1,48 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>Mientras dormías</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.7)"></div>
+<div class="card" style="position: absolute; left: 240px; top: 80px; width: 560px; height: 650px; padding: 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Mientras dormías · 9 h 20 min</span>
+<span style="font-size: 26px; font-weight: 700">Kael acampó en el Vado Roto</span>
+<div style="display: flex; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: #4fe39a"></span><span style="width: 2px; flex: 1; background: #26333b"></span></div><div style="display: flex; flex-direction: column; gap: 1px; padding-bottom: 10px"><span class="num" style="font-size: 12px; color: #7c8992">18:54</span><span style="font-size: 14px; font-weight: 600">Encendiste la fogata</span><span style="font-size: 12px; color: #9aa6ae">Toro y Brisa quedaron de guardia.</span></div></div><div style="display: flex; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: #9aa6ae"></span><span style="width: 2px; flex: 1; background: #26333b"></span></div><div style="display: flex; flex-direction: column; gap: 1px; padding-bottom: 10px"><span class="num" style="font-size: 12px; color: #7c8992">21:10</span><span style="font-size: 14px; font-weight: 600">Brisa se desconectó</span><span style="font-size: 12px; color: #9aa6ae">Extrajo a zona segura.</span></div></div><div style="display: flex; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: #ff6b6b"></span><span style="width: 2px; flex: 1; background: #26333b"></span></div><div style="display: flex; flex-direction: column; gap: 1px; padding-bottom: 10px"><span class="num" style="font-size: 12px; color: #7c8992">23:42</span><span style="font-size: 14px; font-weight: 600">Dos lobos de ceniza te atacaron</span><span style="font-size: 12px; color: #9aa6ae">Perdiste 39 % de vida.</span></div></div><div style="display: flex; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: #6cb8ff"></span><span style="width: 2px; flex: 1; background: #26333b"></span></div><div style="display: flex; flex-direction: column; gap: 1px; padding-bottom: 10px"><span class="num" style="font-size: 12px; color: #7c8992">23:43</span><span style="font-size: 14px; font-weight: 600">Toro los ahuyentó</span><span style="font-size: 12px; color: #9aa6ae">La app te avisó; no respondiste.</span></div></div><div style="display: flex; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: #f5c35b"></span><span style="width: 2px; flex: 1; background: #26333b"></span></div><div style="display: flex; flex-direction: column; gap: 1px; padding-bottom: 10px"><span class="num" style="font-size: 12px; color: #7c8992">02:54</span><span style="font-size: 14px; font-weight: 600">La fogata se apagó</span><span style="font-size: 12px; color: #9aa6ae">Sin fogata, el riesgo subió a alto.</span></div></div><div style="display: flex; gap: 12px"><div style="display: flex; flex-direction: column; align-items: center"><span style="width: 10px; height: 10px; margin-top: 5px; border-radius: 50%; background: #9aa6ae"></span><span style="width: 2px; flex: 1; background: #26333b"></span></div><div style="display: flex; flex-direction: column; gap: 1px; padding-bottom: 10px"><span class="num" style="font-size: 12px; color: #7c8992">04:14</span><span style="font-size: 14px; font-weight: 600">Un jugador pasó y no te atacó</span><span style="font-size: 12px; color: #9aa6ae">Estás en una zona sin PK nocturno.</span></div></div>
+<div style="display: flex; gap: 8px; margin-top: auto"><button class="btn" style="flex: 1">Ver repetición del ataque</button><button class="btn" style="flex: 1; background: #46e3c1; color: #071012; box-shadow: none">Despertar aquí</button></div>
+</div>
+<div style="position: absolute; left: 820px; top: 80px; width: 380px; display: flex; flex-direction: column; gap: 12px">
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 8px"><span class="caps">Cómo está</span><div style="display: flex; align-items: center; gap: 6px"><span style="width: 26px; height: 26px; border-radius: 50%; background: #18242b; border: 1.5px solid #3ccf73; box-sizing: border-box; font-size: 12px; font-weight: 700; line-height: 23px; text-align: center">32</span><div style="flex: 1; position: relative; height: 16px; border-radius: 5px; background: #070a0c; overflow: hidden"><div style="position: absolute; inset: 0; width: 61%; background: #3ccf73"></div></div></div><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Vida</span><span style="font-weight: 700; color: #eef2f4">61 %</span></div><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Objetos perdidos</span><span style="font-weight: 700; color: #4fe39a">ninguno</span></div><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">XP de descanso</span><span style="font-weight: 700; color: #c4b3ff">+4 % (acampado)</span></div><div style="display: flex; justify-content: space-between; font-size: 13px"><span style="color: #9aa6ae">Riesgo ahora</span><span style="font-weight: 700; color: #ff8a8a">alto · sin fogata</span></div></div>
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 0 0 1px rgba(108,184,255,0.5)"><span style="font-size: 15px; font-weight: 700">Toro te defendió</span><span style="font-size: 13px; line-height: 18px; color: #c3ccd3">Estaba de guardia y ahuyentó a los lobos. Puedes agradecerle con un elogio.</span><span class="chip" style="align-self: flex-start; color: #6cb8ff">Dar elogio «Buen vigía»</span></div>
+<div class="card" style="padding: 18px; display: flex; flex-direction: column; gap: 6px"><span class="caps">Si hubiera muerto</span><span style="font-size: 13px; line-height: 18px; color: #c3ccd3">Despertarías en la última zona segura, con la bolsa segura intacta. El resto queda en un fardo donde caíste durante 30 min, y cualquiera puede recogerlo.</span></div>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Consola · Personajes especiales</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+
+<div style="position: absolute; inset: 0; background: #0b0f13"></div>
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 56px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: #0d1216; box-shadow: inset 0 -1px 0 rgba(255,255,255,0.08), inset 0 3px 0 #ff9a4d">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: #ff9a4d; margin-right: 14px">CONSOLA</span>
+<sc-for list="{{atabs}}" as="t" hint-placeholder-count="6"><span style="padding: 0 12px; height: 34px; border-radius: 9px; background: {{t.bg}}; color: {{t.c}}; font-size: 14px; font-weight: 600; line-height: 34px">{{t.n}}</span></sc-for>
+<span class="chip" style="margin-left: auto; color: #ff9a4d">{{role}}</span>
+<span style="font-size: 12px; color: #9aa6ae; margin-left: 8px">Todo queda en el registro de auditoría</span>
+</div>
+
+<div class="card" style="position: absolute; left: 24px; top: 72px; width: 300px; bottom: 24px; padding: 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px">
+<span class="caps">Plantillas de personaje especial</span>
+<sc-for list="{{tpls}}" as="t" hint-placeholder-count="5"><div style="padding: 10px 12px; border-radius: 10px; background: {{t.bg}}; box-shadow: {{t.ring}}; display: flex; flex-direction: column; gap: 2px"><div style="display: flex; justify-content: space-between"><span style="font-size: 15px; font-weight: 700; color: {{t.tc}}">{{t.n}}</span><span class="num" style="font-size: 12px; color: #9aa6ae">{{t.k}}</span></div><span style="font-size: 12px; line-height: 16px; color: #9aa6ae">{{t.d}}</span></div></sc-for>
+<button class="btn" style="margin-top: auto">+ Nueva plantilla</button>
+</div>
+<div class="card" style="position: absolute; left: 340px; top: 72px; width: 560px; bottom: 24px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 9px">
+<div style="display: flex; align-items: baseline; gap: 10px"><span style="font-size: 22px; font-weight: 700; color: #f5c35b">Narrador</span><span style="font-size: 13px; color: #9aa6ae">para roleplayers y streamers que dirigen eventos</span></div>
+<span class="caps">Poderes</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{powers}}" as="p" hint-placeholder-count="8"><div class="sub" style="padding: 9px 12px; display: flex; align-items: center; gap: 10px"><div style="display: flex; flex-direction: column; flex: 1"><span style="font-size: 14px; font-weight: 600">{{p.n}}</span><span style="font-size: 11px; color: #9aa6ae">{{p.d}}</span></div><span class="sw {{p.cls}}" style="background: {{p.bg}}"></span></div></sc-for>
+</div>
+<span class="caps" style="margin-top: 4px">Límites fijos · no se pueden desactivar</span>
+<sc-for list="{{locks}}" as="l" hint-placeholder-count="4"><div style="display: flex; gap: 8px; font-size: 13px; color: #c3ccd3"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f5c35b" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 11V8a6 6 0 0 1 12 0v3M5 11h14v10H5z"></path></svg>{{l.t}}</div></sc-for>
+<div class="sub" style="margin-top: auto; padding: 10px 12px; font-size: 12px; line-height: 17px; color: #c3ccd3; box-shadow: inset 0 0 0 1px rgba(245,195,91,0.45)">Sin marcas extra: los demás lo reconocen por su barra de vida con borde dorado (inmune) y su marco de pluma. Cuando es invisible, nadie lo ve; al aparecer hay un destello.</div>
+</div>
+<div class="card" style="position: absolute; left: 916px; top: 72px; right: 24px; bottom: 24px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 9px">
+<span class="caps">Asignar a un jugador</span>
+<div class="sub" style="height: 40px; padding: 0 12px; display: flex; align-items: center; gap: 8px; font-size: 14px; box-shadow: inset 0 0 0 1.5px #ff9a4d">unu <span style="font-size: 12px; color: #9aa6ae">· cuenta verificada · pionero ×12</span></div>
+<span style="font-size: 12px; color: #9aa6ae">Espacio de personaje</span>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px"><sc-for list="{{slots}}" as="s" hint-placeholder-count="6"><div style="height: 58px; border-radius: 10px; background: {{s.bg}}; border: {{s.bd}}; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px"><span class="num" style="font-size: 12px; font-weight: 700; color: {{s.tc}}">{{s.n}}</span><span style="font-size: 10px; color: #9aa6ae">{{s.s}}</span></div></sc-for></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px"><sc-for list="{{opts}}" as="o" hint-placeholder-count="4"><div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column"><span style="font-size: 11px; color: #9aa6ae">{{o.l}}</span><span style="font-size: 14px; font-weight: 700">{{o.v}}</span></div></sc-for></div>
+<button class="btn" style="background: #ff9a4d; color: #1a0e06; box-shadow: none">Asignar · pide 2.ª firma</button>
+<span class="caps" style="margin-top: 6px">Asignaciones activas</span>
+<sc-for list="{{active}}" as="a" hint-placeholder-count="4"><div style="display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 10px; border-radius: 10px; background: #121a20; font-size: 13px"><span style="font-weight: 700">{{a.p}}</span><span style="color: #f5c35b">{{a.t}}</span><span class="num" style="margin-left: auto; color: #9aa6ae">{{a.d}}</span><span style="color: #ff8a8a">Retirar</span></div></sc-for>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'BARE' ? '#eef2f4' : '#9aa6ae', bar: label === 'BARE' ? A : 'transparent' }));
+const atab = (act) => ['Resumen', 'Moderación', 'Personajes especiales', 'Economía', 'Wiki', 'Registros'].map((n) => n === act ? { n, bg: '#1c2a33', c: '#eef2f4' } : { n, bg: 'transparent', c: '#9aa6ae' });
+const sw = (on) => ({ cls: on ? 'on' : 'off', bg: on ? '#ff9a4d' : '#2a363d' });
+const tp = (n, k, d, sel) => ({ n, k, d, tc: sel ? '#f5c35b' : '#eef2f4', bg: sel ? '#1c2a33' : '#121a20', ring: sel ? 'inset 0 0 0 1.5px #f5c35b' : 'none' });
+const pw = (n, d, on) => Object.assign({ n, d }, sw(on));
+const sl = (n, s, st) => ({ n, s, tc: st === 'sel' ? '#ff9a4d' : '#eef2f4', bg: st === 'sel' ? 'rgba(255,154,77,0.12)' : (st === 'free' ? 'transparent' : '#121a20'), bd: st === 'sel' ? '2px solid #ff9a4d' : (st === 'free' ? '1.5px dashed rgba(255,255,255,0.2)' : '1px solid rgba(255,255,255,0.08)') });
+const extra = { atabs: atab('Personajes especiales'), role: 'Administradora · Mira',
+tpls: [tp('Narrador', '4 activos', 'Dirige escenas de rol. No recibe daño.', true), tp('Semidiós', '1 activo', 'Jefe viviente para eventos: enorme, con vida de raid.'), tp('Streamer invitado', '2 activos', 'Invulnerable opcional, cámara libre, retardo de chat.'), tp('PNJ viviente', '0', 'Un jugador interpreta a un mercader o guía.'), tp('Observador', '0', 'Invisible, solo mira. Para torneos.')],
+powers: [pw('No recibe daño', 'Vida con borde dorado', true), pw('Sin amenaza', 'Los enemigos lo ignoran', true), pw('Volar', 'Y cámara libre', true), pw('Invisible / aparecer', 'Con efecto visible al aparecer', true), pw('Viaje instantáneo', 'Único caso sin caminar', true), pw('Invocar encuentros', 'De una lista aprobada', true), pw('Don menor', 'Da +5 de vida a un jugador · 1 cada 2 min', true), pw('Anuncios de zona', 'Máx. 1 por minuto', true)],
+locks: [{ t: 'Puede entrar a JcJ, mazmorras y raids para contar historias, pero no hace daño ni cuenta en el marcador.' }, { t: 'Influye poco: solo el «Don menor» (+5 de vida) y los encuentros aprobados.' }, { t: 'No comercia durante la escena; recibe una recompensa al terminar, fijada por el equipo.' }, { t: 'Lo que da a otros sale de un presupuesto con tope.' }],
+slots: [sl('1', 'Kael', ''), sl('2', 'Ysolde', ''), sl('3', 'Torq', ''), sl('4', 'aquí', 'sel'), sl('5', 'libre', 'free'), sl('6', 'libre', 'free')],
+opts: [{ l: 'Nombre del personaje', v: 'Aurel' }, { l: 'Duración', v: '30 días' }, { l: 'Zona permitida', v: 'Verdalia + patios' }, { l: 'Presupuesto de recompensas', v: '2.000 oro / escena' }],
+active: [{ p: 'unu', t: 'Narrador', d: '27 días' }, { p: 'LaStream', t: 'Streamer', d: '2 días' }, { p: 'Mira', t: 'Semidiós', d: 'hoy 21:00' }] };
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

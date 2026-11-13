@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8">
+<title>El Nido · Vecindad</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+
+
+
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(../assets/mapa-fondo.jpg) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</head>
+<body data-ready="1">
+<div id="pantalla">
+
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+
+<div style="position: absolute; inset: 0; background: #090c12"></div>
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 60px; padding: 0 20px; box-sizing: border-box; display: flex; align-items: center; gap: 10px; background: rgba(9,12,18,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<svg width="34" height="34" viewBox="0 0 48 48" role="img" aria-label="Insignia de El Nido"><circle cx="24" cy="24" r="22" fill="none" stroke="#46e3c1" stroke-width="2.5"></circle><path d="M10 17h28l-5 10-6 4-3 9-3-9-6-4z" fill="#46e3c1"></path><rect x="21" y="20" width="6" height="5" rx="1" fill="#0d1216"></rect></svg>
+<div style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 700; letter-spacing: 0.2em; color: #46e3c1">EL NIDO</span><span style="font-size: 11px; color: #9aa6ae">Vecindad Umbral 12 · 24 depas</span></div>
+<span class="chip" style="margin-left: 12px">32 vecinos · 9 en casa</span><span class="chip">Tu gremio vive aquí: 6</span>
+<button class="btn" style="margin-left: auto; height: 34px; background: #46e3c1; color: #071012; box-shadow: none">Subir a mi depa <span class="kbd" style="background: rgba(0,0,0,0.2); color: #071012; box-shadow: none">H</span></button>
+<button class="btn" style="height: 34px">Salir al mundo</button>
+</div>
+
+<!-- Vecinos -->
+<div class="card" style="position: absolute; left: 20px; top: 76px; width: 226px; bottom: 20px; padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 7px">
+<span class="caps">Vecinos conectados</span>
+
+<div style="display: flex; align-items: center; gap: 9px; padding: 5px 8px; border-radius: 10px; background: #121a20">
+<div style="width: 26px; height: 26px; border-radius: 50%; background: #4fe39a; flex: none"></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">Brisa</span><span style="font-size: 11px; color: #9aa6ae">En su depa · regando</span></div>
+<span style="font-size: 11px; color: #46e3c1">Visitar</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 9px; padding: 5px 8px; border-radius: 10px; background: #121a20">
+<div style="width: 26px; height: 26px; border-radius: 50%; background: #5aa9ff; flex: none"></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">Toro</span><span style="font-size: 11px; color: #9aa6ae">En el patio</span></div>
+<span style="font-size: 11px; color: #46e3c1">Saludar</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 9px; padding: 5px 8px; border-radius: 10px; background: #121a20">
+<div style="width: 26px; height: 26px; border-radius: 50%; background: #4fe39a; flex: none"></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">Mira</span><span style="font-size: 11px; color: #9aa6ae">Gremio · en su depa</span></div>
+<span style="font-size: 11px; color: #46e3c1">Visitar</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 9px; padding: 5px 8px; border-radius: 10px; background: #121a20">
+<div style="width: 26px; height: 26px; border-radius: 50%; background: #f5c35b; flex: none"></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">Ulric</span><span style="font-size: 11px; color: #9aa6ae">En el mundo · Ferrum</span></div>
+<span style="font-size: 11px; color: #46e3c1"></span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 9px; padding: 5px 8px; border-radius: 10px; background: #121a20">
+<div style="width: 26px; height: 26px; border-radius: 50%; background: #4fe39a; flex: none"></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">Sasha</span><span style="font-size: 11px; color: #9aa6ae">Vende en el mercadillo</span></div>
+<span style="font-size: 11px; color: #46e3c1">Ver</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 9px; padding: 5px 8px; border-radius: 10px; background: #121a20">
+<div style="width: 26px; height: 26px; border-radius: 50%; background: #f5c35b; flex: none"></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">Aurel</span><span style="font-size: 11px; color: #9aa6ae">Narrador · evento 21:00</span></div>
+<span style="font-size: 11px; color: #46e3c1">Seguir</span>
+</div>
+
+<div style="display: flex; align-items: center; gap: 9px; padding: 5px 8px; border-radius: 10px; background: #121a20">
+<div style="width: 26px; height: 26px; border-radius: 50%; background: #9aa6ae; flex: none"></div>
+<div style="flex: 1; display: flex; flex-direction: column"><span style="font-size: 13px; font-weight: 700">Pim</span><span style="font-size: 11px; color: #9aa6ae">Nuevo vecino</span></div>
+<span style="font-size: 11px; color: #46e3c1">Dar bienvenida</span>
+</div>
+
+<div class="sub" style="margin-top: auto; padding: 10px 12px; display: flex; flex-direction: column; gap: 5px"><span style="font-size: 13px; font-weight: 700">Proyecto vecinal: Horno comunal</span><div style="height: 5px; border-radius: 3px; background: #070a0c"><div style="height: 5px; border-radius: 3px; width: 64%; background: #f5b546"></div></div><span style="font-size: 11px; color: #9aa6ae">64 % · todos ganan pan gratis al terminar</span><span class="chip" style="height: 24px; font-size: 12px; align-self: flex-start">Aportar madera</span></div>
+</div>
+
+<!-- Edificio -->
+<div style="position: absolute; left: 270px; top: 84px; width: 870px; height: 22px; border-radius: 8px; background: #2f5a3a; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">Azotea común · huerto comunitario</div>
+<div style="position: absolute; left: 270px; top: 110px; width: 870px; height: 392px; box-sizing: border-box; padding: 10px; border-radius: 10px; background: #14110e; border: 2px solid #3a322a; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px">
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(108,184,255,0.6); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #f5c35b"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Mira</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Luz encendida · amigo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Joao</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: transparent; border: 1.5px dashed rgba(255,255,255,0.16); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #2a241e"></span><span style="font-size: 12px; font-weight: 700; color: #6d6258; white-space: nowrap">Se renta</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Invita a un amigo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #f5c35b"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Sasha</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Luz encendida</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Dren</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Nox</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(108,184,255,0.6); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #f5c35b"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Toro</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Luz encendida · amigo</span>
+</div>
+
+<div style="border-radius: 8px; background: rgba(70,227,193,0.1); border: 2px solid #46e3c1; padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #f5c35b"></span><span style="font-size: 12px; font-weight: 700; color: #46e3c1; white-space: nowrap">Tú · Kael</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Confort 62 · piso 2</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(108,184,255,0.6); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #f5c35b"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Brisa</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Luz encendida · amigo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(108,184,255,0.6); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Ulric</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo · amigo</span>
+</div>
+
+<div style="border-radius: 8px; background: transparent; border: 1.5px dashed rgba(255,255,255,0.16); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #2a241e"></span><span style="font-size: 12px; font-weight: 700; color: #6d6258; white-space: nowrap">Se renta</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Invita a un amigo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Vela</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Aren</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #f5c35b"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Pim</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Luz encendida</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Lune</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Ivo</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Kora</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #f5c35b"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Tess</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Luz encendida</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Bram</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: transparent; border: 1.5px dashed rgba(255,255,255,0.16); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #2a241e"></span><span style="font-size: 12px; font-weight: 700; color: #6d6258; white-space: nowrap">Se renta</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Invita a un amigo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Oda</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #f5c35b"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Rhea</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Luz encendida</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #3a322a"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Finn</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Fuera, en el mundo</span>
+</div>
+
+<div style="border-radius: 8px; background: #1a1612; border: 1px solid rgba(255,220,170,0.12); padding: 7px 9px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px">
+<div style="display: flex; align-items: center; gap: 5px"><span style="width: 8px; height: 8px; border-radius: 2px; background: #f5c35b"></span><span style="font-size: 12px; font-weight: 700; color: #f4ece0; white-space: nowrap">Aurel</span></div>
+<span style="font-size: 10px; line-height: 13px; color: #9a8f84">Luz encendida</span>
+</div>
+
+</div>
+
+<!-- Patio: spawn compartido -->
+<div style="position: absolute; left: 270px; top: 510px; width: 870px; height: 280px; box-sizing: border-box; border-radius: 14px; background: #1b3226; padding: 14px 16px">
+<div style="display: flex; align-items: baseline; gap: 10px"><span style="font-size: 18px; font-weight: 700">El patio</span><span style="font-size: 13px; color: #b8d8c0">Aquí aparecen todos al entrar al juego · zona segura · 14 jugadores</span></div>
+
+<div style="position: absolute; left: 373px; top: 60px; width: 124px; padding: 8px 10px; box-sizing: border-box; border-radius: 10px; background: rgba(9,13,16,0.82); display: flex; flex-direction: column; gap: 1px; box-shadow: 0 0 0 1.5px #46e3c1"><span style="font-size: 13px; font-weight: 700">Fuente</span><span style="font-size: 11px; line-height: 14px; color: #c3ccd3">Punto de aparición</span></div>
+
+<div style="position: absolute; left: 20px; top: 60px; width: 124px; padding: 8px 10px; box-sizing: border-box; border-radius: 10px; background: rgba(9,13,16,0.82); display: flex; flex-direction: column; gap: 1px; box-shadow: none"><span style="font-size: 13px; font-weight: 700">Tablón</span><span style="font-size: 11px; line-height: 14px; color: #c3ccd3">Grupos, eventos, avisos</span></div>
+
+<div style="position: absolute; left: 20px; top: 150px; width: 124px; padding: 8px 10px; box-sizing: border-box; border-radius: 10px; background: rgba(9,13,16,0.82); display: flex; flex-direction: column; gap: 1px; box-shadow: none"><span style="font-size: 13px; font-weight: 700">Buzones</span><span style="font-size: 11px; line-height: 14px; color: #c3ccd3">Correo y regalos · 2</span></div>
+
+<div style="position: absolute; left: 726px; top: 60px; width: 124px; padding: 8px 10px; box-sizing: border-box; border-radius: 10px; background: rgba(9,13,16,0.82); display: flex; flex-direction: column; gap: 1px; box-shadow: none"><span style="font-size: 13px; font-weight: 700">Mercadillo</span><span style="font-size: 11px; line-height: 14px; color: #c3ccd3">Vecinos venden excedentes</span></div>
+
+<div style="position: absolute; left: 726px; top: 150px; width: 124px; padding: 8px 10px; box-sizing: border-box; border-radius: 10px; background: rgba(9,13,16,0.82); display: flex; flex-direction: column; gap: 1px; box-shadow: none"><span style="font-size: 13px; font-weight: 700">Puerta al mundo</span><span style="font-size: 11px; line-height: 14px; color: #c3ccd3">Sales por tu última zona segura</span></div>
+
+<div style="position: absolute; left: 373px; top: 196px; width: 124px; padding: 8px 10px; box-sizing: border-box; border-radius: 10px; background: rgba(9,13,16,0.82); display: flex; flex-direction: column; gap: 1px; box-shadow: none"><span style="font-size: 13px; font-weight: 700">Escalera</span><span style="font-size: 11px; line-height: 14px; color: #c3ccd3">A tu depa y, luego, a tu terreno</span></div>
+
+
+<div style="position: absolute; left: 330px; top: 128px; display: flex; flex-direction: column; align-items: center">
+<svg width="24" height="30" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="10" ry="2.5" fill="rgba(0,0,0,0.35)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#8a3a2b"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#2b1d14"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 10px; font-weight: 700; color: #46e3c1; text-shadow: 0 1px 2px #000000; white-space: nowrap">Tú</span>
+</div>
+
+<div style="position: absolute; left: 380px; top: 140px; display: flex; flex-direction: column; align-items: center">
+<svg width="24" height="30" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="10" ry="2.5" fill="rgba(0,0,0,0.35)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#2b4a8a"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#5a3a20"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 10px; font-weight: 700; color: #6cb8ff; text-shadow: 0 1px 2px #000000; white-space: nowrap">Toro</span>
+</div>
+
+<div style="position: absolute; left: 500px; top: 126px; display: flex; flex-direction: column; align-items: center">
+<svg width="24" height="30" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="10" ry="2.5" fill="rgba(0,0,0,0.35)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#5b3a8a"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#1a1a1a"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 10px; font-weight: 700; color: #eef2f4; text-shadow: 0 1px 2px #000000; white-space: nowrap">Pim</span>
+</div>
+
+<div style="position: absolute; left: 660px; top: 100px; display: flex; flex-direction: column; align-items: center">
+<svg width="24" height="30" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="10" ry="2.5" fill="rgba(0,0,0,0.35)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#2a7a4a"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#c97b4a"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 10px; font-weight: 700; color: #eef2f4; text-shadow: 0 1px 2px #000000; white-space: nowrap">Sasha</span>
+</div>
+
+<div style="position: absolute; left: 560px; top: 180px; display: flex; flex-direction: column; align-items: center">
+<svg width="24" height="30" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="10" ry="2.5" fill="rgba(0,0,0,0.35)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#8a6a2b"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#fff1a8"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 10px; font-weight: 700; color: #f5c35b; text-shadow: 0 1px 2px #000000; white-space: nowrap">Aurel</span>
+</div>
+
+<div style="position: absolute; left: 200px; top: 110px; display: flex; flex-direction: column; align-items: center">
+<svg width="24" height="30" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="10" ry="2.5" fill="rgba(0,0,0,0.35)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#8a3a2b"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#d9b46a"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 10px; font-weight: 700; color: #eef2f4; text-shadow: 0 1px 2px #000000; white-space: nowrap">Kora</span>
+</div>
+
+<div style="position: absolute; left: 240px; top: 200px; display: flex; flex-direction: column; align-items: center">
+<svg width="24" height="30" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="10" ry="2.5" fill="rgba(0,0,0,0.35)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#2b4a8a"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#2b1d14"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 10px; font-weight: 700; color: #eef2f4; text-shadow: 0 1px 2px #000000; white-space: nowrap">Finn</span>
+</div>
+
+<div style="position: absolute; left: 640px; top: 210px; display: flex; flex-direction: column; align-items: center">
+<svg width="24" height="30" viewBox="0 0 30 38" aria-hidden="true"><ellipse cx="15" cy="36" rx="10" ry="2.5" fill="rgba(0,0,0,0.35)"></ellipse><rect x="7" y="18" width="16" height="16" rx="7" fill="#5b3a8a"></rect><circle cx="15" cy="12" r="10" fill="#f1d3b8"></circle><path d="M5 11a10 10 0 0 1 20 0c-3-3-7-4-10-4s-7 1-10 4z" fill="#c97b4a"></path><circle cx="11.5" cy="13" r="1.4" fill="#1a1a1a"></circle><circle cx="18.5" cy="13" r="1.4" fill="#1a1a1a"></circle></svg>
+<span style="font-size: 10px; font-weight: 700; color: #eef2f4; text-shadow: 0 1px 2px #000000; white-space: nowrap">Rhea</span>
+</div>
+
+</div>
+
+<!-- Terrenos -->
+<div class="card" style="position: absolute; right: 20px; top: 76px; width: 256px; bottom: 20px; padding: 16px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span class="caps">Alrededor de la vecindad</span>
+<span style="font-size: 18px; font-weight: 700">Terrenos · próximamente</span>
+<div style="height: 74px; border-radius: 12px; border: 1.5px dashed rgba(255,255,255,0.22); padding: 10px 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">Terreno A · granja</span><span style="font-size: 12px; line-height: 16px; color: #9aa6ae">Campo abierto para cultivos y animales.</span></div><div style="height: 74px; border-radius: 12px; border: 1.5px dashed rgba(255,255,255,0.22); padding: 10px 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">Terreno B · taller</span><span style="font-size: 12px; line-height: 16px; color: #9aa6ae">Nave para producción en serie.</span></div><div style="height: 74px; border-radius: 12px; border: 1.5px dashed rgba(255,255,255,0.22); padding: 10px 12px; box-sizing: border-box; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">Terreno C · gremio</span><span style="font-size: 12px; line-height: 16px; color: #9aa6ae">Casa compartida con tu gremio.</span></div>
+<span style="font-size: 12px; line-height: 17px; color: #c3ccd3">Tu depa nunca se pierde: un terreno es una segunda casa, y la escalera del patio te lleva a las dos.</span>
+<div class="sub" style="margin-top: auto; padding: 12px; display: flex; flex-direction: column; gap: 5px; box-shadow: inset 0 0 0 1.5px #46e3c1"><span class="caps" style="color: #46e3c1">Mudanza</span><span style="font-size: 13px; line-height: 17px; color: #c3ccd3">¿Tus amigos viven en otra vecindad? Puedes mudarte gratis una vez por semana; tu depa viaja contigo tal cual.</span></div>
+</div>
+
+</div>
+</div>
+
+
+
+</body></html>

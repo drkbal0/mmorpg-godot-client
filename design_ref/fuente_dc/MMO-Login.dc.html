@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>MMORPG · Inicio de sesión</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; inset: 0; background: rgba(5,8,10,0.62)"></div>
+<div style="position: absolute; left: 70px; top: 220px; display: flex; flex-direction: column; gap: 14px; max-width: 560px">
+<span style="font-size: 54px; font-weight: 700; letter-spacing: 0.18em; color: {{accent}}">[NOMBRE]</span>
+<span class="sh" style="font-size: 20px; line-height: 28px; color: #dbe4ea">Cuatro universos, una brecha y un refugio que te espera entre ellos.</span>
+</div>
+
+<div class="card" style="position: absolute; right: 90px; top: 130px; width: 420px; padding: 28px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 26px; font-weight: 700">Bienvenido de vuelta</span>
+<button class="btn" style="height: 48px; font-size: 16px; background: {{accent}}; color: #071012; box-shadow: none">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#071012" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="12" r="4"></circle><path d="M12 12h9M18 12v3M21 12v2"></path></svg>Entrar con llave de acceso</button>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 12px; color: #7c8992"><span style="flex: 1; height: 1px; background: #26333b"></span>o escanea con la app<span style="flex: 1; height: 1px; background: #26333b"></span></div>
+<div style="display: flex; gap: 16px; align-items: center">
+<div style="width: 132px; height: 132px; padding: 8px; box-sizing: border-box; border-radius: 12px; background: #eef2f4; display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 2px">
+<sc-for list="{{qr}}" as="q" hint-placeholder-count="81"><span style="background: {{q.c}}; border-radius: 1px"></span></sc-for>
+</div>
+<span style="font-size: 13px; line-height: 19px; color: #9aa6ae">Abre la app en tu móvil, toca «Entrar en el PC» y apunta aquí. No escribes nada.</span>
+</div>
+<span style="font-size: 14px; color: {{accent}}">Usar correo y contraseña</span>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px"><span style="width: 18px; height: 18px; border-radius: 5px; background: {{accent}}"></span>Mantener la sesión en este equipo</div>
+<div class="sub" style="padding: 10px 12px; display: flex; justify-content: space-between; font-size: 13px"><span>Reino <span style="font-weight: 700">Umbral</span></span><span class="num" style="color: #4fe39a">24 ms · sin cola</span></div>
+</div>
+
+<!-- Accesibilidad antes de entrar -->
+<div style="position: absolute; left: 40px; bottom: 30px; display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 14px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08)">
+<span class="caps" style="margin: 0 6px">Accesibilidad</span>
+<span class="chip">A−</span><span class="chip" style="background: #1c2a33; color: #eef2f4">A</span><span class="chip">A+</span>
+<span class="chip">Alto contraste</span><span class="chip">Narrador <span class="kbd">Ctrl Alt N</span></span><span class="chip">Daltonismo</span>
+</div>
+<span class="sh num" style="position: absolute; right: 40px; bottom: 38px; font-size: 13px; color: #9aa6ae">Servidores estables · v1.0.4</span>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Talentos', 'N', TI.star], ['Misiones', 'L', TI.book], ['Mapa', 'M', TI.map], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Interfaz', 'F10', TI.layout]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'WORLD' ? '#eef2f4' : '#9aa6ae', bar: label === 'WORLD' ? A : 'transparent' }));
+const pattern = '111101111100100001101010101000001000111101011001010011101111011100101110111101101';
+const extra = { qr: pattern.split('').map((b) => ({ c: b === '1' ? '#0d1216' : 'transparent' })) };
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>

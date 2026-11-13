@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Comercio · Mercado</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#46e3c1}a:hover{color:#9af0dc}
+.scene{background:#26331f url(/_blob/1f61c24b0ff951de145522a42f77e8ab) center/cover no-repeat}
+.num{font-variant-numeric:tabular-nums}
+.sh{text-shadow:0 1px 3px rgba(0,0,0,0.95)}
+.caps{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#9aa6ae;text-transform:uppercase}
+.kbd{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 4px;border-radius:5px;background:#18242b;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.14);font-size:11px;font-weight:700;color:#dbe4ea;box-sizing:border-box;line-height:1}
+.card{background:#0d1216;border-radius:18px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 20px 50px rgba(0,0,0,0.45)}
+.sub{background:#121a20;border-radius:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;background:#18242b;font-size:13px;color:#c3ccd3;box-sizing:border-box;white-space:nowrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:0;background:#18242b;color:#eef2f4;font-family:inherit;font-size:14px;font-weight:600;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08)}
+.sw{position:relative;width:34px;height:20px;border-radius:10px;flex:none}
+.sw::after{content:"";position:absolute;top:3px;width:14px;height:14px;border-radius:50%;background:#ffffff}
+.sw.on::after{right:3px}.sw.off::after{left:3px;background:#9aa6ae}
+</style>
+</helmet>
+<div style="position: relative; width: 1440px; height: 810px; overflow: hidden; font-family: 'Barlow Semi Condensed', Inter, system-ui, sans-serif; color: #eef2f4; background: #070a0c">
+<div class="scene" style="position: absolute; inset: -30px; filter: blur(10px) brightness(0.4)"></div>
+<div style="position: absolute; inset: 0; background: rgba(6,9,11,0.5)"></div>
+
+<!-- ============ BARRA DEL MENÚ (común a todas las ventanas) ============ -->
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; box-sizing: border-box; display: flex; align-items: center; gap: 4px; background: rgba(9,13,16,0.92); box-shadow: inset 0 -1px 0 rgba(255,255,255,0.07)">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.24em; color: {{accent}}; margin-right: 12px">MENÚ</span>
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="8">
+<div style="position: relative; display: flex; align-items: center; gap: 6px; height: 64px; padding: 0 8px; color: {{t.color}}; font-size: 14px; font-weight: 600">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{t.color}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>
+{{t.label}}<span class="kbd" style="height: 16px; min-width: 16px; font-size: 10px">{{t.k}}</span>
+<div style="position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 2px; background: {{t.bar}}"></div>
+</div>
+</sc-for>
+<button class="btn" style="margin-left: auto; height: 34px; padding: 0 10px; font-size: 13px; color: #9aa6ae" aria-label="Buscar en todo el juego"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span class="kbd">Ctrl K</span></button>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#f5c35b"></circle><circle cx="12" cy="12" r="5.5" fill="none" stroke="#a3772a" stroke-width="1.8"></circle></svg><span class="num" style="font-weight: 700; color: #f5c35b">12.480</span></div>
+<div style="display: flex; align-items: center; gap: 6px; margin-left: 10px; font-size: 15px"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 7-8 13-8-13z" fill="#7ee8ff"></path><path d="M4 9h16M12 2v20" stroke="#0d1216" stroke-width="1.2" fill="none"></path></svg><span class="num" style="font-weight: 700; color: #a8f0ff">340</span><span style="width: 18px; height: 18px; border-radius: 5px; background: #18242b; box-shadow: inset 0 0 0 1px rgba(126,232,255,0.4); color: #a8f0ff; font-size: 14px; line-height: 17px; text-align: center">+</span></div>
+<button class="btn" style="margin-left: 10px; width: 34px; height: 34px; padding: 0" aria-label="Ajustes (F10)"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#c3ccd3" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"></path></svg></button>
+<button class="btn" style="margin-left: 6px; height: 34px; padding: 0 8px" aria-label="Cerrar"><span class="kbd">Esc</span></button>
+</div>
+
+<!-- Subnavegación del refugio -->
+<div style="position: absolute; left: 28px; top: 80px; display: flex; gap: 4px; padding: 3px; border-radius: 12px; background: rgba(13,18,22,0.92); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.07)">
+<sc-for list="{{sub}}" as="s" hint-placeholder-count="5"><span style="padding: 0 14px; height: 32px; border-radius: 9px; background: {{s.bg}}; color: {{s.c}}; font-size: 14px; font-weight: 600; line-height: 32px">{{s.n}}</span></sc-for>
+</div>
+
+<!-- ============ IZQUIERDA: CATEGORÍAS Y FILTROS ============ -->
+<div class="card" style="position: absolute; left: 28px; top: 128px; width: 300px; height: 654px; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 20px; font-weight: 700">Mercado del Nexo</span>
+<span style="font-size: 13px; color: #9aa6ae">Compartido entre los 4 universos</span>
+<div style="display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; border-radius: 10px; background: #070a0c; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1); font-size: 14px; color: #7c8992">
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9aa6ae" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg>Buscar objeto o material</div>
+<sc-for list="{{cats}}" as="c" hint-placeholder-count="7">
+<div style="display: flex; align-items: center; justify-content: space-between; height: 34px; padding: 0 12px; border-radius: 9px; background: {{c.bg}}; font-size: 14px; color: {{c.c}}"><span>{{c.n}}</span><span class="num" style="font-size: 12px; color: #7c8992">{{c.k}}</span></div>
+</sc-for>
+<span class="caps" style="margin-top: 6px">Filtros</span>
+<div style="display: flex; gap: 6px; flex-wrap: wrap"><span class="chip" style="height: 24px; color: #5aa9ff">Raro</span><span class="chip" style="height: 24px; color: #b47bff; box-shadow: inset 0 0 0 1px #b47bff">Épico</span><span class="chip" style="height: 24px; color: #f5a742">Legendario</span><span class="chip" style="height: 24px">Nv. 30–35</span></div>
+<div style="display: flex; align-items: center; gap: 10px; font-size: 14px; margin-top: 4px"><div style="display: flex; flex-direction: column"><span>Solo mejoras para mí</span><span style="font-size: 12px; color: #7c8992">compara con tu equipo y build</span></div><span class="sw on" style="margin-left: auto; background: {{accent}}"></span></div>
+</div>
+
+<!-- ============ CENTRO: RESULTADOS ============ -->
+<div class="card" style="position: absolute; left: 344px; top: 128px; width: 700px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 6px">
+<div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px"><span style="font-size: 18px; font-weight: 700">Armas · Épico</span><span style="font-size: 13px; color: #9aa6ae">48 resultados · 6 son mejora para ti</span></div>
+<div style="display: grid; grid-template-columns: 2.6fr 0.7fr 0.9fr 1fr 1fr 0.9fr; gap: 8px; padding: 0 10px; font-size: 12px; color: #9aa6ae">
+<span>Objeto</span><span>Nivel</span><span>En venta</span><span style="text-align: right">Precio</span><span>7 días</span><span>Para ti</span>
+</div>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="9">
+<div style="display: grid; grid-template-columns: 2.6fr 0.7fr 0.9fr 1fr 1fr 0.9fr; gap: 8px; align-items: center; height: 50px; padding: 0 10px; border-radius: 10px; background: {{r.bg}}; box-shadow: {{r.ring}}">
+<div style="display: flex; align-items: center; gap: 10px; min-width: 0"><span style="width: 32px; height: 32px; border-radius: 8px; background: #121a20; box-shadow: inset 0 0 0 1.5px #b47bff; flex: none"></span><span style="font-size: 14px; font-weight: 600; color: #cfa8ff; white-space: nowrap">{{r.n}}</span></div>
+<span class="num" style="font-size: 14px">{{r.lv}}</span>
+<span class="num" style="font-size: 14px; color: #c3ccd3">{{r.q}}</span>
+<span class="num" style="font-size: 15px; font-weight: 700; color: #f5c35b; text-align: right">{{r.p}}</span>
+<svg width="80" height="24" viewBox="0 0 80 24" aria-hidden="true"><polyline points="{{r.sp}}" fill="none" stroke="{{r.sc}}" stroke-width="2" stroke-linejoin="round"></polyline></svg>
+<span class="num" style="font-size: 13px; font-weight: 700; color: {{r.uc}}">{{r.u}}</span>
+</div>
+</sc-for>
+</div>
+
+<!-- ============ DERECHA: DETALLE DE PRECIO ============ -->
+<div class="card" style="position: absolute; left: 1060px; top: 128px; width: 352px; height: 654px; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 20px; font-weight: 700; color: #cfa8ff">Hoja de la grieta</span>
+<span class="num" style="font-size: 13px; color: #9aa6ae">Nv. obj. 418 · ▲ 6 vs. tu arma · +3,2 % daño estimado</span>
+<span class="caps" style="margin-top: 4px">Precio · últimos 30 días</span>
+<svg width="312" height="130" viewBox="0 0 312 130" role="img" aria-label="Precio de los últimos 30 días, a la baja">
+<line x1="0" y1="40" x2="312" y2="40" stroke="#26333b" stroke-dasharray="3 4"></line>
+<line x1="0" y1="80" x2="312" y2="80" stroke="#26333b" stroke-dasharray="3 4"></line>
+<line x1="0" y1="120" x2="312" y2="120" stroke="#26333b"></line>
+<polyline points="0,30 26,34 52,28 78,40 104,46 130,44 156,58 182,54 208,66 234,72 260,70 286,80 312,84" fill="none" stroke="#f5c35b" stroke-width="2.5" stroke-linejoin="round"></polyline>
+<circle cx="312" cy="84" r="4" fill="#f5c35b"></circle>
+</svg>
+<div style="display: flex; justify-content: space-between; font-size: 12px; color: #9aa6ae"><span>hace 30 días</span><span>hoy</span></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px">
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column"><span style="font-size: 12px; color: #9aa6ae">Mínimo</span><span class="num" style="font-size: 17px; font-weight: 700">1.180</span></div>
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column"><span style="font-size: 12px; color: #9aa6ae">Media</span><span class="num" style="font-size: 17px; font-weight: 700">1.420</span></div>
+<div class="sub" style="padding: 8px 10px; display: flex; flex-direction: column"><span style="font-size: 12px; color: #9aa6ae">Ahora</span><span class="num" style="font-size: 17px; font-weight: 700; color: #f5c35b">1.240</span></div>
+</div>
+<div class="sub" style="padding: 10px 12px; font-size: 13px; color: #c3ccd3; box-shadow: inset 0 0 0 1px rgba(79,227,154,0.4)">Buen precio: está <span style="color: #4fe39a; font-weight: 700">13 % por debajo</span> de la media y sigue bajando.</div>
+<div style="display: flex; flex-direction: column; gap: 8px; margin-top: auto">
+<button class="btn" style="background: {{accent}}; color: #071012; box-shadow: none">Comprar por <span class="num">1.240</span> oro</button>
+<button class="btn">Orden de compra: avisarme bajo 1.150</button>
+<span style="font-size: 12px; color: #7c8992; text-align: center">Tienes 2 órdenes activas · comisión de venta 5 %</span>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"acento":{"editor":"color","default":"#46e3c1","options":["#46e3c1","#5aa9ff","#f5b546","#ff6fa8"]},"$preview":{"width":1440,"height":810}}'>
+class Component extends DCLogic {
+renderVals() {
+const A = this.props.acento ?? '#46e3c1';
+const TI = {
+user: 'M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c1-5 4-7 8-7s7 2 8 7', star: 'M12 2l2.5 7.5H22l-6 4.5 2.5 7.5-6.5-4.5-6.5 4.5 2.5-7.5-6-4.5h7.5z',
+book: 'M4 5c3-1 6-1 8 1 2-2 5-2 8-1v14c-3-1-6-1-8 1-2-2-5-2-8-1zM12 6v14', map: 'M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14',
+users: 'M9 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 20c0-3 3-5 6-5s6 2 6 5M17 11a3 3 0 1 0 0-6M21 20c0-3-2-4-4-5', layout: 'M4 4h16v16H4zM4 15h16M10 15v5', home: 'M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6', bag: 'M6 8h12l-1 12H7zM9 8a3 3 0 0 1 6 0', scroll: 'M6 4h11a2 2 0 0 1 0 4H8v12H5a2 2 0 0 1 0-4h3M11 12h5M11 16h5', orbs: 'M12 9a3 3 0 1 0 0-6a3 3 0 1 0 0 6M6 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M18 21a3 3 0 1 0 0-6a3 3 0 1 0 0 6M10 8l-3 8M14 8l3 8M9 18h6'
+};
+const tabs = [['Equipo', 'C', TI.user], ['Poderes', 'N', TI.orbs], ['Misiones', 'L', TI.scroll], ['Mapa', 'M', TI.map], ['Códice', 'J', TI.book], ['Social', 'O', TI.users], ['Refugio', 'H', TI.home], ['Comercio', 'P', TI.bag]]
+.map(([label, k, icon]) => ({ label, k, icon, color: label === 'Comercio' ? '#eef2f4' : '#9aa6ae', bar: label === 'Comercio' ? A : 'transparent' }));
+const sub = ['Mercado', 'Tienda', 'Pase de batalla'].map((n) => n === 'Mercado' ? { n, bg: '#1c2a33', c: '#eef2f4' } : { n, bg: 'transparent', c: '#9aa6ae' });
+const row = (n, lv, q, p, sp, up, u, sel) => ({ n, lv, q, p, sp,
+sc: up ? '#ff8a8a' : '#4fe39a', u, uc: u.startsWith('▲') ? '#4fe39a' : '#7c8992',
+bg: sel ? '#1c2a33' : '#121a20', ring: sel ? '0 0 0 1.5px ' + A : 'none' });
+const extra = {
+sub,
+cats: [['Armas', '312', true], ['Armaduras', '1.204'], ['Accesorios', '488'], ['Materiales', '5.930'], ['Consumibles', '2.110'], ['Monturas y mascotas', '96'], ['Apariencias', '740']]
+.map(([n, k, on]) => ({ n, k, bg: on ? '#1c2a33' : 'transparent', c: on ? '#eef2f4' : '#c3ccd3' })),
+rows: [
+row('Hoja de la grieta', '418', '7', '1.240', '0,6 13,8 26,7 40,12 53,14 66,17 80,19', false, '▲ +3,2 %', true),
+row('Bastón del vado', '416', '3', '1.560', '0,16 13,14 26,15 40,10 53,9 66,8 80,6', true, '▲ +2,1 %', false),
+row('Guja de Ferrum', '420', '12', '1.890', '0,12 13,12 26,11 40,12 53,13 66,12 80,12', false, '▲ +4,0 %', false),
+row('Daga de eco', '412', '22', '820', '0,8 13,10 26,9 40,11 53,13 66,12 80,15', false, '= 0', false),
+row('Martillo rúnico', '415', '5', '1.330', '0,18 13,16 26,12 40,13 53,10 66,9 80,7', true, 'otra clase', false),
+row('Arco del claro', '410', '31', '640', '0,6 13,7 26,9 40,10 53,12 66,14 80,16', false, '▼ −1,5 %', false),
+row('Hoz de ceniza', '417', '2', '2.100', '0,14 13,13 26,10 40,9 53,8 66,6 80,4', true, '▲ +1,2 %', false),
+row('Lanza del umbral', '419', '9', '1.710', '0,10 13,11 26,10 40,12 53,11 66,13 80,14', false, '▲ +2,8 %', false),
+row('Cetro nómada', '411', '14', '760', '0,9 13,8 26,10 40,9 53,11 66,10 80,12', false, 'otra clase', false)
+]
+};
+
+return Object.assign({ accent: A, tabs }, extra);
+}
+}
+</script>
+</body>
+</html>
