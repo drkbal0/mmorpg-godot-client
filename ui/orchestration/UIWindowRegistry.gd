@@ -22,7 +22,7 @@ func _register_initial_windows() -> void:
 	register("player_hud", "res://ui/components/PlayerHUD/PlayerHUD.tscn", UITypes.WindowCategory.HUD)
 	register("database_admin", "res://ui/windows/DatabaseAdminWindow/DatabaseAdminWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 	register("vendor_window", "res://ui/windows/VendorWindow/VendorWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
-	register("codex_window", "res://ui/windows/CodexDiaryWindow/CodexDiaryWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	register("codex_window", "res://ui/windows/CodexWindow/CodexWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 	register("party_frames", "res://ui/components/PartyFrames/PartyFrames.tscn", UITypes.WindowCategory.HUD)
 	register("marketplace_window", "res://ui/windows/MarketplaceWindow/MarketplaceWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 

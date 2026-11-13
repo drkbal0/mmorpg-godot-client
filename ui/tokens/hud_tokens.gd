@@ -607,3 +607,35 @@ static func dispel_color(kind: String) -> Color:
 static func class_color(cls: String) -> Color:
 	var k := cls.strip_edges().to_lower()
 	return Color(CLASS_COLORS[k]) if CLASS_COLORS.has(k) else TEXT_SECONDARY
+
+
+# --------------------------------------------------------------------------
+# Códice v2 · conocimiento descubrible (MMO-Codice.html / MMO-Inversiones.html)
+# --------------------------------------------------------------------------
+const CODEX_SECRET := Color("#c39bff")        # SECRETO / Mis secretos
+const CODEX_PUBLISHED := Color("#4fe39a")     # PUBLICADO
+const CODEX_PIONEER := Color("#f5c35b")       # PIONERO (oro)
+const CODEX_SEEN := Color("#7c8992")          # VISTO (de lejos)
+const CODEX_KNOWN := Color("#9aa6ae")         # CONOCIDO
+const CODEX_SEEN_BG := Color("#18242b")
+const CODEX_CARD_BG := Color("#121a20")
+const CODEX_CARD_BORDER := Color(1, 1, 1, 0.07)
+const CODEX_SUBNAV_ACTIVE := Color("#1c2a33")
+const CODEX_WARNING := Color("#ffb86b")
+const CODEX_ALERT := Color("#ff8a8a")
+const CODEX_CARD_RADIUS := 12
+const CODEX_BADGE_RADIUS := 10
+const CODEX_SUBNAV_RADIUS := 9
+const CODEX_CHART_BAR := Color("#f5c35b")     # serie única: oro por día
+const CODEX_CHART_BAR_DIM := Color(Color("#f5c35b"), 0.55)
+const CODEX_CHART_BASELINE := Color(1, 1, 1, 0.12)
+
+## Estilo de insignia por visibilidad/estado (texto, fondo).
+const CODEX_BADGES := {
+	"pioneer": {"text": "PIONERO", "color": "#f5c35b", "bg": Color(245 / 255.0, 195 / 255.0, 91 / 255.0, 0.18)},
+	"published": {"text": "PUBLICADO", "color": "#4fe39a", "bg": Color(79 / 255.0, 227 / 255.0, 154 / 255.0, 0.15)},
+	"known_secret": {"text": "SECRETO", "color": "#c39bff", "bg": Color(195 / 255.0, 155 / 255.0, 255 / 255.0, 0.18)},
+	"pending": {"text": "POR DECIDIR", "color": "#ffb86b", "bg": Color(255 / 255.0, 184 / 255.0, 107 / 255.0, 0.16)},
+	"seen": {"text": "VISTO", "color": "#7c8992", "bg": Color("#18242b")},
+	"unknown": {"text": "???", "color": "#7c8992", "bg": Color("#18242b")},
+}

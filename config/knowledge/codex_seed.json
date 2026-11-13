@@ -1,0 +1,71 @@
+{
+  "player_name": "Tú",
+  "categories": [
+    {"id": "criaturas", "label": "Criaturas"},
+    {"id": "objetos", "label": "Objetos"},
+    {"id": "lugares", "label": "Lugares"},
+    {"id": "formulas", "label": "Fórmulas"},
+    {"id": "pnj", "label": "PNJ"}
+  ],
+  "entries": [
+    {"id": "item_amuleto_vacio", "category": "objetos", "visibility": "known_secret", "pending": true,
+     "name": "Amuleto Vacío Ancestral", "subtitle": "Reliquia · #arcano #secreto",
+     "description": "Un talismán milenario tallado en obsidiana con engastes arcanos inertes. Dicen que palpita ante las grietas de las mazmorras.",
+     "location": {"zone": "Criptas profundas de Runavell", "coords": [412.5, 12.0, -88.25]},
+     "publish_bonus": 500, "pioneer_title": "Archivista", "map_base_price": 420, "discovered_at": 1762905600},
+    {"id": "item_pluma_grieta", "category": "objetos", "visibility": "known_secret",
+     "name": "Pluma de grieta", "subtitle": "Material raro · Pispa",
+     "description": "Pluma iridiscente que solo cae de aves cerca de una grieta abierta.",
+     "location": {"zone": "Pispa", "coords": [120.0, 4.0, 33.0]}, "discovered_at": 1762732800},
+    {"id": "item_llave_oxidada", "category": "objetos", "visibility": "known_secret",
+     "name": "Llave oxidada", "subtitle": "Misterio · Runavell",
+     "description": "Abre un cofre sellado en algún lugar de Runavell.",
+     "location": {"zone": "Runavell", "coords": [398.0, 10.5, -91.0]}, "discovered_at": 1762646400},
+    {"id": "item_resina_verdalia", "category": "objetos", "visibility": "published", "is_pioneer": false,
+     "pioneer_name": "Mira", "name": "Resina de Verdalia", "subtitle": "Material · publicado",
+     "published_at": 1762560000, "discovered_at": 1762473600, "wiki_synced": true},
+    {"id": "item_daga_eco", "category": "objetos", "visibility": "published", "is_pioneer": true,
+     "pioneer_name": "Tú", "name": "Daga de eco", "subtitle": "Arma · publicado por ti",
+     "published_at": 1762387200, "discovered_at": 1762300800, "wiki_synced": true},
+    {"id": "item_cofre_ferrum", "category": "objetos", "visibility": "seen", "hint": "Visto en un cofre de Ferrum"},
+    {"id": "item_brillo_vado", "category": "objetos", "visibility": "seen", "hint": "Brillo bajo el Vado Roto"},
+    {"id": "crit_guardia_carmesi", "category": "criaturas", "visibility": "known_secret", "pending": true,
+     "name": "Guardia Carmesí de la Cripta", "subtitle": "Humanoide · Criptas",
+     "description": "Lanza proyectiles ígneos a 12 m. Vulnerable a daño de corte.",
+     "location": {"zone": "Criptas de Runavell", "coords": [405.0, 8.0, -80.0]}, "publish_bonus": 300, "discovered_at": 1762819200},
+    {"id": "crit_sombra_vado", "category": "criaturas", "visibility": "seen", "hint": "Silueta en la niebla del Vado Roto"},
+    {"id": "lugar_cueva_ambar", "category": "lugares", "visibility": "known_secret", "exclusive": false,
+     "name": "Cueva de ámbar", "subtitle": "Lugar · Bosque fósil",
+     "location": {"zone": "Bosque fósil", "coords": [-210.0, 2.0, 140.0]}, "discovered_at": 1762214400},
+    {"id": "formula_lingote_ferrum", "category": "formulas", "visibility": "published", "is_pioneer": true,
+     "pioneer_name": "Tú", "name": "Lingote de ferrum ★★★", "subtitle": "Receta · tu receta",
+     "published_at": 1762128000, "discovered_at": 1762041600, "wiki_synced": true},
+    {"id": "pnj_orla", "category": "pnj", "visibility": "published", "is_pioneer": true,
+     "pioneer_name": "Tú", "name": "Puesto de Orla", "subtitle": "Mercader · Vado Roto",
+     "published_at": 1761955200, "discovered_at": 1761868800, "wiki_synced": true},
+    {"id": "pnj_taberna_nexo", "category": "pnj", "visibility": "known_secret", "pending": true,
+     "name": "Taberna del Nexo", "subtitle": "Tabernera · Nexo",
+     "location": {"zone": "Nexo", "coords": [0.0, 0.0, 12.0]}, "discovered_at": 1762992000}
+  ],
+  "investments": [
+    {"id": "inv_orla", "npc_id": "pnj_orla", "name": "Puesto de Orla", "zone": "Vado Roto · Verdalia", "share": 0.02, "traffic": 0.8, "status": "active", "market_value": 14000,
+     "history": [210, 260, 240, 300, 280, 330, 310, 350, 290, 360, 340, 380, 330, 412]},
+    {"id": "inv_bram", "npc_id": "pnj_bram", "name": "Forja de Bram", "zone": "Ferrum", "share": 0.015, "traffic": 0.65, "status": "active", "market_value": 12000,
+     "history": [180, 200, 220, 190, 240, 260, 250, 270, 300, 280, 320, 330, 300, 380]},
+    {"id": "inv_ysel", "npc_id": "pnj_ysel", "name": "Herbolaria de Ysel", "zone": "Bosque fósil", "share": 0.02, "traffic": 0.2, "status": "low_traffic", "market_value": 5000,
+     "history": [90, 80, 110, 70, 95, 100, 85, 90, 120, 80, 75, 100, 99, 96]},
+    {"id": "inv_cartografo", "npc_id": "pnj_cartografo", "name": "Cartógrafo nómada", "zone": "Se mueve cada día", "share": 0.03, "traffic": 0.5, "status": "active", "market_value": 10000,
+     "history": [120, 140, 100, 160, 150, 170, 130, 180, 160, 190, 170, 150, 190, 196]},
+    {"id": "inv_taller_runico", "npc_id": "pnj_taller_runico", "name": "Taller rúnico", "zone": "Runavell", "share": 0.0, "traffic": 0.0, "status": "mission", "mission_step": 2, "mission_steps": 3, "market_value": 0,
+     "history": []}
+  ],
+  "offers": [
+    {"id": "offer_taberna_nexo", "npc_id": "pnj_taberna_nexo", "name": "Taberna del Nexo", "share": 0.015, "mission_steps": 2, "expires_in_days": 5}
+  ],
+  "notices": [
+    {"kind": "secret_shared", "entry_id": "lugar_cueva_ambar", "title": "Tu secreto ya no es exclusivo",
+     "body": "Otro jugador encontró la «Cueva de ámbar». Tu mapa del hallazgo bajó de precio.", "at": 1762900000}
+  ],
+  "pending_payout": 2140,
+  "map_sales": {"listed": 3, "sold": 7, "gold": 1260}
+}
