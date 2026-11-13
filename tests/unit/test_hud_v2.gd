@@ -3,7 +3,7 @@ extends SceneTree
 ## Run: Godot --headless --path clients/godot-mmo-client -s res://tests/unit/test_hud_v2.gd
 ## Exit code 0 = all pass.
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 
 var _fails: Array[String] = []
 var _checks := 0
@@ -81,7 +81,7 @@ func _run() -> void:
 	await process_frame
 	check(hud.size == T.HUD_SIZE, "HUD mide 1360x460 (es %s)" % hud.size)
 	check(is_equal_approx(hud.anchor_left, 0.5) and is_equal_approx(hud.anchor_right, 0.5) and is_equal_approx(hud.anchor_top, 1.0) and is_equal_approx(hud.anchor_bottom, 1.0), "HUD anclado abajo-centro")
-	check(hud.theme != null and hud.theme.resource_path == "res://ui/hud_theme.tres", "HUD usa hud_theme.tres")
+	check(hud.theme != null and hud.theme.resource_path == "res://ui/theme/hud_theme.tres", "HUD usa hud_theme.tres")
 
 	_count_draws(hud.shape_node, "shape")
 	_count_draws(hud.get_ability(0), "ability")

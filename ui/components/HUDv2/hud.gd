@@ -17,7 +17,7 @@ signal item_used(slot: int, item_name: String, item_id: String)
 signal item_assigned(slot: int, item_name: String, item_id: String)
 signal item_cleared(slot: int)
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const STAT_ROW_SCENE: PackedScene = preload("res://ui/components/HUDv2/stat_row.tscn")
 const BUFF_SCENE: PackedScene = preload("res://ui/components/HUDv2/buff_icon.tscn")
 const FEED_SCENE: PackedScene = preload("res://ui/components/HUDv2/feed_line.tscn")

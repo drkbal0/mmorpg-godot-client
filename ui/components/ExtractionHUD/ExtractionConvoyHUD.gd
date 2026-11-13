@@ -9,7 +9,7 @@ class_name ExtractionConvoyHUD
 ## frame y se re-sincroniza con cada 0x1C (20 Hz). En pánico (radio 4 m) el
 ## acento pasa de cian a ámbar/rojo y se añade el aviso de radio contraído.
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const Codec = preload("res://shared-core/ExtractionReviveCodec.gd")
 
 const COLOR_NORMAL := Color("#00f0ff")

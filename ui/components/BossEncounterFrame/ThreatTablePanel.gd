@@ -5,7 +5,7 @@ class_name ThreatTablePanel
 ## Lista ordenada de los N jugadores con más amenaza, con el % relativo al
 ## Top 1 (misma fórmula que ThreatTable::get_player_threat_pct en Rust).
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const COLOR_SELF := Color("#ef4444")
 const COLOR_TANK := Color("#3b82f6")
 const COLOR_DEFAULT := Color("#f59e0b")

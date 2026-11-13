@@ -4,7 +4,7 @@ extends Control
 ## vector icon, rank pips, mana cost (9x12 drop + number) and a radial
 ## cooldown overlay. Control size is 62x100 (tile + pips + cost).
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 @export var key_label: String = "Q":

@@ -11,7 +11,7 @@ signal item_assigned(slot_idx: int, item_name: String, item_id: String)
 signal item_used(slot_idx: int, item_name: String, item_id: String)
 signal item_cleared(slot_idx: int)
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 enum Kind { ITEM, TRINKET, BUTTON, GOLD }

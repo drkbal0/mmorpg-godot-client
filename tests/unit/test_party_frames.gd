@@ -3,7 +3,7 @@ extends SceneTree
 ## Run: Godot --headless --path clients/godot-mmo-client -s res://tests/unit/test_party_frames.gd
 ## Exit code 0 = all pass.
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const PartyMemberFrame = preload("res://ui/components/PartyFrames/PartyMemberFrame.gd")
 const PartyFrames = preload("res://ui/components/PartyFrames/PartyFrames.gd")
 

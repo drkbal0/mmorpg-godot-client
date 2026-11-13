@@ -3,7 +3,7 @@ extends Control
 ## HUDv2 buff/debuff icon: 28x28, radius 8. Colour tile (or texture), stack
 ## count and an optional remaining-duration sweep.
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 @export var color: Color = Color("#2b6a5c"):

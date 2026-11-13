@@ -4,7 +4,7 @@ extends Control
 ## "PASIVA" caption) or a summoner spell D/F with radial cooldown and
 ## "en espera" caption. Control size is 46x70.
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 @export var is_passive: bool = false:

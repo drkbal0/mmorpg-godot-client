@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://ui/menu/menu_bar.gd" id="1_menu"]
+[ext_resource type="Theme" path="res://ui/theme/hud_theme.tres" id="2_theme"]
+
+[node name="MenuBar" type="PanelContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 64.0
+grow_horizontal = 2
+custom_minimum_size = Vector2(0, 64)
+theme = ExtResource("2_theme")
+theme_type_variation = &"UIMenuBar"
+script = ExtResource("1_menu")

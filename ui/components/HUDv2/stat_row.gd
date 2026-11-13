@@ -3,7 +3,7 @@ extends Control
 ## HUDv2 stat row: 20px tall, 7px coloured dot, name (dim) and a right-aligned
 ## tabular value (Barlow 'tnum').
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 @export var stat_id: String = ""

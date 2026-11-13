@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://ui/components/base/stat_row.gd" id="1_row"]
+[ext_resource type="Theme" path="res://ui/theme/hud_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://ui/components/base/vector_icon.gd" id="3_icon"]
+
+[node name="StatRow" type="HBoxContainer"]
+custom_minimum_size = Vector2(200, 24)
+theme = ExtResource("2_theme")
+theme_override_constants/separation = 8
+alignment = 0
+script = ExtResource("1_row")
+
+[node name="Icon" type="Control" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("3_icon")
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+text = "—"
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="Value" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Delta" type="Label" parent="."]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 2
+vertical_alignment = 1

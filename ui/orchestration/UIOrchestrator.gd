@@ -363,3 +363,41 @@ func show_toast(title: String, message: String, accent_color: Color = Color(1.0,
 	tw.chain().tween_interval(duration)
 	tw.chain().tween_property(toast, "modulate:a", 0.0, 0.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	tw.tween_callback(toast.queue_free)
+
+
+# --- UI v2.4: Menú común superior (res://ui/menu/menu_bar.tscn) ---
+
+## Señal informativa: el menú pidió una ventana que aún no está registrada
+## (p. ej. Tienda / Pase en construcción, Poderes, Misiones…).
+signal menu_navigation_unhandled(window_id: String, params: Dictionary)
+
+var _menu_bars: Array = []
+
+
+## Conecta una barra de menú a la orquestación. Idempotente.
+func connect_menu_bar(bar: Node) -> void:
+	if bar == null or _menu_bars.has(bar):
+		return
+	_menu_bars.append(bar)
+	bar.navigation_requested.connect(_on_menu_navigation_requested)
+	bar.close_requested.connect(_on_menu_close_requested)
+	bar.tree_exiting.connect(func() -> void: _menu_bars.erase(bar))
+
+
+## Traduce una petición de navegación del menú a `toggle_window()`.
+## Devuelve true si la ventana está registrada y se abrió/cerró.
+func _on_menu_navigation_requested(window_id: String, params: Dictionary = {}) -> bool:
+	if registry == null or not registry.is_registered(window_id):
+		push_warning("[UIOrchestrator] Menú: ventana sin registrar '%s' (pendiente de fase UI v2.4)." % window_id)
+		menu_navigation_unhandled.emit(window_id, params)
+		return false
+	toggle_window(window_id, params)
+	return true
+
+
+func _on_menu_close_requested() -> void:
+	if focus_manager == null:
+		return
+	var top_id: String = focus_manager.current_focus_id
+	if top_id != "" and top_id != "player_hud" and is_window_open(top_id):
+		close_window(top_id)

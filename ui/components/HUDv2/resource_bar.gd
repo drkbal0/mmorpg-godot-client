@@ -4,7 +4,7 @@ extends Control
 ## 100-HP segment ticks, damage trail, centred tabular "cur / max" text and a
 ## regen readout on the right (health only).
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 @export_enum("health", "mana") var kind: String = "health":

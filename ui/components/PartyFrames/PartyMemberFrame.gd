@@ -7,7 +7,7 @@ class_name PartyMemberFrame
 ## Visualiza: Icono/clase, nombre, distancia, badge de estado ('NORMAL', 'ABATIDO', 'MUERTO'),
 ## barra de HP animada con texto cur/max y barra de maná, siguiendo los tokens de hud_tokens.gd.
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 signal clicked(player_id: int)

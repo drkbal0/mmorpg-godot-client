@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://ui/hud_demo.gd" id="1_demo"]
 [ext_resource type="Texture2D" path="res://design_ref/mapa-fondo.jpg" id="2_map"]
 [ext_resource type="PackedScene" path="res://ui/components/HUDv2/hud.tscn" id="3_hud"]
-[ext_resource type="Theme" path="res://ui/hud_theme.tres" id="4_theme"]
+[ext_resource type="Theme" path="res://ui/theme/hud_theme.tres" id="4_theme"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_map"]
 atlas = ExtResource("2_map")

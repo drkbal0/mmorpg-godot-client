@@ -3,7 +3,7 @@ extends Control
 ## HUDv2 portrait: XP ring (_draw arc), 84px inner circle and a 36x22 level
 ## pill filled with the accent colour.
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 @export var level: int = 1:

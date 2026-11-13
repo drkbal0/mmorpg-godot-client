@@ -7,7 +7,7 @@ extends Control
 ## top). Multi-layer shadow: -2/-4/-6 px, black alpha 0.12/0.08/0.05.
 ## The StatsTab (rounded StyleBoxFlat) is drawn for Trapecio and Curva.
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 @export_enum("trapecio", "escalonada", "curva") var shape: String = T.SHAPE_TRAPECIO:

@@ -3,7 +3,7 @@ extends Control
 ## HUDv2 feed line: rounded pill with "04:21  Player [Champion] text". Item
 ## announcements render the text in gold. Fades out after FEED_LIFETIME.
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
 const PAD_X := 9.0

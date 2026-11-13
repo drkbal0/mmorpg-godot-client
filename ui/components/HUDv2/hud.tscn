@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://ui/components/HUDv2/hud.gd" id="1_hud"]
-[ext_resource type="Theme" path="res://ui/hud_theme.tres" id="2_theme"]
+[ext_resource type="Theme" path="res://ui/theme/hud_theme.tres" id="2_theme"]
 [ext_resource type="PackedScene" path="res://ui/components/HUDv2/hud_shape.tscn" id="3_shape"]
 [ext_resource type="PackedScene" path="res://ui/components/HUDv2/portrait.tscn" id="4_portrait"]
 [ext_resource type="PackedScene" path="res://ui/components/HUDv2/spell_slot.tscn" id="5_spell"]

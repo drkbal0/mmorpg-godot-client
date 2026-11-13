@@ -6,7 +6,7 @@ class_name PartyFrames
 ## Aloja hasta 3 marcos de miembros del grupo en un VBoxContainer vertical,
 ## gestionando la sincronización de vida, maná, estado abatido, distancias y clics.
 
-const T = preload("res://ui/hud_tokens.gd")
+const T = preload("res://ui/tokens/hud_tokens.gd")
 const PartyMemberFrame = preload("res://ui/components/PartyFrames/PartyMemberFrame.gd")
 const MEMBER_FRAME_SCENE = preload("res://ui/components/PartyFrames/PartyMemberFrame.tscn")
 const MercenaryCodec = preload("res://shared-core/MercenaryCodec.gd")
