@@ -128,13 +128,13 @@ func _run() -> void:
 	# Valores de cable sincronizados con Rust (protocol.rs PING_TYPE_*, opcode 0x1A)
 	print("
 --- 3. Paridad de PingType con el protocolo Rust 0x1A ---")
-	check(TacticalPingWheel.PingType.ATTACK == 0, "Wheel ATTACK == 0 (PING_TYPE_ATTACK)")
+	check(TacticalPingWheel.PingType.MISSING == 0, "Wheel MISSING == 0 (PING_TYPE_ATTACK)")
 	check(TacticalPingWheel.PingType.DANGER == 1, "Wheel DANGER == 1 (PING_TYPE_DANGER)")
 	check(TacticalPingWheel.PingType.ASSIST == 2, "Wheel ASSIST == 2 (PING_TYPE_ASSIST)")
-	check(TacticalPingWheel.PingType.EXTRACT == 3, "Wheel EXTRACT == 3 (PING_TYPE_EXTRACT)")
+	check(TacticalPingWheel.PingType.ON_MY_WAY == 3, "Wheel ON_MY_WAY == 3 (PING_TYPE_EXTRACT)")
 	check(TacticalPingMarker.PingType.ASSIST == TacticalPingWheel.PingType.ASSIST, "Marker y Wheel comparten ASSIST")
-	check(TacticalPingMarker.PingType.EXTRACT == TacticalPingWheel.PingType.EXTRACT, "Marker y Wheel comparten EXTRACT")
-	check(TacticalPingWheel.get_ping_config(3)["name"] == "EXTRAER", "get_ping_config(3) resuelve EXTRAER")
+	check(TacticalPingMarker.PingType.EXTRACT == TacticalPingWheel.PingType.ON_MY_WAY, "Marker EXTRACT y Wheel ON_MY_WAY comparten valor de cable 3")
+	check(TacticalPingWheel.get_ping_config(3)["name"] == "EN CAMINO", "get_ping_config(3) resuelve EN CAMINO")
 	check(TacticalPingWheel.get_ping_config(2)["name"] == "ASISTIR", "get_ping_config(2) resuelve ASISTIR")
 
 	# Limpieza

@@ -1,12 +1,18 @@
 extends Node
 
 # UIInputRouter.gd - Despachador central de atajos de teclado
-# Propósito: Centralizar ESC, I, V, F10 y evitar conflictos entre escenas.
+# Propósito: Centralizar ESC, I, V, F10, G (pings tácticos) y evitar conflictos entre escenas.
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS # Funciona incluso en pausa si es necesario
 
 func _unhandled_input(event: InputEvent):
+	# 0. RUEDA DE PINGS TÁCTICOS (G) — necesita también eventos de soltar y clic derecho,
+	#    por eso se evalúa antes del filtro de "solo teclas pulsadas".
+	if handle_tactical_ping_input(event, get_tree().current_scene if get_tree() else null):
+		get_viewport().set_input_as_handled()
+		return
+
 	# Solo procesamos eventos de teclado presionados
 	if not (event is InputEventKey and event.pressed):
 		return
@@ -57,6 +63,35 @@ func _unhandled_input(event: InputEvent):
 	elif event is InputEventKey and event.pressed and event.keycode == KEY_F8 and not event.is_echo():
 		print("[UIInputRouter] F8 ignorado: El atajo fue desactivado. Usa F9 para alternar hitboxes.")
 		get_viewport().set_input_as_handled()
+
+## Atajo centralizado [G] de la Rueda de Pings Tácticos (ADR 097):
+##   - G pulsada (sin eco): abre la rueda en la posición actual del cursor.
+##   - G soltada: si la rueda está abierta, confirma el cuadrante seleccionado.
+##   - Clic derecho con la rueda abierta: cancela inmediatamente.
+## `world` debe exponer open/confirm/cancel_tactical_ping_wheel (World.gd).
+## `cursor_override` (tests/replays) sustituye a la posición real del ratón.
+## Devuelve true si el evento fue consumido.
+func handle_tactical_ping_input(event: InputEvent, world: Node, cursor_override: Variant = null) -> bool:
+	if world == null or not world.has_method("open_tactical_ping_wheel"):
+		return false
+	if event is InputEventKey and event.keycode == KEY_G:
+		if event.is_echo():
+			return world.is_tactical_ping_wheel_open()
+		if event.pressed:
+			return world.open_tactical_ping_wheel(_cursor_position(world, cursor_override))
+		if world.is_tactical_ping_wheel_open():
+			world.confirm_tactical_ping_wheel(_cursor_position(world, cursor_override))
+			return true
+		return false
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		return world.cancel_tactical_ping_wheel()
+	return false
+
+func _cursor_position(world: Node, cursor_override: Variant = null) -> Vector2:
+	if cursor_override is Vector2:
+		return cursor_override
+	var vp: Viewport = world.get_viewport() if world.is_inside_tree() else null
+	return vp.get_mouse_position() if vp else Vector2.ZERO
 
 func _handle_esc():
 	if not UIOrchestrator: 

@@ -1139,7 +1139,7 @@ func _scenario_tactical_ping() -> void:
 	var wheel: TacticalPingWheel = wheel_scene.instantiate() as TacticalPingWheel
 	_stage.add_child(wheel)
 	wheel.open_at(Vector2(260, 360))
-	wheel.active_selection = TacticalPingWheel.PingType.ATTACK # Resaltar cuadrante Norte (ATACAR)
+	wheel.active_selection = TacticalPingWheel.PingType.DANGER # Resaltar cuadrante Norte (PELIGRO)
 
 	# 2. Marcadores Screen-Space en el mundo a la derecha
 	var marker_scene: PackedScene = load("res://ui/components/TacticalPing/TacticalPingMarker.tscn")

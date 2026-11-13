@@ -81,6 +81,8 @@ func _ready():
 	NetworkManager.zone_transition_received.connect(_on_zone_transition_received)
 	NetworkManager.extraction_beacon_received.connect(_on_extraction_beacon_received)
 	NetworkManager.revive_sync_received.connect(_on_revive_sync_received)
+	if NetworkManager.has_signal("tactical_ping_received"):
+		NetworkManager.tactical_ping_received.connect(_on_tactical_ping_broadcast)
 	
 	AuthManager.profile_fetched.connect(_on_profile_loaded)
 	
@@ -461,19 +463,10 @@ func _on_connection_restored():
 	print("[World] Connection Restored.")
 
 func _unhandled_input(event):
-	# 1. Rueda de Pings Tácticos [G] (mantener pulsado, arrastrar y soltar; clic derecho cancela)
+	# La rueda de Pings Tácticos [G] se enruta de forma centralizada en UIInputRouter
+	# (open/confirm/cancel_tactical_ping_wheel).
 	if event is InputEventKey and not event.is_echo():
-		if event.keycode == KEY_G:
-			if event.pressed:
-				if ping_wheel and not ping_wheel.is_active:
-					var mpos = get_viewport().get_mouse_position()
-					ping_wheel.open_at(mpos)
-					get_viewport().set_input_as_handled()
-			else:
-				if ping_wheel and ping_wheel.is_active:
-					ping_wheel.close_and_confirm()
-					get_viewport().set_input_as_handled()
-		elif event.keycode == KEY_P and event.pressed:
+		if event.keycode == KEY_P and event.pressed:
 			trigger_ki_spectral_pulse()
 			get_viewport().set_input_as_handled()
 			return
@@ -1414,71 +1407,146 @@ func trigger_ki_spectral_pulse() -> void:
 	print("[World] Ki Spectral Vision pulse activated for 5.5s.")
 
 
+## Duraciones de feedback del ping táctico (ADR 097).
+const PING_AURA_DURATION := 2.5
+const PING_BEAM_DURATION := 5.0
+
+
+## API de enrutado para UIInputRouter ([G] pulsada): abre la rueda en el cursor.
+func open_tactical_ping_wheel(screen_pos: Vector2) -> bool:
+	if ping_wheel == null or ping_wheel.is_active:
+		return false
+	ping_wheel.open_at(screen_pos)
+	return true
+
+
+## [G] soltada: confirma el cuadrante seleccionado (o cancela si sigue en el DEADZONE).
+func confirm_tactical_ping_wheel(screen_pos: Vector2) -> int:
+	if ping_wheel == null or not ping_wheel.is_active:
+		return TacticalPingWheel.PingType.NONE
+	ping_wheel.update_selection_from_screen(screen_pos)
+	return ping_wheel.close_and_confirm()
+
+
+## Clic derecho con la rueda abierta: cancela sin emitir.
+func cancel_tactical_ping_wheel() -> bool:
+	if ping_wheel == null or not ping_wheel.is_active:
+		return false
+	ping_wheel.cancel()
+	return true
+
+
+func is_tactical_ping_wheel_open() -> bool:
+	return ping_wheel != null and ping_wheel.is_active
+
+
+## Ping local confirmado por la rueda. El SFX lo reproduce la propia rueda al confirmar
+## (feedback inmediato, sin duplicarlo aquí); World añade aura + baliza 3D + red 0x1A.
 func _on_tactical_ping_confirmed(type: int, ping_name: String) -> void:
-	var ground_pos: Vector3 = Vector3.ZERO
-	if local_player and is_instance_valid(local_player):
-		ground_pos = local_player.get_ground_cursor_position()
-	else:
-		var camera = get_viewport().get_camera_3d()
-		if camera:
-			var mpos = get_viewport().get_mouse_position()
-			var from = camera.project_ray_origin(mpos)
-			var dir = camera.project_ray_normal(mpos)
-			ground_pos = from + dir * (-from.y / dir.y) if abs(dir.y) > 0.001 else from + dir * 15.0
+	var screen_pos: Vector2 = ping_wheel.open_screen_pos if ping_wheel else get_viewport().get_mouse_position()
+	var ground_pos := _ground_position_at_screen(screen_pos)
 
-	# 1. Auditory SFX
-	if has_node("/root/SoundManager"):
-		var sm = get_node("/root/SoundManager")
-		match type:
-			1: # DANGER (Red)
-				sm.play_ui_sfx(&"ping_danger")
-			0: # MISSING ?? (Yellow)
-				sm.play_ui_sfx(&"ping_missing")
-			3: # ON_MY_WAY (Green)
-				sm.play_ui_sfx(&"ping_on_my_way")
-			2: # ASSIST (Blue)
-				sm.play_ui_sfx(&"ping_assist")
+	_apply_tactical_ping_fx(local_player, type, ground_pos, false)
 
-	# 2. Local player aura feedback
-	if local_player and is_instance_valid(local_player):
-		var aura_col: Color = Color("#ff3344") if type == 1 else (Color("#facc15") if type == 0 else (Color("#10b981") if type == 3 else Color("#0284c7")))
-		_spawn_temporary_player_aura(local_player, aura_col, 3.0)
-
-	# 3. 3D World marker
-	var beam = TacticalPingBeam3DScene.new()
-	beam.ping_type = type
-	beam.position = ground_pos
-	add_child(beam)
-	var t = create_tween()
-	t.tween_interval(5.0)
-	t.tween_callback(beam.queue_free)
-
-	# 4. Network broadcast (Protocol 0x1A)
+	# Network broadcast (Protocol 0x1A)
 	if NetworkManager and NetworkManager.has_method("send_tactical_ping"):
 		NetworkManager.send_tactical_ping(type, ground_pos, 0)
 
 	print("[World] Tactical ping emitted: %s (Type %d) at %s" % [ping_name, type, str(ground_pos)])
 
 
-func _spawn_temporary_player_aura(p_node: Node3D, col: Color, dur: float) -> void:
-	var ring = MeshInstance3D.new()
-	var torus = TorusMesh.new()
-	torus.inner_radius = 1.1
-	torus.outer_radius = 1.4
+## Ping táctico recibido de la red (0x1A re-difundido por el servidor).
+## Ubica al emisor por su sender_sid, le activa el aura y proyecta la baliza.
+func _on_tactical_ping_broadcast(ping: Dictionary) -> void:
+	var sender_sid := int(ping.get("sender_sid", 0))
+	var type := int(ping.get("ping_type", TacticalPingWheel.PingType.DANGER))
+	var pos: Vector3 = ping.get("world_pos", Vector3.ZERO)
+	var sender: Node3D = null
+	if remote_players.has(sender_sid) and is_instance_valid(remote_players[sender_sid]):
+		sender = remote_players[sender_sid] as Node3D
+	_apply_tactical_ping_fx(sender, type, pos, true)
+
+
+## Feedback compartido local/remoto: aura temporal en el emisor, baliza 3D en el
+## suelo y (opcional) SFX del cuadrante vía SoundManager. Devuelve la baliza creada.
+func _apply_tactical_ping_fx(owner_node: Node3D, type: int, ground_pos: Vector3, play_sfx: bool) -> Node3D:
+	var col := TacticalPingWheel.get_ping_color(type)
+
+	if play_sfx:
+		var sm = get_node_or_null("/root/SoundManager")
+		if sm and sm.has_method("play_ui_sfx"):
+			sm.play_ui_sfx(TacticalPingWheel.get_ping_sfx(type))
+
+	if owner_node and is_instance_valid(owner_node):
+		_spawn_temporary_player_aura(owner_node, col, PING_AURA_DURATION)
+
+	var beam: Node3D = TacticalPingBeam3DScene.new()
+	beam.name = "TacticalPingBeam3D"
+	beam.ping_type = type
+	beam.position = ground_pos
+	add_child(beam, true)
+	get_tree().create_timer(PING_BEAM_DURATION).timeout.connect(func():
+		if is_instance_valid(beam):
+			beam.queue_free()
+	)
+	return beam
+
+
+## Punto del suelo 3D bajo una posición de pantalla: raycast físico y, si no hay
+## colisión, intersección con el plano y = 0.
+func _ground_position_at_screen(screen_pos: Vector2) -> Vector3:
+	var camera := get_viewport().get_camera_3d()
+	if camera == null:
+		return local_player.global_position if local_player and is_instance_valid(local_player) else Vector3.ZERO
+	var from := camera.project_ray_origin(screen_pos)
+	var dir := camera.project_ray_normal(screen_pos)
+	var world_3d := get_viewport().get_world_3d()
+	var space_state: PhysicsDirectSpaceState3D = world_3d.direct_space_state if world_3d else null
+	if space_state:
+		var query := PhysicsRayQueryParameters3D.create(from, from + dir * 500.0)
+		query.collide_with_bodies = true
+		query.collide_with_areas = false
+		if local_player and local_player is CollisionObject3D:
+			query.exclude = [local_player.get_rid()]
+		var hit: Dictionary = space_state.intersect_ray(query)
+		if not hit.is_empty():
+			return hit.position
+	if absf(dir.y) > 0.0001:
+		var t := -from.y / dir.y
+		if t > 0.0:
+			return from + dir * t
+	return from + dir * 15.0
+
+
+## Aro/aura luminosa temporal anclada al jugador (local o remoto) del color del ping.
+func _spawn_temporary_player_aura(p_node: Node3D, col: Color, dur: float) -> MeshInstance3D:
+	var ring := MeshInstance3D.new()
+	ring.name = "TacticalPingAura"
+	var torus := TorusMesh.new()
+	torus.inner_radius = 0.9
+	torus.outer_radius = 1.25
 	ring.mesh = torus
 	ring.position.y = 0.08
-	var mat = StandardMaterial3D.new()
-	mat.albedo_color = col
+	ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	var mat := StandardMaterial3D.new()
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.albedo_color = Color(col, 0.9)
 	mat.emission_enabled = true
 	mat.emission = col
-	mat.emission_energy_multiplier = 3.0
+	mat.emission_energy_multiplier = 3.5
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	ring.material_override = mat
-	p_node.add_child(ring)
+	ring.set_meta("ping_color", col)
+	ring.set_meta("duration", dur)
+	p_node.add_child(ring, true)
 
-	var tw = create_tween()
-	tw.tween_property(mat, "albedo_color:a", 0.0, dur)
-	tw.tween_callback(ring.queue_free)
+	# Expansión + desvanecimiento; el tween vive en el aro (muere con el jugador).
+	var tw := ring.create_tween().set_parallel(true)
+	tw.tween_property(ring, "scale", Vector3(1.6, 1.0, 1.6), dur).from(Vector3(0.6, 1.0, 0.6)).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(mat, "albedo_color:a", 0.0, dur).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tw.chain().tween_callback(ring.queue_free)
+	return ring
 
 
 func _spawn_overworld_archetypes() -> void:

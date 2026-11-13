@@ -35,9 +35,12 @@ signal extraction_beacon_received(beacon: Dictionary)
 signal revive_sync_received(sync: Dictionary)
 ## Fase 10 (ADR 101): Mercenarios IA y compañeros de escuadra.
 signal mercenary_sync_received(sync: Dictionary)
+## ADR 097: Ping táctico de escuadra re-difundido por el servidor (0x1A).
+signal tactical_ping_received(ping: Dictionary)
 
 const ExtractionReviveCodec = preload("res://shared-core/ExtractionReviveCodec.gd")
 const MercenaryCodec = preload("res://shared-core/MercenaryCodec.gd")
+const TacticalPingCodec = preload("res://shared-core/TacticalPingCodec.gd")
 
 var last_server_heartbeat : float = 0.0
 const SERVER_TIMEOUT : float = 8.0 # If no packet from server in 8s, we are disconnected
@@ -337,6 +340,10 @@ func _process(delta):
 				var msync := MercenaryCodec.decode_mercenary(packet)
 				if not msync.is_empty():
 					mercenary_sync_received.emit(msync)
+			elif packet_type == TacticalPingCodec.OPCODE_TACTICAL_PING: # 0x1A (ADR 097)
+				var tping := TacticalPingCodec.decode(packet)
+				if not tping.is_empty() and int(tping["sender_sid"]) != my_session_id:
+					tactical_ping_received.emit(tping)
 
 func send_heartbeat():
 	if udp_peer.is_socket_connected():
@@ -468,3 +475,9 @@ func send_mercenary_command(mercenary_id: int, stance: int, target_id: int = 0) 
 			"owner_sid": my_session_id,
 			"target_entity_id": target_id,
 		}))
+
+## Ping táctico de escuadra (0x1A, ADR 097). player_id viaja como el sid local;
+## el servidor lo sustituye por la sesión autenticada antes de re-difundir.
+func send_tactical_ping(ping_type: int, world_pos: Vector3, target_entity_id: int = 0) -> void:
+	if udp_peer.is_socket_connected() and my_session_id > 0:
+		udp_peer.put_packet(TacticalPingCodec.encode(my_session_id, ping_type, world_pos, target_entity_id))

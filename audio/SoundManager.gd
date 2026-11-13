@@ -305,10 +305,10 @@ func _generate_procedural_fallbacks() -> void:
 	_sfx_bank[&"hazard_warning"] = _create_synthetic_beep(330.0, 0.8, 0.6)
 
 	# Tactical LoL-Style Pings
-	_sfx_bank[&"ping_danger"] = _create_synthetic_beep(880.0, 0.22, 0.75)
-	_sfx_bank[&"ping_missing"] = _create_synthetic_beep(587.33, 0.26, 0.65)
-	_sfx_bank[&"ping_on_my_way"] = _create_synthetic_beep(659.25, 0.20, 0.70)
-	_sfx_bank[&"ping_assist"] = _create_synthetic_beep(493.88, 0.24, 0.70)
+	_sfx_bank[&"lol_danger"] = _create_synthetic_beep(880.0, 0.22, 0.75)
+	_sfx_bank[&"lol_missing"] = _create_synthetic_beep(587.33, 0.26, 0.65)
+	_sfx_bank[&"lol_omw"] = _create_synthetic_beep(659.25, 0.20, 0.70)
+	_sfx_bank[&"lol_assist"] = _create_synthetic_beep(493.88, 0.24, 0.70)
 
 	# Combat Spells & Skills
 	_sfx_bank[&"spell_fireball"] = _create_synthetic_beep(280.0, 0.35, 0.70)

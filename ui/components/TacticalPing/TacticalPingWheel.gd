@@ -2,17 +2,23 @@
 extends Control
 class_name TacticalPingWheel
 
-## Rueda de Pings Tácticos Radial (ADR 097).
-## Desplegada manteniendo pulsada la tecla 'G', permite seleccionar con el ratón
-## entre 4 cuadrantes: ATTACK (Norte), DANGER (Este), EXTRACT (Sur) y ASSIST (Oeste).
+## Rueda de Pings Tácticos Radial (ADR 097) — UX estilo MOBA.
+## [G] pulsada abre la rueda centrada en el cursor; arrastrar más allá del DEADZONE
+## (35 px) selecciona el cuadrante; soltar [G] o el clic izquierdo confirma (emite
+## `ping_selected` + SFX); clic derecho cancela sin emitir.
+##   ARRIBA    (-90°) PELIGRO      Rojo     #ff3344  lol_danger
+##   IZQUIERDA (180°) DESAPARECIDO Amarillo #facc15  lol_missing
+##   DERECHA   (0°)   EN CAMINO    Verde    #10b981  lol_omw
+##   ABAJO     (90°)  ASISTIR      Azul     #0284c7  lol_assist
 
 const T = preload("res://ui/hud_tokens.gd")
 const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 
+## Valores de cable sincronizados con Rust protocol.rs PING_TYPE_* (0x1A).
 enum PingType {
 	MISSING = 0,    # Oeste / Izquierda (Amarillo ??) — Wire PING_TYPE_ATTACK
 	DANGER = 1,     # Norte / Arriba (Rojo ¡PELIGRO!) — Wire PING_TYPE_DANGER
-	ASSIST = 2,     # Sur / Abajo (Azul VOY EN CAMINO) — Wire PING_TYPE_ASSIST
+	ASSIST = 2,     # Sur / Abajo (Azul ASISTIR / VOY) — Wire PING_TYPE_ASSIST
 	ON_MY_WAY = 3,  # Este / Derecha (Verde EN CAMINO) — Wire PING_TYPE_EXTRACT
 	NONE = -1
 }
@@ -22,39 +28,43 @@ signal cancelled()
 
 const RADIUS_OUTER := 92.0
 const RADIUS_INNER := 34.0
-const DEADZONE := 18.0
+const DEADZONE := 35.0
 
 const PING_CONFIG := [
 	{
 		"type": PingType.DANGER,
 		"name": "PELIGRO",
-		"color": Color("#ef4444"), # Carmesí LoL Alert
+		"color": Color("#ff3344"),
 		"angle": -PI * 0.5,       # Norte (-90°)
 		"glyph": "hazard",
+		"sfx": &"lol_danger",
 		"desc": "¡PELIGRO! Alerta de amenaza inminente"
 	},
 	{
 		"type": PingType.ON_MY_WAY,
 		"name": "EN CAMINO",
-		"color": Color("#10b981"), # Esmeralda LoL OMW
+		"color": Color("#10b981"),
 		"angle": 0.0,             # Este (0°)
 		"glyph": "arrow_right",
+		"sfx": &"lol_omw",
 		"desc": "En camino al objetivo"
 	},
 	{
 		"type": PingType.ASSIST,
-		"name": "VOY EN CAMINO",
-		"color": Color("#0284c7"), # Azul LoL Assist
+		"name": "ASISTIR",
+		"color": Color("#0284c7"),
 		"angle": PI * 0.5,        # Sur (90°)
 		"glyph": "shield",
-		"desc": "Apoyo y asistencia en posición"
+		"sfx": &"lol_assist",
+		"desc": "Asistir / Voy en apoyo"
 	},
 	{
 		"type": PingType.MISSING,
 		"name": "DESAPARECIDO",
-		"color": Color("#facc15"), # Amarillo LoL Missing '??'
+		"color": Color("#facc15"),
 		"angle": PI,              # Oeste (180°)
 		"glyph": "question",
+		"sfx": &"lol_missing",
 		"desc": "Enemigo desaparecido (??)"
 	}
 ]
@@ -67,6 +77,10 @@ var active_selection: int = PingType.NONE:
 
 var is_active: bool = false
 var wheel_center: Vector2 = Vector2.ZERO
+## Posición de pantalla (viewport) donde se abrió la rueda (centro del arrastre).
+var open_screen_pos: Vector2 = Vector2.ZERO
+## Último cue de SFX reproducido al confirmar (telemetría / tests headless).
+var last_sfx_cue: StringName = &""
 
 
 func _ready() -> void:
@@ -80,23 +94,39 @@ func _ready() -> void:
 
 ## Abre la rueda centrada en la posición de pantalla indicada.
 func open_at(screen_pos: Vector2) -> void:
-	global_position = screen_pos - size * 0.5
+	size = custom_minimum_size
+	wheel_center = size * 0.5
+	open_screen_pos = screen_pos
+	global_position = screen_pos - wheel_center
 	visible = true
 	is_active = true
 	active_selection = PingType.NONE
-	if DisplayServer.get_name() != "headless":
-		set_process(true)
+	set_process(true)
 	queue_redraw()
 
 
-## Cierra la rueda y emite la señal de selección si hay un cuadrante válido.
+## Actualiza la selección a partir de la posición actual del cursor (pantalla).
+## Devuelve el cuadrante resultante (NONE si el arrastre no supera el DEADZONE).
+func update_selection_from_screen(screen_pos: Vector2) -> int:
+	if not is_active:
+		return PingType.NONE
+	active_selection = get_quadrant_from_offset(screen_pos - open_screen_pos)
+	return active_selection
+
+
+## Cierra la rueda. Si hay cuadrante válido emite `ping_selected` y reproduce su SFX;
+## si el cursor sigue en el DEADZONE equivale a cancelar.
 func close_and_confirm() -> int:
+	if not is_active:
+		return PingType.NONE
 	set_process(false)
 	var confirmed: int = active_selection
 	is_active = false
 	visible = false
+	active_selection = PingType.NONE
 	if confirmed != PingType.NONE:
-		var cfg = get_ping_config(confirmed)
+		var cfg := get_ping_config(confirmed)
+		_play_sfx(cfg.get("sfx", &""))
 		ping_selected.emit(confirmed, str(cfg.get("name", "PING")))
 	else:
 		cancelled.emit()
@@ -105,6 +135,8 @@ func close_and_confirm() -> int:
 
 ## Cancela la rueda sin emitir ping.
 func cancel() -> void:
+	if not is_active:
+		return
 	set_process(false)
 	is_active = false
 	visible = false
@@ -112,43 +144,56 @@ func cancel() -> void:
 	cancelled.emit()
 
 
-func _unhandled_input(event: InputEvent) -> void:
+## Se usa _input (no _unhandled_input) para que, con la rueda abierta, los clics
+## no lleguen a la selección de objetivos del mundo.
+func _input(event: InputEvent) -> void:
 	if not is_active:
 		return
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			cancel()
 			get_viewport().set_input_as_handled()
-		elif event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-			close_and_confirm()
+		elif event.button_index == MOUSE_BUTTON_LEFT:
+			if not event.pressed:
+				update_selection_from_screen(event.position)
+				if active_selection != PingType.NONE:
+					close_and_confirm()
 			get_viewport().set_input_as_handled()
+	elif event is InputEventMouseMotion:
+		update_selection_from_screen(event.position)
 
 
 func _process(_delta: float) -> void:
-	if not is_active:
+	if not is_active or DisplayServer.get_name() == "headless":
 		return
-	if DisplayServer.get_name() == "headless":
+	update_selection_from_screen(get_viewport().get_mouse_position())
+
+
+func _play_sfx(cue: StringName) -> void:
+	if cue == &"":
 		return
-
-	var mpos := get_local_mouse_position()
-	var offset := mpos - wheel_center
-	var dist := offset.length()
-
-	if dist < DEADZONE:
-		active_selection = PingType.NONE
+	last_sfx_cue = cue
+	var tree := get_tree()
+	if tree == null:
 		return
+	var sm := tree.root.get_node_or_null("SoundManager")
+	if sm and sm.has_method("play_ui_sfx"):
+		sm.play_ui_sfx(cue)
 
-	# Calcular ángulo normalizado en [-PI, PI]
-	var angle := offset.angle()
-	active_selection = get_quadrant_from_angle(angle)
+
+## Cuadrante a partir del desplazamiento cursor-centro (NONE dentro del DEADZONE).
+static func get_quadrant_from_offset(offset: Vector2) -> int:
+	if offset.length() <= DEADZONE:
+		return PingType.NONE
+	return get_quadrant_from_angle(offset.angle())
 
 
 ## Retorna el cuadrante angular según el ángulo del ratón respecto al centro.
 static func get_quadrant_from_angle(angle: float) -> int:
 	# Cuadrantes en cruz (45° de tolerancia por sector):
-	# Norte (-90°): [-3PI/4, -PI/4] -> DANGER (Up, Red)
-	# Este (0°):    [-PI/4, PI/4]   -> ON_MY_WAY (Right, Green)
-	# Sur (90°):    [PI/4, 3PI/4]   -> ASSIST (Down, Blue)
+	# Norte (-90°): [-3PI/4, -PI/4) -> DANGER (Up, Red)
+	# Este (0°):    [-PI/4, PI/4)   -> ON_MY_WAY (Right, Green)
+	# Sur (90°):    [PI/4, 3PI/4)   -> ASSIST (Down, Blue)
 	# Oeste (180°): resto           -> MISSING (Left, Yellow ??)
 	if angle >= -PI * 0.75 and angle < -PI * 0.25:
 		return PingType.DANGER
@@ -158,6 +203,14 @@ static func get_quadrant_from_angle(angle: float) -> int:
 		return PingType.ASSIST
 	else:
 		return PingType.MISSING
+
+
+static func get_ping_color(p_type: int) -> Color:
+	return get_ping_config(p_type).get("color", Color.WHITE)
+
+
+static func get_ping_sfx(p_type: int) -> StringName:
+	return get_ping_config(p_type).get("sfx", &"")
 
 
 static func get_ping_config(p_type: int) -> Dictionary:
