@@ -10,12 +10,18 @@ extends Control
 ##   set_trinket(charges)                  set_gold(amount)
 ##   set_stats({stat_id: value})           set_buffs([{color, stacks, ...}])
 ##   push_feed(time, player, champion, text, is_item)
+##   set_shield(amount)                    tramo blanco de escudo en la barra de vida
+##   set_combat_mode(in_combat)            Combate (chat 60 %, sin misiones/utilidad) / Exploración
+##   set_quests(["Misión", ...])           rastreador de misiones (solo en exploración)
+##   set_interrupt_slots([0, 2])           habilidades de corte/aturdimiento
+##   set_interrupt_highlight(active)       brillo dorado si el objetivo canaliza algo interrumpible
 
 signal recall_pressed
 signal shop_pressed
 signal item_used(slot: int, item_name: String, item_id: String)
 signal item_assigned(slot: int, item_name: String, item_id: String)
 signal item_cleared(slot: int)
+signal combat_mode_changed(in_combat: bool)
 
 const T = preload("res://ui/tokens/hud_tokens.gd")
 const STAT_ROW_SCENE: PackedScene = preload("res://ui/components/HUDv2/stat_row.tscn")
@@ -55,14 +61,32 @@ var stat_values: Dictionary = {}
 var gold: int = 0
 var level: int = 1
 
+## Modo Combate (true) / Exploración (false).
+var in_combat: bool = false
+## Slots de habilidad que cortan/aturden (Q por defecto: "slash").
+var interrupt_slots: Array[int] = [0]
+var interrupt_active: bool = false
+var quests: Array[String] = []
+## Nodos de chat atenuados al 60 % en combate (el feed propio + los registrados).
+var chat_nodes: Array[CanvasItem] = []
+## Widgets secundarios de exploración ocultos en combate (misiones + utilidad).
+var exploration_widgets: Array[CanvasItem] = []
+var quest_tracker: VBoxContainer
+var combat_hint: Label
+
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_build_stats()
+	_build_quest_tracker()
+	chat_nodes.append(feed_root)
+	exploration_widgets.append_array([quest_tracker, btn_recall, btn_shop])
 	btn_recall.pressed.connect(func() -> void: recall_pressed.emit())
 	btn_shop.pressed.connect(func() -> void: shop_pressed.emit())
 	set_accent(accent)
 	set_shape(shape)
+	_apply_interrupt_slots()
+	_apply_combat_mode()
 	get_viewport().size_changed.connect(_fit_to_viewport)
 	_fit_to_viewport()
 
@@ -116,6 +140,13 @@ func set_health(current: float, max_value: float, regen: float) -> void:
 	if not is_node_ready():
 		await ready
 	health_bar.set_values(current, max_value, regen)
+
+
+## Escudo absorbente: tramo blanco tras la vida actual ("+2.700 escudo").
+func set_shield(amount: float) -> void:
+	if not is_node_ready():
+		await ready
+	health_bar.set_shield(amount)
 
 
 func set_mana(current: float, max_value: float) -> void:
@@ -225,6 +256,145 @@ func push_feed(time: String, player: String, champion: String, text: String, is_
 		var old := feed_root.get_child(0)
 		feed_root.remove_child(old)
 		old.queue_free()
+
+
+# --------------------------------------------------------------------------
+# Modo Combate / Exploración (MMO-HUD)
+# --------------------------------------------------------------------------
+## Combate: chat al 60 %, se ocultan misiones y botones de utilidad y aparece
+## el aviso "+N misiones ocultas". Exploración: todo al 100 % y visible.
+func set_combat_mode(p_in_combat: bool) -> void:
+	var changed := p_in_combat != in_combat
+	in_combat = p_in_combat
+	if is_node_ready():
+		_apply_combat_mode()
+	if changed:
+		combat_mode_changed.emit(in_combat)
+
+
+func is_in_combat() -> bool:
+	return in_combat
+
+
+## Registra un chat externo (ventana de chat del juego) para atenuarlo en combate.
+func register_chat(node: CanvasItem) -> void:
+	if node and not chat_nodes.has(node):
+		chat_nodes.append(node)
+		_apply_combat_mode()
+
+
+## Registra un widget secundario de exploración (se oculta en combate).
+func register_exploration_widget(node: CanvasItem) -> void:
+	if node and not exploration_widgets.has(node):
+		exploration_widgets.append(node)
+		_apply_combat_mode()
+
+
+func set_quests(list: Array) -> void:
+	quests.clear()
+	for q in list:
+		quests.append(str(q))
+	if not is_node_ready():
+		return
+	_rebuild_quests()
+	_apply_combat_mode()
+
+
+func get_chat_alpha() -> float:
+	return feed_root.modulate.a if is_node_ready() else 1.0
+
+
+func _apply_combat_mode() -> void:
+	if not is_node_ready():
+		return
+	var alpha := T.COMBAT_CHAT_ALPHA if in_combat else T.EXPLORATION_CHAT_ALPHA
+	for n in chat_nodes:
+		if is_instance_valid(n):
+			n.modulate.a = alpha
+	for w in exploration_widgets:
+		if is_instance_valid(w):
+			w.visible = not in_combat
+	combat_hint.visible = in_combat and not quests.is_empty()
+	combat_hint.text = "+%d %s ocultas durante el combate" % [quests.size(), "misión" if quests.size() == 1 else "misiones"]
+
+
+func _build_quest_tracker() -> void:
+	quest_tracker = VBoxContainer.new()
+	quest_tracker.name = "QuestTracker"
+	quest_tracker.position = Vector2(T.STATS_TAB_RECT.position.x, 40)
+	quest_tracker.size = Vector2(T.STATS_TAB_RECT.size.x, 140)
+	quest_tracker.alignment = BoxContainer.ALIGNMENT_END
+	quest_tracker.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	quest_tracker.add_theme_constant_override("separation", 4)
+	add_child(quest_tracker)
+	combat_hint = Label.new()
+	combat_hint.name = "CombatHint"
+	combat_hint.position = Vector2(T.STATS_TAB_RECT.position.x, 160)
+	combat_hint.size = Vector2(T.STATS_TAB_RECT.size.x, 20)
+	combat_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	combat_hint.add_theme_font_override("font", T.font("medium"))
+	combat_hint.add_theme_font_size_override("font_size", T.FS_BODY)
+	combat_hint.add_theme_color_override("font_color", T.TEXT_SECONDARY)
+	combat_hint.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	combat_hint.visible = false
+	add_child(combat_hint)
+	_rebuild_quests()
+
+
+func _rebuild_quests() -> void:
+	for c in quest_tracker.get_children():
+		quest_tracker.remove_child(c)
+		c.queue_free()
+	for q in quests:
+		var l := Label.new()
+		l.text = "◆ " + q
+		l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		l.add_theme_font_override("font", T.font("medium"))
+		l.add_theme_font_size_override("font_size", T.FS_BODY)
+		l.add_theme_color_override("font_color", T.TEXT)
+		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		quest_tracker.add_child(l)
+
+
+# --------------------------------------------------------------------------
+# Interrupciones (quickslots de habilidad)
+# --------------------------------------------------------------------------
+## Define qué slots (0..3) son habilidades de corte/aturdimiento.
+func set_interrupt_slots(slots: Array) -> void:
+	interrupt_slots.clear()
+	for sl in slots:
+		if int(sl) >= 0 and int(sl) < 4:
+			interrupt_slots.append(int(sl))
+	_apply_interrupt_slots()
+
+
+## El objetivo actual canaliza un hechizo interrumpible: las habilidades de
+## corte/aturdimiento brillan en dorado. false lo apaga.
+func set_interrupt_highlight(active: bool) -> void:
+	interrupt_active = active
+	if not is_node_ready():
+		return
+	for a in abilities:
+		a.set_interrupt_highlight(active)
+
+
+## Slots que ahora mismo brillan por interrupción.
+func get_glowing_interrupt_slots() -> Array[int]:
+	var out: Array[int] = []
+	if not is_node_ready():
+		return out
+	for i in abilities.size():
+		if abilities[i].is_interrupt_glowing():
+			out.append(i)
+	return out
+
+
+func _apply_interrupt_slots() -> void:
+	if not is_node_ready():
+		return
+	for i in abilities.size():
+		abilities[i].can_interrupt = interrupt_slots.has(i)
+		abilities[i].set_interrupt_highlight(interrupt_active)
 
 
 # --------------------------------------------------------------------------

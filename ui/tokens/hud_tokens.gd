@@ -533,3 +533,77 @@ static func delta_style(delta: float, higher_is_better: bool = true) -> Dictiona
 		"color": DELTA_UP if good else DELTA_DOWN,
 		"improves": good,
 	}
+
+
+# ==========================================================================
+# Paso 4 UI v2.4 · HUD de combate reactivo (MMO-HUD) y HUD de raid (MMO-Raid)
+# ==========================================================================
+# Modo Combate / Exploración.
+const COMBAT_CHAT_ALPHA := 0.60                     # chat/feed atenuado en combate
+const EXPLORATION_CHAT_ALPHA := 1.0
+const COMBAT_FADE_TIME := 0.25                      # s (solo cosmético; el valor final se fija al instante)
+
+# Escudo absorbente sobre la barra de vida (MMO-HUD: rgba(255,255,255,0.55)).
+const SHIELD := Color(1, 1, 1, 0.55)
+const SHIELD_TEXT := Color("#e8edf0")
+
+# Interrupción: brillo dorado en habilidades de corte/aturdimiento.
+const INTERRUPT_GLOW := Color("#f5c35b")
+const INTERRUPT_GLOW_WIDTH := 3
+const INTERRUPT_PULSE_HZ := 2.0
+
+# Icono vectorial de stat dentro del panel de atributos del HUDv2.
+const STAT_ROW_ICON := STAT_ICON_SIZE_HUD           # 16 px
+
+# --- Raid ------------------------------------------------------------------
+const RAID_SIZE := 20
+const RAID_GROUPS := 4
+const RAID_GROUP_SIZE := 5
+const RAID_FRAME_SIZE := Vector2(128, 42)
+const RAID_FRAME_GAP := Vector2(10, 3)
+const RAID_FRAME_RADIUS := 8
+const RAID_FRAME_BG := Color(7 / 255.0, 10 / 255.0, 12 / 255.0, 0.9)
+const RAID_FRAME_EDGE := Color(1, 1, 1, 0.08)
+const RAID_HEALTH := HEALTH                         # #3ccf73
+const RAID_HEALTH_SEGMENTS := 10                    # tramos de 10 %
+const RAID_INCOMING_HEAL := Color(60 / 255.0, 207 / 255.0, 115 / 255.0, 0.35)
+const RAID_PREDICTED_A := Color(245 / 255.0, 195 / 255.0, 91 / 255.0, 0.75)
+const RAID_PREDICTED_B := Color(245 / 255.0, 195 / 255.0, 91 / 255.0, 0.20)
+const RAID_PREDICTED_STRIPE := 4.0                  # px por franja (patrón 135°, periodo 8 px)
+const RAID_PREDICTION_WINDOW := 3.0                 # s
+const RAID_AGGRO := Color("#ff6b6b")
+const RAID_AGGRO_PULSE_HZ := 1.5
+const RAID_SELECTED := ACCENT_DEFAULT
+const RAID_HEAL_RANGE := 40.0                       # m
+const RAID_OUT_OF_RANGE_ALPHA := 0.4
+const RAID_DEAD_ALPHA := 0.6
+const RAID_DISPEL_SIZE := 11.0
+const RAID_ALERT_BG := Color(58 / 255.0, 29 / 255.0, 34 / 255.0, 0.92)
+const RAID_ALERT_EDGE := Color("#ff6b6b")
+const RAID_ALERT_ICON := Color("#ffb3b3")
+const RAID_ALERT_SUB := Color("#ffc9c9")
+const RAID_ALERT_COUNT := Color("#ff8a8a")
+const RAID_ARROW_PATH := "M19 12H5M11 6l-6 6 6 6"   # flecha (apunta a la izquierda)
+
+## Efectos purificables (rombos). Siempre color + nombre (regla 2.6).
+const DISPEL_TYPES := {
+	"magia": {"name": "Magia", "color": "#b47bff"},
+	"veneno": {"name": "Veneno", "color": "#6fdc5a"},
+	"enfermedad": {"name": "Enfermedad", "color": "#c8a25a"},
+	"maldicion": {"name": "Maldición", "color": "#ff6bd0"},
+}
+
+## Color de clase (cuadradito inferior derecho del marco de raid).
+const CLASS_COLORS := {
+	"guerrero": "#5aa9ff", "tanque": "#5aa9ff", "sanador": "#4fe39a",
+	"mago": "#ff9a4d", "arquero": "#9fe36a", "picaro": "#ffd36b", "brujo": "#b47bff",
+}
+
+
+static func dispel_color(kind: String) -> Color:
+	return Color(DISPEL_TYPES[kind]["color"]) if DISPEL_TYPES.has(kind) else Color(DISPEL_TYPES["magia"]["color"])
+
+
+static func class_color(cls: String) -> Color:
+	var k := cls.strip_edges().to_lower()
+	return Color(CLASS_COLORS[k]) if CLASS_COLORS.has(k) else TEXT_SECONDARY

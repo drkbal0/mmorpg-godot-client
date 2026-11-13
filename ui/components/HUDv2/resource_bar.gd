@@ -27,6 +27,12 @@ const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 		regen = value
 		queue_redraw()
 
+## Escudo absorbente (solo vida): tramo blanco a continuación de la vida actual.
+@export var shield: float = 0.0:
+	set(value):
+		shield = maxf(0.0, value)
+		queue_redraw()
+
 ## Units per segment tick (0 disables).
 @export var tick_step: float = 100.0
 
@@ -45,6 +51,25 @@ func set_values(p_current: float, p_max: float, p_regen: float = 0.0) -> void:
 
 func get_fraction() -> float:
 	return clampf(current / max_value, 0.0, 1.0)
+
+
+func set_shield(amount: float) -> void:
+	shield = amount
+
+
+## Fracción de la barra que ocupa el tramo de escudo (recortada al final de la barra).
+func get_shield_fraction() -> float:
+	if kind != "health" or shield <= 0.0:
+		return 0.0
+	return clampf((current + shield) / max_value, 0.0, 1.0) - get_fraction()
+
+
+## Texto central: "18.420 / 30.100" (+ " +2.700 escudo" si hay escudo).
+func get_display_text() -> String:
+	var txt := "%s / %s" % [T.format_amount(roundi(current)), T.format_amount(roundi(max_value))]
+	if kind == "health" and shield > 0.0:
+		txt += "  +%s escudo" % T.format_amount(roundi(shield))
+	return txt
 
 
 func _process(delta: float) -> void:
@@ -83,8 +108,16 @@ func _draw() -> void:
 				if x < fill.end.x - 1.0:
 					draw_line(Vector2(x, inner.position.y + 1), Vector2(x, inner.end.y - 1), T.HEALTH_TICK, 1.0)
 
+	# Escudo absorbente: tramo blanco translúcido tras la vida actual.
+	var sf := get_shield_fraction()
+	if sf > 0.0:
+		var sx := inner.position.x + inner.size.x * f
+		var sr := Rect2(sx, inner.position.y, maxf(inner.size.x * sf, 2.0), inner.size.y)
+		draw_rect(sr, T.SHIELD)
+		draw_line(Vector2(sx, inner.position.y), Vector2(sx, inner.end.y), Color(1, 1, 1, 0.85), 1.0)
+
 	var fs := T.FS_BAR if rect.size.y >= 18.0 else T.FS_SMALL
-	var txt := "%d / %d" % [roundi(current), roundi(max_value)]
+	var txt := get_display_text()
 	D.draw_text_centered(self, T.font("semibold"), fs, rect, txt, T.TEXT, true)
 	if kind == "health" and regen != 0.0:
 		var rr := Rect2(rect.size.x - 60, 0, 52, rect.size.y)

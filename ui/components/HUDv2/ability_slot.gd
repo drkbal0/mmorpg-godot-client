@@ -52,6 +52,16 @@ const D = preload("res://ui/components/HUDv2/hud_draw.gd")
 		icon_texture = value
 		queue_redraw()
 
+## Habilidad de corte/aturdimiento: puede interrumpir un lanzamiento enemigo.
+@export var can_interrupt: bool = false:
+	set(value):
+		can_interrupt = value
+		queue_redraw()
+
+## true mientras el objetivo canaliza algo interrumpible (lo fija el HUD).
+var interrupt_highlight: bool = false
+var _interrupt_phase: float = 0.0
+
 ## Remaining cooldown seconds (ticks down on its own).
 var cooldown: float = 0.0
 ## Total of the current cooldown, used for the radial fraction.
@@ -83,8 +93,36 @@ func is_ready() -> bool:
 	return not locked and rank > 0 and cooldown <= 0.0
 
 
+## Activa el brillo dorado de interrupción. Solo brilla si la habilidad puede
+## interrumpir (`can_interrupt`); el estado pedido se guarda igualmente.
+func set_interrupt_highlight(active: bool) -> void:
+	interrupt_highlight = active
+	if not active:
+		_interrupt_phase = 0.0
+	queue_redraw()
+
+
+## Brillo dorado visible ahora mismo (también cuenta si está en enfriamiento:
+## el jugador debe ver que la herramienta existe aunque aún no esté lista).
+func is_interrupt_glowing() -> bool:
+	return interrupt_highlight and can_interrupt and not locked and rank > 0
+
+
+## Color de borde efectivo del tile (dorado cuando brilla por interrupción).
+func get_border_color() -> Color:
+	if is_interrupt_glowing():
+		return T.INTERRUPT_GLOW
+	var learned := rank > 0 and not locked
+	return accent if learned else (T.SLOT_BORDER if locked else Color(accent, 0.35))
+
+
 func _process(delta: float) -> void:
-	if Engine.is_editor_hint() or cooldown <= 0.0:
+	if Engine.is_editor_hint():
+		return
+	if is_interrupt_glowing():
+		_interrupt_phase = fmod(_interrupt_phase + delta * T.INTERRUPT_PULSE_HZ, 1.0)
+		queue_redraw()
+	if cooldown <= 0.0:
 		return
 	cooldown = maxf(0.0, cooldown - delta)
 	if cooldown <= 0.0:
@@ -98,9 +136,16 @@ func _draw() -> void:
 
 	# Tile background + border.
 	# Spec: "Tile habilidad lista: #1c2a33. Bloqueada: #11181d. Neutro (pasiva/retrato): #1a252c."
-	var border_color := accent if learned else (T.SLOT_BORDER if locked else Color(accent, 0.35))
+	var border_color := get_border_color()
+	var glowing := is_interrupt_glowing()
+	if glowing:
+		# Halo exterior dorado que pulsa (2 Hz) para destacar el corte disponible.
+		var pulse := 0.5 + 0.5 * sin(_interrupt_phase * TAU)
+		for i in 3:
+			var g := float(i + 1) * 2.0
+			draw_style_box(T.box(Color.TRANSPARENT, T.ABILITY_RADIUS + int(g), 2, Color(T.INTERRUPT_GLOW, (0.30 - i * 0.09) * (0.6 + 0.4 * pulse))), tile.grow(g))
 	var bg := T.SLOT_LOCKED if locked else (T.SLOT_READY if learned else T.SLOT_NEUTRAL)
-	draw_style_box(T.box(bg, T.ABILITY_RADIUS, T.ABILITY_BORDER, border_color), tile)
+	draw_style_box(T.box(bg, T.ABILITY_RADIUS, T.INTERRUPT_GLOW_WIDTH if glowing else T.ABILITY_BORDER, border_color), tile)
 	if learned:
 		# Inner sheen.
 		draw_style_box(T.box(Color(accent, 0.07), T.ABILITY_RADIUS - 3), tile.grow(-4))
