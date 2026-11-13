@@ -62,6 +62,20 @@ var ping_layer: CanvasLayer = null
 var ping_wheel: TacticalPingWheel = null
 var overworld_archetypes: Array[Node3D] = []
 
+# Escuadra local de pruebas (Party Frames + reanimación ADR 100)
+const PartyAllyNPCScript = preload("res://world/PartyAllyNPC.gd")
+const PARTY_ALLY_SID_BASE := 900000 # == Player.LOCAL_MOCK_SID_BASE
+const PARTY_AUTO_JOIN_RADIUS := 6.0
+var party_allies: Array[Node3D] = []
+var party_frames: Control = null
+var party_member_ids: Array[int] = []
+var _local_revive_target: Node3D = null
+var _party_refresh_accum := 0.0
+
+# Proyectiles: separación del spawn respecto a la cápsula del lanzador y altura del pecho.
+const PROJECTILE_SPAWN_FORWARD := 0.9
+const CHEST_HEIGHT := 1.2
+
 func _ready():
 	print("[World] Entry point reached. Initializing world state.")
 	
@@ -94,6 +108,7 @@ func _ready():
 	_build_map_topography()
 	_setup_ping_and_ki_systems()
 	_spawn_overworld_archetypes()
+	_spawn_party_allies()
 	add_to_group("hitbox_debug")
 	
 	# 3. Handle Spawn and Connection
@@ -153,6 +168,9 @@ func _on_profile_loaded():
 		# Player._ready() respeta este meta en vez de recalcular desde last_pos.
 		local_player.set_meta("safe_spawn", spawn_pos)
 		add_child(local_player)
+		if local_player.has_signal("revive_requested"):
+			local_player.revive_requested.connect(_on_local_revive_requested)
+			local_player.revive_released.connect(_on_local_revive_released)
 		
 		# Update HUD with final name if it was empty
 		var hud = UIOrchestrator.registry.get_instance("player_hud") if UIOrchestrator else null
@@ -537,19 +555,38 @@ func _exit_tree():
 func _on_skill_spawned(projectile_id: int, caster_sid: int, spell_id: int, origin: Vector3, dir: Vector2, speed: float, _server_tick: int):
 	match spell_id:
 		1: # Fireball ballistic projectile
-			_spawn_fireball_projectile(projectile_id, origin, dir, speed)
+			_spawn_fireball_projectile(projectile_id, origin, dir, speed, caster_sid)
 		2: # Blink Dash (Movement ability: quick start ring, no projectile)
 			_spawn_dash_trail(origin)
 		3: # Hitscan Instant Beam
-			_spawn_hitscan_tracer(origin, dir)
+			_spawn_hitscan_tracer(origin, dir, caster_sid)
 		4: # Defensive Barrier (E)
 			_spawn_barrier_vfx(projectile_id, caster_sid, origin)
 		5: # Impacto Cósmico / Meteor Strike (R)
 			_spawn_meteor_vfx(projectile_id, origin)
 		_:
-			_spawn_fireball_projectile(projectile_id, origin, dir, speed)
+			_spawn_fireball_projectile(projectile_id, origin, dir, speed, caster_sid)
 
-func _spawn_fireball_projectile(projectile_id: int, origin: Vector3, dir: Vector2, speed: float):
+## RIDs que los rayos de proyectiles deben ignorar: el jugador local (cuerpo + hitboxes)
+## y el lanzador. Sin esto, el rayo nacía DENTRO de la cápsula del avatar y el
+## proyectil explotaba a 0.05 m (bug de habilidades "bloqueadas" en 3ª persona).
+func _projectile_excludes(caster_sid: int = -1) -> Array[RID]:
+	var out: Array[RID] = []
+	var nodes: Array = []
+	if local_player and is_instance_valid(local_player):
+		nodes.append(local_player)
+	if caster_sid >= 0 and remote_players.has(caster_sid):
+		nodes.append(remote_players[caster_sid])
+	for n in nodes:
+		if n is CollisionObject3D:
+			out.append((n as CollisionObject3D).get_rid())
+		for c in n.get_children():
+			if c is CollisionObject3D:
+				out.append((c as CollisionObject3D).get_rid())
+	return out
+
+
+func _spawn_fireball_projectile(projectile_id: int, origin: Vector3, dir: Vector2, speed: float, caster_sid: int = -1) -> Node3D:
 	var p = MeshInstance3D.new()
 	var sphere = SphereMesh.new()
 	sphere.radius = 0.35
@@ -563,15 +600,18 @@ func _spawn_fireball_projectile(projectile_id: int, origin: Vector3, dir: Vector
 	mat.emission_energy_multiplier = 4.0
 	p.set_surface_override_material(0, mat)
 	
-	p.position = origin
-	add_child(p)
-	
 	var move_speed = max(speed, 5.0)
 	var move_dir = Vector3(dir.x, 0, dir.y).normalized()
 	if move_dir.length_squared() < 0.001:
 		move_dir = Vector3.FORWARD
+	# Nace por delante de la cápsula del lanzador (radio 0.5 + radio de la bola).
+	var spawn_pos: Vector3 = origin + move_dir * PROJECTILE_SPAWN_FORWARD
+	p.position = spawn_pos
+	p.set_meta("spawn_origin", spawn_pos)
+	add_child(p)
+
 	var max_range = 25.0
-	var nominal_target = origin + move_dir * max_range
+	var nominal_target = spawn_pos + move_dir * max_range
 	var target_pos = nominal_target
 	var hit_obstacle = false
 	
@@ -580,15 +620,18 @@ func _spawn_fireball_projectile(projectile_id: int, origin: Vector3, dir: Vector
 	var w3d = vp.find_world_3d() if vp else null
 	var space_state = w3d.direct_space_state if w3d else null
 	if space_state:
-		var ray_query = PhysicsRayQueryParameters3D.create(origin, nominal_target)
+		var ray_query = PhysicsRayQueryParameters3D.create(spawn_pos, nominal_target)
 		ray_query.collide_with_bodies = true
 		ray_query.collide_with_areas = false
+		ray_query.exclude = _projectile_excludes(caster_sid)
 		var hit_dict = space_state.intersect_ray(ray_query)
 		if not hit_dict.is_empty():
 			target_pos = hit_dict.position
 			hit_obstacle = true
+	p.set_meta("target_pos", target_pos)
+	p.set_meta("hit_obstacle", hit_obstacle)
 	
-	var travel_dist = origin.distance_to(target_pos)
+	var travel_dist = spawn_pos.distance_to(target_pos)
 	var duration = max(travel_dist / move_speed, 0.05)
 	
 	var tween = create_tween()
@@ -600,6 +643,7 @@ func _spawn_fireball_projectile(projectile_id: int, origin: Vector3, dir: Vector
 	)
 	
 	active_projectiles[projectile_id] = p
+	return p
 
 func _spawn_fireball_impact_blast(pos: Vector3, hit_obstacle: bool):
 	var blast = MeshInstance3D.new()
@@ -768,14 +812,47 @@ func _spawn_meteor_impact_blast(ground_pos: Vector3):
 		if is_instance_valid(shockwave): shockwave.queue_free()
 	)
 
-func _spawn_hitscan_tracer(origin: Vector3, dir: Vector2):
+## Altura del pecho del lanzador: se sondea el suelo bajo `origin` (capa 1, sin
+## jugadores) y se sitúa el haz a CHEST_HEIGHT sobre él. Sin suelo detectable se
+## asume que `origin` es la posición base (pies) y se suma CHEST_HEIGHT.
+func _chest_origin(origin: Vector3, excludes: Array[RID]) -> Vector3:
+	var vp = get_viewport()
+	var w3d = vp.find_world_3d() if vp else null
+	var space_state = w3d.direct_space_state if w3d else null
+	if space_state:
+		var q := PhysicsRayQueryParameters3D.create(origin + Vector3(0, 0.5, 0), origin - Vector3(0, 3.0, 0))
+		q.collide_with_bodies = true
+		q.collide_with_areas = false
+		q.collision_mask = 1
+		q.exclude = excludes
+		var hit: Dictionary = space_state.intersect_ray(q)
+		if not hit.is_empty():
+			return Vector3(origin.x, hit.position.y + CHEST_HEIGHT, origin.z)
+	return origin + Vector3(0, CHEST_HEIGHT, 0)
+
+
+func _spawn_hitscan_tracer(origin: Vector3, dir: Vector2, caster_sid: int = -1) -> Node3D:
 	var max_dist = 45.0
 	var beam_dir = Vector3(dir.x, 0.0, dir.y).normalized()
 	if beam_dir.length_squared() < 0.001:
 		beam_dir = Vector3.FORWARD
+	var excludes := _projectile_excludes(caster_sid)
+	origin = _chest_origin(origin, excludes)
 	var beam_end = origin + beam_dir * max_dist
+	# El haz se corta en el primer obstáculo, ignorando al propio lanzador.
+	var vp = get_viewport()
+	var w3d = vp.find_world_3d() if vp else null
+	var space_state = w3d.direct_space_state if w3d else null
+	if space_state:
+		var q := PhysicsRayQueryParameters3D.create(origin + beam_dir * 0.3, beam_end)
+		q.collide_with_bodies = true
+		q.collide_with_areas = false
+		q.exclude = excludes
+		var hit: Dictionary = space_state.intersect_ray(q)
+		if not hit.is_empty():
+			beam_end = hit.position
 	var dist = origin.distance_to(beam_end)
-	if dist < 0.1: return
+	if dist < 0.1: return null
 	
 	var mid = (origin + beam_end) * 0.5
 	
@@ -821,6 +898,9 @@ func _spawn_hitscan_tracer(origin: Vector3, dir: Vector2):
 		if is_instance_valid(beam): beam.queue_free()
 		if is_instance_valid(flash): flash.queue_free()
 	)
+	beam.set_meta("beam_origin", origin)
+	beam.set_meta("beam_end", beam_end)
+	return beam
 
 func _on_combat_event_received(source_sid: int, target_sid: int, spell_id: int, damage: float, is_crit: bool, target_hp_percent: int):
 	# Si es Impacto Cósmico (Meteoro - Spell 5), sincronizar daño con el impacto del meteoro (0.45s)
@@ -887,6 +967,7 @@ func _process(delta: float) -> void:
 	_process_portal_extraction(delta)
 	_update_debug_overlay()
 	_process_portal_vortices(delta)
+	_process_party_allies(delta)
 
 func set_hitbox_debug_visible(is_visible: bool) -> void:
 	if debug_overlay_layer:
@@ -1711,3 +1792,227 @@ func _create_mock_mob(p_name: String, pos: Vector3, col: Color, lvl: int, hp: fl
 
 	return mob
 
+
+# -------------------------------------------------------------------------
+# Escuadra local de pruebas: Valerius (Tanque), Sylvia (Ranger), Kaelen (Abatido)
+# -------------------------------------------------------------------------
+
+const PARTY_ALLY_DEFS := [
+	{"node": "Aliado_Valerius", "name": "Valerius", "role": "warrior", "level": 15, "max_hp": 2400.0, "hp": 2400.0,
+		"pos": Vector3(8.0, 1.0, 8.0), "color": Color(0.35, 0.55, 0.95), "title": "‹ GUARDIÁN · TANQUE ›", "downed": false},
+	{"node": "Aliada_Sylvia", "name": "Sylvia", "role": "ranger", "level": 14, "max_hp": 1600.0, "hp": 1600.0,
+		"pos": Vector3(-8.0, 1.0, -6.0), "color": Color(0.3, 0.85, 0.55), "title": "‹ CAZADORA · RANGER ›", "downed": false},
+	{"node": "Aliado_Kaelen", "name": "Kaelen", "role": "mage", "level": 13, "max_hp": 1200.0, "hp": 0.0,
+		"pos": Vector3(6.0, 1.0, -9.0), "color": Color(0.85, 0.6, 0.3), "title": "‹ COMPAÑERO ›", "downed": true},
+]
+
+
+func _spawn_party_allies() -> void:
+	for a in party_allies:
+		if is_instance_valid(a):
+			a.queue_free()
+	party_allies.clear()
+	party_member_ids.clear()
+
+	for i in PARTY_ALLY_DEFS.size():
+		var d: Dictionary = PARTY_ALLY_DEFS[i]
+		var ally: Area3D = PartyAllyNPCScript.new()
+		ally.name = d["node"]
+		ally.position = d["pos"]
+		ally.collision_layer = 48
+		ally.collision_mask = 48
+		ally.input_ray_pickable = true
+		ally.add_to_group("interactable")
+		ally.add_to_group("party_allies")
+
+		var col := CollisionShape3D.new()
+		col.name = "Collision"
+		var shape := CapsuleShape3D.new()
+		shape.radius = 0.4
+		shape.height = 1.8
+		col.shape = shape
+		ally.add_child(col)
+
+		var mesh := MeshInstance3D.new()
+		mesh.name = "Mesh"
+		var cap := CapsuleMesh.new()
+		cap.radius = 0.38
+		cap.height = 1.8
+		mesh.mesh = cap
+		var mat := StandardMaterial3D.new()
+		mat.albedo_color = d["color"]
+		mat.roughness = 0.45
+		mesh.material_override = mat
+		ally.add_child(mesh)
+		ally.mesh = mesh
+
+		# Anillo verde de aliado a los pies
+		var ring := MeshInstance3D.new()
+		ring.name = "AllyRing"
+		var torus := TorusMesh.new()
+		torus.inner_radius = 0.55
+		torus.outer_radius = 0.7
+		ring.mesh = torus
+		ring.position = Vector3(0.0, -0.95, 0.0)
+		var ring_mat := StandardMaterial3D.new()
+		ring_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		ring_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		ring_mat.albedo_color = Color(0.24, 1.0, 0.54, 0.6)
+		ring.material_override = ring_mat
+		ring.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		ally.add_child(ring)
+
+		add_child(ally)
+		ally.setup(d["name"], d["role"], d["level"], d["max_hp"], d["hp"], PARTY_ALLY_SID_BASE + i + 1, d["downed"])
+		ally.set_meta("archetype_title", d["title"])
+		ally.join_requested.connect(_on_party_ally_join_requested)
+		ally.revived.connect(_on_party_ally_revived)
+		party_allies.append(ally)
+
+		# Nameplate amistoso (nivel a la IZQUIERDA, verde)
+		var np = WorldNameplateScene.instantiate()
+		np.name = "WorldNameplate"
+		np.setup(d["name"], maxf(d["hp"], 1.0), d["max_hp"], false, d["title"], d["level"])
+		ally.set_meta("nameplate", np)
+		if has_node("/root/ScreenSpaceManager"):
+			ScreenSpaceManager.register_target(ally, np, Vector3(0, 2.2, 0))
+		else:
+			np.visible = false
+			ally.add_child(np)
+		if d["downed"] and np.has_method("set_downed"):
+			np.set_downed(ally.bleedout_remaining)
+
+	print("[World] Escuadra de pruebas desplegada: %d aliados (Valerius, Sylvia, Kaelen)." % party_allies.size())
+
+
+func get_party_ally(ally_name: String) -> Node3D:
+	for a in party_allies:
+		if is_instance_valid(a) and a.ally_name == ally_name:
+			return a
+	return null
+
+
+func get_party_frames() -> Control:
+	if party_frames == null or not is_instance_valid(party_frames):
+		party_frames = null
+		if UIOrchestrator:
+			party_frames = UIOrchestrator.open_window("party_frames")
+		if party_frames == null:
+			party_frames = load("res://ui/components/PartyFrames/PartyFrames.tscn").instantiate()
+			_phase97_ui_layer().add_child(party_frames)
+		party_frames.position = Vector2(16, 200)
+	return party_frames
+
+
+func _ally_frame_data(ally: Node3D) -> Dictionary:
+	var dist := 0.0
+	if local_player and is_instance_valid(local_player):
+		dist = local_player.global_position.distance_to(ally.global_position)
+	return {
+		"id": ally.session_id, "name": ally.ally_name, "class": ally.role,
+		"hp": ally.hp, "max_hp": ally.max_hp, "distance": dist,
+		"is_downed": ally.is_downed, "timer_sec": ally.bleedout_remaining,
+	}
+
+
+## Auto-acepta la invitación: el aliado entra en el grupo y aparece en Party Frames
+## (jugador local en el HUD + 3 aliados = 4 miembros).
+func join_party_ally(ally: Node3D) -> bool:
+	if ally == null or not is_instance_valid(ally) or ally.in_party:
+		return false
+	var pf := get_party_frames()
+	if pf == null or not pf.has_method("add_party_member"):
+		return false
+	var frame = pf.add_party_member(_ally_frame_data(ally))
+	if frame == null:
+		return false
+	ally.in_party = true
+	party_member_ids.append(ally.session_id)
+	print("[Party] %s aceptó la invitación de grupo (%d/4)." % [ally.ally_name, party_member_ids.size() + 1])
+	return true
+
+
+func join_all_party_allies() -> int:
+	var n := 0
+	for a in party_allies:
+		if join_party_ally(a):
+			n += 1
+	return n
+
+
+func _on_party_ally_join_requested(ally: Node3D) -> void:
+	join_party_ally(ally)
+
+
+func _on_party_ally_revived(ally: Node3D) -> void:
+	var np = ally.get_meta("nameplate", null)
+	if np and is_instance_valid(np):
+		np.is_downed = false
+		np.setup(ally.ally_name, ally.hp, ally.max_hp, false, str(ally.get_meta("archetype_title", "")), ally.level)
+	if party_frames and is_instance_valid(party_frames) and ally.in_party:
+		party_frames.update_member_downed(ally.session_id, false, 0.0)
+		party_frames.update_member_hp(ally.session_id, ally.hp, ally.max_hp)
+		party_frames.update_member_status(ally.session_id, "NORMAL")
+	print("[Party] %s ha sido reanimado (%d/%d HP)." % [ally.ally_name, int(ally.hp), int(ally.max_hp)])
+
+
+## Reanimación local (aliados simulados): Player emite revive_requested al pulsar [F].
+func _on_local_revive_requested(target: Node3D) -> void:
+	if target == null or not target.has_meta("local_mock") or not target.has_method("advance_revive"):
+		return
+	_local_revive_target = target
+	join_party_ally(target)
+	get_revive_modal().start(target.ally_name, target.session_id, 0)
+
+
+func _on_local_revive_released(_sid: int) -> void:
+	_cancel_local_revive()
+
+
+func _cancel_local_revive() -> void:
+	if _local_revive_target and is_instance_valid(_local_revive_target):
+		_local_revive_target.cancel_revive()
+		if revive_modal:
+			revive_modal.interrupt()
+	_local_revive_target = null
+
+
+func _process_party_allies(delta: float) -> void:
+	if party_allies.is_empty():
+		return
+	var lp_valid: bool = local_player != null and is_instance_valid(local_player)
+
+	# Canalización local de reanimación (6 s, alcance 2.5 m — ADR 100).
+	if _local_revive_target and is_instance_valid(_local_revive_target):
+		if not lp_valid or local_player.global_position.distance_to(_local_revive_target.global_position) > ExtractionReviveCodec.REVIVE_RANGE_M:
+			_cancel_local_revive()
+			if lp_valid and "reviving_sid" in local_player:
+				local_player.reviving_sid = 0
+		else:
+			if revive_modal:
+				revive_modal.set_progress_pct(_local_revive_target.revive_progress * 100.0)
+			if _local_revive_target.advance_revive(delta):
+				if revive_modal:
+					revive_modal.complete()
+				if "reviving_sid" in local_player:
+					local_player.reviving_sid = 0
+				_local_revive_target = null
+
+	# Auto-aceptación por proximidad + refresco de frames a 4 Hz.
+	_party_refresh_accum += delta
+	if _party_refresh_accum < 0.25:
+		return
+	_party_refresh_accum = 0.0
+	for a in party_allies:
+		if not is_instance_valid(a):
+			continue
+		if lp_valid and not a.in_party and local_player.global_position.distance_to(a.global_position) <= PARTY_AUTO_JOIN_RADIUS:
+			join_party_ally(a)
+		if a.is_downed:
+			var np = a.get_meta("nameplate", null)
+			if np and is_instance_valid(np) and np.has_method("set_downed"):
+				np.set_downed(a.bleedout_remaining)
+		if a.in_party and party_frames and is_instance_valid(party_frames):
+			party_frames.update_member_distance(a.session_id, local_player.global_position.distance_to(a.global_position) if lp_valid else 0.0)
+			if a.is_downed:
+				party_frames.update_member_downed(a.session_id, true, a.bleedout_remaining)

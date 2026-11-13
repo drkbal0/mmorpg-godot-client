@@ -26,6 +26,8 @@ var reviving_sid: int = 0
 ## true mientras un aliado nos reanima: el servidor rechaza movimiento (snapback),
 ## el cliente además congela la velocidad para no arrastrarse fuera de 2.5 m.
 var is_pinned: bool = false
+## Session ids >= este valor pertenecen a aliados simulados en cliente (World.PARTY_ALLY_SID_BASE).
+const LOCAL_MOCK_SID_BASE := 900000
 
 var player_hud_instance : Node
 var world_hp_bar_instance : Node3D
@@ -273,6 +275,18 @@ func _setup_crosshair():
 	add_child(crosshair_layer)
 	crosshair_layer.visible = (camera_mode == CameraMode.THIRD_PERSON)
 
+## Fuerza la perspectiva LoL/Diablo (Top-Down) en mapas que lo requieran: mientras
+## `forced` sea true, toggle_camera_mode() no puede pasar a 3ª persona.
+func set_forced_camera_top_down(forced: bool) -> void:
+	force_camera_top_down = forced
+	if forced and camera_mode != CameraMode.TOP_DOWN:
+		camera_mode = CameraMode.TOP_DOWN
+		if is_inside_tree() and camera:
+			setup_camera()
+
+func is_camera_top_down_forced() -> bool:
+	return force_camera_top_down
+
 func toggle_camera_mode():
 	if force_camera_top_down:
 		print("[Player] Camera toggle locked: Top-Down perspective enforced on this map.")
@@ -372,7 +386,8 @@ func handle_interact_pressed() -> bool:
 	if choice["kind"] == ReviveInteraction.KIND_REVIVE:
 		var target: Node3D = choice["node"]
 		reviving_sid = ReviveInteraction.session_id_of(target)
-		if network and network.has_method("send_revive_request"):
+		# Aliados locales de prueba (sin servidor): World simula la canalización.
+		if network and network.has_method("send_revive_request") and not target.has_meta("local_mock"):
 			network.send_revive_request(reviving_sid, false)
 		revive_requested.emit(target)
 		return true
@@ -384,7 +399,7 @@ func handle_interact_pressed() -> bool:
 func handle_interact_released() -> void:
 	var sid := reviving_sid
 	reviving_sid = 0
-	if network and network.has_method("send_revive_request"):
+	if network and network.has_method("send_revive_request") and sid < LOCAL_MOCK_SID_BASE:
 		network.send_revive_request(sid, true)
 	revive_released.emit(sid)
 
@@ -535,6 +550,9 @@ func get_ground_cursor_position() -> Vector3:
 	var result = space_state.intersect_ray(query)
 	if result:
 		return result.position
+
+	if camera_mode == CameraMode.THIRD_PERSON:
+		return _third_person_aim_point(space_state, from, dir, excludes)
 		
 	# Ground plane intersection (y = 0)
 	var denom = dir.y
@@ -544,6 +562,31 @@ func get_ground_cursor_position() -> Vector3:
 			return from + dir * t
 			
 	return from + dir * 50.0
+
+
+## 3ª persona: la retícula puede apuntar al horizonte o hacia arriba, donde la
+## intersección con el plano y=0 da t <= 0 (punto DETRÁS de la cámara). Se lanza
+## un rayo hacia delante contra estáticas (capa 1) y targetables (capas 5 y 6)
+## excluyendo al propio jugador; sin impacto se devuelve un punto lejano en la mira.
+const THIRD_PERSON_AIM_MASK := 1 | 16 | 32
+const THIRD_PERSON_AIM_FALLBACK_M := 60.0
+
+func _third_person_aim_point(space_state: PhysicsDirectSpaceState3D, from: Vector3, dir: Vector3, excludes: Array[RID]) -> Vector3:
+	if space_state:
+		var q := PhysicsRayQueryParameters3D.create(from, from + dir * 100.0)
+		q.collide_with_areas = true
+		q.collide_with_bodies = true
+		q.collision_mask = THIRD_PERSON_AIM_MASK
+		q.exclude = excludes
+		var hit := space_state.intersect_ray(q)
+		if not hit.is_empty():
+			return hit.position
+	# Apuntando hacia abajo: el plano del suelo sigue siendo válido.
+	if dir.y < -0.0001:
+		var t := -from.y / dir.y
+		if t > 0.0 and t < 100.0:
+			return from + dir * t
+	return from + dir * THIRD_PERSON_AIM_FALLBACK_M
 
 func _cast_skill(skill_id: int):
 	if SpellManager and not SpellManager.is_ready(skill_id):
