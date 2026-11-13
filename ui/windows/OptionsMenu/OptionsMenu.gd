@@ -1,4 +1,25 @@
+class_name OptionsMenu
 extends CanvasLayer
+
+const B = preload("res://audio/audio_buses.gd")
+
+## Persistencia de ajustes de audio (Fase 9.13 - ADR 094)
+const SETTINGS_PATH := "user://settings.cfg"
+const AUDIO_SECTION := "audio"
+const AUDIO_DEFAULT_VOLUME := 100.0
+const AUDIO_MUTE_DB := -80.0
+## Buses canónicos expuestos al jugador: [nombre de bus, etiqueta visible]
+const AUDIO_BUS_ROWS := [
+	[B.MASTER, "Volumen Maestro"],
+	[B.MUSIC, "Música"],
+	[B.SFX, "Efectos (SFX)"],
+	[B.AMBIENCE, "Ambiente"],
+	[B.UI, "Interfaz"],
+]
+
+## bus StringName -> HSlider / Label de porcentaje (expuestos para tests)
+var audio_sliders: Dictionary = {}
+var audio_percent_labels: Dictionary = {}
 
 @onready var action_list = find_child("ActionList", true, false)
 
@@ -30,6 +51,7 @@ func _ready():
 			isettings.bindings_updated.connect(_populate_action_list)
 	
 	_populate_ui_settings()
+	_setup_audio_settings()
 	_populate_action_list()
 
 func _populate_ui_settings():
@@ -223,6 +245,124 @@ func _populate_ui_settings():
 				UIOrchestrator.layout_persistence.set_global_zoom(z)
 			)
 			ui_container.add_child(btn)
+
+# --- Pestaña Sonido (Fase 9.13 - ADR 094) ---
+
+func _find_tab_container() -> TabContainer:
+	if action_list:
+		var p = action_list.get_parent()
+		while p != null:
+			if p is TabContainer:
+				return p
+			p = p.get_parent()
+	return find_child("TabContainer", true, false) as TabContainer
+
+func _setup_audio_settings() -> void:
+	var tab_container := _find_tab_container()
+	if tab_container == null or tab_container.has_node("Sonido"):
+		return
+
+	var tab_panel := MarginContainer.new()
+	tab_panel.name = "Sonido"
+	for side in ["margin_top", "margin_left", "margin_right", "margin_bottom"]:
+		tab_panel.add_theme_constant_override(side, 20)
+
+	var vbox := VBoxContainer.new()
+	vbox.name = "AudioSettingsList"
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	vbox.add_theme_constant_override("separation", 12)
+	tab_panel.add_child(vbox)
+
+	var header := Label.new()
+	header.text = "VOLUMEN DE AUDIO"
+	header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(header)
+
+	var saved := _load_audio_settings()
+
+	for row_def in AUDIO_BUS_ROWS:
+		var bus: StringName = row_def[0]
+		var row := HBoxContainer.new()
+		row.name = "AudioRow_%s" % bus
+		row.add_theme_constant_override("separation", 12)
+		vbox.add_child(row)
+
+		var name_lbl := Label.new()
+		name_lbl.text = row_def[1]
+		name_lbl.custom_minimum_size = Vector2(140, 0)
+		row.add_child(name_lbl)
+
+		var slider := HSlider.new()
+		slider.name = "VolumeSlider_%s" % bus
+		slider.min_value = 0
+		slider.max_value = 100
+		slider.step = 1
+		slider.custom_minimum_size = Vector2(200, 24)
+		slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		row.add_child(slider)
+
+		var pct_lbl := Label.new()
+		pct_lbl.name = "VolumePercent_%s" % bus
+		pct_lbl.custom_minimum_size = Vector2(50, 0)
+		pct_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		row.add_child(pct_lbl)
+
+		audio_sliders[bus] = slider
+		audio_percent_labels[bus] = pct_lbl
+
+		# Aplicar el valor persistido sin re-guardar, y conectar después.
+		var value: float = saved.get(bus, AUDIO_DEFAULT_VOLUME)
+		slider.set_value_no_signal(value)
+		_apply_bus_volume(bus, slider.value)
+		slider.value_changed.connect(_on_audio_slider_changed.bind(bus))
+
+	var info := Label.new()
+	info.text = "Los cambios se aplican al instante y se guardan automáticamente."
+	info.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	info.modulate = Color(0.7, 0.7, 0.7)
+	vbox.add_child(info)
+
+	tab_container.add_child(tab_panel)
+
+func _on_audio_slider_changed(value: float, bus: StringName) -> void:
+	_apply_bus_volume(bus, value)
+	_save_audio_settings()
+
+func _apply_bus_volume(bus: StringName, value: float) -> void:
+	var pct_lbl: Label = audio_percent_labels.get(bus)
+	if pct_lbl:
+		pct_lbl.text = "%d%%" % int(round(value))
+	var idx := AudioServer.get_bus_index(bus)
+	if idx < 0:
+		push_warning("[OptionsMenu] Bus de audio inexistente: %s" % bus)
+		return
+	if value <= 0.0:
+		AudioServer.set_bus_mute(idx, true)
+		AudioServer.set_bus_volume_db(idx, AUDIO_MUTE_DB)
+	else:
+		AudioServer.set_bus_mute(idx, false)
+		AudioServer.set_bus_volume_db(idx, linear_to_db(value / 100.0))
+
+func _load_audio_settings() -> Dictionary:
+	var result := {}
+	var cfg := ConfigFile.new()
+	var has_file := cfg.load(SETTINGS_PATH) == OK
+	for row_def in AUDIO_BUS_ROWS:
+		var bus: StringName = row_def[0]
+		var v = cfg.get_value(AUDIO_SECTION, String(bus), AUDIO_DEFAULT_VOLUME) if has_file else AUDIO_DEFAULT_VOLUME
+		result[bus] = clampf(float(v), 0.0, 100.0)
+	return result
+
+func _save_audio_settings() -> void:
+	var cfg := ConfigFile.new()
+	# Conservar otras secciones que pudieran existir en settings.cfg.
+	cfg.load(SETTINGS_PATH)
+	for bus in audio_sliders.keys():
+		cfg.set_value(AUDIO_SECTION, String(bus), int(round(audio_sliders[bus].value)))
+	var err := cfg.save(SETTINGS_PATH)
+	if err != OK:
+		push_warning("[OptionsMenu] No se pudo guardar %s (error %d)" % [SETTINGS_PATH, err])
 
 func _input(event: InputEvent):
 	if is_listening and event.is_pressed():
