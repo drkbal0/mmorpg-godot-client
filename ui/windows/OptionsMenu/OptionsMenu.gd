@@ -2,12 +2,15 @@ class_name OptionsMenu
 extends CanvasLayer
 
 const B = preload("res://audio/audio_buses.gd")
+const AudioSettings = preload("res://audio/audio_settings.gd")
 
 ## Persistencia de ajustes de audio (Fase 9.13 - ADR 094)
-const SETTINGS_PATH := "user://settings.cfg"
-const AUDIO_SECTION := "audio"
-const AUDIO_DEFAULT_VOLUME := 100.0
-const AUDIO_MUTE_DB := -80.0
+const SETTINGS_PATH := AudioSettings.SETTINGS_PATH
+const AUDIO_SECTION := AudioSettings.AUDIO_SECTION
+const AUDIO_DEFAULT_VOLUME := AudioSettings.DEFAULT_VOLUME
+const AUDIO_MUTE_DB := AudioSettings.MUTE_DB
+## Debounce de guardado a disco para cambios sin arrastre (teclado/rueda/código).
+const AUDIO_SAVE_DEBOUNCE_SEC := 0.4
 ## Buses canónicos expuestos al jugador: [nombre de bus, etiqueta visible]
 const AUDIO_BUS_ROWS := [
 	[B.MASTER, "Volumen Maestro"],
@@ -20,6 +23,11 @@ const AUDIO_BUS_ROWS := [
 ## bus StringName -> HSlider / Label de porcentaje (expuestos para tests)
 var audio_sliders: Dictionary = {}
 var audio_percent_labels: Dictionary = {}
+## Estado del guardado diferido (expuesto para tests)
+var audio_save_count: int = 0
+var _audio_dirty: bool = false
+var _audio_dragging: bool = false
+var _audio_save_timer: Timer = null
 
 @onready var action_list = find_child("ActionList", true, false)
 
@@ -280,6 +288,13 @@ func _setup_audio_settings() -> void:
 
 	var saved := _load_audio_settings()
 
+	_audio_save_timer = Timer.new()
+	_audio_save_timer.name = "AudioSaveDebounce"
+	_audio_save_timer.one_shot = true
+	_audio_save_timer.wait_time = AUDIO_SAVE_DEBOUNCE_SEC
+	_audio_save_timer.timeout.connect(flush_audio_settings)
+	add_child(_audio_save_timer)
+
 	for row_def in AUDIO_BUS_ROWS:
 		var bus: StringName = row_def[0]
 		var row := HBoxContainer.new()
@@ -315,7 +330,10 @@ func _setup_audio_settings() -> void:
 		var value: float = saved.get(bus, AUDIO_DEFAULT_VOLUME)
 		slider.set_value_no_signal(value)
 		_apply_bus_volume(bus, slider.value)
+		# Tiempo real: AudioServer + etiqueta. Disco: al soltar (drag_ended) o tras debounce.
 		slider.value_changed.connect(_on_audio_slider_changed.bind(bus))
+		slider.drag_started.connect(_on_audio_drag_started)
+		slider.drag_ended.connect(_on_audio_drag_ended)
 
 	var info := Label.new()
 	info.text = "Los cambios se aplican al instante y se guardan automáticamente."
@@ -327,40 +345,63 @@ func _setup_audio_settings() -> void:
 
 func _on_audio_slider_changed(value: float, bus: StringName) -> void:
 	_apply_bus_volume(bus, value)
+	_audio_dirty = true
+	# Durante el arrastre no se toca el disco: se persiste en drag_ended.
+	if not _audio_dragging and _audio_save_timer and _audio_save_timer.is_inside_tree():
+		_audio_save_timer.start()
+
+func _on_audio_drag_started() -> void:
+	_audio_dragging = true
+	if _audio_save_timer:
+		_audio_save_timer.stop()
+
+func _on_audio_drag_ended(_value_changed: bool) -> void:
+	_audio_dragging = false
+	flush_audio_settings()
+
+## Persiste en disco si hay cambios pendientes. Idempotente.
+func flush_audio_settings() -> void:
+	if _audio_save_timer:
+		_audio_save_timer.stop()
+	if not _audio_dirty:
+		return
+	_audio_dirty = false
 	_save_audio_settings()
+
+func has_pending_audio_save() -> bool:
+	return _audio_dirty
+
+func _exit_tree() -> void:
+	# No perder cambios pendientes si el menú se cierra antes del debounce.
+	flush_audio_settings()
 
 func _apply_bus_volume(bus: StringName, value: float) -> void:
 	var pct_lbl: Label = audio_percent_labels.get(bus)
 	if pct_lbl:
 		pct_lbl.text = "%d%%" % int(round(value))
-	var idx := AudioServer.get_bus_index(bus)
-	if idx < 0:
+	if not AudioSettings.apply_bus_volume(bus, value):
 		push_warning("[OptionsMenu] Bus de audio inexistente: %s" % bus)
 		return
-	if value <= 0.0:
-		AudioServer.set_bus_mute(idx, true)
-		AudioServer.set_bus_volume_db(idx, AUDIO_MUTE_DB)
-	else:
-		AudioServer.set_bus_mute(idx, false)
-		AudioServer.set_bus_volume_db(idx, linear_to_db(value / 100.0))
+	# Mantener el ducking de combate relativo a la nueva base de música del usuario.
+	if bus == B.MUSIC:
+		var sm := get_node_or_null("/root/SoundManager")
+		if sm and sm.has_method("set_user_music_base_db"):
+			sm.set_user_music_base_db(AudioSettings.percent_to_db(value))
 
 func _load_audio_settings() -> Dictionary:
+	var saved := AudioSettings.load_saved_volumes()
 	var result := {}
-	var cfg := ConfigFile.new()
-	var has_file := cfg.load(SETTINGS_PATH) == OK
 	for row_def in AUDIO_BUS_ROWS:
 		var bus: StringName = row_def[0]
-		var v = cfg.get_value(AUDIO_SECTION, String(bus), AUDIO_DEFAULT_VOLUME) if has_file else AUDIO_DEFAULT_VOLUME
-		result[bus] = clampf(float(v), 0.0, 100.0)
+		result[bus] = saved.get(bus, AUDIO_DEFAULT_VOLUME)
 	return result
 
 func _save_audio_settings() -> void:
-	var cfg := ConfigFile.new()
-	# Conservar otras secciones que pudieran existir en settings.cfg.
-	cfg.load(SETTINGS_PATH)
+	var volumes := {}
 	for bus in audio_sliders.keys():
-		cfg.set_value(AUDIO_SECTION, String(bus), int(round(audio_sliders[bus].value)))
-	var err := cfg.save(SETTINGS_PATH)
+		volumes[bus] = audio_sliders[bus].value
+	var err := AudioSettings.save_volumes(volumes)
+	audio_save_count += 1
 	if err != OK:
 		push_warning("[OptionsMenu] No se pudo guardar %s (error %d)" % [SETTINGS_PATH, err])
 

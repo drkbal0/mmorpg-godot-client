@@ -4,6 +4,7 @@ extends Node
 ## Cero instanciación dinámica en runtime para evitar picos de Garbage Collection.
 
 const B = preload("res://audio/audio_buses.gd")
+const AudioSettings = preload("res://audio/audio_settings.gd")
 
 const POOL_SIZE_3D: int = 48
 const POOL_SIZE_2D: int = 16
@@ -34,11 +35,57 @@ var _in_combat: bool = false
 var _combat_timer: float = 0.0
 var _ducking_tween: Tween = null
 
+## Atenuación aplicada a la música durante el combate, relativa a la base del usuario.
+const COMBAT_DUCK_DB: float = 6.0
+## Volumen base del bus Music elegido por el usuario (dB). El ducking se calcula sobre él.
+var user_music_base_db: float = 0.0
+
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	load_and_apply_saved_volumes()
 	_init_pools()
 	_generate_procedural_fallbacks()
+
+
+# -------------------------------------------------------------------------
+# Boot pre-load de volúmenes (user://settings.cfg [audio])
+# -------------------------------------------------------------------------
+
+## Lee [audio] de user://settings.cfg y aplica los volúmenes a AudioServer.
+## Sin archivo/sección los buses quedan en su valor por defecto (100% / 0 dB).
+## Devuelve el número de buses aplicados.
+func load_and_apply_saved_volumes() -> int:
+	var saved := AudioSettings.load_saved_volumes()
+	var applied := 0
+	for bus in saved:
+		if AudioSettings.apply_bus_volume(bus, saved[bus]):
+			applied += 1
+	var music_idx := AudioServer.get_bus_index(B.MUSIC)
+	if music_idx >= 0:
+		user_music_base_db = AudioServer.get_bus_volume_db(music_idx)
+	return applied
+
+
+## Actualiza la base de música del usuario (llamado desde OptionsMenu). Si hay combate
+## activo, mantiene la atenuación relativa (base - COMBAT_DUCK_DB).
+func set_user_music_base_db(db: float) -> void:
+	user_music_base_db = db
+	var music_idx := AudioServer.get_bus_index(B.MUSIC)
+	if music_idx < 0:
+		return
+	if _ducking_tween and _ducking_tween.is_valid():
+		_ducking_tween.kill()
+	AudioServer.set_bus_volume_db(music_idx, get_music_target_db())
+
+
+## Volumen objetivo actual del bus Music según el estado de combate.
+func get_music_target_db() -> float:
+	return user_music_base_db - COMBAT_DUCK_DB if _in_combat else user_music_base_db
+
+
+func is_in_combat() -> bool:
+	return _in_combat
 
 
 func _init_pools() -> void:
@@ -229,7 +276,8 @@ func _set_combat_ducking(active: bool) -> void:
 		_ducking_tween.kill()
 	
 	_ducking_tween = create_tween()
-	var target_db: float = -6.0 if active else 0.0
+	# Relativo a la base del usuario: base - 6 dB en combate, restaurar exactamente a base al salir.
+	var target_db: float = get_music_target_db()
 	var dur: float = 0.12 if active else 0.6
 	_ducking_tween.tween_method(func(vol: float) -> void:
 		AudioServer.set_bus_volume_db(music_bus_idx, vol)
