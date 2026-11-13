@@ -1,4 +1,6 @@
 extends CharacterBody3D
+
+const SpawnSafety = preload("res://shared-core/SpawnSafety.gd")
 # Fix V7.1: Corrected viewport names and type hints for SubViewport compatibility.
 
 enum CameraMode { TOP_DOWN, THIRD_PERSON }
@@ -90,11 +92,12 @@ func _ready():
 		nameplate.pixel_size = 0.009
 		nameplate.shaded = false
 	
-	if AuthManager.last_pos != Vector3(-999, -999, -999):
-		position = AuthManager.last_pos
-		if position == Vector3.ZERO: position.y = 1.0 
+	# Blindaje de spawn (ADR 037/081): World.gd fija "safe_spawn" antes de add_child;
+	# si el jugador se instancia por otra vía, se aplica la misma validación.
+	if has_meta("safe_spawn"):
+		position = get_meta("safe_spawn")
 	else:
-		position = Vector3(randf_range(-5.0, 5.0), 1.0, randf_range(-5.0, 5.0))
+		position = SpawnSafety.resolve(AuthManager.last_pos)
 		
 	setup_camera()
 	_setup_crosshair()

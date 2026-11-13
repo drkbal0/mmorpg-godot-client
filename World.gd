@@ -51,6 +51,7 @@ const KiAuraProjectorScript = preload("res://ui/components/KiSpectralVision/KiAu
 const TacticalPingWheelScene = preload("res://ui/components/TacticalPing/TacticalPingWheel.tscn")
 const TacticalPingBeam3DScene = preload("res://world/TacticalPingBeam3D.gd")
 const WorldNameplateScene = preload("res://ui/screenspace/WorldNameplate.tscn")
+const GildasMerchantScript = preload("res://world/GildasMerchant.gd")
 
 var ki_layer: CanvasLayer = null
 var ki_vision: KiSpectralVision = null
@@ -96,7 +97,9 @@ func _ready():
 	add_to_group("hitbox_debug")
 	
 	# 3. Handle Spawn and Connection
-	if AuthManager.selected_character_id != "":
+	# Fallback seguro (ADR 037/081): aunque no haya personaje seleccionado (editor,
+	# standalone, tests locales) el jugador local SIEMPRE se instancia en un punto válido.
+	if local_player == null:
 		_on_profile_loaded()
 	
 	# Replay any identities and static entities cached before or during scene transition
@@ -132,16 +135,28 @@ func _setup_hud():
 			hud.update_name(AuthManager.selected_character_name)
 			hud.update_hp(100.0) # Initial default
 
+const SpawnSafety = preload("res://shared-core/SpawnSafety.gd")
+const DEFAULT_CHARACTER_NAME := "Aren"
+
+## Blindaje de spawn (ADR 037/081). Delegado en SpawnSafety (compartido con Player.gd).
+static func resolve_safe_spawn(raw_pos: Vector3) -> Vector3:
+	return SpawnSafety.resolve(raw_pos)
+
 func _on_profile_loaded():
 	if local_player == null:
-		print("[World] Spawning local player: ", AuthManager.selected_character_name)
+		if AuthManager.selected_character_name == "":
+			AuthManager.selected_character_name = DEFAULT_CHARACTER_NAME
+		var spawn_pos := resolve_safe_spawn(AuthManager.last_pos)
+		print("[World] Spawning local player: ", AuthManager.selected_character_name, " @ ", spawn_pos)
 		local_player = player_scene.instantiate()
-		local_player.position = AuthManager.last_pos
+		local_player.position = spawn_pos
+		# Player._ready() respeta este meta en vez de recalcular desde last_pos.
+		local_player.set_meta("safe_spawn", spawn_pos)
 		add_child(local_player)
 		
 		# Update HUD with final name if it was empty
-		var hud = UIOrchestrator.registry.get_instance("player_hud")
-		if hud:
+		var hud = UIOrchestrator.registry.get_instance("player_hud") if UIOrchestrator else null
+		if hud and hud.has_method("update_name"):
 			hud.update_name(AuthManager.selected_character_name)
 			
 		# Apply cached HP if connect ACK arrived before player was created
@@ -501,6 +516,10 @@ func _try_select_target():
 	if result:
 		var hit_node = result.collider
 		print("[Targeting] Hit: ", hit_node.name, " (", hit_node.get_parent().name, ")")
+		# Clic sobre un NPC interactuable (Gildas) -> abre su ventana atómicamente
+		if hit_node.get_script() == GildasMerchantScript:
+			hit_node.interact(local_player)
+			return
 		# Search upwards for sid
 		var node = hit_node
 		while node != null and node != self:
@@ -1556,7 +1575,7 @@ func _spawn_overworld_archetypes() -> void:
 	overworld_archetypes.clear()
 
 	# 1. Gildas el Mercader (Puesto Comercial P2P)
-	var gildas = Area3D.new()
+	var gildas: Area3D = GildasMerchantScript.new()
 	gildas.name = "NPC_Gildas"
 	gildas.position = Vector3(4.0, 1.0, 4.0)
 	gildas.collision_layer = 48
@@ -1580,16 +1599,23 @@ func _spawn_overworld_archetypes() -> void:
 	gildas_mesh.material_override = g_mat
 	gildas.add_child(gildas_mesh)
 
-	var gildas_script = load("res://world/GildasMerchant.gd")
-	if gildas_script:
-		gildas.set_script(gildas_script)
+	gildas_mesh.name = "Mesh"
+	gildas_col.name = "Collision"
+	gildas.input_ray_pickable = true
+	gildas.set_meta("archetype_level", 25)
+	gildas.set_meta("archetype_hostile", false)
 	add_child(gildas)
 	overworld_archetypes.append(gildas)
 
+	var gildas_np = WorldNameplateScene.instantiate()
+	gildas_np.name = "WorldNameplate"
+	gildas_np.setup("Gildas el Mercader", 1000.0, 1000.0, false, "‹ MERCADO P2P ›", 25)
+	gildas.set_meta("nameplate", gildas_np)
 	if has_node("/root/ScreenSpaceManager"):
-		var np = WorldNameplateScene.instantiate()
-		np.setup("Gildas el Mercader", 1000.0, 1000.0, false, "‹ MERCADO P2P ›", 25)
-		ScreenSpaceManager.register_target(gildas, np, Vector3(0, 2.2, 0))
+		ScreenSpaceManager.register_target(gildas, gildas_np, Vector3(0, 2.2, 0))
+	else:
+		gildas_np.visible = false
+		gildas.add_child(gildas_np)
 
 	# 2. Guardia Carmesí (Fuerza / Red Aura #ff3344, Nivel 12)
 	var carmesi = _create_mock_mob("Guardia Carmesí", Vector3(-6.0, 1.0, 8.0), Color(0.95, 0.25, 0.25), 12, 1200.0, "‹ DOMINANCIA FUERZA ›")
@@ -1618,22 +1644,31 @@ func _create_mock_mob(p_name: String, pos: Vector3, col: Color, lvl: int, hp: fl
 	var mob = Area3D.new()
 	mob.name = p_name.replace(" ", "_")
 	mob.position = pos
+	# La escala del nodo ya amplía malla y colisión: las dimensiones base NO se
+	# multiplican otra vez (evita el boss a 4.84x por doble escalado).
 	mob.scale = Vector3.ONE * mob_scale
 	mob.collision_layer = 48
 	mob.collision_mask = 48
+	mob.input_ray_pickable = true
 	mob.add_to_group("hitbox_debug")
+	mob.add_to_group("overworld_mob")
+	mob.set_meta("archetype_level", lvl)
+	mob.set_meta("archetype_hostile", true)
+	mob.set_meta("archetype_max_hp", hp)
 
 	var col_shape = CollisionShape3D.new()
+	col_shape.name = "Collision"
 	var cap = CapsuleShape3D.new()
-	cap.radius = 0.4 * mob_scale
-	cap.height = 1.8 * mob_scale
+	cap.radius = 0.4
+	cap.height = 1.8
 	col_shape.shape = cap
 	mob.add_child(col_shape)
 
 	var mesh_inst = MeshInstance3D.new()
+	mesh_inst.name = "Mesh"
 	var c_mesh = CapsuleMesh.new()
-	c_mesh.radius = 0.38 * mob_scale
-	c_mesh.height = 1.8 * mob_scale
+	c_mesh.radius = 0.38
+	c_mesh.height = 1.8
 	mesh_inst.mesh = c_mesh
 	var mat = StandardMaterial3D.new()
 	mat.albedo_color = col
@@ -1641,14 +1676,38 @@ func _create_mock_mob(p_name: String, pos: Vector3, col: Color, lvl: int, hp: fl
 	mesh_inst.material_override = mat
 	mob.add_child(mesh_inst)
 
+	# Aura 3D de dominancia a los pies (siempre visible, independiente del Ki Vision)
+	var aura = MeshInstance3D.new()
+	aura.name = "Aura"
+	var torus = TorusMesh.new()
+	torus.inner_radius = 0.55
+	torus.outer_radius = 0.75
+	aura.mesh = torus
+	aura.position = Vector3(0.0, -0.85, 0.0)
+	var aura_mat = StandardMaterial3D.new()
+	aura_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	aura_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	aura_mat.albedo_color = Color(col.r, col.g, col.b, 0.55)
+	aura_mat.emission_enabled = true
+	aura_mat.emission = col
+	aura_mat.emission_energy_multiplier = 2.0
+	aura.material_override = aura_mat
+	aura.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	mob.add_child(aura)
+
 	add_child(mob)
 	overworld_archetypes.append(mob)
 
 	# Hostile nameplate -> Nivel a la DERECHA
+	var np = WorldNameplateScene.instantiate()
+	np.name = "WorldNameplate"
+	np.setup(p_name, hp, hp, true, title, lvl)
+	mob.set_meta("nameplate", np)
 	if has_node("/root/ScreenSpaceManager"):
-		var np = WorldNameplateScene.instantiate()
-		np.setup(p_name, hp, hp, true, title, lvl)
 		ScreenSpaceManager.register_target(mob, np, Vector3(0, 2.2 * mob_scale, 0))
+	else:
+		np.visible = false
+		mob.add_child(np)
 
 	return mob
 

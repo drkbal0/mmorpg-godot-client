@@ -40,7 +40,10 @@ func set_instance(id: String, node: Node) -> void:
 
 func get_instance(id: String) -> Node:
 	var instance = _instances.get(id)
-	if instance != null and not is_instance_valid(instance):
+	# En Godot 4 una instancia liberada compara == null, por lo que el guard
+	# `instance != null` no la detectaba y el `return` tipado fallaba con
+	# "previously freed instance". is_instance_valid cubre null y liberadas.
+	if not is_instance_valid(instance):
 		_instances.erase(id)
 		return null
 	return instance
