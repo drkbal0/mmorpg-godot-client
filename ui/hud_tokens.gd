@@ -184,18 +184,18 @@ const FS_STAT_VALUE := 14
 # --------------------------------------------------------------------------
 const STAT_SECTIONS: Array[String] = ["OFENSIVA", "DEFENSA", "UTILIDAD"]
 const STAT_SCHEMA: Array[Dictionary] = [
-	{"id": "attack_damage", "label": "Daño ataque", "color": Color("#f0a03c"), "section": 0, "col": 0},
+	{"id": "attack_damage", "label": "Atq. físico", "color": Color("#f0a03c"), "section": 0, "col": 0},
 	{"id": "ability_power", "label": "Poder hab.", "color": Color("#b07cf0"), "section": 0, "col": 1},
 	{"id": "attack_speed", "label": "Vel. ataque", "color": Color("#f0d05a"), "section": 0, "col": 0},
 	{"id": "crit", "label": "Crítico", "color": Color("#f06a5a"), "section": 0, "col": 1},
-	{"id": "armor_pen", "label": "Pen. armad.", "color": Color("#e8783c"), "section": 0, "col": 0},
-	{"id": "magic_pen", "label": "Pen. mágica", "color": Color("#c878f0"), "section": 0, "col": 1},
+	{"id": "armor_pen", "label": "Pen. arm.", "color": Color("#e8783c"), "section": 0, "col": 0},
+	{"id": "magic_pen", "label": "Pen. mág.", "color": Color("#c878f0"), "section": 0, "col": 1},
 	{"id": "life_steal", "label": "Robo vida", "color": Color("#e85a6a"), "section": 0, "col": 0},
 	{"id": "omnivamp", "label": "Omnivamp.", "color": Color("#e870b0"), "section": 0, "col": 1},
 	{"id": "armor", "label": "Armadura", "color": Color("#e8b44c"), "section": 1, "col": 0},
-	{"id": "magic_resist", "label": "Res. mágica", "color": Color("#5ac8e8"), "section": 1, "col": 1},
+	{"id": "magic_resist", "label": "Res. mág.", "color": Color("#5ac8e8"), "section": 1, "col": 1},
 	{"id": "tenacity", "label": "Tenacidad", "color": Color("#a98cf0"), "section": 1, "col": 0},
-	{"id": "heal_shield", "label": "Cur./escudo", "color": Color("#6ad89a"), "section": 1, "col": 1},
+	{"id": "heal_shield", "label": "Cur./esc.", "color": Color("#6ad89a"), "section": 1, "col": 1},
 	{"id": "ability_haste", "label": "Celeridad", "color": Color("#d8dde3"), "section": 2, "col": 0},
 	{"id": "move_speed", "label": "Vel. mov.", "color": Color("#d8dde3"), "section": 2, "col": 1},
 	{"id": "attack_range", "label": "Alcance", "color": Color("#d8dde3"), "section": 2, "col": 0},
