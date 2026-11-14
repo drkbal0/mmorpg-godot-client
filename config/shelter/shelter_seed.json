@@ -1,0 +1,242 @@
+{
+	"name": "El Nido",
+	"subtitle": "Tu depa · Vecindad Umbral 12",
+	"cols": 6,
+	"level_thresholds": [0, 5, 10, 16, 20, 26],
+	"base_comfort": 20,
+	"base_storage": 600,
+	"items": {
+		"madera": {"name": "Madera", "color": "#c79a5b"},
+		"metal": {"name": "Metal", "color": "#c3ccd3"},
+		"esquirlas": {"name": "Esquirlas", "color": "#46e3c1"},
+		"hierbas": {"name": "Hierbas", "color": "#7bd88f"},
+		"resina": {"name": "Resina", "color": "#c79a5b"},
+		"grano": {"name": "Grano", "color": "#f5c35b"},
+		"seda": {"name": "Seda", "color": "#ff9ad5"},
+		"tonicos": {"name": "Tónicos", "color": "#46e3c1"},
+		"barniz": {"name": "Barniz", "color": "#c79a5b"},
+		"lingotes": {"name": "Lingotes", "color": "#c3ccd3"},
+		"pan": {"name": "Pan de Verdalia", "color": "#f5c35b"},
+		"telas": {"name": "Telas", "color": "#ff9ad5"},
+		"oro": {"name": "Oro", "color": "#f5c35b"},
+		"pluma_grieta": {"name": "Pluma de grieta", "color": "#5aa9ff", "rare": true},
+		"llave_oxidada": {"name": "Llave oxidada", "color": "#b78cff", "rare": true},
+		"plano_forja": {"name": "Plano de forja nv 3", "color": "#b78cff", "rare": true}
+	},
+	"storage": {"madera": 512, "metal": 380, "esquirlas": 1240, "hierbas": 22, "resina": 6, "grano": 10, "seda": 3, "pan": 3, "tonicos": 8, "lingotes": 6, "oro": 0},
+	"catalog": {
+		"dormitorio": {"name": "Dormitorio", "color": "#5aa9ff", "category": "muebles", "desc": "Camas: tus personajes descansan aquí.", "cost": {"madera": 120}, "build_hours": 3, "capacity": 2, "comfort": 6, "rest": true},
+		"cocina": {"name": "Cocina", "color": "#f5c35b", "category": "estaciones", "desc": "Pan y tónicos para el grupo.", "cost": {"madera": 100, "metal": 40}, "build_hours": 3, "capacity": 2, "comfort": 3},
+		"despensa": {"name": "Despensa", "color": "#c3ccd3", "category": "muebles", "desc": "Compartida entre personajes.", "cost": {"madera": 80}, "build_hours": 2, "capacity": 1, "comfort": 1, "storage": 200},
+		"almacen": {"name": "Almacén", "color": "#9aa6ae", "category": "muebles", "desc": "Almacén central: aquí llegan dividendos y botín.", "cost": {"madera": 120, "metal": 60}, "build_hours": 3, "capacity": 1, "comfort": 0, "storage": 300},
+		"forja": {"name": "Forja", "color": "#ff9a4d", "category": "estaciones", "desc": "Metal → lingotes. Abre Fabricación.", "cost": {"madera": 80, "metal": 120}, "build_hours": 4, "capacity": 2, "comfort": 0},
+		"taller": {"name": "Taller", "color": "#ff9a4d", "category": "estaciones", "desc": "Mesa de herrero: +calidad en lo fabricado.", "cost": {"madera": 100, "metal": 80}, "build_hours": 4, "capacity": 2, "comfort": 1},
+		"taller_resina": {"name": "Rincón de resina", "color": "#7bd88f", "category": "estaciones", "desc": "Resina → barniz.", "cost": {"madera": 90, "metal": 30}, "build_hours": 2, "capacity": 1, "comfort": 1},
+		"destilador": {"name": "Destilería", "color": "#46e3c1", "category": "estaciones", "desc": "Hierbas + esquirlas → tónicos.", "cost": {"madera": 60, "metal": 100}, "build_hours": 4, "capacity": 2, "comfort": 0},
+		"molino": {"name": "Molino", "color": "#f5c35b", "category": "estaciones", "desc": "Grano → pan de Verdalia.", "cost": {"madera": 120, "metal": 20}, "build_hours": 3, "capacity": 1, "comfort": 1},
+		"huerto": {"name": "Huerto", "color": "#7bd88f", "category": "huerto", "desc": "Invernadero bajo lámparas: más hierbas.", "cost": {"madera": 60}, "build_hours": 2, "capacity": 2, "comfort": 3, "raw_boost": {"hierbas": 6}},
+		"mesa_mapas": {"name": "Mesa de mapas", "color": "#b78cff", "category": "estaciones", "desc": "Expediciones de tus personajes secundarios.", "cost": {"madera": 80, "metal": 40}, "build_hours": 3, "capacity": 1, "comfort": 1},
+		"entrenamiento": {"name": "Maniquí", "color": "#ff6b6b", "category": "estaciones", "desc": "Prueba tu rotación.", "cost": {"madera": 60, "metal": 20}, "build_hours": 2, "capacity": 1, "comfort": 0},
+		"sala": {"name": "Sala", "color": "#f5c35b", "category": "decoracion", "desc": "Recibes visitas · vitrina de trofeos.", "cost": {"madera": 80}, "build_hours": 2, "capacity": 1, "comfort": 8},
+		"telar": {"name": "Telar", "color": "#ff6fa8", "category": "estaciones", "desc": "Mueble-estación: al colocarlo, el cuarto se vuelve taller de telas.", "cost": {"madera": 140, "metal": 80}, "build_hours": 4, "capacity": 2, "comfort": 1},
+		"colmena": {"name": "Colmena antigua", "color": "#b78cff", "category": "huerto", "desc": "Miel de esquirla. Estaba tapiada desde antes de El Nido.", "cost": {}, "build_hours": 0, "capacity": 1, "comfort": 4, "secret": true, "buildable": false}
+	},
+	"decorations": {
+		"sillon": {"name": "Sillón y alfombra", "category": "decoracion", "desc": "+4 de confort", "cost": {"madera": 60}, "comfort": 4},
+		"maceta": {"name": "Maceta grande", "category": "huerto", "desc": "Para el balcón o la azotea", "cost": {"madera": 20}, "comfort": 2},
+		"ventanal": {"name": "Ventanal", "category": "decoracion", "desc": "Se ve tu universo", "cost": {"madera": 120, "metal": 40}, "comfort": 6, "requires_level": 5}
+	},
+	"affinity": {
+		"telar": {"despensa": 10, "almacen": 5},
+		"cocina": {"despensa": 15, "huerto": 5},
+		"forja": {"almacen": 10, "taller": 5},
+		"taller": {"forja": 10},
+		"destilador": {"huerto": 10, "almacen": 5},
+		"molino": {"cocina": 10, "despensa": 5},
+		"huerto": {"destilador": 5},
+		"taller_resina": {"huerto": 10},
+		"mesa_mapas": {"almacen": 5}
+	},
+	"comfort_synergy": {
+		"dormitorio": {"sala": 4, "cocina": 2},
+		"sala": {"cocina": 2}
+	},
+	"floors": [
+		{"name": "Piso 1", "cells": [
+			{"room": "dormitorio", "size": 2, "level": 1},
+			{"state": "room"},
+			{"room": "cocina", "level": 1},
+			{"room": "despensa", "level": 2},
+			{"room": "sala", "level": 2},
+			{"state": "empty"}
+		]},
+		{"name": "Piso 2", "cells": [
+			{"room": "taller", "level": 2},
+			{"room": "taller_resina", "level": 1, "building_hours": 1.33},
+			{"room": "mesa_mapas", "level": 2},
+			{"room": "almacen", "level": 1},
+			{"state": "empty"},
+			{"state": "rock"}
+		]},
+		{"name": "Sótano", "cells": [
+			{"room": "destilador", "level": 2},
+			{"room": "forja", "level": 1},
+			{"room": "molino", "level": 1},
+			{"room": "entrenamiento", "level": 1},
+			{"state": "rock"},
+			{"state": "locked", "requires_level": 5}
+		]},
+		{"name": "Profundo", "cells": [
+			{"state": "secret", "secret": {"id": "lugar_colmena_tapiada", "name": "Colmena antigua", "room_type": "colmena", "hint": "Una puerta tapiada. Se oye un zumbido detrás."}},
+			{"state": "rock"},
+			{"state": "rock"},
+			{"state": "locked", "requires_level": 5},
+			{"state": "locked", "requires_level": 5},
+			{"state": "locked", "requires_level": 6}
+		]}
+	],
+	"dig_cost": {"metal": 40},
+	"new_floor": {"requires_level": 5, "cost": {"metal": 200}, "hours": 2},
+	"surface": {
+		"plots": [
+			{"id": "azotea", "name": "Huerto de azotea", "crop": "hierbas", "yield": 22, "grow_hours": 0.2, "progress_hours": 0.2},
+			{"id": "balcon", "name": "Balcón · macetas", "crop": "hierbas", "yield": 6, "grow_hours": 1.0, "progress_hours": 0.4}
+		],
+		"features": [
+			{"id": "nido_pispa", "name": "Nido de Pispa"},
+			{"id": "escalera", "name": "Escalera al patio", "visitor": "Brisa de visita"},
+			{"id": "portal", "name": "Puerta-portal"}
+		]
+	},
+	"characters": [
+		{"id": "kael", "name": "Kael (tú)", "role": "Herrero", "level": 24, "color": "#9be26b", "is_player": true, "ideal_rooms": ["taller", "forja"], "room": [1, 0]},
+		{"id": "ysolde", "name": "Ysolde", "role": "Guardiana", "level": 18, "color": "#f5b546", "ideal_rooms": ["huerto", "destilador"], "room": [2, 0]},
+		{"id": "torq", "name": "Torq", "role": "Minero", "level": 22, "color": "#5aa9ff", "ideal_rooms": ["forja", "molino"]},
+		{"id": "mira", "name": "Mira", "role": "Cartógrafa", "level": 15, "color": "#b78cff", "ideal_rooms": ["mesa_mapas", "cocina"], "room": [2, 1]},
+		{"id": "lia", "name": "Lía (de Brisa)", "role": "Tejedora", "level": 16, "color": "#6cb8ff", "ideal_rooms": ["telar", "taller_resina"], "loaned_by": "Brisa", "loan_hours": 8, "room": [2, 2]}
+	],
+	"raw_sources": [
+		{"id": "hierbas", "rate": 22, "source": "Invernadero"},
+		{"id": "esquirlas", "rate": 42, "source": "Veta del sótano"},
+		{"id": "resina", "rate": 8, "source": "Invernadero"},
+		{"id": "metal", "rate": 8, "source": "expediciones"},
+		{"id": "grano", "rate": 12, "source": "Parcelas"}
+	],
+	"workshops": [
+		{"id": "destileria", "name": "Destilería", "room_type": "destilador", "inputs": {"hierbas": 2, "esquirlas": 1}, "outputs": {"tonicos": 1}, "base_rate": 3},
+		{"id": "taller_resina", "name": "Taller de resina", "room_type": "taller_resina", "inputs": {"resina": 2}, "outputs": {"barniz": 1}, "base_rate": 3},
+		{"id": "forja", "name": "Forja", "room_type": "forja", "inputs": {"metal": 2}, "outputs": {"lingotes": 1}, "base_rate": 6},
+		{"id": "molino", "name": "Molino", "room_type": "molino", "inputs": {"grano": 1}, "outputs": {"pan": 1}, "base_rate": 25}
+	],
+	"destinations": [
+		{"id": "mercado", "name": "Mercado", "kind": "market", "detail": "vendes 4 /h", "demand": {"tonicos": 4}},
+		{"id": "mision_hierbas", "name": "Misión: Hierbas de la brecha", "kind": "mission", "detail": "pide 4 tónicos", "demand": {"tonicos": 4}},
+		{"id": "mejoras", "name": "Mejoras del refugio", "kind": "upgrade", "detail": "Forja nv 3 pide 20 lingotes", "demand": {"lingotes": 2, "barniz": 1}},
+		{"id": "pispa", "name": "Pispa", "kind": "pispa", "detail": "bocadillos", "demand": {"pan": 2}}
+	],
+	"expeditions": [
+		{"id": "ruinas_ferrum", "name": "Ruinas de Ferrum", "zone": "Ferrum", "risk": "medio", "desc": "Fábricas abandonadas al otro lado de la brecha. Buen metal; a veces, planos.", "durations": [2, 4, 8], "recommended_roles": ["Guardiana", "Herrero"], "recommended_level": 15, "min_chars": 1, "rewards": {"metal": [60, 120], "esquirlas": [40, 80]}, "rare": {"item": "plano_forja", "pct": 8},
+			"event": {"title": "Bifurcación", "text": "{who} encontró dos caminos. El túnel inundado parece tener más vetas.", "options": [
+				{"id": "tunel", "label": "Túnel inundado", "detail": "+50 % botín · −15 % éxito", "loot_mult": 1.5, "success_delta": -15, "safe": false},
+				{"id": "puente", "label": "Puente de cadenas", "detail": "seguro", "loot_mult": 1.0, "success_delta": 0, "safe": true}
+			]}},
+		{"id": "bosque_fosil", "name": "Bosque fósil", "zone": "Verdalia", "risk": "bajo", "desc": "Árboles de piedra con resina antigua.", "durations": [1, 2, 4], "recommended_roles": [], "recommended_level": 1, "min_chars": 1, "rewards": {"hierbas": [40, 80], "resina": [10, 30]}, "rare": {"item": "pluma_grieta", "pct": 4},
+			"event": {"title": "Nido de grifo", "text": "{who} ve huevos brillantes en un nido.", "options": [
+				{"id": "trepar", "label": "Trepar al nido", "detail": "+30 % botín · −10 % éxito", "loot_mult": 1.3, "success_delta": -10, "safe": false},
+				{"id": "rodear", "label": "Rodear la zona", "detail": "seguro", "loot_mult": 1.0, "success_delta": 0, "safe": true}
+			]}},
+		{"id": "grieta_profunda", "name": "Grieta profunda", "zone": "Umbral", "risk": "alto", "desc": "Esquirlas puras y algo que nadie ha visto.", "durations": [8], "recommended_roles": ["Minero"], "recommended_level": 30, "min_chars": 2, "rewards": {"esquirlas": [120, 200]}, "rare": {"item": "llave_oxidada", "pct": 12},
+			"event": {"title": "Eco en la grieta", "text": "{who} oye una voz que llama desde abajo.", "options": [
+				{"id": "bajar", "label": "Bajar a ver", "detail": "+80 % botín · −25 % éxito", "loot_mult": 1.8, "success_delta": -25, "safe": false},
+				{"id": "marcar", "label": "Marcarla y volver", "detail": "seguro", "loot_mult": 1.0, "success_delta": 0, "safe": true}
+			]}},
+		{"id": "biblioteca_runica", "name": "Biblioteca rúnica", "zone": "Runavell", "risk": "bajo", "desc": "Estanterías que se reordenan solas.", "durations": [4], "recommended_roles": ["Guardiana"], "recommended_level": 10, "min_chars": 1, "rewards": {"esquirlas": [20, 40], "seda": [2, 5]}, "rare": {"item": "llave_oxidada", "pct": 5},
+			"event": {"title": "Libro sellado", "text": "{who} encuentra un libro que susurra.", "options": [
+				{"id": "abrir", "label": "Abrirlo", "detail": "+40 % botín · −10 % éxito", "loot_mult": 1.4, "success_delta": -10, "safe": false},
+				{"id": "dejar", "label": "Dejarlo en su sitio", "detail": "seguro", "loot_mult": 1.0, "success_delta": 0, "safe": true}
+			]}}
+	],
+	"active_expeditions": [
+		{"exp_id": "ruinas_ferrum", "chars": ["torq"], "duration": 4, "elapsed": 2.8}
+	],
+	"finished_expeditions": [
+		{"name": "Ysolde · Bosque fósil", "outcome": "success", "summary": "+80 hierbas · +1 nivel · ayer 22:10"},
+		{"name": "Torq · Grieta profunda", "outcome": "partial", "summary": "+140 esquirlas · sin objeto raro"},
+		{"name": "Ysolde · Ruinas de Ferrum", "outcome": "fail", "summary": "Volvió con 20 % del botín · sin penalización"}
+	],
+	"pispa": {
+		"name": "Pispa", "species": "Polilla de las grietas · te sigue desde el día 2",
+		"level": 3, "xp": 340, "xp_next": 500, "affection": 4,
+		"bag_capacity": 20, "stack_max": 12,
+		"traits": [
+			{"id": "olfato", "name": "Olfato de grieta", "desc": "+15 % de esquirlas en cada viaje", "bonus": {"esquirlas": 0.15}},
+			{"id": "curiosa", "name": "Curiosa", "desc": "A veces vuelve con algo que no buscaba", "surprise_pct": 10}
+		],
+		"targets": [
+			{"id": "esquirlas", "name": "Esquirlas", "minutes": 30, "desc": "viaje de 30 min · seguro", "note": "Lo de siempre", "loot": {"esquirlas": [6, 12]}, "color": "#46e3c1"},
+			{"id": "hierbas", "name": "Hierbas", "minutes": 45, "desc": "viaje de 45 min", "loot": {"hierbas": [4, 8]}, "color": "#7bd88f", "mission_item": "hierbas"},
+			{"id": "sorpresa", "name": "Sorpresa", "minutes": 120, "desc": "viaje de 2 h · 5 % objeto raro", "note": "Para cuando no juegas", "loot": {"esquirlas": [4, 10], "resina": [2, 6], "seda": [1, 2]}, "rare": {"item": "pluma_grieta", "pct": 5}, "color": "#b78cff"},
+			{"id": "ferrum", "name": "Materiales de Ferrum", "minutes": 60, "desc": "viaje de 1 h · metal", "loot": {"metal": [6, 14]}, "color": "#c3ccd3", "requires_nest": 4}
+		],
+		"target": "hierbas",
+		"trip_elapsed_min": 30,
+		"bag": [["esquirlas", 8], ["hierbas", 6], ["esquirlas", 4], ["esquirlas", 12], ["esquirlas", 9], ["resina", 3], ["hierbas", 2], ["pluma_grieta", 1], ["esquirlas", 5], ["hierbas", 7], ["llave_oxidada", 1], ["hierbas", 6], ["seda", 3], ["resina", 2]],
+		"journal": [
+			{"text": "Pluma de grieta (rara)", "when": "hoy 14:20 · búsqueda sorpresa", "color": "#5aa9ff"},
+			{"text": "Hierba de la brecha ×6", "when": "hoy 12:05", "color": "#7bd88f"},
+			{"text": "Esquirlas ×42", "when": "hoy 10:40", "color": "#46e3c1"},
+			{"text": "Llave oxidada (misterio)", "when": "ayer · abre algo en Runavell", "color": "#b78cff"}
+		],
+		"nest_bonus": {"4": {"bag": 6, "unlock": "ferrum"}}
+	},
+	"mission_needs": {"hierbas": 4},
+	"upgrades": [
+		{"id": "invernadero", "name": "Invernadero", "color": "#7bd88f", "tiers": [
+			{"name": "Huerto", "done": true}, {"name": "Riego", "done": true},
+			{"name": "Resina", "effect": "desbloquea Resina", "cost": {"madera": 150}, "hours": 3, "goal": "hoja_grieta"},
+			{"name": "Flor de grieta", "cost": {"madera": 250, "esquirlas": 200}, "hours": 5},
+			{"name": "Bosque mini", "requires_level": 5}]},
+		{"id": "forja", "name": "Forja", "color": "#ff9a4d", "tiers": [
+			{"name": "Yunque", "done": true}, {"name": "Fuelle", "done": true},
+			{"name": "Cola +1", "effect": "+5 % calidad", "cost": {"metal": 200}, "hours": 4, "goal": "hoja_grieta", "why": "Con la resina lista, sube la calidad del arma que vas a fabricar."},
+			{"name": "Aleaciones", "cost": {"metal": 350}, "hours": 6},
+			{"name": "Maestría", "requires_level": 5}]},
+		{"id": "mesa_mapas", "name": "Mesa de expediciones", "color": "#b78cff", "tiers": [
+			{"name": "Mapa", "done": true}, {"name": "Brújula", "done": true},
+			{"name": "2 personajes", "effect": "Ysolde sube antes", "cost": {"madera": 150, "metal": 60}, "hours": 3, "goal": "subir_ysolde"},
+			{"name": "Ferrum lejano", "cost": {"metal": 220}, "hours": 5},
+			{"name": "Grieta abisal", "requires_level": 5}]},
+		{"id": "destilador", "name": "Destilador", "color": "#46e3c1", "tiers": [
+			{"name": "Alambique", "done": true}, {"name": "Filtro", "done": true}, {"name": "Doble paso", "done": true},
+			{"name": "Flujo", "cost": {"metal": 160}, "hours": 2.67, "in_progress_left": 2.67},
+			{"name": "Cristal puro", "requires_level": 5}]},
+		{"id": "nido_pispa", "name": "Nido de Pispa", "color": "#f5c35b", "tiers": [
+			{"name": "Ramitas", "done": true}, {"name": "Musgo", "done": true}, {"name": "Linterna", "done": true},
+			{"name": "Bolsa +6", "effect": "+6 espacios en la bolsa", "cost": {"madera": 200, "seda": 5}, "hours": 3},
+			{"name": "Rutas Ferrum", "requires_level": 5}]},
+		{"id": "dormitorio", "name": "Dormitorio", "color": "#5aa9ff", "tiers": [
+			{"name": "Camas", "done": true},
+			{"name": "Descanso +", "effect": "+10 % descanso", "cost": {"madera": 200}, "hours": 2},
+			{"name": "Cama extra", "cost": {"madera": 260}, "hours": 3},
+			{"name": "Sueño lúcido", "cost": {"esquirlas": 300}, "hours": 4},
+			{"name": "Torre", "requires_level": 5}]},
+		{"id": "almacen", "name": "Almacén", "color": "#9aa6ae", "tiers": [
+			{"name": "Estantes", "done": true}, {"name": "Cofres", "done": true},
+			{"name": "+200", "effect": "+200 de capacidad", "cost": {"metal": 300}, "hours": 3, "storage": 200},
+			{"name": "Clasificado", "cost": {"madera": 200}, "hours": 3},
+			{"name": "Bóveda", "requires_level": 5}]},
+		{"id": "entrenamiento", "name": "Sala de entrenamiento", "color": "#ff6b6b", "tiers": [
+			{"name": "Maniquí", "done": true},
+			{"name": "Grabación", "cost": {"esquirlas": 150}, "hours": 2},
+			{"name": "Jefe sombra", "cost": {"esquirlas": 300}, "hours": 4},
+			{"name": "Arena", "cost": {"metal": 300}, "hours": 6},
+			{"name": "Duelo", "requires_level": 5}]}
+	],
+	"goals": [
+		{"id": "hoja_grieta", "label": "Meta: fabricar Hoja de la grieta", "why": "Sin Resina no puedes fabricar la Hoja de la grieta ni terminar «Hierbas de la brecha»."},
+		{"id": "subir_ysolde", "label": "Meta: subir a Ysolde", "why": "Mandar a 2 personajes sube el éxito y Ysolde gana niveles más rápido."}
+	],
+	"upgrade_slots": 2,
+	"decor": [{"id": "sillon", "room": [0, 4]}, {"id": "maceta", "room": [0, 0]}],
+	"dividend_sources": {"pnj_gildas": "Gildas", "pnj_torin": "Torin"}
+}

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/windows/ShelterWindow/ShelterPocket.gd" id="1_pocket"]
+
+[node name="ShelterPocket" type="PanelContainer"]
+custom_minimum_size = Vector2(480, 430)
+offset_right = 480.0
+offset_bottom = 430.0
+script = ExtResource("1_pocket")

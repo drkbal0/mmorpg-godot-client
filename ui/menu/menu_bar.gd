@@ -34,7 +34,7 @@ const DEFAULT_TABS: Array[Dictionary] = [
 	{"id": "mapa", "icon": "M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15", "label": "Mapa", "key": KEY_M, "window": "map_window"},
 	{"id": "codice", "icon": "M2 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v14a2 2 0 0 1 2-2h8z", "label": "Códice", "key": KEY_J, "window": "codex_window"},
 	{"id": "social", "icon": "M9 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M2 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2.4.6 4 2.8 4 6.5", "label": "Social", "key": KEY_O, "window": "social_window"},
-	{"id": "refugio", "icon": "M3 11l9-7 9 7M5 9.5V21h14V9.5M10 21v-6h4v6", "label": "Refugio", "key": KEY_H, "window": "shelter_lobby"},
+	{"id": "refugio", "icon": "M3 11l9-7 9 7M5 9.5V21h14V9.5M10 21v-6h4v6", "label": "Refugio", "key": KEY_H, "window": "shelter"},
 	{"id": "comercio", "icon": "M6 7h12l-1 14H7zM9 7V5a3 3 0 0 1 6 0v2", "label": "Comercio", "key": KEY_P, "window": "marketplace_window",
 		"subtabs": [
 			{"id": "mercado", "label": "Mercado", "window": "marketplace_window"},

@@ -383,7 +383,7 @@ func _test_menu_bar() -> void:
 
 	var expected_nav := {
 		KEY_C: "inventory", KEY_N: "powers", KEY_L: "quests_window", KEY_M: "map_window",
-		KEY_J: "codex_window", KEY_O: "social_window", KEY_H: "shelter_lobby",
+		KEY_J: "codex_window", KEY_O: "social_window", KEY_H: "shelter",
 	}
 	for code in expected_nav:
 		log.clear()

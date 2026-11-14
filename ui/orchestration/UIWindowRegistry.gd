@@ -28,6 +28,10 @@ func _register_initial_windows() -> void:
 	# UI v2.4 Paso 6-7: Poderes [N] (Crisol · Atlas · Constelación · Afinidades) y oferta del pionero.
 	register("powers", "res://ui/windows/PowersWindow/PowersWindow.tscn", UITypes.WindowCategory.GAME_WINDOW, [KEY_N])
 	register("pioneer_offer", "res://ui/windows/PioneerOfferModal/PioneerOfferModal.tscn", UITypes.WindowCategory.MODAL_OVERLAY)
+	# UI v2.4 Paso 8: Refugio «El Nido» [H] (corte lateral · Construir B · Producción · Expediciones · Pispa · Mejoras)
+	# y su versión de bolsillo para colas, antesalas y pantallas de carga (Anexo D).
+	register("shelter", "res://ui/windows/ShelterWindow/ShelterWindow.tscn", UITypes.WindowCategory.GAME_WINDOW, [KEY_H])
+	register("shelter_pocket", "res://ui/windows/ShelterWindow/ShelterPocket.tscn", UITypes.WindowCategory.GAME_WINDOW)
 
 
 func register(id: String, scene_path: String, category: int, shortcut_keys: Array = []) -> void:
