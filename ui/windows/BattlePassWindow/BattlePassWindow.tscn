@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/windows/BattlePassWindow/BattlePassWindow.gd" id="1_script"]
+
+[node name="BattlePassWindow" type="PanelContainer"]
+custom_minimum_size = Vector2(1270, 680)
+offset_right = 1270.0
+offset_bottom = 680.0
+script = ExtResource("1_script")

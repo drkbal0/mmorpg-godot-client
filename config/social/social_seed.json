@@ -1,0 +1,94 @@
+{
+  "player": {"id": "kael", "name": "Kael", "level": 31},
+  "max_party": 4,
+  "party": ["toro", "brisa"],
+  "loan_hours": 8,
+  "friends": [
+    {"id": "toro", "name": "Toro", "level": 31, "class": "warrior", "zone": "Vado Roto", "status": "online", "activity": "En tu grupo", "guild": false, "color": "#ff9b5a"},
+    {"id": "brisa", "name": "Brisa", "level": 30, "class": "druid", "zone": "Vado Roto", "status": "online", "activity": "En tu grupo", "guild": false, "color": "#6cb8ff"},
+    {"id": "mira", "name": "Mira", "level": 33, "class": "mage", "zone": "Nexo", "status": "online", "activity": "Oficial · en el Nexo", "guild": true, "color": "#c39bff"},
+    {"id": "ulric", "name": "Ulric", "level": 34, "class": "paladin", "zone": "Bóveda de Ferrum", "status": "online", "activity": "Bóveda de Ferrum · 3/5", "guild": true, "color": "#f5c35b"},
+    {"id": "sasha", "name": "Sasha", "level": 29, "class": "rogue", "zone": "El Nido", "status": "online", "activity": "Fabricando · busca hierbas", "guild": false, "color": "#4fe39a"},
+    {"id": "dren", "name": "Dren", "level": 27, "class": "hunter", "zone": "Verdalia", "status": "away", "activity": "Ausente 20 min", "guild": true, "color": "#9be26b"},
+    {"id": "ivo", "name": "Ivo", "level": 25, "class": "priest", "zone": "Nexo", "status": "offline", "activity": "Desconectado · hace 2 h", "guild": false, "color": "#9aa6ae"},
+    {"id": "lune", "name": "Lune", "level": 32, "class": "warlock", "zone": "Runavell", "status": "offline", "activity": "Desconectada · ayer", "guild": true, "color": "#9aa6ae"}
+  ],
+  "guild": {
+    "name": "Orden del Umbral", "level": 7, "motto": "Donde se abre una grieta, llegamos primero.",
+    "rank": "Veterano", "members_total": 64, "online_total": 42,
+    "event": "Raid mañana 21:00 · 18/20 confirmados",
+    "chest_gold": 48200, "chest_goal": 60000, "chest_goal_label": "Estandarte de la sede (nivel 8)",
+    "donation_presets": [100, 500, 1000],
+    "members": [
+      {"name": "Aurel", "rank": "Maestre", "online": true, "zone": "Nexo"},
+      {"name": "Mira", "rank": "Oficial", "online": true, "zone": "Nexo"},
+      {"name": "Ulric", "rank": "Oficial", "online": true, "zone": "Bóveda de Ferrum"},
+      {"name": "Kael (tú)", "rank": "Veterano", "online": true, "zone": "Vado Roto"},
+      {"name": "Dren", "rank": "Veterano", "online": false, "zone": "Verdalia"},
+      {"name": "Nox", "rank": "Miembro", "online": true, "zone": "Arena"},
+      {"name": "Kora", "rank": "Miembro", "online": true, "zone": "Ferrum"},
+      {"name": "Lune", "rank": "Miembro", "online": false, "zone": "Runavell"},
+      {"name": "Pim", "rank": "Aspirante", "online": true, "zone": "El Nido"}
+    ],
+    "donations": [
+      {"name": "Mira", "amount": 1500},
+      {"name": "Ulric", "amount": 800}
+    ]
+  },
+  "neighborhood": {
+    "id": "umbral_12", "name": "Vecindad Umbral 12", "floors": 6, "units_per_floor": 4,
+    "neighbors_total": 32, "guild_neighbors": 6, "player_unit": [3, 1], "player_comfort": 62,
+    "apartments": [
+      {"floor": 0, "unit": 0, "owner": "Mira", "home": true, "friend": true, "guild": true},
+      {"floor": 0, "unit": 1, "owner": "Joao", "home": false},
+      {"floor": 0, "unit": 2, "owner": "", "rent": true},
+      {"floor": 0, "unit": 3, "owner": "Sasha", "home": true, "friend": true},
+      {"floor": 1, "unit": 0, "owner": "Dren", "home": false, "friend": true, "guild": true},
+      {"floor": 1, "unit": 1, "owner": "Nox", "home": false, "guild": true},
+      {"floor": 1, "unit": 2, "owner": "Toro", "home": true, "friend": true},
+      {"floor": 1, "unit": 3, "owner": "Brisa", "home": true, "friend": true},
+      {"floor": 2, "unit": 0, "owner": "Ulric", "home": false, "friend": true, "guild": true},
+      {"floor": 2, "unit": 1, "owner": "", "rent": true},
+      {"floor": 2, "unit": 2, "owner": "Vela", "home": false},
+      {"floor": 2, "unit": 3, "owner": "Aren", "home": false},
+      {"floor": 3, "unit": 0, "owner": "Pim", "home": true},
+      {"floor": 3, "unit": 2, "owner": "Lune", "home": false, "friend": true, "guild": true},
+      {"floor": 3, "unit": 3, "owner": "Ivo", "home": false, "friend": true},
+      {"floor": 4, "unit": 0, "owner": "Kora", "home": false, "guild": true},
+      {"floor": 4, "unit": 1, "owner": "Tess", "home": true},
+      {"floor": 4, "unit": 2, "owner": "Bram", "home": false},
+      {"floor": 4, "unit": 3, "owner": "", "rent": true},
+      {"floor": 5, "unit": 0, "owner": "Oda", "home": false},
+      {"floor": 5, "unit": 1, "owner": "Rhea", "home": true},
+      {"floor": 5, "unit": 2, "owner": "Finn", "home": false},
+      {"floor": 5, "unit": 3, "owner": "Aurel", "home": true, "guild": true}
+    ],
+    "residents_online": [
+      {"name": "Brisa", "where": "En su depa · regando", "action": "Visitar", "friend": true},
+      {"name": "Toro", "where": "En el patio", "action": "Saludar", "friend": true},
+      {"name": "Mira", "where": "Gremio · en su depa", "action": "Visitar", "friend": true, "guild": true},
+      {"name": "Sasha", "where": "Vende en el mercadillo", "action": "Ver", "friend": true},
+      {"name": "Aurel", "where": "Narrador · evento 21:00", "action": "Seguir", "guild": true},
+      {"name": "Pim", "where": "Nuevo vecino", "action": "Dar bienvenida"}
+    ],
+    "patio": [
+      {"id": "fuente", "name": "Fuente", "note": "Punto de aparición"},
+      {"id": "tablon", "name": "Tablón", "note": "Grupos, eventos, avisos"},
+      {"id": "buzones", "name": "Buzones", "note": "Correo y regalos · 2"},
+      {"id": "mercadillo", "name": "Mercadillo", "note": "Vecinos venden excedentes"},
+      {"id": "puerta", "name": "Puerta al mundo", "note": "Sales por tu última zona segura"},
+      {"id": "escalera", "name": "Escalera", "note": "A tu depa y, luego, a tu terreno"}
+    ],
+    "projects": [
+      {"id": "horno_comunal", "name": "Horno comunal", "resource": "madera", "progress": 3200, "goal": 5000, "reward": "todos ganan pan gratis al terminar"},
+      {"id": "huerto_azotea", "name": "Huerto comunitario de azotea", "resource": "semillas", "progress": 180, "goal": 600, "reward": "+10 % de cosecha para todos los vecinos"}
+    ],
+    "other_neighborhoods": [
+      {"id": "umbral_7", "name": "Vecindad Umbral 7", "friends": ["Ulric", "Ivo"], "free_units": 3},
+      {"id": "brecha_3", "name": "Vecindad Brecha 3", "friends": ["Lune"], "free_units": 1},
+      {"id": "nexo_1", "name": "Vecindad Nexo 1", "friends": [], "free_units": 0}
+    ],
+    "move_cooldown_days": 7,
+    "last_move_day": -100
+  }
+}

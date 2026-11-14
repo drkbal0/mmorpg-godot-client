@@ -1,0 +1,60 @@
+{
+  "map_size": [2000, 1300],
+  "world_to_map": {"origin": [1000, 860], "scale": 1.2},
+  "current_location": "vado_roto",
+  "regions": [
+    {"id": "verdalia", "name": "Verdalia · Bosque de la brecha", "universe": "Verdalia", "kind": "aventura", "rect": [500, 380, 720, 400], "explored": true, "explored_pct": 64, "color": "#2f5a36"},
+    {"id": "forja", "name": "Forja de Ferrum", "universe": "Ferrum", "kind": "tecnológico", "rect": [1300, 180, 420, 330], "explored": true, "explored_pct": 31, "color": "#4a3a2a"},
+    {"id": "nexo", "name": "Nexo", "universe": "Nexo", "kind": "ciudad central", "rect": [820, 780, 400, 220], "explored": true, "explored_pct": 88, "color": "#2a3d4a"},
+    {"id": "runavell", "name": "Criptas de Runavell", "universe": "Runavell", "kind": "rúnico", "rect": [1300, 620, 420, 320], "explored": false, "explored_pct": 12, "color": "#3a2d4a"},
+    {"id": "cumbres", "name": "Cumbres de Escarcha", "universe": "Verdalia", "kind": "aventura", "rect": [500, 120, 720, 240], "explored": false, "explored_pct": 0, "color": "#3a4650"},
+    {"id": "paramo", "name": "Páramo de ceniza", "universe": "Ferrum", "kind": "tecnológico", "rect": [120, 300, 360, 420], "explored": false, "explored_pct": 0, "color": "#4a3030"},
+    {"id": "bosque_fosil", "name": "Bosque fósil", "universe": "Verdalia", "kind": "aventura", "rect": [420, 920, 380, 260], "explored": false, "explored_pct": 8, "color": "#3d4a2a"}
+  ],
+  "pois": [
+    {"id": "npc_gildas", "kind": "npc", "name": "Gildas", "subtitle": "Comerciante · Overworld", "region": "verdalia", "pos": [900, 600]},
+    {"id": "npc_torin", "kind": "npc", "name": "Torin", "subtitle": "Herrero · Forja de Ferrum", "region": "forja", "pos": [1530, 330]},
+    {"id": "boss_valgorath", "kind": "boss", "name": "Val'Gorath", "subtitle": "Guardián del Umbral · jefe élite", "region": "verdalia", "pos": [1180, 470]},
+    {"id": "nido_entrance", "kind": "shelter", "name": "El Nido", "subtitle": "Entrada a tu Refugio · zona segura", "region": "verdalia", "pos": [930, 690]},
+    {"id": "post_vado", "kind": "post", "name": "Puesto del Vado", "subtitle": "Posta de caravanas · zona segura", "region": "verdalia", "pos": [1050, 610]},
+    {"id": "portal_ferrum", "kind": "portal", "name": "Portal a Ferrum", "subtitle": "Brecha abierta", "region": "verdalia", "pos": [1210, 400]},
+    {"id": "boveda_ferrum", "kind": "dungeon", "name": "Bóveda de Ferrum", "subtitle": "Mazmorra · 5 jugadores", "region": "forja", "pos": [1620, 440]},
+    {"id": "plaza_nexo", "kind": "post", "name": "Plaza del Nexo", "subtitle": "Ciudad · mercado nómada 19:00", "region": "nexo", "pos": [1010, 880]},
+    {"id": "cripta_runica", "kind": "dungeon", "name": "Cripta rúnica", "subtitle": "Mazmorra", "region": "runavell", "pos": [1520, 800]},
+    {"id": "coloso_runavell", "kind": "boss", "name": "Coloso de Runavell", "subtitle": "Jefe del mundo · 18:30", "region": "runavell", "pos": [1640, 700]}
+  ],
+  "labels": [
+    {"text": "VADO ROTO", "pos": [1010, 540], "region": "verdalia"},
+    {"text": "CLARO DE LOS ECOS", "pos": [700, 700], "region": "verdalia"}
+  ],
+  "modes": [
+    {"id": "caravana", "name": "Caravana", "speed_kmh": 16.0, "path_factor": 1.0, "cost_base": 20, "cost_per_km": 6.25, "risk": 0.05, "escorted": true, "departs_every_min": 10, "next_departure_min": 6, "color": "#46e3c1",
+     "desc": "Sale cada 10 min del Puesto del Vado. Puedes abrir El Nido o el mercado mientras viajas."},
+    {"id": "montura", "name": "Montura", "speed_kmh": 16.0, "path_factor": 1.5, "cost_base": 0, "cost_per_km": 0.0, "risk": 0.2, "escorted": false, "color": "#4fe39a",
+     "desc": "Por el camino real. Emboscadas posibles en el tramo de la brecha."},
+    {"id": "atajo", "name": "A pie por tu atajo", "speed_kmh": 6.0, "path_factor": 0.8125, "cost_base": 0, "cost_per_km": 0.0, "risk": 0.4, "escorted": false, "requires_secret": "lugar_cueva_ambar", "requires_destination_flag": "shortcut", "color": "#9be26b",
+     "desc": "Cruza la Cueva de ámbar (secreto tuyo). Recursos raros por el camino."},
+    {"id": "dirigible", "name": "Dirigible de Ferrum", "speed_kmh": 30.0, "path_factor": 1.0, "cost_base": 120, "cost_per_km": 0.0, "risk": 0.03, "escorted": true, "requires_destination_flag": "airship", "next_departure_min": 34, "color": "#5aa9ff",
+     "desc": "Sale a las horas en punto. Próxima: en 34 min."},
+    {"id": "puerta_nido", "name": "Puerta de El Nido", "speed_kmh": 0.0, "path_factor": 0.0, "fixed_min": 1, "cost_base": 0, "cost_per_km": 0.0, "risk": 0.0, "escorted": true, "requires_safe_origin": true, "requires_destination_flag": "nest", "only_for_flag": "nest", "color": "#b78cff",
+     "desc": "Desde cualquier zona segura cruzas la puerta de tu depa. No es un teletransporte: solo funciona en zona segura."}
+  ],
+  "locations": [
+    {"id": "vado_roto", "name": "Vado Roto", "safe": false, "poi": ""},
+    {"id": "puesto_vado", "name": "Puesto del Vado", "safe": true, "poi": "post_vado"}
+  ],
+  "breach_risk": 0.1,
+  "destinations": [
+    {"id": "boveda_ferrum", "name": "Bóveda de Ferrum", "subtitle": "Mazmorra · tu grupo va ahí", "poi": "boveda_ferrum", "distance_km": 3.2, "crosses_breach": true, "flags": ["airship", "shortcut"]},
+    {"id": "puesto_vado", "name": "Puesto del Vado", "subtitle": "Zona segura · 240 m", "poi": "post_vado", "distance_km": 0.24, "crosses_breach": false, "flags": []},
+    {"id": "nexo", "name": "Nexo", "subtitle": "Ciudad · 2 postas", "poi": "plaza_nexo", "distance_km": 5.6, "crosses_breach": false, "flags": ["airship"]},
+    {"id": "el_nido", "name": "El Nido", "subtitle": "Tu depa · desde cualquier zona segura", "poi": "nido_entrance", "distance_km": 0.0, "crosses_breach": false, "flags": ["nest"]},
+    {"id": "coloso_runavell", "name": "Coloso de Runavell", "subtitle": "Evento 18:30 · 3 postas", "poi": "coloso_runavell", "distance_km": 8.4, "crosses_breach": true, "flags": []},
+    {"id": "atajo_cueva", "name": "Atajo de la cueva", "subtitle": "Secreto tuyo · solo tú lo ves", "poi": "", "secret": "lugar_cueva_ambar", "distance_km": 1.8, "crosses_breach": false, "flags": ["shortcut"]}
+  ],
+  "events": [
+    {"time": "18:30", "name": "Coloso de Runavell", "note": "Jefe del mundo · otro universo", "action": "Avisarme 5 min antes", "color": "#f5c35b"},
+    {"time": "18:45", "name": "Invasión del Vado Roto", "note": "Aquí · 6 grupos interesados", "action": "Unirme a la cola", "color": "#ff6b6b"},
+    {"time": "19:00", "name": "Mercado nómada", "note": "Nexo · 1 hora", "action": "Ver catálogo", "color": "#46e3c1"}
+  ]
+}

@@ -466,8 +466,10 @@ func _test_orchestrator_bridge() -> void:
 	check(bar.navigation_requested.get_connections().size() == 1, "connect_menu_bar es idempotente")
 	var unhandled := [""]
 	orch.menu_navigation_unhandled.connect(func(w: String, _p: Dictionary) -> void: unhandled[0] = w)
-	bar.select_subtab("comercio", "tienda")
-	check(unhandled[0] == "shop_window", "Ventana sin registrar (Tienda) -> menu_navigation_unhandled")
+	# Paso 9: la Tienda ya está registrada; una ventana pendiente sigue avisando.
+	bar.navigation_requested.emit("ventana_pendiente", {})
+	check(unhandled[0] == "ventana_pendiente", "Ventana sin registrar -> menu_navigation_unhandled")
+	check(orch.registry.is_registered("shop_window") and orch.registry.is_registered("battle_pass_window"), "Tienda y Pase registrados (Paso 9)")
 	check(orch.registry.is_registered("codex_window") and orch.registry.is_registered("marketplace_window"), "Ventanas existentes (Códice, Mercado) registradas para el menú")
 	bar.queue_free()
 	await process_frame

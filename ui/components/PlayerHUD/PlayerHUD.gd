@@ -91,6 +91,11 @@ func _setup_hudv2() -> void:
 		"ability_haste": 10, "move_speed": 348,
 		"attack_range": 175, "regen": "19 | 55",
 	})
+	# UI v2.4 Paso 9: el rastreador de misiones del HUD refleja las (máx. 3) misiones
+	# que el jugador sigue desde Misiones [L].
+	var quest_service = get_node_or_null("/root/QuestService")
+	if quest_service and quest_service.has_method("bind_hud"):
+		quest_service.bind_hud(hud_v2)
 
 func _setup_wings_overlay() -> void:
 	var hud_margin = get_node_or_null("RootBottom/HUDMargin")

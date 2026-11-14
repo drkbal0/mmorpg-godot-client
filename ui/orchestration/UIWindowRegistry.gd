@@ -32,6 +32,13 @@ func _register_initial_windows() -> void:
 	# y su versión de bolsillo para colas, antesalas y pantallas de carga (Anexo D).
 	register("shelter", "res://ui/windows/ShelterWindow/ShelterWindow.tscn", UITypes.WindowCategory.GAME_WINDOW, [KEY_H])
 	register("shelter_pocket", "res://ui/windows/ShelterWindow/ShelterPocket.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	# UI v2.4 Paso 9: Misiones [L], Mapa y viajes [M], Social y vecindad [O] y Comercio [P]
+	# (Tienda y Pase de batalla en construcción; se abren desde el submenú Comercio).
+	register("quests_window", "res://ui/windows/QuestsWindow/QuestsWindow.tscn", UITypes.WindowCategory.GAME_WINDOW, [KEY_L])
+	register("map_window", "res://ui/windows/MapWindow/MapWindow.tscn", UITypes.WindowCategory.GAME_WINDOW, [KEY_M])
+	register("social_window", "res://ui/windows/SocialWindow/SocialWindow.tscn", UITypes.WindowCategory.GAME_WINDOW, [KEY_O])
+	register("shop_window", "res://ui/windows/ShopWindow/ShopWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	register("battle_pass_window", "res://ui/windows/BattlePassWindow/BattlePassWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 
 
 func register(id: String, scene_path: String, category: int, shortcut_keys: Array = []) -> void:

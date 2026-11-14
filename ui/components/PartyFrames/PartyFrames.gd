@@ -151,7 +151,10 @@ func set_loot_policy(policy: String) -> void:
 func clear_party() -> void:
 	_frames_by_id.clear()
 	if is_instance_valid(member_list):
+		# Se sacan del árbol antes de liberarlos: si no, `set_party_members()` llamado
+		# en el mismo frame seguiría contándolos para el límite de MAX_PARTY_MEMBERS.
 		for child in member_list.get_children():
+			member_list.remove_child(child)
 			child.queue_free()
 
 

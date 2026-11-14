@@ -1,0 +1,63 @@
+{
+  "wallet": {"gold": 12480, "prisms": 340},
+  "shop": {
+    "under_construction": true,
+    "banner": "Estructura propuesta de la tienda · contenido y precios por definir",
+    "allowed_kinds": ["cosmetic", "comfort"],
+    "forbidden_fields": ["stats", "power", "damage", "armor", "item_level", "combat", "xp_boost", "attributes"],
+    "policy": "Propuesta: la tienda solo vende apariencia y comodidad, nunca poder en combate. Precios siempre visibles en Prismas y en dinero real.",
+    "categories": [
+      {"id": "destacado", "label": "Destacado"},
+      {"id": "apariencias", "label": "Apariencias"},
+      {"id": "monturas", "label": "Monturas"},
+      {"id": "mascotas", "label": "Mascotas"},
+      {"id": "decoracion", "label": "Decoración del refugio"},
+      {"id": "comodidades", "label": "Comodidades"},
+      {"id": "prismas", "label": "Prismas"}
+    ],
+    "items": [
+      {"id": "skin_guardabosques", "name": "Apariencia «Guardabosques»", "category": "apariencias", "kind": "cosmetic", "price_prisms": 900, "featured": true, "color": "#9be26b"},
+      {"id": "skin_umbral", "name": "Capa del Umbral", "category": "apariencias", "kind": "cosmetic", "price_prisms": 600, "color": "#c39bff"},
+      {"id": "mount_ciervo", "name": "Ciervo de musgo", "category": "monturas", "kind": "cosmetic", "price_prisms": 1400, "featured": true, "color": "#4fe39a", "note": "misma velocidad que cualquier montura"},
+      {"id": "pet_polilla", "name": "Polilla lunar", "category": "mascotas", "kind": "cosmetic", "price_prisms": 500, "featured": true, "color": "#7ee8ff"},
+      {"id": "deco_farolillos", "name": "Farolillos de azotea", "category": "decoracion", "kind": "cosmetic", "price_prisms": 300, "featured": true, "color": "#f5c35b"},
+      {"id": "deco_chimenea", "name": "Chimenea de piedra rúnica", "category": "decoracion", "kind": "cosmetic", "price_prisms": 450, "color": "#ff9b5a"},
+      {"id": "comfort_pestana_banco", "name": "Pestaña extra de banco", "category": "comodidades", "kind": "comfort", "price_prisms": 400, "featured": true, "color": "#6cb8ff"},
+      {"id": "comfort_cambio_nombre", "name": "Cambio de nombre", "category": "comodidades", "kind": "comfort", "price_prisms": 800, "color": "#9aa6ae"}
+    ],
+    "packs": [
+      {"id": "pack_500", "prisms": 500, "bonus": 0, "price_real": "4,99 €"},
+      {"id": "pack_1100", "prisms": 1000, "bonus": 100, "price_real": "9,99 €"},
+      {"id": "pack_2400", "prisms": 2000, "bonus": 400, "price_real": "19,99 €"},
+      {"id": "pack_6500", "prisms": 5000, "bonus": 1500, "price_real": "49,99 €"}
+    ]
+  },
+  "battle_pass": {
+    "under_construction": true,
+    "banner": "Estructura propuesta del pase de batalla · recompensas por definir",
+    "season": 1, "name": "La Brecha de Ferrum", "days_left": 41,
+    "max_level": 50, "xp_per_level": 1000, "level": 12, "xp": 640,
+    "premium_unlocked": false, "premium_price_prisms": 950,
+    "policy": "Propuesta: el pase da XP jugando cualquier cosa (también refugio y expediciones). Lo que ya ganaste nunca se pierde al acabar la temporada. Precio en Prismas por definir.",
+    "activity_xp": {"combate": 120, "misiones": 250, "refugio": 80, "expediciones": 150, "fabricacion": 90, "social": 60, "exploracion": 100, "mazmorras": 300, "default": 50},
+    "filler": {"free": "Cofre de materiales", "premium": "Tinte de temporada"},
+    "milestones": [
+      {"level": 1, "free": "Marco «Brecha»", "premium": "Apariencia «Recluta de Ferrum»"},
+      {"level": 5, "free": "Emblema de temporada", "premium": "Mascota «Chispa de forja»"},
+      {"level": 10, "free": "Título «Explorador de grietas»", "premium": "Capa de engranajes"},
+      {"level": 15, "free": "Mueble: farol de Ferrum", "premium": "Montura «Autómata de bronce»"},
+      {"level": 20, "free": "Tinte «Óxido»", "premium": "Apariencia «Forjador»"},
+      {"level": 25, "free": "Retrato animado", "premium": "Decoración: yunque rúnico"},
+      {"level": 30, "free": "Emote «Martillazo»", "premium": "Alas de ceniza"},
+      {"level": 35, "free": "Mueble: mesa de engranajes", "premium": "Mascota «Polilla de cobre»"},
+      {"level": 40, "free": "Título «Sellador»", "premium": "Apariencia «Guardián del Umbral»"},
+      {"level": 45, "free": "Marco «Brecha sellada»", "premium": "Montura «Dirigible de bolsillo»"},
+      {"level": 50, "free": "Estandarte de temporada", "premium": "Apariencia legendaria «Val'Gorath»"}
+    ],
+    "challenges": [
+      {"label": "Completa 3 expediciones desde El Nido", "progress": 2, "goal": 3, "xp": 1500},
+      {"label": "Recoge 40 hierbas de la brecha", "progress": 10, "goal": 40, "xp": 1200},
+      {"label": "Termina 5 misiones en grupo", "progress": 4, "goal": 5, "xp": 2000}
+    ]
+  }
+}
