@@ -64,6 +64,27 @@ func _unhandled_input(event: InputEvent):
 		print("[UIInputRouter] F8 ignorado: El atajo fue desactivado. Usa F9 para alternar hitboxes.")
 		get_viewport().set_input_as_handled()
 
+	# 9. ATAJOS DECLARADOS EN UIWindowRegistry (p. ej. Poderes [N])
+	elif handle_window_shortcut(event):
+		get_viewport().set_input_as_handled()
+
+## Atajos de ventana declarados en UIWindowRegistry (`register(..., [KEY_N])`).
+## Solo teclas sin modificadores ni eco. Devuelve true si abrió/cerró una ventana.
+func handle_window_shortcut(event: InputEvent, orchestrator: Node = null) -> bool:
+	if not (event is InputEventKey) or not event.pressed or event.is_echo():
+		return false
+	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed:
+		return false
+	var orch: Node = orchestrator if orchestrator else get_node_or_null("/root/UIOrchestrator")
+	if orch == null or orch.get("registry") == null:
+		return false
+	var code: int = event.keycode if event.keycode != KEY_NONE else event.physical_keycode
+	var window_id: String = orch.registry.get_window_for_key(code)
+	if window_id == "":
+		return false
+	orch.toggle_window(window_id)
+	return true
+
 ## Atajo centralizado [G] de la Rueda de Pings Tácticos (ADR 097):
 ##   - G pulsada (sin eco): abre la rueda en la posición actual del cursor.
 ##   - G soltada: si la rueda está abierta, confirma el cuadrante seleccionado.

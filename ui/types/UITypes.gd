@@ -28,6 +28,7 @@ class WindowMetadata:
 	var lazy_load: bool = true
 	var persist_position: bool = true
 	var layer: int = 0 # 0 es default, usado por orquestador para ordenar CanvasLayers
+	var shortcut_keys: Array = [] # Atajos de teclado (Key) que abren/cierran la ventana
 
 	func _init(_id: String, _path: String, _category: WindowCategory = WindowCategory.GAME_WINDOW):
 		self.id = _id

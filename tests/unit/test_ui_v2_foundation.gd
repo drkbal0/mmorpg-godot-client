@@ -382,7 +382,7 @@ func _test_menu_bar() -> void:
 	bar.close_requested.connect(func() -> void: log.append("close"))
 
 	var expected_nav := {
-		KEY_C: "inventory", KEY_N: "powers_window", KEY_L: "quests_window", KEY_M: "map_window",
+		KEY_C: "inventory", KEY_N: "powers", KEY_L: "quests_window", KEY_M: "map_window",
 		KEY_J: "codex_window", KEY_O: "social_window", KEY_H: "shelter_lobby",
 	}
 	for code in expected_nav:

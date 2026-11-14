@@ -25,12 +25,28 @@ func _register_initial_windows() -> void:
 	register("codex_window", "res://ui/windows/CodexWindow/CodexWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 	register("party_frames", "res://ui/components/PartyFrames/PartyFrames.tscn", UITypes.WindowCategory.HUD)
 	register("marketplace_window", "res://ui/windows/MarketplaceWindow/MarketplaceWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	# UI v2.4 Paso 6-7: Poderes [N] (Crisol · Atlas · Constelación · Afinidades) y oferta del pionero.
+	register("powers", "res://ui/windows/PowersWindow/PowersWindow.tscn", UITypes.WindowCategory.GAME_WINDOW, [KEY_N])
+	register("pioneer_offer", "res://ui/windows/PioneerOfferModal/PioneerOfferModal.tscn", UITypes.WindowCategory.MODAL_OVERLAY)
 
 
-func register(id: String, scene_path: String, category: int) -> void:
+func register(id: String, scene_path: String, category: int, shortcut_keys: Array = []) -> void:
 	var meta = UITypes.WindowMetadata.new(id, scene_path, category)
+	meta.shortcut_keys = shortcut_keys.duplicate()
 	_registry[id] = meta
 	print("[UIWindowRegistry] Registrada ventana: ", id)
+
+## Atajos de teclado (Key) declarados para una ventana. [] si no tiene o no existe.
+func get_shortcut_keys(id: String) -> Array:
+	var meta = _registry.get(id)
+	return meta.shortcut_keys.duplicate() if meta else []
+
+## Ventana asociada a un atajo (keycode) o "" si ninguna lo declara.
+func get_window_for_key(keycode: int) -> String:
+	for id in _registry:
+		if _registry[id].shortcut_keys.has(keycode):
+			return id
+	return ""
 
 func get_metadata(id: String) -> UITypes.WindowMetadata:
 	return _registry.get(id)

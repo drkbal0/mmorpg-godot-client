@@ -29,7 +29,7 @@ signal close_requested
 ## Tabla canónica de pestañas (sección 2.1). `window` = id en UIWindowRegistry.
 const DEFAULT_TABS: Array[Dictionary] = [
 	{"id": "equipo", "icon": "M12 4a4 4 0 1 0 0 8a4 4 0 1 0 0-8M4 21c0-4 3.6-7 8-7s8 3 8 7", "label": "Equipo", "key": KEY_C, "window": "inventory"},
-	{"id": "poderes", "icon": "M12 3a3 3 0 1 0 0 6a3 3 0 1 0 0-6M6 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6M18 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6M10.6 8.6l-3.2 6.8M13.4 8.6l3.2 6.8M9 18h6", "label": "Poderes", "key": KEY_N, "window": "powers_window"},
+	{"id": "poderes", "icon": "M12 3a3 3 0 1 0 0 6a3 3 0 1 0 0-6M6 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6M18 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6M10.6 8.6l-3.2 6.8M13.4 8.6l3.2 6.8M9 18h6", "label": "Poderes", "key": KEY_N, "window": "powers"},
 	{"id": "misiones", "icon": "M4 5h16M4 10h16M4 15h10M4 20h7", "label": "Misiones", "key": KEY_L, "window": "quests_window"},
 	{"id": "mapa", "icon": "M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15", "label": "Mapa", "key": KEY_M, "window": "map_window"},
 	{"id": "codice", "icon": "M2 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H2zM22 4h-7a3 3 0 0 0-3 3v14a2 2 0 0 1 2-2h8z", "label": "Códice", "key": KEY_J, "window": "codex_window"},

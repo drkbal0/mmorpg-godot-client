@@ -639,3 +639,41 @@ const CODEX_BADGES := {
 	"seen": {"text": "VISTO", "color": "#7c8992", "bg": Color("#18242b")},
 	"unknown": {"text": "???", "color": "#7c8992", "bg": Color("#18242b")},
 }
+
+
+# --------------------------------------------------------------------------
+# Paso 6 UI v2.4 · Oferta de inversión del pionero (MMO-Oferta.html)
+# --------------------------------------------------------------------------
+const OFFER_GOLD := Color("#f5c35b")
+const OFFER_GOLD_BG := Color(245 / 255.0, 195 / 255.0, 91 / 255.0, 0.14)
+const OFFER_GOLD_EDGE := Color(245 / 255.0, 195 / 255.0, 91 / 255.0, 0.85)
+const OFFER_DIM := Color(0, 0, 0, 0.55)
+const OFFER_CARD_BG := Color("#0d1216")
+const OFFER_SUB_BG := Color("#121a20")
+const OFFER_OPTION_BG := Color(18 / 255.0, 26 / 255.0, 32 / 255.0, 0.92)
+const OFFER_PORTRAIT_BG := Color("#1a252c")
+const OFFER_PORTRAIT_LINE := Color("#6d7c86")
+const OFFER_CARD_RADIUS := 18
+const OFFER_SUB_RADIUS := 12
+
+# --------------------------------------------------------------------------
+# Paso 7 UI v2.4 · Poderes: Crisol · Atlas · Constelación · Afinidades
+# --------------------------------------------------------------------------
+const POWERS_CARD_BG := Color("#0d1216")
+const POWERS_SUB_BG := Color("#121a20")
+const POWERS_CHIP_BG := Color("#18242b")
+const POWERS_CHIP_ON := Color(70 / 255.0, 227 / 255.0, 193 / 255.0, 0.12)
+const POWERS_NEW := Color("#f5c35b")                # badge «¡NUEVA!»
+const POWERS_NEW_BG := Color(245 / 255.0, 195 / 255.0, 91 / 255.0, 0.85)
+const POWERS_HINT := Color("#46e3c1")               # celdas «pista»
+const POWERS_CELL_UNKNOWN := Color("#0a0f13")
+const POWERS_CELL_PURE := Color("#121a20")
+const POWERS_CELL_SIZE := 38.0
+const POWERS_CELL_GAP := 4.0
+const POWERS_NODE_ACTIVE := Color("#46e3c1")
+const POWERS_NODE_LOCKED := Color("#2a343b")
+const POWERS_NODE_KEYSTONE := Color("#f5c35b")
+const POWERS_EDGE_ACTIVE := Color("#46e3c1")
+const POWERS_EDGE_LOCKED := Color(1, 1, 1, 0.22)
+const POWERS_TREE_BG := Color("#070a0c")
+const POWERS_PRIMARY_TEXT := Color("#06231c")

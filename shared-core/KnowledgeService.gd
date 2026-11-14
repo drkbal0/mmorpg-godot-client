@@ -58,6 +58,8 @@ signal wiki_publish_requested(id: String, payload: Dictionary)
 signal notice_added(notice: Dictionary)
 signal investments_changed
 signal payout_collected(amount: int)
+## Oferta de inversión del pionero resuelta: decision = "accept" | "defer" | "reject".
+signal pioneer_offer_resolved(offer_id: String, decision: String, result: Dictionary)
 
 ## Nombre con el que firma el jugador en la wiki (pionero).
 var player_name: String = "Tú"
@@ -81,6 +83,8 @@ var _map_serial: int = 0
 # Inversiones
 var investments: Array[Dictionary] = []
 var offers: Array[Dictionary] = []
+## Ofertas rechazadas: pasan al siguiente descubridor del puesto.
+var passed_offers: Array[Dictionary] = []
 var pending_payout: int = 0
 var total_collected: int = 0
 var map_sales: Dictionary = {"listed": 0, "sold": 0, "gold": 0}
@@ -109,6 +113,7 @@ func reset() -> void:
 	titles.clear()
 	investments.clear()
 	offers.clear()
+	passed_offers.clear()
 	pending_payout = 0
 	total_collected = 0
 	map_sales = {"listed": 0, "sold": 0, "gold": 0}
@@ -640,6 +645,106 @@ func add_offer(offer: Dictionary) -> void:
 	o["expires_in_days"] = int(o.get("expires_in_days", OFFER_THINK_DAYS))
 	offers.append(o)
 	investments_changed.emit()
+
+
+# ==========================================================================
+# Oferta de inversión del pionero (§2.3.7) · MMO-Oferta.html
+# ==========================================================================
+## offer: id, npc_id, npc_name, shop_name, zone, share, fee, mission {name, steps[{label, goal}]}.
+## Regla «un solo socio por puesto»: si el PNJ ya tiene socio, no se puede aceptar ni guardar.
+func has_partner_for(npc_id: String) -> bool:
+	for inv in investments:
+		if str(inv.get("npc_id", "")) == npc_id:
+			return true
+	return false
+
+
+func get_offer(offer_id: String) -> Dictionary:
+	for o in offers:
+		if str(o.get("id", "")) == offer_id:
+			return o
+	return {}
+
+
+func remove_offer(offer_id: String) -> bool:
+	for i in offers.size():
+		if str(offers[i].get("id", "")) == offer_id:
+			offers.remove_at(i)
+			investments_changed.emit()
+			return true
+	return false
+
+
+func _validate_offer(offer: Dictionary) -> String:
+	if str(offer.get("id", "")) == "" or str(offer.get("npc_id", "")) == "":
+		return "invalid_offer"
+	if has_partner_for(str(offer["npc_id"])):
+		return "post_has_partner"
+	return ""
+
+
+## «Trato hecho»: inicia la misión especial. El contrato queda en estado
+## «mission» (no cobra) hasta completar todos los pasos.
+func accept_pioneer_offer(offer: Dictionary) -> Dictionary:
+	var err := _validate_offer(offer)
+	if err != "":
+		return {"ok": false, "reason": err, "decision": "accept"}
+	var steps: Array = (offer.get("mission", {}) as Dictionary).get("steps", [])
+	var inv_id := "inv_" + str(offer["npc_id"]).trim_prefix("pnj_")
+	add_investment({
+		"id": inv_id, "npc_id": offer["npc_id"], "name": str(offer.get("shop_name", offer.get("name", ""))),
+		"zone": str(offer.get("zone", "")), "share": float(offer.get("share", 0.0)), "traffic": 0.0,
+		"status": "mission", "mission_step": 0, "mission_steps": maxi(1, steps.size()),
+		"mission": (offer.get("mission", {}) as Dictionary).duplicate(true), "market_value": 0, "history": [],
+	})
+	remove_offer(str(offer["id"]))
+	var result := {"ok": true, "decision": "accept", "investment_id": inv_id, "mission_steps": maxi(1, steps.size())}
+	pioneer_offer_resolved.emit(str(offer["id"]), "accept", result)
+	return result
+
+
+## «Déjame pensarlo»: la oferta se guarda OFFER_THINK_DAYS días en Códice › Inversiones.
+## Si ya estaba guardada no se reinicia el plazo.
+func defer_pioneer_offer(offer: Dictionary) -> Dictionary:
+	var err := _validate_offer(offer)
+	if err != "":
+		return {"ok": false, "reason": err, "decision": "defer"}
+	var existing := get_offer(str(offer["id"]))
+	if existing.is_empty():
+		var o := offer.duplicate(true)
+		o["name"] = str(offer.get("shop_name", offer.get("name", "")))
+		o["mission_steps"] = maxi(1, ((offer.get("mission", {}) as Dictionary).get("steps", []) as Array).size())
+		o["expires_in_days"] = OFFER_THINK_DAYS
+		add_offer(o)
+		existing = get_offer(str(offer["id"]))
+	var result := {"ok": true, "decision": "defer", "expires_in_days": int(existing["expires_in_days"])}
+	pioneer_offer_resolved.emit(str(offer["id"]), "defer", result)
+	return result
+
+
+## «No me interesa»: la oportunidad pasa al siguiente jugador que descubra el puesto.
+func reject_pioneer_offer(offer: Dictionary, next_discoverer: String = "") -> Dictionary:
+	if str(offer.get("id", "")) == "":
+		return {"ok": false, "reason": "invalid_offer", "decision": "reject"}
+	remove_offer(str(offer["id"]))
+	var passed := {"offer_id": str(offer["id"]), "npc_id": str(offer.get("npc_id", "")), "passed_to": next_discoverer, "at": now()}
+	passed_offers.append(passed)
+	var result := {"ok": true, "decision": "reject", "passed_to": next_discoverer}
+	pioneer_offer_resolved.emit(str(offer["id"]), "reject", result)
+	return result
+
+
+## Avanza un paso de la misión especial. Al completarla, el contrato pasa a «active».
+func advance_offer_mission(inv_id: String) -> Dictionary:
+	var inv := get_investment(inv_id)
+	if inv.is_empty() or inv.get("status", "") != "mission":
+		return {"ok": false, "reason": "not_in_mission"}
+	inv["mission_step"] = int(inv.get("mission_step", 0)) + 1
+	var done: bool = int(inv["mission_step"]) >= int(inv.get("mission_steps", 1))
+	if done:
+		inv["status"] = "active"
+	investments_changed.emit()
+	return {"ok": true, "step": inv["mission_step"], "completed": done}
 
 
 # ==========================================================================
