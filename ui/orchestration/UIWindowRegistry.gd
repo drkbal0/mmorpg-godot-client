@@ -57,6 +57,10 @@ func _register_initial_windows() -> void:
 	# extracción (desde Misiones): bolsa segura, riesgo si mueres y preparación.
 	register("collections_window", "res://ui/windows/CollectionsWindow/CollectionsWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 	register("incursions_window", "res://ui/windows/IncursionsWindow/IncursionsWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	# UI v2.4 Paso 13: Diálogo cinematográfico con PNJ (letterbox, opciones [1]-[4], relación) y
+	# Muerte y reaparición con recap táctico de los últimos 5 s, resurrección y repetición [R].
+	register("dialogue_window", "res://ui/windows/DialogueWindow/DialogueWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	register("death_window", "res://ui/windows/DeathWindow/DeathWindow.tscn", UITypes.WindowCategory.MODAL_OVERLAY)
 
 
 func register(id: String, scene_path: String, category: int, shortcut_keys: Array = []) -> void:

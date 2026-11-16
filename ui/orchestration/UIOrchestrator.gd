@@ -178,6 +178,16 @@ func open_incursions(incursion_id: String = "") -> Node:
 	return open_window("incursions_window", {"incursion_id": incursion_id})
 
 
+## UI v2.4 Paso 13: abre el diálogo cinematográfico con un PNJ en un nodo ("" = su nodo inicial).
+func open_dialogue(npc_id: String = "mira", dialogue_node_id: String = "intro") -> Node:
+	return open_window("dialogue_window", {"npc_id": npc_id, "dialogue_node_id": dialogue_node_id})
+
+
+## UI v2.4 Paso 13: abre la pantalla de muerte con el recap dado (vacío = recap actual o el del seed).
+func open_death_window(recap_data: Dictionary = {}) -> Node:
+	return open_window("death_window", {"recap": recap_data})
+
+
 func close_window(id: String, free_instance: bool = false) -> void:
 	for routed in registry.get_route_targets(id):
 		if registry.get_instance(routed):

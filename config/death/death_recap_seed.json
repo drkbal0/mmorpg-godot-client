@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "title": "Has caído",
+  "subtitle": "El combate sigue · tu grupo aún puede ganar",
+  "context": "raid",
+  "window_s": 5.0,
+  "replay_s": 10,
+  "player": {"name": "Tú", "max_health": 15200},
+  "abilities": {
+    "sangrado": {"name": "Sangrado", "short": "el sangrado", "kind": "dot", "source": "Coloso de hierro", "avoidable": false},
+    "golpe_coloso": {"name": "Golpe del Coloso", "short": "el golpe del Coloso", "kind": "hit", "source": "Coloso de hierro", "avoidable": false},
+    "terremoto_runico": {"name": "Terremoto rúnico", "short": "el terremoto", "kind": "mechanic", "source": "Coloso de hierro", "avoidable": true,
+      "hint": "Muévete a la izquierda cuando aparezca la alerta roja."},
+    "esquirla_perdida": {"name": "Esquirla perdida", "short": "la esquirla", "kind": "mechanic", "source": "Coloso de hierro", "avoidable": true,
+      "hint": "Las esquirlas caen donde brilla el suelo: sal del círculo."}
+  },
+  "defensives": [
+    {"id": "escudo", "name": "escudo", "key": "Shift+4", "glyph": "⇧4", "absorbs": 9000, "ready": true},
+    {"id": "pocion", "name": "poción de vida", "key": "Shift+1", "glyph": "⇧1", "absorbs": 3000, "ready": false}
+  ],
+  "events": [
+    {"t": -7.5, "ability": "golpe_coloso", "amount": 5800},
+    {"t": -4.8, "ability": "sangrado", "amount": 1100, "hits": 3},
+    {"t": -3.1, "ability": "golpe_coloso", "amount": 6400},
+    {"t": -1.0, "ability": "terremoto_runico", "amount": 8200},
+    {"t": 0.0, "ability": "esquirla_perdida", "amount": 2900}
+  ],
+  "resurrection": {"caster": "Brisa", "spell": "Aliento de savia", "duration_s": 4.0, "elapsed_s": 2.4, "auto_accept": true},
+  "respawn": {"seconds": 12, "point": "checkpoint"},
+  "respawn_points": {
+    "checkpoint": "Reaparecer en el punto de control",
+    "camp": "Reaparecer en el campamento",
+    "safe_zone": "Reaparecer en la zona segura"
+  },
+  "note": "Sin penalización de equipo. Morir en una raid nunca te quita progreso."
+}

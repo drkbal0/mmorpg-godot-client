@@ -361,6 +361,44 @@ const CONSTRUCTION_EDGE := Color(245 / 255.0, 195 / 255.0, 91 / 255.0, 0.5)
 const CONSTRUCTION_BADGE_BG := Color("#f5c35b")
 const CONSTRUCTION_BADGE_TEXT := Color("#1a1205")
 
+# --------------------------------------------------------------------------
+# UI v2.4 Paso 13 · Diálogo con PNJ (MMO-Dialogo.html) y Muerte (MMO-Muerte.html)
+# --------------------------------------------------------------------------
+## Lienzo de diseño de las pantallas cinematográficas (se escala al viewport).
+const CINEMA_DESIGN_SIZE := Vector2(1440, 810)
+const DIALOGUE_LETTERBOX_TOP := 70.0
+const DIALOGUE_LETTERBOX_BOTTOM := 40.0
+const DIALOGUE_SHADE_HEIGHT := 540.0
+const DIALOGUE_SHADE := Color(4 / 255.0, 7 / 255.0, 9 / 255.0, 0.97)
+const DIALOGUE_PORTRAIT_SIZE := Vector2(220, 300)
+const DIALOGUE_PORTRAIT_BG := Color("#1a252c")
+const DIALOGUE_PORTRAIT_EDGE := Color("#2c3b44")
+const DIALOGUE_PORTRAIT_LINE := Color("#5d6d77")
+const DIALOGUE_TEXT_SIZE := 21
+const DIALOGUE_TEXT_LINE := 31
+const DIALOGUE_CURSOR := Color("#7c8992")
+const DIALOGUE_OPTION_HEIGHT := 46
+const DIALOGUE_OPTION_BG := Color(18 / 255.0, 26 / 255.0, 32 / 255.0, 0.85)
+const DIALOGUE_OPTION_ACTIVE_BG := Color(70 / 255.0, 227 / 255.0, 193 / 255.0, 0.12)
+const DIALOGUE_OPTION_ACTIVE_EDGE := Color("#46e3c1")
+const DIALOGUE_RELATION_ON := Color("#46e3c1")
+const DIALOGUE_RELATION_OFF := Color("#26333b")
+const DIALOGUE_CHIP_BG := Color(9 / 255.0, 13 / 255.0, 16 / 255.0, 0.86)
+const DIALOGUE_QUEST := Color("#4fe39a")
+const DIALOGUE_BRANCH := Color("#f5c35b")
+
+const DEATH_BRIGHTNESS := 0.55
+const DEATH_TINT := Color(8 / 255.0, 10 / 255.0, 14 / 255.0, 0.35)
+const DEATH_TITLE_SIZE := 48
+const DEATH_CARD_BG := Color("#0d1216")
+const DEATH_SUB_BG := Color("#121a20")
+const DEATH_DAMAGE := Color("#ff8a8a")
+const DEATH_BAR := Color("#e25555")
+const DEATH_AVOIDABLE := Color("#f5c35b")
+const DEATH_AVOIDABLE_BG := Color("#2a2414")
+const DEATH_TIP_EDGE := Color(70 / 255.0, 227 / 255.0, 193 / 255.0, 0.35)
+const DEATH_RES_EDGE := Color("#46e3c1")
+
 
 # --------------------------------------------------------------------------
 # Helpers

@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "relation_levels": [
+    {"id": "unknown", "name": "Desconocido", "name_f": "Desconocida", "min": 0},
+    {"id": "neutral", "name": "Neutral", "name_f": "Neutral", "min": 100},
+    {"id": "friendly", "name": "Amistoso", "name_f": "Amistosa", "min": 200},
+    {"id": "ally", "name": "Aliado", "name_f": "Aliada", "min": 300},
+    {"id": "revered", "name": "Reverenciado", "name_f": "Reverenciada", "min": 400}
+  ],
+  "relation_max": 500,
+  "factions": {
+    "ferrum": {"name": "Ferrum", "value": 0},
+    "guardabosques": {"name": "Guardabosques", "value": 120}
+  },
+  "npcs": [
+    {
+      "id": "mira",
+      "name": "Mira",
+      "title": "Exploradora del Umbral",
+      "gender": "f",
+      "relation": 340,
+      "portrait": "silhouette",
+      "start": "intro",
+      "nodes": {
+        "intro": {
+          "text": [
+            "La grieta del Vado Roto no se cerrará sola.",
+            "Si el Guardián cae, Ferrum perderá su paso hacia el bosque… pero también nosotros perderemos el nuestro hacia ellos."
+          ],
+          "options": [
+            {"id": "take_guardian", "type": "quest", "text": "Yo me encargo del Guardián.",
+             "quest_id": "q_sellar_grieta", "quest_action": "accept", "reward": "Hoja de la grieta",
+             "badge": "Acepta misión · Hoja de la grieta ▲", "relation": 20, "next": "accept_guardian"},
+            {"id": "leave_open", "type": "branch", "text": "¿Y si dejamos la grieta abierta?",
+             "badge": "Rama alternativa · reputación con Ferrum", "reputation": {"ferrum": 15}, "next": "branch_open"},
+            {"id": "ask_ferrum", "type": "lore", "text": "¿Qué es Ferrum, exactamente?",
+             "topic": "lore_ferrum", "next": "lore_ferrum"},
+            {"id": "supplies", "type": "shop", "text": "Muéstrame tus suministros.",
+             "badge": "Tienda", "shop": {"window": "vendor_window", "vendor_id": "mira_suministros"}}
+          ]
+        },
+        "accept_guardian": {
+          "text": [
+            "Sabía que podía contar contigo.",
+            "Val'Gorath custodia la grieta desde el puente caído. Cuando la tierra brille en rojo, apártate: su terremoto rúnico no perdona."
+          ],
+          "options": [
+            {"id": "ask_guardian", "type": "lore", "text": "¿Qué sabes del Guardián?", "topic": "lore_guardian", "next": "lore_guardian"},
+            {"id": "farewell", "type": "continue", "text": "Me pongo en marcha.", "next": ""}
+          ]
+        },
+        "branch_open": {
+          "text": [
+            "¿Abierta? Ferrum lo agradecería… y quizá nos debería un favor.",
+            "Pero los Guardabosques no lo olvidarán. Piénsalo bien antes de decidir."
+          ],
+          "options": [
+            {"id": "side_ferrum", "type": "branch", "text": "Hablaré con Ferrum antes de nada.",
+             "badge": "Rama alternativa · reputación con Ferrum", "reputation": {"ferrum": 25, "guardabosques": -20},
+             "relation": -40, "next": ""},
+            {"id": "back_intro", "type": "continue", "text": "Tienes razón. Volvamos a la grieta.", "next": "intro"}
+          ]
+        },
+        "lore_ferrum": {
+          "text": [
+            "Ferrum es un universo de hierro y vapor. Sus forjas nunca se apagan.",
+            "Sus exploradores cruzan por las grietas buscando savia: allí ya no crece nada."
+          ],
+          "options": [
+            {"id": "ask_guardian_from_ferrum", "type": "lore", "text": "¿Y el Guardián?", "topic": "lore_guardian", "next": "lore_guardian"},
+            {"id": "back_from_ferrum", "type": "continue", "text": "Volvamos a la grieta.", "next": "intro"}
+          ]
+        },
+        "lore_guardian": {
+          "text": [
+            "Val'Gorath no es de aquí ni de allí: nació en la grieta.",
+            "Golpea despacio pero fuerte. Si te alcanza el terremoto sin escudo, caerás."
+          ],
+          "options": [
+            {"id": "back_from_guardian", "type": "continue", "text": "Entendido.", "next": "intro"}
+          ]
+        }
+      }
+    },
+    {
+      "id": "gildas",
+      "name": "Gildas",
+      "title": "Mercader del Vado",
+      "gender": "m",
+      "relation": 150,
+      "portrait": "silhouette",
+      "start": "intro",
+      "nodes": {
+        "intro": {
+          "text": ["¡Bienvenido al puesto! Si buscas algo que no tengo, el Mercado del Nexo lo tendrá."],
+          "options": [
+            {"id": "buy", "type": "shop", "text": "Enséñame lo que tienes.", "badge": "Tienda",
+             "shop": {"window": "vendor_window", "vendor_id": "gildas_vado"}},
+            {"id": "market", "type": "shop", "text": "¿Dónde está el Mercado?", "badge": "Mercado",
+             "shop": {"window": "marketplace_window", "market": true}},
+            {"id": "secret", "type": "lore", "text": "¿Algún rumor?", "topic": "rumor_gildas", "next": "rumor",
+             "requires_relation": "friendly"},
+            {"id": "bye", "type": "continue", "text": "Adiós.", "next": ""}
+          ]
+        },
+        "rumor": {
+          "text": ["Dicen que bajo las Minas Abisales hay una sala que nadie ha cartografiado."],
+          "options": [
+            {"id": "back", "type": "continue", "text": "Gracias.", "next": "intro"}
+          ]
+        }
+      }
+    }
+  ],
+  "state": {
+    "asked": {"mira": ["lore_ferrum"]},
+    "visited": {"mira": ["intro", "lore_ferrum"]}
+  }
+}
