@@ -17,6 +17,11 @@ func _unhandled_input(event: InputEvent):
 	if not (event is InputEventKey and event.pressed):
 		return
 
+	# Flujo de entrada (Launcher, Login, Selección, Creación, Carga · ADR 113): las pantallas
+	# gestionan su propio teclado; los atajos del mundo (I, J, N, F10…) quedan bloqueados.
+	if is_entry_flow_blocking():
+		return
+
 	# USANDO ACCIONES DEL INPUTMAP (pre-mapeadas en InputSettings)
 	
 	# 1. ESC / CANCELAR
@@ -68,6 +73,11 @@ func _unhandled_input(event: InputEvent):
 	elif handle_window_shortcut(event):
 		get_viewport().set_input_as_handled()
 
+## true si una pantalla del flujo de entrada está visible (bloquea los atajos globales).
+func is_entry_flow_blocking(orchestrator: Node = null) -> bool:
+	var orch: Node = orchestrator if orchestrator else get_node_or_null("/root/UIOrchestrator")
+	return orch != null and orch.has_method("is_entry_flow_active") and orch.is_entry_flow_active()
+
 ## Atajos de ventana declarados en UIWindowRegistry (`register(..., [KEY_N])`).
 ## Solo teclas sin modificadores ni eco. Devuelve true si abrió/cerró una ventana.
 func handle_window_shortcut(event: InputEvent, orchestrator: Node = null) -> bool:
@@ -77,6 +87,8 @@ func handle_window_shortcut(event: InputEvent, orchestrator: Node = null) -> boo
 		return false
 	var orch: Node = orchestrator if orchestrator else get_node_or_null("/root/UIOrchestrator")
 	if orch == null or orch.get("registry") == null:
+		return false
+	if is_entry_flow_blocking(orch):
 		return false
 	var code: int = event.keycode if event.keycode != KEY_NONE else event.physical_keycode
 	var window_id: String = orch.registry.get_window_for_key(code)

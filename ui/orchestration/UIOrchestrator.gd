@@ -155,6 +155,10 @@ func open_window(id: String, params: Dictionary = {}, custom_instance_id: String
 	# Skip focus for HUD or non-interactive elements
 	if meta.category != UITypes.WindowCategory.HUD:
 		focus_manager.request_focus(instance_id, instance)
+	# Flujo de entrada (ADR 113): la SYSTEM_MODAL recién abierta queda delante (foco) y las
+	# TRANSITION visibles (pantalla de carga) siempre por encima de todo.
+	if UITypes.ENTRY_FLOW_CATEGORIES.has(meta.category):
+		_raise_transitions()
 		
 	return instance
 
@@ -186,6 +190,53 @@ func open_dialogue(npc_id: String = "mira", dialogue_node_id: String = "intro") 
 ## UI v2.4 Paso 13: abre la pantalla de muerte con el recap dado (vacío = recap actual o el del seed).
 func open_death_window(recap_data: Dictionary = {}) -> Node:
 	return open_window("death_window", {"recap": recap_data})
+
+
+## UI v2.4 Paso 15 (ADR 113): Launcher (temporada, novedades, servidores, amigos e instalación).
+func open_launcher() -> Node:
+	return open_window("launcher")
+
+
+## UI v2.4 Paso 15: Inicio de sesión (llave de acceso, QR, correo y accesibilidad previa).
+func open_login() -> Node:
+	return open_window("login")
+
+
+## UI v2.4 Paso 15: Selección de personaje.
+func open_character_select() -> Node:
+	return open_window("character_select")
+
+
+## UI v2.4 Paso 15: Creación de personaje en 4 pasos (empieza un borrador nuevo).
+func open_character_creation() -> Node:
+	return open_window("character_create")
+
+
+## UI v2.4 Paso 15: Pantalla de carga táctica. `dest_data` vacío = la carga en curso o el destino por defecto.
+func open_loading_screen(dest_data: Dictionary = {}) -> Node:
+	return open_window("game_loading", {"destination": dest_data})
+
+
+## true si hay una pantalla del flujo de entrada (SYSTEM_MODAL / TRANSITION) visible.
+func is_entry_flow_active() -> bool:
+	if registry == null:
+		return false
+	for id in registry.get_all_instance_ids():
+		var inst = registry.get_instance(id)
+		var meta = registry.get_metadata(id)
+		if inst != null and meta != null and inst.visible and UITypes.ENTRY_FLOW_CATEGORIES.has(meta.category):
+			return true
+	return false
+
+
+func _raise_transitions() -> void:
+	for id in registry.get_all_instance_ids():
+		var inst = registry.get_instance(id)
+		var meta = registry.get_metadata(id)
+		if inst != null and meta != null and inst.visible and meta.category == UITypes.WindowCategory.TRANSITION and inst is CanvasItem:
+			inst.move_to_front()
+			inst.z_as_relative = false
+			inst.z_index = mini(focus_manager.get_next_z_index(), RenderingServer.CANVAS_ITEM_Z_MAX)
 
 
 ## UI v2.4 Paso 14: abre la antesala de la mazmorra (el grupo vuelve a la espera).
@@ -285,7 +336,7 @@ func is_mouse_over_ui() -> bool:
 				continue
 				
 			# Si es una ventana Modal o Full Screen, bloquea todo input al mundo 3D
-			if meta != null and (meta.category == UITypes.WindowCategory.MODAL_OVERLAY or meta.category == UITypes.WindowCategory.FULL_SCREEN or meta.modal_policy != UITypes.ModalPolicy.NONE):
+			if meta != null and (meta.category == UITypes.WindowCategory.MODAL_OVERLAY or meta.category == UITypes.WindowCategory.FULL_SCREEN or UITypes.ENTRY_FLOW_CATEGORIES.has(meta.category) or meta.modal_policy != UITypes.ModalPolicy.NONE):
 				return true
 				
 			if instance is Control:

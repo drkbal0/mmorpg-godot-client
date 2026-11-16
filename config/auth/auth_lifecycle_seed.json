@@ -1,0 +1,196 @@
+{
+	"game_name": "[NOMBRE DEL JUEGO]",
+	"game_short": "[NOMBRE]",
+	"tagline": "Cuatro universos, una brecha y un refugio que te espera entre ellos.",
+	"launcher": {
+		"version": "v1.0.4",
+		"patch_notes_url": "https://mmo.elbalo.lol/notas/v1.0.4",
+		"tabs": [
+			{"id": "home", "label": "Inicio"},
+			{"id": "news", "label": "Novedades"},
+			{"id": "patch_notes", "label": "Notas del parche"},
+			{"id": "install", "label": "Instalación"},
+			{"id": "support", "label": "Soporte"}
+		],
+		"season": {
+			"caps": "Temporada 1 · ya disponible",
+			"title": "La Brecha de Ferrum",
+			"text": "Un universo nuevo, el refugio flotante y expediciones con tus personajes.",
+			"cover": "res://design_ref/assets/mapa-fondo.jpg"
+		},
+		"changes": [
+			{"kind": "improvement", "text": "Tejedor de grietas: Haz de grieta hace un 5 % más de daño."},
+			{"kind": "balance", "text": "Tu build «Ancla única» tiene 1 talento que cambió: revísalo al entrar."},
+			{"kind": "note", "text": "Tus 2 órdenes del mercado siguen activas."}
+		],
+		"account": {"title": "Tu cuenta", "passkey_text": "Llave de acceso activa"},
+		"friends_playing": 4,
+		"friends": [
+			{"id": "mira", "name": "Mira", "where": "En el Nexo", "status": "online"},
+			{"id": "toro", "name": "Toro", "where": "En su refugio", "status": "online"},
+			{"id": "brisa", "name": "Brisa", "where": "Bóveda de Ferrum", "status": "busy"}
+		],
+		"maintenance": "Mantenimiento el jueves 4:00–5:00 (tu hora).",
+		"download": {"total_gb": 42.0, "done_gb": 18.4, "speed_mbps": 48.0, "limit_while_playing": true},
+		"packs": [
+			{"id": "core", "name": "Núcleo", "weight": 2, "progress": 1.0, "required": true},
+			{"id": "nexus", "name": "Nexo", "weight": 1, "progress": 1.0, "required": true},
+			{"id": "verdalia", "name": "Verdalia", "weight": 2, "progress": 1.0, "required": true},
+			{"id": "ferrum", "name": "Ferrum", "weight": 2, "progress": 0.4, "required": false},
+			{"id": "runavell", "name": "Runavell", "weight": 2, "progress": 0.0, "required": false}
+		]
+	},
+	"servers": [
+		{"id": "umbral", "name": "Umbral", "ping_ms": 24, "status": "stable", "queue_min": 0, "home": true, "language": "Español", "population": "alta"},
+		{"id": "nexo_eu", "name": "Nexo Europa", "ping_ms": 140, "status": "ok", "queue_min": 0, "home": false, "language": "Multilingüe", "population": "media"},
+		{"id": "nexo_asia", "name": "Nexo Asia", "ping_ms": 210, "status": "queue", "queue_min": 3, "home": false, "language": "Multilingüe", "population": "llena"}
+	],
+	"login": {
+		"passkey_registered": true,
+		"qr_ttl_s": 120,
+		"max_failed_attempts": 5,
+		"lockout_s": 30,
+		"demo_accounts": [
+			{"email": "jugador@umbral.test", "password": "brecha-2026", "account": "Tu cuenta"}
+		]
+	},
+	"max_slots": 6,
+	"characters": [
+		{"id": "kael", "name": "Kael", "level": 32, "class_id": "rift_weaver", "origin": "verdalia", "last_played_days": 2, "ilvl": 412,
+			"appearance": {"body": 1, "hair_style": 0, "hair_color": 0, "eye_color": 0, "outfit": 0},
+			"stats": {"vida": 4820, "poder": 612, "defensa": 288},
+			"continue": {"title": "Sellar la grieta menor · 2/3", "text": "Vado Roto, Verdalia · 40 m de tu posición", "destination": "vado_roto"}},
+		{"id": "ysolde", "name": "Ysolde", "level": 18, "class_id": "rune_guardian", "origin": "runavell", "last_played_days": 7, "ilvl": 240,
+			"appearance": {"body": 0, "hair_style": 2, "hair_color": 3, "eye_color": 2, "outfit": 1},
+			"stats": {"vida": 3150, "poder": 210, "defensa": 455},
+			"continue": {"title": "La runa partida · 1/4", "text": "Puerto de Runavell · en la posada", "destination": "puerto_runavell"}},
+		{"id": "torq", "name": "Torq", "level": 45, "class_id": "ferrum_smith", "origin": "ferrum", "last_played_days": 21, "ilvl": 455,
+			"appearance": {"body": 2, "hair_style": 3, "hair_color": 1, "eye_color": 1, "outfit": 2},
+			"stats": {"vida": 6210, "poder": 702, "defensa": 390},
+			"continue": {"title": "Forjar el ancla de la Bóveda", "text": "Bóveda de Ferrum · antesala", "destination": "boveda_ferrum"}},
+		{"id": "aurel", "name": "Aurel", "level": 0, "class_id": "narrator", "origin": "umbral", "last_played_days": 0, "ilvl": 0,
+			"special": true, "special_template": "Narrador", "special_days_left": 27,
+			"appearance": {"body": 1, "hair_style": 1, "hair_color": 5, "eye_color": 4, "outfit": 2},
+			"stats": {},
+			"continue": {"title": "Escena: El eco del vado", "text": "Asignado por el equipo · zona Verdalia", "destination": "vado_roto"}}
+	],
+	"away": [
+		{"color": "#46e3c1", "title": "Tu refugio tiene 5 cosas listas", "text": "Pispa volvió · Torq espera una decisión"},
+		{"color": "#4fe39a", "title": "Tu fabricación terminó", "text": "10 lingotes de ferrum en la forja"},
+		{"color": "#6cb8ff", "title": "Raid del gremio mañana 21:00", "text": "Mira te invitó · 18/20 confirmados"},
+		{"color": "#f5c35b", "title": "Vendiste Daga de eco", "text": "+820 oro en el correo"}
+	],
+	"nest_ready": 5,
+	"origins": [
+		{"id": "verdalia", "name": "Verdalia", "color": "#9fe36a", "start": "vado_roto", "energy": "Savia", "energy_color": "#4fe39a",
+			"text": "Bosques que respiran y ríos con memoria. La Savia cura y enraíza."},
+		{"id": "ferrum", "name": "Ferrum", "color": "#5aa9ff", "start": "boveda_ferrum", "energy": "Hierro", "energy_color": "#b8c3ca",
+			"text": "Ciudades-forja suspendidas sobre la brecha. El Hierro resiste y golpea."},
+		{"id": "runavell", "name": "Runavell", "color": "#f5b546", "start": "puerto_runavell", "energy": "Runa", "energy_color": "#f5b546",
+			"text": "Archipiélagos grabados con runas antiguas. La Runa protege y potencia."},
+		{"id": "umbral", "name": "Umbral", "color": "#b47bff", "start": "vado_roto", "energy": "Vacío", "energy_color": "#b47bff",
+			"text": "El borde entre universos, donde nada es del todo real. El Vacío desplaza y desgarra."}
+	],
+	"classes": [
+		{"id": "rift_weaver", "name": "Tejedor de grietas", "role": "damage", "range": "distancia", "style": "distancia · media",
+			"text": "Abre grietas que explotan y arrastran a los enemigos. Daño en área desde media distancia.",
+			"ratings": {"damage": 4, "control": 3, "survival": 2, "difficulty": 3}, "recommended": false, "body_color": "#8a3a2b"},
+		{"id": "rune_guardian", "name": "Guardiana rúnica", "role": "tank", "range": "cuerpo a cuerpo", "style": "cuerpo a cuerpo",
+			"text": "Escudos rúnicos que absorben golpes y castigan a quien ignora al grupo. Aguanta en primera línea.",
+			"ratings": {"damage": 2, "control": 3, "survival": 5, "difficulty": 1}, "recommended": true, "body_color": "#2b4a8a"},
+		{"id": "wandering_druid", "name": "Druida errante", "role": "healer", "range": "área", "style": "curación en área",
+			"text": "Siembra círculos de Savia que curan a todo el que pisa dentro. Sanación en área y apoyo.",
+			"ratings": {"damage": 2, "control": 2, "survival": 3, "difficulty": 2}, "recommended": false, "body_color": "#2a7a4a"},
+		{"id": "shadow_blade", "name": "Hoja de sombra", "role": "assassin", "range": "cuerpo a cuerpo", "style": "sigilo · difícil",
+			"text": "Desaparece entre sombras y remata objetivos aislados. Daño explosivo con mucho riesgo.",
+			"ratings": {"damage": 5, "control": 2, "survival": 2, "difficulty": 5}, "recommended": false, "body_color": "#4a2b5a"},
+		{"id": "ferrum_smith", "name": "Herrero de Ferrum", "role": "damage", "range": "cuerpo a cuerpo", "style": "cuerpo · fabrica más",
+			"text": "Martillo y yunque portátil: golpea fuerte y fabrica más rápido en la Forja del refugio.",
+			"ratings": {"damage": 4, "control": 2, "survival": 4, "difficulty": 2}, "recommended": false, "body_color": "#8a3a2b"},
+		{"id": "engineer", "name": "Ingeniera", "role": "support", "range": "distancia", "style": "torretas · escudos",
+			"text": "Despliega torretas y escudos de campo. Controla el espacio y protege al grupo.",
+			"ratings": {"damage": 3, "control": 4, "survival": 3, "difficulty": 3}, "recommended": false, "body_color": "#5b3a8a"}
+	],
+	"special_classes": [
+		{"id": "narrator", "name": "Narrador", "role": "special", "range": "—", "style": "personaje especial", "text": "Personaje especial asignado por el equipo.", "ratings": {}, "body_color": "#f5c35b"}
+	],
+	"roles": {
+		"damage": {"label": "Daño", "color": "#8a3a2b"},
+		"tank": {"label": "Tanque", "color": "#2b4a8a"},
+		"healer": {"label": "Sanador", "color": "#2a7a4a"},
+		"support": {"label": "Apoyo", "color": "#5b3a8a"},
+		"assassin": {"label": "Asesino", "color": "#6a2b5a"},
+		"special": {"label": "Especial", "color": "#8a6a2b"}
+	},
+	"appearance": {
+		"body": {"label": "Cuerpo", "options": [{"name": "Menudo", "value": 0.9}, {"name": "Equilibrado", "value": 1.0}, {"name": "Robusto", "value": 1.12}]},
+		"hair_style": {"label": "Peinado", "options": [{"name": "Flequillo"}, {"name": "Coleta"}, {"name": "Rapado"}, {"name": "Melena"}]},
+		"hair_color": {"label": "Color de pelo", "options": [{"name": "Castaño", "color": "#2b1d14"}, {"name": "Cobre", "color": "#8a4a20"}, {"name": "Rubio", "color": "#e0c070"}, {"name": "Negro", "color": "#121212"}, {"name": "Platino", "color": "#d8dde3"}, {"name": "Cian", "color": "#46e3c1"}]},
+		"eye_color": {"label": "Color de ojos", "options": [{"name": "Oscuros", "color": "#1a1a1a"}, {"name": "Ámbar", "color": "#b8762a"}, {"name": "Verdes", "color": "#2a7a4a"}, {"name": "Azules", "color": "#2b4a8a"}, {"name": "Violeta", "color": "#7a4ab8"}]},
+		"outfit": {"label": "Atuendo inicial", "options": [{"name": "Viajero", "color": ""}, {"name": "Cota ligera", "color": "#5d6d77"}, {"name": "Túnica del umbral", "color": "#3a2b5a"}]}
+	},
+	"traits": [
+		{"id": "persistent_echo", "name": "Eco persistente", "energy": "Eco", "color": "#7fe0ff", "text": "Tu primer poder de cada combate se repite una vez al 30 %."},
+		{"id": "threshold_spark", "name": "Chispa del Umbral", "energy": "Vacío", "color": "#b47bff", "text": "Descubres las combinaciones del Atlas un 10 % antes."},
+		{"id": "deep_root", "name": "Raíz profunda", "energy": "Savia", "color": "#4fe39a", "text": "Tus chibis rinden un 5 % más en el huerto del refugio."},
+		{"id": "steady_pulse", "name": "Pulso firme", "energy": "Pulso", "color": "#5aa9ff", "text": "+5 % de tenacidad mientras tu vida esté por encima del 50 %."}
+	],
+	"name_rules": {
+		"min": 3,
+		"max": 16,
+		"profanity": ["idiota", "imbecil", "estupido", "mierda", "puta", "joder", "cabron", "pendejo", "gilipollas", "fuck", "shit", "bitch"],
+		"reserved": ["admin", "moderador", "gm", "soporte", "sistema", "nexo"],
+		"taken": ["Mira", "Toro", "Brisa", "Vela", "Nox", "Sasha", "Pispa"]
+	},
+	"trial": {"duration_s": 300, "arena": "Arena del maniquí"},
+	"loading": {
+		"default_destination": "vado_roto",
+		"stages": [
+			{"until": 0.25, "text": "Conectando con el reino {realm}"},
+			{"until": 0.5, "text": "Sincronizando a {character}"},
+			{"until": 0.9, "text": "Cargando el terreno de {universe}"},
+			{"until": 1.0, "text": "Preparando el encuentro"}
+		],
+		"general_tips": [
+			{"shape": "diamond", "color": "#46e3c1", "text": "Pulsa H para abrir tu refugio de bolsillo mientras esperas."},
+			{"shape": "diamond", "color": "#5aa9ff", "text": "Los consejos cambian según tu destino y tu grupo."},
+			{"shape": "diamond", "color": "#f5c35b", "text": "Nada se pierde si sales: tu refugio produce hasta 12 h sin ti."}
+		],
+		"destinations": {
+			"vado_roto": {
+				"name": "Vado Roto", "universe": "Verdalia", "objective": "derrota al Guardián del Umbral", "duration_s": 21.0,
+				"quote": "El vado no se rompió: lo partieron desde el otro lado.", "quote_source": "Diario de Mira, día 12",
+				"tips": [
+					{"shape": "diamond", "color": "#ff6b6b", "text": "A los 8 s abre una Grieta: apártate hacia un lado."},
+					{"shape": "diamond", "color": "#46e3c1", "text": "Su lanzamiento largo se interrumpe con Corte de fase [4]."},
+					{"shape": "diamond", "color": "#5aa9ff", "text": "Fase 2 al 50 %: agrúpense para la Oleada."}
+				],
+				"activities": [
+					{"text": "Cambiar conjunto", "key": "F1–F3"},
+					{"text": "Revisar poderes", "key": "N"}
+				],
+				"party_inside": 3, "party_size": 5
+			},
+			"puerto_runavell": {
+				"name": "Puerto de Runavell", "universe": "Runavell", "objective": "habla con la runista del muelle", "duration_s": 14.0,
+				"quote": "Cada runa es una promesa que alguien no cumplió.", "quote_source": "Inscripción del muelle",
+				"tips": [
+					{"shape": "diamond", "color": "#f5b546", "text": "Las runas del suelo dan escudo si te quedas encima 2 s."},
+					{"shape": "diamond", "color": "#46e3c1", "text": "La posada guarda tu progreso de misión aunque salgas."}
+				],
+				"activities": [{"text": "Revisar poderes", "key": "N"}],
+				"party_inside": 0, "party_size": 1
+			},
+			"boveda_ferrum": {
+				"name": "Bóveda de Ferrum", "universe": "Ferrum", "objective": "reúnete con tu grupo en la antesala", "duration_s": 18.0,
+				"quote": "El hierro recuerda cada golpe.", "quote_source": "Proverbio de los herreros",
+				"tips": [
+					{"shape": "diamond", "color": "#ff6b6b", "text": "Los Ecos que se acumulan explotan a la tercera vez."},
+					{"shape": "diamond", "color": "#5aa9ff", "text": "Reparad el equipo: la Bóveda gasta durabilidad deprisa."}
+				],
+				"activities": [{"text": "Cambiar conjunto", "key": "F1–F3"}, {"text": "Refugio de bolsillo", "key": "H"}],
+				"party_inside": 2, "party_size": 5
+			}
+		}
+	}
+}

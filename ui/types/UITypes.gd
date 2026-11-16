@@ -8,8 +8,16 @@ enum WindowCategory {
 	EPHEMERAL_POPUP,   # Desaparecen solas o tras interacción mínima (Death screen, Notifications)
 	TOOLTIP,           # Siguen al mouse o aparecen cerca de elementos
 	CONTEXT_MENU,      # Menús click derecho
-	FULL_SCREEN        # Pantallas completas (Login, Character Select)
+	FULL_SCREEN,       # Pantallas completas (Login, Character Select)
+	SYSTEM_MODAL,      # Flujo de entrada (Launcher, Login, Selección, Creación): por encima de todo, bloquea el mundo
+	TRANSITION         # Transiciones (pantalla de carga): por encima incluso de SYSTEM_MODAL
 }
+
+## Alias de capas usado por el flujo de entrada (ADR 113): `UITypes.WindowLayer.SYSTEM_MODAL`.
+const WindowLayer = WindowCategory
+
+## Categorías del flujo de entrada: bloquean los atajos globales del mundo mientras están visibles.
+const ENTRY_FLOW_CATEGORIES := [WindowCategory.SYSTEM_MODAL, WindowCategory.TRANSITION]
 
 # Políticas de modal
 enum ModalPolicy {

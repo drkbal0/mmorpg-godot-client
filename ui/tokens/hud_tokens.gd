@@ -443,6 +443,67 @@ const DUNGEON_XP_GAIN := Color("#9a7bff")
 const DUNGEON_ATLAS_EDGE := Color(245 / 255.0, 195 / 255.0, 91 / 255.0, 0.4)
 const DUNGEON_OFFER_TEXT := Color("#6cb8ff")
 
+# --------------------------------------------------------------------------
+# UI v2.4 Paso 15 · Entrada: Launcher, Inicio de sesión, Selección, Creación y Carga
+# --------------------------------------------------------------------------
+const ENTRY_PRIMARY := Color("#46e3c1")              # «Jugar ya», «Entrar al mundo», llave de acceso
+const ENTRY_PRIMARY_TEXT := Color("#071012")
+const ENTRY_CARD_BG := Color("#0d1216")
+const ENTRY_CARD_EDGE := Color(1, 1, 1, 0.07)
+const ENTRY_SUB_BG := Color("#121a20")
+const ENTRY_SELECTED := Color("#46e3c1")             # tarjeta de personaje activa (aro 2 px)
+const ENTRY_SPECIAL := Color("#f5c35b")              # personaje especial (aro 1,5 px)
+const ENTRY_STEP_DONE := Color("#4fe39a")
+const ENTRY_STEP_ACTIVE := Color("#46e3c1")
+const ENTRY_STEP_PENDING := Color("#26333b")
+const ENTRY_AVATAR_BG := Color("#1a252c")
+const ENTRY_DIVIDER := Color("#26333b")
+const ENTRY_TEXT_SOFT := Color("#dbe4ea")
+# Launcher (MMO-Launcher.html)
+const LAUNCHER_BG := Color("#0b0f13")
+const LAUNCHER_TITLEBAR_BG := Color("#070a0c")
+const LAUNCHER_TITLEBAR_HEIGHT := 36.0
+const LAUNCHER_SIDEBAR_WIDTH := 230.0
+const LAUNCHER_SIDEBAR_BG := Color("#0d1216")
+const LAUNCHER_TAB_ACTIVE_BG := Color("#1c2a33")
+const LAUNCHER_COVER_HEIGHT := 330.0
+const LAUNCHER_TITLE_SIZE := 44
+const LAUNCHER_FOOTER_HEIGHT := 120.0
+const LAUNCHER_PLAY_HEIGHT := 56
+const LAUNCHER_CHANGE_IMPROVEMENT := Color("#4fe39a")
+const LAUNCHER_CHANGE_BALANCE := Color("#f5c35b")
+const LAUNCHER_CHANGE_NOTE := Color("#9aa6ae")
+# Inicio de sesión (MMO-Login.html)
+const LOGIN_VEIL := Color(5 / 255.0, 8 / 255.0, 10 / 255.0, 0.62)
+const LOGIN_CARD_WIDTH := 420.0
+const LOGIN_CARD_RIGHT := 90.0
+const LOGIN_CARD_TOP := 130.0
+const LOGIN_QR_SIZE := 132.0
+const LOGIN_LOGO_SIZE := 54
+const LOGIN_A11Y_BG := Color(13 / 255.0, 18 / 255.0, 22 / 255.0, 0.92)
+const LOGIN_A11Y_ACTIVE := Color("#1c2a33")
+# Selección (MMO-Seleccion.html)
+const SELECT_VEIL := Color(5 / 255.0, 8 / 255.0, 10 / 255.0, 0.72)
+const SELECT_LIST_WIDTH := 320.0
+const SELECT_LIST_LEFT := 40.0
+const SELECT_TOP := 110.0
+const SELECT_AWAY_WIDTH := 360.0
+const SELECT_NAME_SIZE := 32
+const SELECT_ENTER_HEIGHT := 56
+# Creación (MMO-Creacion.html)
+const CREATE_VEIL := Color(5 / 255.0, 8 / 255.0, 10 / 255.0, 0.78)
+const CREATE_STEP_HEIGHT := 36
+const CREATE_COLUMN_WIDTH := 360.0
+const CREATE_ACTION_HEIGHT := 46
+# Carga (MMO-Carga.html)
+const LOADING_SHADE_HEIGHT := 420.0
+const LOADING_SHADE := Color(4 / 255.0, 7 / 255.0, 9 / 255.0, 0.97)
+const LOADING_TITLE_SIZE := 40
+const LOADING_TIPS_WIDTH := 460.0
+const LOADING_ACTIVITIES_WIDTH := 230.0
+const LOADING_TRACK := Color(1, 1, 1, 0.12)
+const LOADING_CHIP_BG := Color(13 / 255.0, 18 / 255.0, 22 / 255.0, 0.92)
+
 
 # --------------------------------------------------------------------------
 # Helpers

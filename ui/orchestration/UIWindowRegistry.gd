@@ -65,6 +65,13 @@ func _register_initial_windows() -> void:
 	# Resumen de mazmorra (botín inteligente, momentos del grupo con elogios y progreso).
 	register("dungeon_lobby", "res://ui/windows/DungeonLobbyWindow/DungeonLobbyWindow.tscn", UITypes.WindowCategory.MODAL_OVERLAY)
 	register("dungeon_summary", "res://ui/windows/DungeonSummaryWindow/DungeonSummaryWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	# UI v2.4 Paso 15 (ADR 113): Entrada y ciclo de vida del personaje. Launcher, Inicio de sesión,
+	# Selección y Creación son SYSTEM_MODAL; la pantalla de carga es TRANSITION (queda encima).
+	register("launcher", "res://ui/windows/LauncherWindow/LauncherWindow.tscn", UITypes.WindowLayer.SYSTEM_MODAL)
+	register("login", "res://ui/windows/LoginWindow/LoginWindow.tscn", UITypes.WindowLayer.SYSTEM_MODAL)
+	register("character_select", "res://ui/windows/CharacterSelectWindow/CharacterSelectWindow.tscn", UITypes.WindowLayer.SYSTEM_MODAL)
+	register("character_create", "res://ui/windows/CharacterCreationWindow/CharacterCreationWindow.tscn", UITypes.WindowLayer.SYSTEM_MODAL)
+	register("game_loading", "res://ui/windows/GameLoadingWindow/GameLoadingWindow.tscn", UITypes.WindowLayer.TRANSITION)
 
 
 func register(id: String, scene_path: String, category: int, shortcut_keys: Array = []) -> void:
