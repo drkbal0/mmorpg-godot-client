@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://ui/windows/TradeWindow/TradeWindow.gd" id="1_script"]
+
+[node name="TradeWindow" type="PanelContainer"]
+custom_minimum_size = Vector2(900, 600)
+offset_right = 900.0
+offset_bottom = 600.0
+script = ExtResource("1_script")

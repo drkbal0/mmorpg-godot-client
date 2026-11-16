@@ -158,6 +158,16 @@ func open_window(id: String, params: Dictionary = {}, custom_instance_id: String
 		
 	return instance
 
+## UI v2.4 Paso 11: abre Fabricación en una profesión (y receta) concreta.
+func open_crafting(profession: String = "blacksmithing", recipe_id: String = "") -> Node:
+	return open_window("crafting_window", {"profession": profession, "recipe_id": recipe_id})
+
+
+## UI v2.4 Paso 11: abre el Trato cara a cara con `target_name` (`target_data` vacío = demo del seed).
+func open_trade(target_name: String = "Sasha", target_data: Dictionary = {}) -> Node:
+	return open_window("trade_window", {"target_name": target_name, "target_data": target_data})
+
+
 func close_window(id: String, free_instance: bool = false) -> void:
 	for routed in registry.get_route_targets(id):
 		if registry.get_instance(routed):

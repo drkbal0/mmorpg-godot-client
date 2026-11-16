@@ -49,6 +49,10 @@ func _register_initial_windows() -> void:
 	register("social_window", "res://ui/windows/SocialWindow/SocialWindow.tscn", UITypes.WindowCategory.GAME_WINDOW, [KEY_O])
 	register("shop_window", "res://ui/windows/ShopWindow/ShopWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 	register("battle_pass_window", "res://ui/windows/BattlePassWindow/BattlePassWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	# UI v2.4 Paso 11: Fabricación (se abre desde la Forja del Refugio; cola en segundo plano)
+	# y Trato cara a cara P2P con doble confirmación simétrica y máscara «???» del Códice.
+	register("crafting_window", "res://ui/windows/CraftingWindow/CraftingWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	register("trade_window", "res://ui/windows/TradeWindow/TradeWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 
 
 func register(id: String, scene_path: String, category: int, shortcut_keys: Array = []) -> void:

@@ -210,6 +210,14 @@ static func normalize_text(text: String) -> String:
 		s = s.replace(accented, replacements[accented])
 	return s
 
+## UI v2.4 Paso 11: «Buscar en mercado» desde Fabricación abre el Mercado con `query`.
+func initialize_window(params: Dictionary) -> void:
+	if params.has("query"):
+		var q := str(params["query"])
+		if search_input:
+			search_input.text = q
+		_on_search_changed(q)
+
 func _on_search_changed(new_text: String) -> void:
 	current_search_query = new_text.strip_edges()
 	_refresh_listings_view()

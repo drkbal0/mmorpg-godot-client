@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "local_name": "Tú",
+  "local_gold": 12480,
+  "cooldown_s": 3.0,
+  "items": {
+    "mapa_cueva_ambar": {"name": "Mapa del hallazgo: Cueva de ámbar", "rarity": "secret", "price": 900, "kind": "discovery_map", "secret_id": "lugar_cueva_ambar", "secret_category": "lugares", "secret_name": "Cueva de ámbar", "location": {"zone": "Bosque fósil", "coords": [-210.0, 2.0, 140.0]}},
+    "lingote_ferrum": {"name": "Lingote de ferrum ★★", "rarity": "uncommon", "price": 60},
+    "corona_umbral": {"name": "Corona del umbral", "rarity": "epic", "price": 2000, "codex_id": "item_corona_umbral", "codex_category": "objetos"},
+    "seda": {"name": "Seda", "rarity": "common", "price": 40},
+    "tonico_triple": {"name": "Tónico triple", "rarity": "uncommon", "price": 100},
+    "esquirla_grieta": {"name": "Esquirla de grieta", "rarity": "rare", "price": 35},
+    "hoja_grieta": {"name": "Hoja de la grieta", "rarity": "epic", "price": 1800},
+    "afilador_grieta": {"name": "Afilador de grieta", "rarity": "uncommon", "price": 30}
+  },
+  "demo_session": {
+    "target_name": "Sasha",
+    "distance_m": 3,
+    "reputation": "Confiable",
+    "local_offer": {
+      "items": [
+        {"item_id": "mapa_cueva_ambar", "qty": 1, "tag": "secret_seller"},
+        {"item_id": "lingote_ferrum", "qty": 6, "tag": "workshop"}
+      ],
+      "gold": 150
+    },
+    "remote_offer": {
+      "items": [
+        {"item_id": "corona_umbral", "qty": 1},
+        {"item_id": "seda", "qty": 5, "tag": "need", "tag_text": "La necesitas para el Nido de Pispa"},
+        {"item_id": "tonico_triple", "qty": 3}
+      ],
+      "gold": 0
+    }
+  }
+}
