@@ -1,0 +1,72 @@
+{
+	"_comment": "Seed de Equipo e inventario [C] (UI v2.4 Paso 10, design_ref/pantallas_html/MMO-Equipo.html). Stats con claves canónicas del Anexo A.",
+	"character": {"name": "Aren", "class": "Tejedor de grietas", "level": 32},
+	"backpack_capacity": 40,
+	"secure_capacity": 3,
+	"base_stats": {
+		"dano": 120, "poder": 80, "armadura": 140, "resmag": 90, "velatq": 10, "celeridad": 0,
+		"critico": 5, "velmov": 335, "penarm": 0, "penmag": 0, "robo": 0, "omni": 0,
+		"alcance": 125, "tenacidad": 0, "curacion": 0, "regen": 6
+	},
+	"items": [
+		{"id": "yelmo_grieta", "name": "Yelmo de la grieta", "slot": "head", "category": "armor", "rarity": "epic", "item_level": 410, "stats": {"armadura": 60, "resmag": 30, "celeridad": 4}},
+		{"id": "colgante_eco", "name": "Colgante de eco", "slot": "neck", "category": "armor", "rarity": "rare", "item_level": 412, "stats": {"poder": 40, "celeridad": 3}},
+		{"id": "hombreras_vigia", "name": "Hombreras del vigía", "slot": "shoulders", "category": "armor", "rarity": "rare", "item_level": 408, "stats": {"armadura": 45, "tenacidad": 5}},
+		{"id": "coraza_tejida", "name": "Coraza tejida", "slot": "chest", "category": "armor", "rarity": "epic", "item_level": 416, "stats": {"armadura": 110, "resmag": 40, "regen": 4}},
+		{"id": "faja_savia", "name": "Faja de savia", "slot": "waist", "category": "armor", "rarity": "uncommon", "item_level": 404, "stats": {"armadura": 25, "regen": 3}},
+		{"id": "grebas_umbral", "name": "Grebas del umbral", "slot": "legs", "category": "armor", "rarity": "rare", "item_level": 412, "stats": {"armadura": 70, "velmov": 5}},
+		{"id": "botas_marea", "name": "Botas de marea", "slot": "feet", "category": "armor", "rarity": "rare", "item_level": 410, "stats": {"velmov": 25, "armadura": 20}},
+		{"id": "brazales_hierro", "name": "Brazales de hierro", "slot": "wrists", "category": "armor", "rarity": "uncommon", "item_level": 406, "stats": {"armadura": 30, "penarm": 6}},
+		{"id": "guanteletes_calor", "name": "Guanteletes de calor", "slot": "hands", "category": "armor", "rarity": "epic", "item_level": 414, "stats": {"dano": 40, "velatq": 8, "critico": 4}},
+		{"id": "anillo_umbral", "name": "Anillo del umbral", "slot": "ring", "category": "armor", "rarity": "rare", "item_level": 404, "stats": {"dano": 102, "celeridad": 2.7, "critico": 2, "armadura": 98}},
+		{"id": "sello_tejedor", "name": "Sello del tejedor", "slot": "ring", "category": "armor", "rarity": "epic", "item_level": 412, "stats": {"poder": 30, "critico": 3, "robo": 2}},
+		{"id": "hoja_grieta", "name": "Hoja de la grieta", "slot": "main_hand", "category": "weapon", "rarity": "legendary", "item_level": 424, "stats": {"dano": 180, "velatq": 12, "critico": 6, "penarm": 10}},
+		{"id": "daga_vacio", "name": "Daga de vacío", "slot": "off_hand", "category": "weapon", "rarity": "epic", "item_level": 424, "stats": {"dano": 60, "velatq": 6, "robo": 3}},
+
+		{"id": "anillo_deriva", "name": "Anillo de la deriva", "slot": "ring", "category": "armor", "rarity": "epic", "item_level": 420, "new": true, "stats": {"celeridad": 5.8, "dano": 142, "critico": 2, "armadura": 60}},
+		{"id": "escudo_bastion", "name": "Escudo de bastión", "slot": "off_hand", "category": "weapon", "rarity": "epic", "item_level": 418, "stats": {"armadura": 160, "resmag": 80, "tenacidad": 10}},
+		{"id": "coraza_bastion", "name": "Coraza de bastión", "slot": "chest", "category": "armor", "rarity": "epic", "item_level": 418, "stats": {"armadura": 190, "resmag": 70, "tenacidad": 8, "curacion": 5}},
+		{"id": "yelmo_bastion", "name": "Yelmo de bastión", "slot": "head", "category": "armor", "rarity": "rare", "item_level": 408, "stats": {"armadura": 90, "resmag": 45}},
+		{"id": "guantes_recolector", "name": "Guantes del recolector", "slot": "hands", "category": "armor", "rarity": "uncommon", "item_level": 380, "stats": {"velmov": 10, "regen": 4}},
+		{"id": "pico_ambar", "name": "Pico de ámbar", "slot": "main_hand", "category": "weapon", "rarity": "rare", "item_level": 390, "stats": {"dano": 40, "alcance": 50}},
+		{"id": "botas_sendero", "name": "Botas de sendero", "slot": "feet", "category": "armor", "rarity": "uncommon", "item_level": 384, "stats": {"velmov": 45}},
+		{"id": "mandoble_hierro", "name": "Mandoble de hierro", "slot": "main_hand", "category": "weapon", "rarity": "rare", "item_level": 402, "new": true, "stats": {"dano": 210, "velatq": -5, "penarm": 8}},
+		{"id": "amuleto_luz", "name": "Amuleto de luz", "slot": "neck", "category": "armor", "rarity": "rare", "item_level": 400, "stats": {"curacion": 8, "regen": 5, "omni": 2}},
+		{"id": "baculo_pulso", "name": "Báculo del pulso", "slot": "main_hand", "category": "weapon", "rarity": "epic", "item_level": 416, "new": true, "stats": {"poder": 160, "penmag": 12, "celeridad": 6}},
+		{"id": "pocion_vida", "name": "Poción de vida", "category": "consumable", "rarity": "common", "quantity": 12},
+		{"id": "elixir_celeridad", "name": "Elixir de celeridad", "category": "consumable", "rarity": "rare", "quantity": 4},
+		{"id": "racion_viaje", "name": "Ración de viaje", "category": "consumable", "rarity": "common", "quantity": 8},
+		{"id": "cristal_vacio", "name": "Cristal de vacío", "category": "material", "rarity": "uncommon", "quantity": 37},
+		{"id": "lingote_hierro", "name": "Lingote de hierro", "category": "material", "rarity": "common", "quantity": 14},
+		{"id": "fibra_savia", "name": "Fibra de savia", "category": "material", "rarity": "common", "quantity": 22},
+		{"id": "fragmento_runa", "name": "Fragmento de runa", "category": "material", "rarity": "rare", "quantity": 3},
+		{"id": "carta_torin", "name": "Carta sellada de Torin", "category": "quest", "rarity": "common"},
+		{"id": "nucleo_grieta", "name": "Núcleo de grieta", "category": "material", "rarity": "legendary", "quantity": 1},
+		{"id": "mapa_cueva", "name": "Mapa de la cueva de ámbar", "category": "quest", "rarity": "epic"}
+	],
+	"equipped": {
+		"head": "yelmo_grieta", "neck": "colgante_eco", "shoulders": "hombreras_vigia", "chest": "coraza_tejida",
+		"waist": "faja_savia", "legs": "grebas_umbral", "feet": "botas_marea", "wrists": "brazales_hierro",
+		"hands": "guanteletes_calor", "ring_1": "anillo_umbral", "ring_2": "sello_tejedor",
+		"main_hand": "hoja_grieta", "off_hand": "daga_vacio"
+	},
+	"backpack": [
+		"anillo_deriva", "mandoble_hierro", "baculo_pulso", "escudo_bastion", "coraza_bastion", "yelmo_bastion",
+		"guantes_recolector", "pico_ambar", "botas_sendero", "amuleto_luz",
+		"pocion_vida", "elixir_celeridad", "racion_viaje",
+		"cristal_vacio", "lingote_hierro", "fibra_savia", "fragmento_runa", "carta_torin"
+	],
+	"secure": ["nucleo_grieta", "mapa_cueva"],
+	"sets": [
+		{"id": "damage", "name": "Daño", "key": "F1", "slots": {
+			"head": "yelmo_grieta", "neck": "colgante_eco", "shoulders": "hombreras_vigia", "chest": "coraza_tejida",
+			"waist": "faja_savia", "legs": "grebas_umbral", "feet": "botas_marea", "wrists": "brazales_hierro",
+			"hands": "guanteletes_calor", "ring_1": "anillo_umbral", "ring_2": "sello_tejedor",
+			"main_hand": "hoja_grieta", "off_hand": "daga_vacio"}},
+		{"id": "tank", "name": "Tanque", "key": "F2", "slots": {
+			"head": "yelmo_bastion", "chest": "coraza_bastion", "off_hand": "escudo_bastion", "main_hand": "mandoble_hierro"}},
+		{"id": "gathering", "name": "Recolección", "key": "F3", "slots": {
+			"hands": "guantes_recolector", "main_hand": "pico_ambar", "feet": "botas_sendero", "neck": "amuleto_luz"}}
+	],
+	"active_set": "damage"
+}

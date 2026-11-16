@@ -8,12 +8,22 @@ var _registry: Dictionary = {}
 # Dictionary[String, Node] - Ventanas activas e instanciadas
 var _instances: Dictionary = {}
 
+# Rutas por parámetro: source_id -> [{target, param}]. Si `params[param]` es verdadero,
+# las llamadas a `source_id` se resuelven a `target` (compatibilidad con llamadas antiguas).
+var _routes: Dictionary = {}
+
 func _init() -> void:
 	_register_initial_windows()
 
 # Registro de las ventanas base conocidas hasta ahora
 func _register_initial_windows() -> void:
-	register("inventory", "res://ui/windows/InventoryWindow/secure_slots_ui.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	# UI v2.4 Paso 10: Equipo e inventario [C] (paperdoll, 16 stats con deltas y conjuntos F1-F3).
+	# El almacén clásico (alijo/personaje/bolsa segura en cuadrícula) sigue disponible como
+	# "inventory_stash": las llamadas a "inventory" con `is_shelter_context` (Refugio, Vendedor)
+	# se enrutan a él para mantener la compatibilidad.
+	register("inventory", "res://ui/windows/EquipmentWindow/EquipmentWindow.tscn", UITypes.WindowCategory.GAME_WINDOW, [KEY_C])
+	register("inventory_stash", "res://ui/windows/InventoryWindow/secure_slots_ui.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	register_route("inventory", "inventory_stash", "is_shelter_context")
 	register("admin_panel", "res://ui/windows/AdminPanel/AdminPanel.tscn", UITypes.WindowCategory.GAME_WINDOW)
 	register("options_menu", "res://ui/windows/OptionsMenu/OptionsMenu.tscn", UITypes.WindowCategory.MODAL_OVERLAY)
 	register("backpack", "res://ui/windows/InventoryWindow/SubInventoryContainer.gd", UITypes.WindowCategory.GAME_WINDOW)
@@ -46,6 +56,26 @@ func register(id: String, scene_path: String, category: int, shortcut_keys: Arra
 	meta.shortcut_keys = shortcut_keys.duplicate()
 	_registry[id] = meta
 	print("[UIWindowRegistry] Registrada ventana: ", id)
+
+## Declara que `source_id` abierto con `params[param_key]` verdadero se resuelve a `target_id`.
+func register_route(source_id: String, target_id: String, param_key: String) -> void:
+	if not _routes.has(source_id):
+		_routes[source_id] = []
+	_routes[source_id].append({"target": target_id, "param": param_key})
+
+## Id efectivo para (id, params): la ruta que aplique o el propio id.
+func resolve_route(id: String, params: Dictionary = {}) -> String:
+	for r in _routes.get(id, []):
+		if bool(params.get(r["param"], false)) and is_registered(r["target"]):
+			return r["target"]
+	return id
+
+## Ventanas a las que puede enrutarse `id` (para is_window_open/close_window).
+func get_route_targets(id: String) -> Array:
+	var out: Array = []
+	for r in _routes.get(id, []):
+		out.append(r["target"])
+	return out
 
 ## Atajos de teclado (Key) declarados para una ventana. [] si no tiene o no existe.
 func get_shortcut_keys(id: String) -> Array:

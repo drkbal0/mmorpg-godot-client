@@ -83,6 +83,11 @@ func stop_drag_follow() -> void:
 	_active_drag_visual = null
 
 func open_window(id: String, params: Dictionary = {}, custom_instance_id: String = "") -> Node:
+	# Rutas de compatibilidad (p. ej. "inventory" + is_shelter_context -> "inventory_stash").
+	if custom_instance_id == "" and registry:
+		var routed: String = registry.resolve_route(id, params)
+		if routed != id:
+			return open_window(routed, params)
 	var registry_id = id
 	var instance_id = custom_instance_id if custom_instance_id != "" else id
 	var persistence_key = _get_scoped_id(instance_id)
@@ -154,6 +159,9 @@ func open_window(id: String, params: Dictionary = {}, custom_instance_id: String
 	return instance
 
 func close_window(id: String, free_instance: bool = false) -> void:
+	for routed in registry.get_route_targets(id):
+		if registry.get_instance(routed):
+			close_window(routed, free_instance)
 	var instance = registry.get_instance(id)
 	if instance:
 		# Guardar posición si ha sido movida
@@ -189,6 +197,8 @@ func _get_scoped_id(id: String) -> String:
 	return id
 
 func toggle_window(id: String, params: Dictionary = {}, custom_instance_id: String = "") -> void:
+	if custom_instance_id == "":
+		id = registry.resolve_route(id, params)
 	var instance = registry.get_instance(id)
 	if instance and instance.visible:
 		close_window(id)
@@ -210,7 +220,13 @@ func register_instance(id: String, node: Node) -> void:
 
 func is_window_open(id: String) -> bool:
 	var instance = registry.get_instance(id)
-	return instance != null and instance.visible
+	if instance != null and instance.visible:
+		return true
+	for routed in registry.get_route_targets(id):
+		var r = registry.get_instance(routed)
+		if r != null and r.visible:
+			return true
+	return false
 
 func is_mouse_over_ui() -> bool:
 	# Si hay un menú contextual abierto, cuenta como UI

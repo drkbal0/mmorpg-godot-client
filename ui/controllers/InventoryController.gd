@@ -8,6 +8,8 @@ signal item_move_completed(item_id, success)
 signal item_rotation_completed(item_id, success)
 signal item_removed_completed(item_id, success)
 signal inventory_refresh_requested(state) # For atomic UI updates
+## UI v2.4 Paso 10 · Equipo [C]: resultado de mover entre mochila, bolsa segura y paperdoll.
+signal equipment_move_completed(item_id, slot, success)
 
 func _ready():
 	print("[InventoryController] Inicializado.")
@@ -392,3 +394,36 @@ func auto_sort_items(items: Array, grid_w: int, grid_h: int) -> Array:
 			if placed: break
 			
 	return placements
+
+
+# ==========================================================================
+# UI v2.4 Paso 10 · Equipo e inventario [C] (EquipmentWindow + EquipmentService)
+# ==========================================================================
+# La ventana de Equipo no mueve nodos InventoryItem: delega aquí y el estado vive en
+# EquipmentService (inyectable). Así la lógica de arrastrar/soltar es la misma para
+# ratón, mando y tests, y el punto de persistencia en backend queda centralizado.
+
+## Mochila/bolsa segura/otra ranura -> ranura del paperdoll. Devuelve el resultado del servicio.
+func request_equip(service: Node, item_id: String, slot: String = "") -> Dictionary:
+	if service == null or not service.has_method("equip"):
+		return {"ok": false, "reason": "no_service"}
+	var res: Dictionary = service.equip(item_id, slot)
+	equipment_move_completed.emit(item_id, str(res.get("slot", slot)), bool(res.get("ok", false)))
+	return res
+
+## Ranura del paperdoll -> mochila (en `index` si se indica).
+func request_unequip(service: Node, slot: String, index: int = -1) -> bool:
+	if service == null or not service.has_method("unequip"):
+		return false
+	var iid := str(service.equipped.get(slot, ""))
+	var ok: bool = service.unequip(slot, index)
+	equipment_move_completed.emit(iid, slot, ok)
+	return ok
+
+## Mochila <-> bolsa segura.
+func request_secure_move(service: Node, item_id: String, to_secure: bool) -> bool:
+	if service == null:
+		return false
+	var ok: bool = service.move_to_secure(item_id) if to_secure else service.move_from_secure(item_id)
+	equipment_move_completed.emit(item_id, "secure" if to_secure else "backpack", ok)
+	return ok

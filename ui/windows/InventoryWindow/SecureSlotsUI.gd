@@ -94,7 +94,9 @@ func _on_title_gui_input(event):
 func request_focus():
 	if has_node("/root/UIOrchestrator"):
 		# Usamos el ID registrado en el WindowRegistry
-		get_node("/root/UIOrchestrator").focus_window("inventory")
+		# Registrada como "inventory_stash" (las llamadas a "inventory" con contexto de
+		# Refugio se enrutan aquí; "inventory" es ahora la ventana de Equipo [C]).
+		get_node("/root/UIOrchestrator").focus_window("inventory_stash")
 	else:
 		# Fallback si el orquestador no está (ej: tests aislados)
 		move_to_front()
