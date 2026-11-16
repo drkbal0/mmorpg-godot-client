@@ -61,6 +61,10 @@ func _register_initial_windows() -> void:
 	# Muerte y reaparición con recap táctico de los últimos 5 s, resurrección y repetición [R].
 	register("dialogue_window", "res://ui/windows/DialogueWindow/DialogueWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 	register("death_window", "res://ui/windows/DeathWindow/DeathWindow.tscn", UITypes.WindowCategory.MODAL_OVERLAY)
+	# UI v2.4 Paso 14: Antesala de mazmorra (5 integrantes, listo, cuenta atrás, conjuntos F1-F3) y
+	# Resumen de mazmorra (botín inteligente, momentos del grupo con elogios y progreso).
+	register("dungeon_lobby", "res://ui/windows/DungeonLobbyWindow/DungeonLobbyWindow.tscn", UITypes.WindowCategory.MODAL_OVERLAY)
+	register("dungeon_summary", "res://ui/windows/DungeonSummaryWindow/DungeonSummaryWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 
 
 func register(id: String, scene_path: String, category: int, shortcut_keys: Array = []) -> void:

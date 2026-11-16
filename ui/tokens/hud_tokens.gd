@@ -399,6 +399,50 @@ const DEATH_AVOIDABLE_BG := Color("#2a2414")
 const DEATH_TIP_EDGE := Color(70 / 255.0, 227 / 255.0, 193 / 255.0, 0.35)
 const DEATH_RES_EDGE := Color("#46e3c1")
 
+# --------------------------------------------------------------------------
+# UI v2.4 Paso 14 · Antesala (MMO-Antesala.html) y Resumen de mazmorra (MMO-Resumen.html)
+# --------------------------------------------------------------------------
+const DUNGEON_LOBBY_VEIL := Color(5 / 255.0, 8 / 255.0, 10 / 255.0, 0.74)
+const DUNGEON_SUMMARY_VEIL := Color(5 / 255.0, 8 / 255.0, 10 / 255.0, 0.78)
+const DUNGEON_TITLE_SIZE := 34
+const DUNGEON_CARD_BG := Color("#0d1216")
+const DUNGEON_CARD_EDGE := Color(1, 1, 1, 0.07)
+const DUNGEON_CARD_RADIUS := 18
+const DUNGEON_SUB_BG := Color("#121a20")
+const DUNGEON_SELF_EDGE := Color("#46e3c1")
+const DUNGEON_GRID_LEFT := 50.0
+const DUNGEON_GRID_TOP := 150.0
+const DUNGEON_GRID_GAP := 14.0
+const DUNGEON_PLAYER_CARDS := 5
+const DUNGEON_AVATAR_SIZE := Vector2(40, 50)
+const DUNGEON_BADGE_HEIGHT := 30
+const DUNGEON_READY := Color("#4fe39a")
+const DUNGEON_READY_BG := Color(79 / 255.0, 227 / 255.0, 154 / 255.0, 0.15)
+const DUNGEON_CHANGING := Color("#f5c35b")
+const DUNGEON_CHANGING_BG := Color(245 / 255.0, 195 / 255.0, 91 / 255.0, 0.15)
+const DUNGEON_FOOTER_HEIGHT := 48
+const DUNGEON_SKIN := Color("#f1d3b8")
+const DUNGEON_EYES := Color("#1a1a1a")
+const DUNGEON_COLUMN_HEIGHT := 600.0
+const DUNGEON_COLUMN_TOP := 130.0
+const DUNGEON_LOOT_X := 50.0
+const DUNGEON_LOOT_WIDTH := 420.0
+const DUNGEON_MOMENTS_X := 490.0
+const DUNGEON_MOMENTS_WIDTH := 460.0
+const DUNGEON_PROGRESS_X := 970.0
+const DUNGEON_PROGRESS_WIDTH := 420.0
+const DUNGEON_RECORD := Color("#f5c35b")
+const DUNGEON_RECORD_BG := Color("#2a2414")
+const DUNGEON_PRAISED := Color("#4fe39a")
+const DUNGEON_PRAISED_BG := Color(79 / 255.0, 227 / 255.0, 154 / 255.0, 0.12)
+const DUNGEON_REPEAT := Color("#46e3c1")
+const DUNGEON_REPEAT_TEXT := Color("#071012")
+const DUNGEON_XP_TEXT := Color("#c4b3ff")
+const DUNGEON_XP_BEFORE := Color("#5b4a9a")
+const DUNGEON_XP_GAIN := Color("#9a7bff")
+const DUNGEON_ATLAS_EDGE := Color(245 / 255.0, 195 / 255.0, 91 / 255.0, 0.4)
+const DUNGEON_OFFER_TEXT := Color("#6cb8ff")
+
 
 # --------------------------------------------------------------------------
 # Helpers

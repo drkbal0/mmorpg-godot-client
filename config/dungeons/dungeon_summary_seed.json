@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "dungeon": {"id": "ferrum_vault", "name": "Bóveda de Ferrum", "difficulty": "Heroica"},
+  "status": "Completada",
+  "completion_s": 1902,
+  "group_best_s": 1975,
+  "local_player": "kael",
+  "player_gear": {"weapon": 412, "shoulders": 418, "chest": 410},
+  "members": [
+    {"id": "toro", "name": "Toro", "color": "#5aa9ff", "gear": {"weapon": 418, "shoulders": 406, "chest": 420},
+      "moment": "Bloqueó 14 golpes de mecánica", "stat": {"id": "mechanic_blocks", "value": 14}},
+    {"id": "brisa", "name": "Brisa", "color": "#4fe39a", "gear": {"weapon": 414, "shoulders": 414, "chest": 412},
+      "moment": "Salvó al grupo 3 veces al límite", "stat": {"id": "clutch_saves", "value": 3}},
+    {"id": "kael", "name": "Kael", "color": "#ff9a4d", "gear": {"weapon": 412, "shoulders": 418, "chest": 410},
+      "moment": "11 interrupciones, ninguna perdida", "stat": {"id": "interrupts", "value": 11}},
+    {"id": "nox", "name": "Nox", "color": "#b47bff", "gear": {"weapon": 405, "shoulders": 410, "chest": 404},
+      "moment": "Primera vez aquí · cero muertes", "stat": {"id": "deaths", "value": 0}},
+    {"id": "vela", "name": "Vela", "color": "#f5b546", "gear": {"weapon": 409, "shoulders": 420, "chest": 408},
+      "moment": "Encontró el cofre secreto", "stat": {"id": "secrets", "value": 1}}
+  ],
+  "praised": ["brisa"],
+  "loot": [
+    {"id": "guja_ferrum", "name": "Guja de Ferrum", "kind": "gear", "slot": "weapon", "ilvl": 420, "color": "#b47bff",
+      "stat": "+4,1 % daño", "tradeable": true, "scrap_yield": 24},
+    {"id": "hombreras_vado", "name": "Hombreras del vado", "kind": "gear", "slot": "shoulders", "ilvl": 418, "color": "#5aa9ff",
+      "stat": "", "tradeable": true, "scrap_yield": 18},
+    {"id": "esquirlas", "name": "Esquirlas", "kind": "material", "qty": 120, "color": "#46e3c1", "destination": "shelter"}
+  ],
+  "progress": {
+    "level": 32, "xp_before": 71300, "xp_to_next": 115000, "xp_gained": 18400,
+    "affinities": [{"energy": "vacio", "delta": 2}, {"energy": "pulso", "delta": 1}, {"energy": "calor", "delta": 1}],
+    "combos": [{"energies": ["vacio", "pulso"], "uses": 11}, {"energies": ["calor", "vacio"], "uses": 4}],
+    "atlas_hint_threshold": 10,
+    "reputation": [{"faction": "Ferrum", "delta": 350}],
+    "quests": [{"name": "Mensaje para Ferrum", "status": "avanzó"}]
+  },
+  "praise_note": "Puedes dar 1 elogio por mazmorra a cada compañero.",
+  "moments_note": "sin tablas de daño, solo lo que sumó"
+}

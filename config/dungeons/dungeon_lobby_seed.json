@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "dungeon": {"id": "ferrum_vault", "name": "Bóveda de Ferrum", "difficulty": "Heroica"},
+  "dungeons": {
+    "ferrum_vault": {"name": "Bóveda de Ferrum", "difficulty": "Heroica"},
+    "vado_hundido": {"name": "Vado hundido", "difficulty": "Normal"}
+  },
+  "auto_entry_s": 24,
+  "set_swap_s": 2.0,
+  "local_player": "kael",
+  "leader": "kael",
+  "roles": {
+    "tank": {"name": "Tanque", "color": "#5aa9ff"},
+    "healer": {"name": "Sanadora", "name_m": "Sanador", "color": "#4fe39a"},
+    "dps": {"name": "Daño", "color": "#ff9a4d"}
+  },
+  "equipment_sets": {
+    "dano": {"name": "Daño", "role": "dps", "key": "F1", "ilvl": 412},
+    "tanque": {"name": "Tanque", "role": "tank", "key": "F2", "ilvl": 404},
+    "sanacion": {"name": "Sanación", "role": "healer", "key": "F3", "ilvl": 400}
+  },
+  "members": [
+    {"id": "toro", "name": "Toro", "archetype": "Guardián", "role": "tank", "ilvl": 418, "status": "ready",
+      "consumables": {"ok": true, "text": "✓"}, "durability": 96, "set": "Tanque",
+      "avatar": {"body": "#2b4a8a", "hair": "#5a3a20"}, "first_time": false},
+    {"id": "brisa", "name": "Brisa", "archetype": "Druida", "role": "healer", "ilvl": 414, "status": "changing",
+      "consumables": {"ok": false, "text": "sin tónicos"}, "durability": 88, "set": "Daño", "pending_set": "Sanación", "swap_remaining": 6.0,
+      "avatar": {"body": "#2a7a4a", "hair": "#c97b4a"}, "first_time": false},
+    {"id": "kael", "name": "Kael", "archetype": "Lancero", "role": "dps", "ilvl": 412, "status": "ready",
+      "consumables": {"ok": true, "text": "✓"}, "durability": 82, "set": "Daño", "set_id": "dano",
+      "avatar": {"body": "#8a3a2b", "hair": "#2b1d14"}, "first_time": false},
+    {"id": "nox", "name": "Nox", "archetype": "Hechicero", "role": "dps", "ilvl": 405, "status": "ready",
+      "consumables": {"ok": true, "text": "✓"}, "durability": 41, "set": "Daño",
+      "avatar": {"body": "#5b3a8a", "hair": "#1a1a1a"}, "first_time": true},
+    {"id": "vela", "name": "Vela", "archetype": "Arquera", "role": "dps", "ilvl": 409, "status": "preparing",
+      "consumables": {"ok": true, "text": "✓"}, "durability": 100, "set": "Daño",
+      "avatar": {"body": "#8a6a2b", "hair": "#d9b46a"}, "first_time": true}
+  ],
+  "affixes": [
+    {"name": "Grietas inestables", "color": "#b47bff", "text": "Las grietas enemigas duran el doble. Interrumpir es clave."},
+    {"name": "Hierro vivo", "color": "#b8c3ca", "text": "Los élites ganan armadura con cada golpe recibido."}
+  ],
+  "routes": [
+    {"id": "fast", "name": "Ruta rápida", "color": "#46e3c1", "votes": ["toro", "kael", "nox"]},
+    {"id": "loot", "name": "Ruta del botín (+1 cofre)", "color": "#f5c35b", "votes": ["brisa", "vela"]}
+  ],
+  "learning_mode": true,
+  "nest": {"title": "El Nido en mini-ventana · 5 cosas listas", "text": "Ábrelo en una mini-ventana mientras esperas", "key": "H"}
+}

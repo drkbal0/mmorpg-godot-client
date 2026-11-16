@@ -188,6 +188,16 @@ func open_death_window(recap_data: Dictionary = {}) -> Node:
 	return open_window("death_window", {"recap": recap_data})
 
 
+## UI v2.4 Paso 14: abre la antesala de la mazmorra (el grupo vuelve a la espera).
+func open_dungeon_lobby(dungeon_id: String = "ferrum_vault") -> Node:
+	return open_window("dungeon_lobby", {"dungeon_id": dungeon_id})
+
+
+## UI v2.4 Paso 14: abre el resumen de mazmorra con los datos dados (vacío = el del seed).
+func open_dungeon_summary(summary_data: Dictionary = {}) -> Node:
+	return open_window("dungeon_summary", {"summary": summary_data})
+
+
 func close_window(id: String, free_instance: bool = false) -> void:
 	for routed in registry.get_route_targets(id):
 		if registry.get_instance(routed):
