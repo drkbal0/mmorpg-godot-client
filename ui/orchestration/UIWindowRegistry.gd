@@ -12,6 +12,9 @@ var _instances: Dictionary = {}
 # las llamadas a `source_id` se resuelven a `target` (compatibilidad con llamadas antiguas).
 var _routes: Dictionary = {}
 
+# Atajos con modificadores: id -> [{keycode, ctrl, shift, alt}] (p. ej. raid_hud -> Ctrl+R).
+var _combos: Dictionary = {}
+
 func _init() -> void:
 	_register_initial_windows()
 
@@ -77,6 +80,11 @@ func _register_initial_windows() -> void:
 	# cuadrícula magnética, códigos para compartir). "options_menu" sigue siendo el menú de sesión (Esc).
 	register("settings_window", "res://ui/windows/SettingsWindow/SettingsWindow.tscn", UITypes.WindowLayer.GAME_WINDOW, [KEY_F10])
 	register("ui_editor", "res://ui/windows/UIEditorWindow/UIEditorWindow.tscn", UITypes.WindowLayer.GAME_WINDOW)
+	# UI v2.4 Paso 17 (ADR 115): HUD de raid extendido para sanador (10/20 integrantes, click-casting,
+	# jefe colosal, alerta táctica central y consola compacta). Capa HUD: convive con todas las
+	# ventanas sin robar el foco. Atajo con modificador Ctrl+R (la R sola es la definitiva).
+	register("raid_hud", "res://ui/windows/RaidHUDWindow/RaidHUDWindow.tscn", UITypes.WindowLayer.HUD)
+	register_combo("raid_hud", KEY_R, true)
 
 
 func register(id: String, scene_path: String, category: int, shortcut_keys: Array = []) -> void:
@@ -84,6 +92,24 @@ func register(id: String, scene_path: String, category: int, shortcut_keys: Arra
 	meta.shortcut_keys = shortcut_keys.duplicate()
 	_registry[id] = meta
 	print("[UIWindowRegistry] Registrada ventana: ", id)
+
+## Atajo con modificadores (p. ej. Ctrl+R). Las teclas sin modificador van en `register(…, [KEY_N])`.
+func register_combo(id: String, keycode: int, ctrl: bool = true, shift: bool = false, alt: bool = false) -> void:
+	if not _combos.has(id):
+		_combos[id] = []
+	_combos[id].append({"keycode": keycode, "ctrl": ctrl, "shift": shift, "alt": alt})
+
+## Atajos con modificadores declarados para una ventana ([{keycode, ctrl, shift, alt}]).
+func get_shortcut_combos(id: String) -> Array:
+	return (_combos.get(id, []) as Array).duplicate(true)
+
+## Ventana asociada a una combinación exacta de tecla y modificadores, o "".
+func get_window_for_combo(keycode: int, ctrl: bool, shift: bool = false, alt: bool = false) -> String:
+	for id in _combos:
+		for c in _combos[id]:
+			if c["keycode"] == keycode and c["ctrl"] == ctrl and c["shift"] == shift and c["alt"] == alt:
+				return id
+	return ""
 
 ## Declara que `source_id` abierto con `params[param_key]` verdadero se resuelve a `target_id`.
 func register_route(source_id: String, target_id: String, param_key: String) -> void:

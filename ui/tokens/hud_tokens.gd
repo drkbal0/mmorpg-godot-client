@@ -795,6 +795,53 @@ static func class_color(cls: String) -> Color:
 	return Color(CLASS_COLORS[k]) if CLASS_COLORS.has(k) else TEXT_SECONDARY
 
 
+# --- HUD de raid extendido · UI v2.4 Paso 17 (ADR 115, MMO-Raid.html) ---------
+const RAID_SCENE_VEIL := Color(5 / 255.0, 8 / 255.0, 10 / 255.0, 0.25)
+const RAID_BOSS_ORIGIN := Vector2(470, 20)
+const RAID_BOSS_WIDTH := 500.0
+const RAID_BOSS_BAR_HEIGHT := 14.0
+const RAID_BOSS_BAR_RADIUS := 7
+const RAID_BOSS_BAR_BG := Color(7 / 255.0, 10 / 255.0, 12 / 255.0, 0.9)
+const RAID_BOSS_HP := Color("#e25555")
+const RAID_BOSS_PHASE := Color("#f5c35b")
+const RAID_ALERT_TOP := 170.0
+const RAID_ALERT_RADIUS := 16
+const RAID_GRID_ORIGIN := Vector2(40, 290)
+const RAID_HEADER := Color("#c3ccd3")
+const RAID_LEGEND := Color("#9aa6ae")
+const RAID_STATUS_TEXT := Color("#dbe4ea")
+const RAID_DEBUFF_FILL := Color("#7a5bd0")          # vida de un integrante con debuff purificable
+const RAID_DISPEL := Color("#b47bff")               # rombo violeta rotado 45°
+const RAID_ROLE_TANK := Color("#5aa9ff")
+const RAID_ROLE_HEALER := Color("#4fe39a")
+const RAID_ROLE_DPS := Color("#ff9a4d")
+const RAID_ROLE_BADGE := 8.0
+const RAID_SHIELD := Color("#9fd0ff")                # escudo de absorción (franja superior de 3 px)
+const RAID_SHIELD_HEIGHT := 3.0
+const RAID_CONSOLE_POINTS: Array[Vector2] = [Vector2(380, 811), Vector2(420, 690), Vector2(1020, 690), Vector2(1060, 811)]
+const RAID_CONSOLE_BG := Color(13 / 255.0, 18 / 255.0, 22 / 255.0, 0.97)   # #0d1216 @ 0.97
+const RAID_CONSOLE_EDGE := Color(1, 1, 1, 0.09)
+const RAID_CONSOLE_EDGE_WIDTH := 1.5
+const RAID_CONSOLE_RECT := Rect2(453, 724, 534, 70)  # left 453 · bottom 16 · 534 de ancho
+const RAID_CONSOLE_BAR_HEIGHT := 14.0
+const RAID_SLOT_SIZE := 48.0
+const RAID_SLOT_GAP := 6.0
+const RAID_SLOT_RADIUS := 11
+const RAID_SLOT_EDGE := Color(1, 1, 1, 0.08)
+const RAID_SLOT_CD_VEIL := Color(6 / 255.0, 9 / 255.0, 11 / 255.0, 0.72)
+
+
+static func raid_role_color(role: String) -> Color:
+	match role:
+		"tank":
+			return RAID_ROLE_TANK
+		"healer":
+			return RAID_ROLE_HEALER
+		"dps":
+			return RAID_ROLE_DPS
+	return TEXT_SECONDARY
+
+
 # --------------------------------------------------------------------------
 # Códice v2 · conocimiento descubrible (MMO-Codice.html / MMO-Inversiones.html)
 # --------------------------------------------------------------------------

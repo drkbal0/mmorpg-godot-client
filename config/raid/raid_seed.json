@@ -1,0 +1,84 @@
+{
+	"version": 1,
+	"source": "design_ref/pantallas_html/MMO-Raid.html",
+	"raid_size": 20,
+	"sizes": [10, 20],
+	"rows": 5,
+	"columns_by_size": {"10": 2, "20": 4},
+	"heal_range_m": 40,
+	"roles": {
+		"tank": {"label": "Tanque", "color": "#5aa9ff"},
+		"healer": {"label": "Sanador", "color": "#4fe39a"},
+		"dps": {"label": "Daño", "color": "#ff9a4d"}
+	},
+	"click_casting": {
+		"legend": "Clic: Sanar · Clic der.: Escudo · Shift+clic: Purificar",
+		"heal_pct": 15,
+		"heal_mana": 40,
+		"shield_pct": 20,
+		"shield_mana": 60,
+		"dispel_mana": 30,
+		"resurrect_pct": 30,
+		"resurrect_mana": 100
+	},
+	"boss": {
+		"name": "Coloso de Runavell",
+		"hp_percent": 43,
+		"phase": 2,
+		"phases": [
+			{"id": 1, "label": "Fase 1", "until_percent": 70},
+			{"id": 2, "label": "Fase 2", "until_percent": 30},
+			{"id": 3, "label": "Fase 3", "until_percent": 0}
+		],
+		"enrage_seconds": 252,
+		"phase_color": "#f5c35b",
+		"hp_color": "#e25555"
+	},
+	"alert": {
+		"title": "Todos a la izquierda",
+		"subtitle": "Terremoto rúnico · también suena desde la derecha",
+		"duration_sec": 3,
+		"side": "right",
+		"direction": "left"
+	},
+	"healer": {
+		"hp_percent": 88,
+		"mana_current": 520,
+		"mana_max": 1000,
+		"mana_burn_per_sec": 5.2
+	},
+	"abilities": [
+		{"key": "1", "name": "Sanación rápida", "color": "#1a2e22", "cooldown": 0, "cooldown_total": 0, "mana": 40},
+		{"key": "2", "name": "Renovar", "color": "#1a2e22", "cooldown": 0, "cooldown_total": 0, "mana": 30},
+		{"key": "3", "name": "Barrera", "color": "#1d2f55", "cooldown": 0, "cooldown_total": 0, "mana": 60},
+		{"key": "4", "name": "Purificar", "color": "#2a1d3a", "cooldown": 6, "cooldown_total": 8, "mana": 30},
+		{"key": "5", "name": "Sanación en cadena", "color": "#1a2e22", "cooldown": 0, "cooldown_total": 0, "mana": 80},
+		{"key": "6", "name": "Marea de vida", "color": "#1c3a3a", "cooldown": 22, "cooldown_total": 30, "mana": 120},
+		{"key": "7", "name": "Escudo sagrado", "color": "#1d2f55", "cooldown": 0, "cooldown_total": 0, "mana": 60},
+		{"key": "8", "name": "Himno de la banda", "color": "#4a3a1c", "cooldown": 100, "cooldown_total": 180, "mana": 0},
+		{"key": "9", "name": "Resucitar", "color": "#1a2e22", "cooldown": 0, "cooldown_total": 0, "mana": 100},
+		{"key": "0", "name": "Último aliento", "color": "#4a1d22", "cooldown": 0, "cooldown_total": 0, "mana": 0}
+	],
+	"members": [
+		{"id": "toro", "name": "Toro", "role": "tank", "class_name": "guerrero", "group": 1, "max_hp": 1500, "hp_percent": 58, "incoming_heal": 12, "projected_damage_3s": 30, "has_dispellable_debuff": false, "distance_meters": 12, "has_priority_threat": true},
+		{"id": "brisa", "name": "Brisa", "role": "healer", "class_name": "sanador", "group": 1, "max_hp": 1000, "hp_percent": 92, "distance_meters": 0},
+		{"id": "kael", "name": "Kael", "role": "dps", "class_name": "mago", "group": 1, "max_hp": 1000, "hp_percent": 61, "projected_damage_3s": 20, "distance_meters": 18},
+		{"id": "nox", "name": "Nox", "role": "dps", "class_name": "brujo", "group": 1, "max_hp": 1000, "hp_percent": 40, "incoming_heal": 18, "has_dispellable_debuff": true, "debuff_name": "Magia", "distance_meters": 14, "is_selected": true},
+		{"id": "vela", "name": "Vela", "role": "dps", "class_name": "arquero", "group": 1, "max_hp": 1000, "hp_percent": 100, "distance_meters": 42},
+		{"id": "ulric", "name": "Ulric", "role": "tank", "class_name": "guerrero", "group": 2, "max_hp": 1500, "hp_percent": 88, "distance_meters": 10},
+		{"id": "sasha", "name": "Sasha", "role": "healer", "class_name": "sanador", "group": 2, "max_hp": 1000, "hp_percent": 74, "distance_meters": 22},
+		{"id": "dren", "name": "Dren", "role": "dps", "class_name": "picaro", "group": 2, "max_hp": 1000, "hp_percent": 30, "projected_damage_3s": 22, "distance_meters": 8},
+		{"id": "ivo", "name": "Ivo", "role": "dps", "class_name": "mago", "group": 2, "max_hp": 1000, "hp_percent": 0, "is_dead": true, "distance_meters": 16},
+		{"id": "lune", "name": "Lune", "role": "dps", "class_name": "arquero", "group": 2, "max_hp": 1000, "hp_percent": 95, "distance_meters": 25},
+		{"id": "mira", "name": "Mira", "role": "healer", "class_name": "sanador", "group": 3, "max_hp": 1000, "hp_percent": 100, "distance_meters": 20},
+		{"id": "joao", "name": "Joao", "role": "dps", "class_name": "picaro", "group": 3, "max_hp": 1000, "hp_percent": 66, "has_dispellable_debuff": true, "debuff_name": "Magia", "distance_meters": 11},
+		{"id": "aren", "name": "Aren", "role": "dps", "class_name": "mago", "group": 3, "max_hp": 1000, "hp_percent": 81, "distance_meters": 19},
+		{"id": "pim", "name": "Pim", "role": "dps", "class_name": "arquero", "group": 3, "max_hp": 1000, "hp_percent": 52, "projected_damage_3s": 25, "distance_meters": 9},
+		{"id": "kora", "name": "Kora", "role": "dps", "class_name": "brujo", "group": 3, "max_hp": 1000, "hp_percent": 90, "distance_meters": 27},
+		{"id": "tess", "name": "Tess", "role": "healer", "class_name": "sanador", "group": 4, "max_hp": 1000, "hp_percent": 77, "distance_meters": 24},
+		{"id": "bram", "name": "Bram", "role": "dps", "class_name": "picaro", "group": 4, "max_hp": 1000, "hp_percent": 45, "projected_damage_3s": 30, "distance_meters": 7},
+		{"id": "oda", "name": "Oda", "role": "dps", "class_name": "mago", "group": 4, "max_hp": 1000, "hp_percent": 100, "distance_meters": 30},
+		{"id": "rhea", "name": "Rhea", "role": "dps", "class_name": "arquero", "group": 4, "max_hp": 1000, "hp_percent": 63, "distance_meters": 21},
+		{"id": "finn", "name": "Finn", "role": "dps", "class_name": "brujo", "group": 4, "max_hp": 1000, "hp_percent": 88, "distance_meters": 15}
+	]
+}

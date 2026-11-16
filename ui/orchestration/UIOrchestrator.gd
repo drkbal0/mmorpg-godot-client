@@ -15,6 +15,15 @@ var layout_persistence: LayoutPersistence
 var window_layer: CanvasLayer
 var drag_layer: CanvasLayer
 
+const RAID_HUD_ID := "raid_hud"
+const PARTY_FRAMES_ID := "party_frames"
+
+## UI v2.4 Paso 17: el HUD de raid se abrió (true) o se cerró (false).
+signal raid_hud_toggled(open: bool)
+
+var _party_hidden_by_raid := false
+var _closing_all := false
+
 var _active_drag_visual: Control = null
 var _active_drag_offset: Vector2 = Vector2.ZERO
 
@@ -159,6 +168,8 @@ func open_window(id: String, params: Dictionary = {}, custom_instance_id: String
 	# TRANSITION visibles (pantalla de carga) siempre por encima de todo.
 	if UITypes.ENTRY_FLOW_CATEGORIES.has(meta.category):
 		_raise_transitions()
+	if registry_id == RAID_HUD_ID:
+		_on_raid_hud_opened()
 		
 	return instance
 
@@ -228,6 +239,52 @@ func open_ui_editor(params: Dictionary = {}) -> Node:
 	return open_window("ui_editor", params)
 
 
+## UI v2.4 Paso 17 (ADR 115): HUD de raid extendido del sanador (capa HUD, Ctrl+R).
+## params: {"raid_size": 10 | 20, "backdrop": bool, "start_encounter": bool, "select": id}.
+## Al abrirlo sustituye a los marcos de grupo (party_frames) y avisa a UIEditorService del
+## contenido «raid» (diseño Raid 20 si «Cambiar solo según el contenido» está activo).
+func open_raid_hud(params: Dictionary = {}) -> Node:
+	return open_window(RAID_HUD_ID, params)
+
+
+func close_raid_hud() -> void:
+	close_window(RAID_HUD_ID)
+
+
+func toggle_raid_hud(params: Dictionary = {}) -> void:
+	if is_raid_hud_open():
+		close_raid_hud()
+	else:
+		open_raid_hud(params)
+
+
+func is_raid_hud_open() -> bool:
+	return registry != null and is_window_open(RAID_HUD_ID)
+
+
+## true si los marcos de grupo están ocultos porque el HUD de raid ocupa su lugar.
+func is_party_swapped_for_raid() -> bool:
+	return _party_hidden_by_raid
+
+
+func _on_raid_hud_opened() -> void:
+	if is_window_open(PARTY_FRAMES_ID):
+		close_window(PARTY_FRAMES_ID)
+		_party_hidden_by_raid = true
+	var editor := get_node_or_null("/root/UIEditorService")
+	if editor != null and editor.has_method("on_content_changed"):
+		editor.on_content_changed("raid")
+	raid_hud_toggled.emit(true)
+
+
+func _on_raid_hud_closed() -> void:
+	if _party_hidden_by_raid and not _closing_all:
+		_party_hidden_by_raid = false
+		if registry.is_registered(PARTY_FRAMES_ID):
+			open_window(PARTY_FRAMES_ID)
+	raid_hud_toggled.emit(false)
+
+
 ## true si hay una pantalla del flujo de entrada (SYSTEM_MODAL / TRANSITION) visible.
 func is_entry_flow_active() -> bool:
 	if registry == null:
@@ -278,7 +335,10 @@ func close_window(id: String, free_instance: bool = false) -> void:
 				var persistence_key = _get_scoped_id(id)
 				layout_persistence.set_window_position(persistence_key, instance.global_position)
 		
+		var was_visible: bool = instance.visible
 		instance.visible = false
+		if id == RAID_HUD_ID and was_visible:
+			_on_raid_hud_closed()
 		if free_instance:
 			registry.remove_instance(id)
 			instance.queue_free()
@@ -368,9 +428,12 @@ func get_window_instance(id: String) -> Node:
 ## Cierra y libera TODAS las ventanas activas.
 ## Debe llamarse antes de cualquier transición de escena.
 func close_all_windows() -> void:
+	_closing_all = true
 	var all_ids = registry.get_all_instance_ids()
 	for id in all_ids:
 		close_window(id, true)
+	_closing_all = false
+	_party_hidden_by_raid = false
 	if is_instance_valid(_active_context_menu):
 		_active_context_menu.queue_free()
 	print("[UIOrchestrator] Todas las ventanas cerradas y liberadas.")

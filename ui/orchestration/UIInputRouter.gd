@@ -1,7 +1,7 @@
 extends Node
 
 # UIInputRouter.gd - Despachador central de atajos de teclado
-# Propósito: Centralizar ESC, I, V, F10, G (pings tácticos) y evitar conflictos entre escenas.
+# Propósito: Centralizar ESC, I, V, F10, G (pings tácticos), Ctrl+R (HUD de raid) y evitar conflictos entre escenas.
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS # Funciona incluso en pausa si es necesario
@@ -78,12 +78,11 @@ func is_entry_flow_blocking(orchestrator: Node = null) -> bool:
 	var orch: Node = orchestrator if orchestrator else get_node_or_null("/root/UIOrchestrator")
 	return orch != null and orch.has_method("is_entry_flow_active") and orch.is_entry_flow_active()
 
-## Atajos de ventana declarados en UIWindowRegistry (`register(..., [KEY_N])`).
-## Solo teclas sin modificadores ni eco. Devuelve true si abrió/cerró una ventana.
+## Atajos de ventana declarados en UIWindowRegistry: teclas sin modificador (`register(..., [KEY_N])`)
+## y combinaciones exactas (`register_combo(..., KEY_R, true)` = Ctrl+R). Sin eco.
+## Devuelve true si abrió/cerró una ventana.
 func handle_window_shortcut(event: InputEvent, orchestrator: Node = null) -> bool:
 	if not (event is InputEventKey) or not event.pressed or event.is_echo():
-		return false
-	if event.ctrl_pressed or event.alt_pressed or event.meta_pressed:
 		return false
 	var orch: Node = orchestrator if orchestrator else get_node_or_null("/root/UIOrchestrator")
 	if orch == null or orch.get("registry") == null:
@@ -91,6 +90,20 @@ func handle_window_shortcut(event: InputEvent, orchestrator: Node = null) -> boo
 	if is_entry_flow_blocking(orch):
 		return false
 	var code: int = event.keycode if event.keycode != KEY_NONE else event.physical_keycode
+	# Combinaciones con modificador declaradas con `register_combo` (Ctrl+R → HUD de raid).
+	if event.ctrl_pressed or event.alt_pressed:
+		if event.meta_pressed or not orch.registry.has_method("get_window_for_combo"):
+			return false
+		var combo_id: String = orch.registry.get_window_for_combo(code, event.ctrl_pressed, event.shift_pressed, event.alt_pressed)
+		if combo_id == "":
+			return false
+		if combo_id == "raid_hud" and orch.has_method("toggle_raid_hud"):
+			orch.toggle_raid_hud()
+		else:
+			orch.toggle_window(combo_id)
+		return true
+	if event.meta_pressed:
+		return false
 	var window_id: String = orch.registry.get_window_for_key(code)
 	if window_id == "":
 		return false
