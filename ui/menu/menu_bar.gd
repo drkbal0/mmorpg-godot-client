@@ -44,7 +44,7 @@ const DEFAULT_TABS: Array[Dictionary] = [
 ]
 
 const SEARCH_WINDOW := "global_search"
-const SETTINGS_WINDOW := "options_menu"
+const SETTINGS_WINDOW := "settings_window"
 const SHOP_SUBTAB := "tienda"
 
 const ICON_SEARCH := "M11 4a7 7 0 1 0 0 14a7 7 0 1 0 0-14M16.5 16.5L21 21"

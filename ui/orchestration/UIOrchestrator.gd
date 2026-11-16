@@ -217,6 +217,17 @@ func open_loading_screen(dest_data: Dictionary = {}) -> Node:
 	return open_window("game_loading", {"destination": dest_data})
 
 
+## UI v2.4 Paso 16 (ADR 114): Ajustes [F10] en una categoría (graphics · audio · controls ·
+## interface · accessibility · network · account).
+func open_settings(category: String = "graphics") -> Node:
+	return open_window("settings_window", {"category": category})
+
+
+## UI v2.4 Paso 16: Editor de interfaz (diseños por rol, módulos del HUD y accesibilidad).
+func open_ui_editor(params: Dictionary = {}) -> Node:
+	return open_window("ui_editor", params)
+
+
 ## true si hay una pantalla del flujo de entrada (SYSTEM_MODAL / TRANSITION) visible.
 func is_entry_flow_active() -> bool:
 	if registry == null:

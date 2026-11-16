@@ -88,7 +88,7 @@ func _is_any_modal_open() -> bool:
 	var orch = get_node("/root/UIOrchestrator")
 	return orch.is_window_open("codex_window") or \
 		orch.is_window_open("inventory") or \
-		orch.is_window_open("options_menu") or \
+		orch.is_window_open("options_menu") or 		orch.is_window_open("settings_window") or 		orch.is_window_open("ui_editor") or \
 		orch.is_window_open("admin_panel")
 
 func _process(_delta: float) -> void:

@@ -409,7 +409,7 @@ func _test_menu_bar() -> void:
 	check(bar.handle_shortcut(_key(KEY_K, true)) and log.has("search") and log.has("nav:global_search"), "Ctrl+K -> búsqueda global")
 	log.clear()
 	check(not bar.handle_shortcut(_key(KEY_C, true)), "Ctrl+C no se interpreta como pestaña")
-	check(bar.handle_shortcut(_key(KEY_F10)) and log.has("settings") and log.has("nav:options_menu"), "F10 -> Ajustes")
+	check(bar.handle_shortcut(_key(KEY_F10)) and log.has("settings") and log.has("nav:settings_window"), "F10 -> Ajustes")
 	log.clear()
 	check(bar.handle_shortcut(_key(KEY_ESCAPE)) and log == ["close"], "Esc -> cerrar")
 	log.clear()

@@ -72,6 +72,11 @@ func _register_initial_windows() -> void:
 	register("character_select", "res://ui/windows/CharacterSelectWindow/CharacterSelectWindow.tscn", UITypes.WindowLayer.SYSTEM_MODAL)
 	register("character_create", "res://ui/windows/CharacterCreationWindow/CharacterCreationWindow.tscn", UITypes.WindowLayer.SYSTEM_MODAL)
 	register("game_loading", "res://ui/windows/GameLoadingWindow/GameLoadingWindow.tscn", UITypes.WindowLayer.TRANSITION)
+	# UI v2.4 Paso 16 (ADR 114): Ajustes globales [F10] (gráficos, sonido, controles con atajos
+	# repetidos, interfaz, accesibilidad, red y cuenta) y Editor de interfaz (diseños por rol,
+	# cuadrícula magnética, códigos para compartir). "options_menu" sigue siendo el menú de sesión (Esc).
+	register("settings_window", "res://ui/windows/SettingsWindow/SettingsWindow.tscn", UITypes.WindowLayer.GAME_WINDOW, [KEY_F10])
+	register("ui_editor", "res://ui/windows/UIEditorWindow/UIEditorWindow.tscn", UITypes.WindowLayer.GAME_WINDOW)
 
 
 func register(id: String, scene_path: String, category: int, shortcut_keys: Array = []) -> void:

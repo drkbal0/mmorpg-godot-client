@@ -1,0 +1,74 @@
+{
+	"version": 1,
+	"canvas": {"width": 944, "height": 531},
+	"grid": 24,
+	"align_threshold": 8,
+	"scale_min": 0.5,
+	"scale_max": 1.5,
+	"scale_step": 0.05,
+	"history_limit": 50,
+	"guide_color": "#ff6fa8",
+	"modules": [
+		{"id": "group_frames", "label": "Grupo", "detail": "5 marcos", "x": 14, "y": 14, "w": 170, "h": 150, "opacity": 1.0},
+		{"id": "target_frame", "label": "Objetivo", "detail": "arriba centro", "x": 300, "y": 14, "w": 340, "h": 80, "opacity": 1.0},
+		{"id": "timeline", "label": "Línea de tiempo", "detail": "340 × 64", "x": 300, "y": 110, "w": 340, "h": 64, "opacity": 0.4},
+		{"id": "minimap", "label": "Minimapa", "detail": "120 px", "x": 816, "y": 14, "w": 114, "h": 114, "opacity": 1.0},
+		{"id": "quest_tracker", "label": "Misiones", "detail": "3 visibles", "x": 776, "y": 150, "w": 154, "h": 110, "opacity": 1.0},
+		{"id": "chat_box", "label": "Chat", "detail": "", "x": 14, "y": 300, "w": 250, "h": 110, "opacity": 0.4},
+		{"id": "action_bar", "label": "Barra de acción", "detail": "2 filas × 10", "x": 300, "y": 410, "w": 340, "h": 108, "opacity": 1.0},
+		{"id": "player_portrait", "label": "Retrato", "detail": "", "x": 160, "y": 440, "w": 120, "h": 78, "opacity": 1.0},
+		{"id": "performance_meter", "label": "Rendimiento", "detail": "DPS · amenaza", "x": 660, "y": 440, "w": 150, "h": 78, "opacity": 1.0}
+	],
+	"presets": [
+		{"id": "tank", "label": "Tanque", "context": "Tanque · mazmorra", "chip": true,
+			"modules": {
+				"target_frame": {"x": 288, "y": 14, "scale": 1.15},
+				"timeline": {"x": 300, "y": 120, "opacity": 1.0},
+				"performance_meter": {"x": 660, "y": 300, "detail": "amenaza"},
+				"group_frames": {"x": 14, "y": 120}
+			}},
+		{"id": "healer", "label": "Sanador", "context": "Sanador · mazmorra", "chip": true,
+			"modules": {
+				"group_frames": {"x": 360, "y": 216, "scale": 1.2},
+				"player_portrait": {"x": 160, "y": 432},
+				"performance_meter": {"x": 680, "y": 440, "detail": "curación"},
+				"chat_box": {"x": 14, "y": 200}
+			}},
+		{"id": "dps", "label": "Daño", "context": "Daño · mazmorra", "chip": true, "modules": {}},
+		{"id": "explorer", "label": "Explorador", "context": "Explorador · mundo", "chip": true,
+			"modules": {
+				"minimap": {"x": 768, "y": 14, "scale": 1.4},
+				"quest_tracker": {"x": 776, "y": 192, "detail": "5 visibles"},
+				"performance_meter": {"visible": false},
+				"timeline": {"visible": false},
+				"group_frames": {"opacity": 0.6}
+			}},
+		{"id": "raid20", "label": "Raid 20", "context": "Raid de 20", "chip": true,
+			"modules": {
+				"group_frames": {"x": 14, "y": 14, "scale": 1.5, "detail": "20 marcos"},
+				"timeline": {"x": 300, "y": 110, "opacity": 1.0},
+				"quest_tracker": {"visible": false},
+				"chat_box": {"x": 14, "y": 300, "scale": 0.8, "opacity": 0.2}
+			}},
+		{"id": "streamer", "label": "Streamer", "context": "Streamer · cámara libre", "chip": true,
+			"modules": {
+				"chat_box": {"visible": false},
+				"quest_tracker": {"visible": false},
+				"minimap": {"scale": 0.75},
+				"group_frames": {"scale": 0.8},
+				"action_bar": {"scale": 0.85, "x": 312, "y": 432}
+			}},
+		{"id": "social", "label": "Social", "context": "Social · ciudad", "chip": false,
+			"modules": {
+				"chat_box": {"x": 14, "y": 260, "scale": 1.3, "opacity": 1.0},
+				"performance_meter": {"visible": false},
+				"timeline": {"visible": false},
+				"target_frame": {"opacity": 0.6}
+			}}
+	],
+	"default_preset": "dps",
+	"content_presets": {"dungeon": "dps", "raid": "raid20", "world": "explorer", "city": "social"},
+	"content_labels": {"dungeon": "Mazmorra", "raid": "Raid", "world": "Mundo", "city": "Ciudad"},
+	"shared_codes": {"HUD-7QK-D2M": {"preset": "dps"}},
+	"default_selected": "timeline"
+}

@@ -1,0 +1,137 @@
+{
+	"version": 1,
+	"confirm_seconds": 15,
+	"categories": [
+		{"id": "graphics", "label": "Gráficos"},
+		{"id": "audio", "label": "Sonido"},
+		{"id": "controls", "label": "Controles"},
+		{"id": "interface", "label": "Interfaz"},
+		{"id": "accessibility", "label": "Accesibilidad"},
+		{"id": "network", "label": "Red"},
+		{"id": "account", "label": "Cuenta y privacidad"}
+	],
+	"graphics_presets": [
+		{"id": "low", "label": "Bajo", "values": {"shadow_quality": "low", "view_distance": 60, "spell_effects": "minimal", "resolution_scale": 80, "motion_blur": false}},
+		{"id": "medium", "label": "Medio", "values": {"shadow_quality": "medium", "view_distance": 80, "spell_effects": "reduced", "resolution_scale": 90, "motion_blur": false}},
+		{"id": "high", "label": "Alto", "values": {"shadow_quality": "high", "view_distance": 100, "spell_effects": "full", "resolution_scale": 100, "motion_blur": false}},
+		{"id": "ultra", "label": "Ultra", "values": {"shadow_quality": "high", "view_distance": 100, "spell_effects": "full", "resolution_scale": 100, "motion_blur": true}},
+		{"id": "custom", "label": "Personal", "values": {}}
+	],
+	"options": {
+		"graphics": [
+			{"key": "shadow_quality", "label": "Calidad de sombras", "hint": "Sombras dinámicas de personajes y hechizos", "type": "select", "default": "high", "keywords": ["sombras", "shadows"],
+				"choices": [{"value": "low", "label": "Baja", "fps": 0}, {"value": "medium", "label": "Media", "fps": -3}, {"value": "high", "label": "Alta", "fps": -8}]},
+			{"key": "view_distance", "label": "Distancia de visión", "hint": "Afecta al mapa y a las grietas lejanas", "type": "select", "default": 80, "keywords": ["vision", "lejos", "draw distance"],
+				"choices": [{"value": 60, "label": "60 %", "fps": 0}, {"value": 80, "label": "80 %", "fps": -5}, {"value": 100, "label": "100 %", "fps": -11}]},
+			{"key": "spell_effects", "label": "Efectos de hechizos de otros", "hint": "Bajarlos da claridad en raids", "type": "select", "default": "reduced", "keywords": ["particulas", "efectos", "raid"],
+				"choices": [{"value": "full", "label": "Completos", "fps": 0}, {"value": "reduced", "label": "Reducidos", "fps": 12}, {"value": "minimal", "label": "Mínimos", "fps": 18}]},
+			{"key": "resolution_scale", "label": "Escala de resolución", "hint": "Con reescalado inteligente", "type": "select", "default": 90, "confirm": true, "keywords": ["resolucion", "reescalado", "nitidez"],
+				"choices": [{"value": 80, "label": "80 %", "fps": 16}, {"value": 90, "label": "90 %", "fps": 9}, {"value": 100, "label": "100 %", "fps": 0}]},
+			{"key": "shelter_fps_limit", "label": "Límite de fps en el refugio", "hint": "Ahorra energía cuando no hay combate", "type": "select", "default": 60, "keywords": ["energia", "bateria", "refugio"],
+				"choices": [{"value": 30, "label": "30"}, {"value": 60, "label": "60"}]},
+			{"key": "motion_blur", "label": "Desenfoque de movimiento", "hint": "Apagado si activas «Reducir movimiento»", "type": "toggle", "default": false, "keywords": ["blur", "desenfoque"],
+				"choices": [{"value": false, "label": "No"}, {"value": true, "label": "Sí", "fps": -2}]},
+			{"key": "ui_brightness", "label": "Brillo de la interfaz", "hint": "Independiente del brillo del juego", "type": "select", "default": 100, "keywords": ["brillo", "luz"],
+				"choices": [{"value": 80, "label": "80 %"}, {"value": 90, "label": "90 %"}, {"value": 100, "label": "100 %"}, {"value": 110, "label": "110 %"}, {"value": 120, "label": "120 %"}]},
+			{"key": "display_mode", "label": "Modo de pantalla", "hint": "Se revierte solo si no confirmas en 15 s", "type": "select", "default": "borderless", "confirm": true, "keywords": ["pantalla completa", "ventana"],
+				"choices": [{"value": "windowed", "label": "Ventana"}, {"value": "borderless", "label": "Sin bordes"}, {"value": "fullscreen", "label": "Completa"}]},
+			{"key": "resolution", "label": "Resolución", "hint": "Se revierte sola si no confirmas en 15 s", "type": "select", "default": "1920x1080", "confirm": true, "keywords": ["resolucion", "pixeles"],
+				"choices": [{"value": "1280x720", "label": "1280 × 720"}, {"value": "1600x900", "label": "1600 × 900"}, {"value": "1920x1080", "label": "1920 × 1080"}, {"value": "2560x1440", "label": "2560 × 1440"}]}
+		],
+		"audio": [
+			{"key": "volume_master", "bus": "Master", "label": "Volumen general", "hint": "Todo el sonido del juego", "type": "slider", "min": 0, "max": 100, "step": 1, "default": 100, "keywords": ["volumen", "maestro"]},
+			{"key": "mute_master", "bus": "Master", "label": "Silenciar todo", "type": "mute", "default": false, "hidden": true},
+			{"key": "volume_music", "bus": "Music", "label": "Música", "hint": "Banda sonora y temas de zona", "type": "slider", "min": 0, "max": 100, "step": 1, "default": 100, "keywords": ["musica", "banda sonora"]},
+			{"key": "mute_music", "bus": "Music", "label": "Silenciar música", "type": "mute", "default": false, "hidden": true},
+			{"key": "volume_sfx", "bus": "SFX", "label": "Efectos", "hint": "Golpes, hechizos y pasos", "type": "slider", "min": 0, "max": 100, "step": 1, "default": 100, "keywords": ["efectos", "sfx"]},
+			{"key": "mute_sfx", "bus": "SFX", "label": "Silenciar efectos", "type": "mute", "default": false, "hidden": true},
+			{"key": "volume_ambience", "bus": "Ambience", "label": "Ambiente", "hint": "Viento, fauna y grietas", "type": "slider", "min": 0, "max": 100, "step": 1, "default": 100, "keywords": ["ambiente"]},
+			{"key": "mute_ambience", "bus": "Ambience", "label": "Silenciar ambiente", "type": "mute", "default": false, "hidden": true},
+			{"key": "volume_ui", "bus": "UI", "label": "Interfaz", "hint": "Clics, avisos y menús", "type": "slider", "min": 0, "max": 100, "step": 1, "default": 100, "keywords": ["interfaz", "clics", "avisos"]},
+			{"key": "mute_ui", "bus": "UI", "label": "Silenciar interfaz", "type": "mute", "default": false, "hidden": true}
+		],
+		"controls": [
+			{"key": "move_forward", "label": "Avanzar", "verb": "te hace avanzar", "group": "Movimiento", "type": "key", "default": "W"},
+			{"key": "move_left", "label": "Izquierda", "verb": "te mueve a la izquierda", "group": "Movimiento", "type": "key", "default": "A"},
+			{"key": "move_back", "label": "Retroceder", "verb": "te hace retroceder", "group": "Movimiento", "type": "key", "default": "S"},
+			{"key": "move_right", "label": "Derecha", "verb": "te mueve a la derecha", "group": "Movimiento", "type": "key", "default": "D"},
+			{"key": "ability_1", "label": "Habilidad 1", "verb": "lanza la habilidad 1", "group": "Combate", "type": "key", "default": "1"},
+			{"key": "ability_2", "label": "Habilidad 2", "verb": "lanza la habilidad 2", "group": "Combate", "type": "key", "default": "2"},
+			{"key": "ability_3", "label": "Habilidad 3", "verb": "lanza la habilidad 3", "group": "Combate", "type": "key", "default": "3"},
+			{"key": "ability_4", "label": "Habilidad 4", "verb": "lanza la habilidad 4", "group": "Combate", "type": "key", "default": "4"},
+			{"key": "ability_5", "label": "Habilidad 5", "verb": "lanza la habilidad 5", "group": "Combate", "type": "key", "default": "5"},
+			{"key": "ability_6", "label": "Habilidad 6", "verb": "lanza la habilidad 6", "group": "Combate", "type": "key", "default": "6"},
+			{"key": "menu_equipment", "label": "Equipo", "verb": "abre Equipo", "group": "Menús", "type": "key", "default": "C"},
+			{"key": "menu_powers", "label": "Poderes", "verb": "abre Poderes", "group": "Menús", "type": "key", "default": "N"},
+			{"key": "menu_quests", "label": "Misiones", "verb": "abre Misiones", "group": "Menús", "type": "key", "default": "L"},
+			{"key": "menu_map", "label": "Mapa", "verb": "abre el Mapa", "group": "Menús", "type": "key", "default": "M"},
+			{"key": "menu_codex", "label": "Códice", "verb": "abre el Códice", "group": "Menús", "type": "key", "default": "J"},
+			{"key": "menu_social", "label": "Social", "verb": "abre Social", "group": "Menús", "type": "key", "default": "O"},
+			{"key": "menu_shelter", "label": "Refugio", "verb": "abre el Refugio", "group": "Menús", "type": "key", "default": "H"},
+			{"key": "menu_commerce", "label": "Comercio", "verb": "abre Comercio", "group": "Menús", "type": "key", "default": "P"},
+			{"key": "menu_settings", "label": "Ajustes", "verb": "abre Ajustes", "group": "Menús", "type": "key", "default": "F10"},
+			{"key": "menu_close", "label": "Cerrar / menú", "verb": "cierra ventanas", "group": "Menús", "type": "key", "default": "Esc", "locked": true},
+			{"key": "signals", "label": "Señales", "verb": "abre Señales", "group": "Grupo", "type": "key", "default": "G"},
+			{"key": "mount", "label": "Montura", "verb": "llama a la montura", "group": "Grupo", "type": "key", "default": "G", "suggested": "Z"}
+		],
+		"interface": [
+			{"key": "language", "label": "Idioma", "hint": "Textos, voces y subtítulos", "type": "select", "default": "es", "keywords": ["idioma", "language"],
+				"choices": [{"value": "es", "label": "Español"}, {"value": "en", "label": "English"}, {"value": "pt", "label": "Português"}]},
+			{"key": "number_format", "label": "Formato de números", "hint": "Cifras tabulares alinean daño y precios", "type": "select", "default": "tabular", "keywords": ["numeros", "cifras"],
+				"choices": [{"value": "tabular", "label": "Tabulares"}, {"value": "proportional", "label": "Proporcionales"}]},
+			{"key": "chat_opacity", "label": "Opacidad del chat fuera de combate", "hint": "En combate el chat se muestra al 100 %", "type": "slider", "min": 0, "max": 100, "step": 5, "default": 40, "keywords": ["chat", "transparencia"]},
+			{"key": "text_shadow", "label": "Sombra del texto", "hint": "Mejora la lectura sobre fondos claros", "type": "toggle", "default": true, "keywords": ["contorno", "legibilidad"],
+				"choices": [{"value": false, "label": "No"}, {"value": true, "label": "Sí"}]}
+		],
+		"accessibility": [
+			{"key": "color_mode", "label": "Modo de color", "hint": "Cambia los colores, no los iconos", "type": "select", "default": "normal", "keywords": ["daltonismo", "color", "protanopia", "deuteranopia", "tritanopia"],
+				"choices": [{"value": "normal", "label": "Normal", "short": "Normal"}, {"value": "protanopia", "label": "Protanopia", "short": "Protan."}, {"value": "deuteranopia", "label": "Deuteranopia", "short": "Deutan."}, {"value": "tritanopia", "label": "Tritanopia", "short": "Tritan."}]},
+			{"key": "large_text", "label": "Texto grande (115 %)", "hint": "afecta a todos los módulos", "type": "toggle", "default": false, "keywords": ["letra", "tamaño", "fuente"],
+				"choices": [{"value": false, "label": "No"}, {"value": true, "label": "Sí"}]},
+			{"key": "reduce_motion", "label": "Reducir movimiento", "hint": "sin destellos ni sacudidas", "type": "toggle", "default": true, "keywords": ["mareo", "sacudidas", "destellos"],
+				"choices": [{"value": false, "label": "No"}, {"value": true, "label": "Sí"}]},
+			{"key": "narrator", "label": "Narrador de interfaz", "hint": "lee menús y alertas", "type": "toggle", "default": false, "keywords": ["voz", "lector", "accesskit"],
+				"choices": [{"value": false, "label": "No"}, {"value": true, "label": "Sí"}]},
+			{"key": "directional_audio", "label": "Avisos sonoros direccionales", "hint": "mecánicas por audio 3D", "type": "toggle", "default": true, "keywords": ["audio 3d", "sonido"],
+				"choices": [{"value": false, "label": "No"}, {"value": true, "label": "Sí"}]},
+			{"key": "shapes_with_colors", "label": "Formas además de colores", "hint": "rombos, triángulos, círculos", "type": "toggle", "default": true, "keywords": ["formas", "iconos"],
+				"choices": [{"value": false, "label": "No"}, {"value": true, "label": "Sí"}]}
+		],
+		"network": [
+			{"key": "show_latency", "label": "Mostrar latencia", "hint": "Ping al reino en la esquina del minimapa", "type": "toggle", "default": true, "keywords": ["ping", "latencia", "ms"],
+				"choices": [{"value": false, "label": "No"}, {"value": true, "label": "Sí"}]},
+			{"key": "telemetry_rate", "label": "Telemetría UDP", "hint": "Frecuencia de envío de posición al servidor", "type": "select", "default": 20, "keywords": ["udp", "hz", "telemetria"],
+				"choices": [{"value": 10, "label": "10 Hz"}, {"value": 20, "label": "20 Hz"}, {"value": 30, "label": "30 Hz"}]},
+			{"key": "realm", "label": "Reino", "hint": "Se aplica al volver a la selección de personaje", "type": "select", "default": "umbral", "keywords": ["servidor", "reino", "region"],
+				"choices": [{"value": "umbral", "label": "Servidor Umbral", "ms": 24}, {"value": "nexo_eu", "label": "Nexo Europa", "ms": 140}, {"value": "nexo_asia", "label": "Nexo Asia", "ms": 210}]}
+		],
+		"account": [
+			{"key": "profile_visibility", "label": "Visibilidad del perfil", "hint": "Quién ve tus logros y personajes", "type": "select", "default": "friends", "keywords": ["perfil", "privacidad"],
+				"choices": [{"value": "public", "label": "Pública"}, {"value": "friends", "label": "Amigos"}, {"value": "private", "label": "Privada"}]},
+			{"key": "friend_requests", "label": "Solicitudes de amistad", "hint": "Quién puede enviarte solicitudes", "type": "select", "default": "everyone", "keywords": ["amigos", "solicitudes"],
+				"choices": [{"value": "everyone", "label": "Todos"}, {"value": "friends_of_friends", "label": "Amigos de amigos"}, {"value": "nobody", "label": "Nadie"}]},
+			{"key": "passkey", "label": "Llave de acceso", "hint": "Inicio de sesión sin contraseña en este equipo", "type": "info", "default": "active", "keywords": ["passkey", "seguridad", "contraseña"],
+				"choices": [{"value": "active", "label": "Activa"}, {"value": "none", "label": "Sin configurar"}]}
+		]
+	},
+	"performance": {
+		"max_fps": 150,
+		"good_fps": 110,
+		"warn_fps": 60,
+		"scenarios": [
+			{"id": "open_world", "label": "Mundo abierto", "fps": 144},
+			{"id": "raid_20", "label": "Raid de 20", "fps": 118},
+			{"id": "nexus_city", "label": "Ciudad del Nexo", "fps": 96},
+			{"id": "shelter", "label": "Refugio", "fps": 150, "capped_by": "shelter_fps_limit"}
+		],
+		"note": "Medido en tus últimas sesiones, no en una prueba sintética."
+	},
+	"network_status": {"latency_ms": 24, "packet_loss": 0.0},
+	"palettes": {
+		"normal": {"good": "#4fe39a", "warn": "#f5c35b", "bad": "#ff6b6b", "info": "#46e3c1"},
+		"protanopia": {"good": "#3fa7ff", "warn": "#f5c35b", "bad": "#b07cff", "info": "#46e3c1"},
+		"deuteranopia": {"good": "#3fa7ff", "warn": "#ffd166", "bad": "#ff8a3d", "info": "#9ad8ff"},
+		"tritanopia": {"good": "#4fe39a", "warn": "#ff8fb1", "bad": "#ff4d4d", "info": "#c3ccd3"}
+	},
+	"shapes": {"good": "circle", "warn": "triangle", "bad": "diamond", "info": "square"}
+}

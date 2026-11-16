@@ -167,11 +167,15 @@ func _handle_camera():
 			player.camera_mode = 1 if player.camera_mode == 0 else 0
 			player.setup_camera()
 
+## F10: Ajustes (UI v2.4 §2.1 · ADR 114). Las cuentas de administrador conservan el panel de
+## administración en F10; abren Ajustes desde el botón del menú común.
 func _handle_admin():
 	if AuthManager.auth_token != "" and AuthManager.is_admin:
 		UIOrchestrator.toggle_window("admin_panel")
+	elif UIOrchestrator and UIOrchestrator.registry and UIOrchestrator.registry.is_registered("settings_window"):
+		UIOrchestrator.toggle_window("settings_window")
 	else:
-		print("[UIInputRouter] F10 ignorado o no autenticado.")
+		print("[UIInputRouter] F10 ignorado: Ajustes no registrados.")
 
 func _handle_db_admin():
 	if AuthManager.auth_token != "" and AuthManager.is_admin:

@@ -504,6 +504,49 @@ const LOADING_ACTIVITIES_WIDTH := 230.0
 const LOADING_TRACK := Color(1, 1, 1, 0.12)
 const LOADING_CHIP_BG := Color(13 / 255.0, 18 / 255.0, 22 / 255.0, 0.92)
 
+# --------------------------------------------------------------------------
+# UI v2.4 Paso 16 (ADR 114) · Ajustes (MMO-Ajustes.html) y Editor de interfaz (MMO-Interfaz.html)
+# --------------------------------------------------------------------------
+const SETTINGS_SCENE_BRIGHTNESS := 0.4                # .scene filter: brightness(0.4)
+const SETTINGS_VEIL := Color(6 / 255.0, 9 / 255.0, 11 / 255.0, 0.5)
+const SETTINGS_TOP := 88.0
+const SETTINGS_CARD_HEIGHT := 694.0
+const SETTINGS_CARD_BG := Color("#0d1216")
+const SETTINGS_CARD_EDGE := Color(1, 1, 1, 0.07)
+const SETTINGS_SUB_BG := Color("#121a20")
+const SETTINGS_ACTIVE_BG := Color("#1c2a33")         # categoría / segmento activo
+const SETTINGS_FIELD_BG := Color("#070a0c")          # buscador y desplegables
+const SETTINGS_FIELD_EDGE := Color(1, 1, 1, 0.1)
+const SETTINGS_PRIMARY_TEXT := Color("#071012")
+const SETTINGS_SWITCH_OFF := Color("#2a363d")
+const SETTINGS_GOOD := Color("#4fe39a")               # +fps / rendimiento holgado
+const SETTINGS_WARN := Color("#f5c35b")               # −fps / atajo repetido
+const SETTINGS_IDLE := Color("#9aa6ae")
+const SETTINGS_CHEVRON := Color("#7c8992")
+const SETTINGS_LEFT_X := 28.0
+const SETTINGS_LEFT_WIDTH := 300.0
+const SETTINGS_CENTER_X := 344.0
+const SETTINGS_CENTER_WIDTH := 700.0
+const SETTINGS_RIGHT_X := 1060.0
+const SETTINGS_RIGHT_WIDTH := 352.0
+const SETTINGS_ROW_HEIGHT := 54.0
+const SETTINGS_CATEGORY_HEIGHT := 38.0
+const SETTINGS_VALUE_WIDTH := 140.0
+# Editor de interfaz
+const EDITOR_LEFT_WIDTH := 980.0
+const EDITOR_PANEL_X := 1024.0
+const EDITOR_PANEL_WIDTH := 388.0
+const EDITOR_CANVAS_SIZE := Vector2(944, 531)
+const EDITOR_GRID := 24
+const EDITOR_GRID_LINE := Color(1, 1, 1, 0.05)
+const EDITOR_CANVAS_VEIL := Color(5 / 255.0, 8 / 255.0, 10 / 255.0, 0.55)
+const EDITOR_MODULE_BG := Color(13 / 255.0, 18 / 255.0, 22 / 255.0, 0.82)
+const EDITOR_MODULE_EDGE := Color(1, 1, 1, 0.22)
+const EDITOR_SELECTED_BG := Color(70 / 255.0, 227 / 255.0, 193 / 255.0, 0.16)
+const EDITOR_GUIDE := Color("#ff6fa8")                # guía magnética «alineado con…»
+const EDITOR_HANDLE := Color("#ffffff")
+const EDITOR_HANDLE_SIZE := 10.0
+
 
 # --------------------------------------------------------------------------
 # Helpers
