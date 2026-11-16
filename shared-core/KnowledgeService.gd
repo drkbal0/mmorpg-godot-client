@@ -207,6 +207,7 @@ func get_entry_view(id: String) -> Dictionary:
 		"wiki_synced": bool(e.get("wiki_synced", false)),
 		"wiki_url": wiki_url(id) if v == PUBLISHED else "",
 		"location": (e.get("location", {}) as Dictionary).duplicate(true) if known else {},
+		"universe": str(e.get("universe", "")),
 	}
 	return view
 

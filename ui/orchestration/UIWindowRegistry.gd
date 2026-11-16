@@ -53,6 +53,10 @@ func _register_initial_windows() -> void:
 	# y Trato cara a cara P2P con doble confirmación simétrica y máscara «???» del Códice.
 	register("crafting_window", "res://ui/windows/CraftingWindow/CraftingWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 	register("trade_window", "res://ui/windows/TradeWindow/TradeWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	# UI v2.4 Paso 12: Colecciones y Diario del multiverso (desde el Códice) e Incursiones con
+	# extracción (desde Misiones): bolsa segura, riesgo si mueres y preparación.
+	register("collections_window", "res://ui/windows/CollectionsWindow/CollectionsWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
+	register("incursions_window", "res://ui/windows/IncursionsWindow/IncursionsWindow.tscn", UITypes.WindowCategory.GAME_WINDOW)
 
 
 func register(id: String, scene_path: String, category: int, shortcut_keys: Array = []) -> void:

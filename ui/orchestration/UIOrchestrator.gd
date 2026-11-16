@@ -168,6 +168,16 @@ func open_trade(target_name: String = "Sasha", target_data: Dictionary = {}) -> 
 	return open_window("trade_window", {"target_name": target_name, "target_data": target_data})
 
 
+## UI v2.4 Paso 12: abre Colecciones en una categoría (mounts · pets · transmogs · achievements · titles).
+func open_collections(category: String = "mounts") -> Node:
+	return open_window("collections_window", {"category": category})
+
+
+## UI v2.4 Paso 12: abre Incursiones ("" = la recomendada del seed).
+func open_incursions(incursion_id: String = "") -> Node:
+	return open_window("incursions_window", {"incursion_id": incursion_id})
+
+
 func close_window(id: String, free_instance: bool = false) -> void:
 	for routed in registry.get_route_targets(id):
 		if registry.get_instance(routed):
